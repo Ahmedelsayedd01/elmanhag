@@ -10,7 +10,7 @@ const AddBundlesLayout = () => {
   };
   return (
     <>
-      <HeaderPageSection handleClick={handleGoBack} name="Add" />
+      <HeaderPageSection handleClick={handleGoBack} name="Add Bundle" />
       <AddBundlesPage />
     </>
   )

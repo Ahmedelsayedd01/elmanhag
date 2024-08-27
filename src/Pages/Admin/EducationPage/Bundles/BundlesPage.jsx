@@ -27,6 +27,8 @@ const BundlesPage = () => {
        const [openSemester, setOpenSemester] = useState(false);
        const [bundlesChanged, setBundlesChanged] = useState(false);
 
+       const [semester, setSemester] = useState();
+
 
        const dropdownCategoryRef = useRef(null);
        const dropdownStatusRef = useRef(null);
@@ -99,6 +101,10 @@ const BundlesPage = () => {
                      if (response.status === 200) {
                             setBundles(response.data.bundles);
                             console.log(response.data)
+
+                            // Extract unique semesters
+                            const uniqueSemesters = [...new Set(response.data.bundles.map(bundle => bundle.semester))];
+                            setSemester(uniqueSemesters);
                      }
               } catch (error) {
                      console.error('Error fetching bundles data:', error);
@@ -166,7 +172,7 @@ const BundlesPage = () => {
        }
 
        if (!bundles) {
-                     return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No student data available</div>;
+              return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Bundles data available</div>;
        }
 
 
@@ -184,7 +190,7 @@ const BundlesPage = () => {
                                           handleOpenOption={handleOptionSemester}
                                           stateoption={selectedOptionSemester}
                                           openMenu={openSemester}
-                                          options={bundles.semester||[]}
+                                          options={bundles.map(bundle => ({ name: bundle?.semester || 'N/A' }))}
                                    />
                             </div>
                             <div className="sm:w-full xl:w-1/5">
@@ -195,7 +201,7 @@ const BundlesPage = () => {
                                           handleOpenOption={handleOptionCategory}
                                           stateoption={selectedOptionCategory}
                                           openMenu={openCategory}
-                                          options={bundles.name || []}
+                                          options={bundles.map(bundle => ({ name: bundle.category?.name || 'N/A' }))}
                                    />
                             </div>
                             <div className="sm:w-full xl:w-1/5">
@@ -206,7 +212,9 @@ const BundlesPage = () => {
                                           handleOpenOption={handleOptionStatus}
                                           stateoption={selectedOptionStatus}
                                           openMenu={openStatus}
+                                          // options={bundles.map(bundle => ({ name: bundle.status===1?"Active" :"Disable" || 'N/A' }))}
                                           options={bundles.status || []}
+
                                    />
                             </div>
                             <div className="sm:w-full xl:w-1/12 xl:text-left">
