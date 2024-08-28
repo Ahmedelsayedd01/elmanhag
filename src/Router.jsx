@@ -46,6 +46,7 @@ import {
   StudentsSubjectLayout,
   AddBundlesLayout,
   EditBundlesLayout,
+  StudentsBundlesLayout,
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -233,7 +234,7 @@ const AppLayoutStudent = () => (
       <div className="contentSection w-4/5 min-h-screen ">
         {/* <HeaderStudent /> */}
         <UserContext>
-        <NavbarStudent />
+          <NavbarStudent />
           <Outlet />
         </UserContext>
       </div>
@@ -487,6 +488,10 @@ export const router = createBrowserRouter([
               {
                 path: 'edit/:bundleId', // Default route for "subject"
                 element: <EditBundlesLayout />,
+              },
+              {
+                path: 'students/:bundleId', // Default route for "subject"
+                element: <StudentsBundlesLayout />,
               },
             ]
           },
