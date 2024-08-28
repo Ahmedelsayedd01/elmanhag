@@ -15,8 +15,10 @@ const StudentsSubjectLayout = () => {
 
 
   useEffect(() => {
-    const allStudents = JSON.parse(localStorage.getItem('subjects')) || [];
-    console.log('Subject Students from local storage:', allStudents); // Debugging log
+    const subjectData = JSON.parse(localStorage.getItem('subjects')) || [];
+    const allStudents = subjectData.subjects;
+    console.log('Subject Students from local storage:', subjectData); // Debugging log
+    console.log('allStudents:', allStudents); // Debugging log
 
     if (allStudents.length > 0) {
       const Student = allStudents.find(c => c.id === parseInt(subjectId));

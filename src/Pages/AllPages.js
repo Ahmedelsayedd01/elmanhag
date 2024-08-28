@@ -18,6 +18,7 @@ export { default as EditCategoryPage } from "./Admin/EducationPage/Category/Edit
 export { default as BundlesPage } from "./Admin/EducationPage/Bundles/BundlesPage";
 export { default as AddBundlesPage } from "./Admin/EducationPage/Bundles/AddBundlesPage";
 export { default as EditBundlesPage } from "./Admin/EducationPage/Bundles/EditBundlesPage";
+export { default as StudentsBundlesPage } from "./Admin/EducationPage/Bundles/StudentsBundlesPage";
 
 export { default as SubjectPage } from "./Admin/EducationPage/SubjectPage/SubjectPage";
 export { default as AddSubjectPage } from "./Admin/EducationPage/SubjectPage/AddSubjectPage";

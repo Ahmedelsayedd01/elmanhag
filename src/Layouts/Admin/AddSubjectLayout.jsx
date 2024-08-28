@@ -10,7 +10,7 @@ const AddSubjectLayout = () => {
   };
   return (
     <>
-      <HeaderPageSection handleClick={handleGoBack} name="Add" />
+      <HeaderPageSection handleClick={handleGoBack} name="Add Subject" />
       <AddSubjectPage />
     </>
   )

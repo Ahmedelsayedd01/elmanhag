@@ -79,16 +79,22 @@ const EditPaymentMethodPage = () => {
 
         setLoading(true);
         try {
-            const queryParams = new URLSearchParams({
-                title: title,
-                description: description,
-                thumbnail_link: thumbnailFile,
-                status: paymentActive
-            }).toString();
+            // const queryParams = new URLSearchParams({
+            //     title: title,
+            //     description: description,
+            //     thumbnail_link: thumbnailFile,
+            //     status: paymentActive
+            // }).toString();
+
+            const formData = new FormData();
+            formData.append('title', title);
+            formData.append('description', description);
+            formData.append('thumbnail_link', thumbnailFile);
+            formData.append('status', paymentActive);
 
             const response = await axios.post(
-                `https://bdev.elmanhag.shop/admin/Settings/paymentMethods/update/${paymentContent.id}?${queryParams}`,
-                {}, // Empty body since we are using query params
+                `https://bdev.elmanhag.shop/admin/Settings/paymentMethods/update/${paymentContent.id}`,
+                formData, // Empty body since we are using query params
                 {
                     headers: {
                         Authorization: `Bearer ${auth.user.token}`,
@@ -100,7 +106,7 @@ const EditPaymentMethodPage = () => {
             if (response.status === 200) {
                 auth.toastSuccess('Payment Method updated successfully!');
                 handleGoBack();
-                console.log('queryParams',queryParams)
+                console.log('formData', formData)
             } else {
                 auth.toastError('Failed to update Payment Method.');
             }
