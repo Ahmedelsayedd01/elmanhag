@@ -60,11 +60,11 @@ const LoginPage = () => {
                      if (response.status === 200) {
                             const userData = {
                                    ...response.data.detailes,
-                                   roles: [response.data.detailes.type] // Assuming type represents the user's role
+                                   roles: [response.data.detailes.role] // Assuming type represents the user's role
                             };
                             console.log('Login response:', response); // Debugging line
                             setData(userData);
-                            setType(response.data.detailes.type);
+                            setType(response.data.detailes.role);
                             console.log("response", response);
 
                      } else {
