@@ -92,8 +92,8 @@ const SubjextPage = () => {
         },
       });
       if (response.status === 200) {
-        setSubjects(response.data.subjects);
-        setSubject(response.data);
+        setSubjects(response.data);
+        setSubject(response.data.subjects);
       }
     } catch (error) {
       console.error('Error fetching Subjects data:', error);
@@ -171,7 +171,6 @@ const SubjextPage = () => {
 
   // }, [])
 
-
   return (
     <>
       <div className="w-full">
@@ -234,7 +233,7 @@ const SubjextPage = () => {
               </tr>
             </thead>
             <tbody className="w-full">
-              {subjects.map((subject, index) => (
+              {subject.map((subject, index) => (
 
                 <tr className="w-full border-b-2" key={subject.id}>
                   <td
