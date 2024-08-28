@@ -99,10 +99,7 @@ import AdminUser from "./Layouts/Admin/AdminUser";
 import LayoutAdmin from "./Layouts/Admin/LayoutAdmin";
 import EditProfilePage from "./Layouts/Admin/EditeProfileStudent";
 import EditCategoryLayout from "./Layouts/Admin/EditCategoryLayout";
-<<<<<<< Updated upstream
-=======
 import NavbarStudent from "./Components/NavbarStudent";
->>>>>>> Stashed changes
 
 export const ContextNumper = createContext()
 const AppLayoutAuthentication = () => (
