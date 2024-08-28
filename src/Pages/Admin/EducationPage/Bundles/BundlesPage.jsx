@@ -132,11 +132,10 @@ const BundlesPage = () => {
               handleCloseDialog();
 
               if (success) {
-                     auth.toastSuccess('Student deleted successfully!');
-                     setBundles((prevBundle) => ({
-                            ...prevBundle,
-                            bundles: prevBundle.bundles.filter((bundle) => bundle.id !== bundleId),
-                     }));
+                     auth.toastSuccess('Bundle deleted successfully!');
+                     setBundles((prevBundle) =>
+                            prevBundle.filter((bundle) => bundle.id !== bundleId)
+                     );
               } else {
                      auth.toastError('Failed to delete Bundle.');
               }

@@ -267,6 +267,7 @@ const EditBundlesPage = () => {
             handleSelectOption={handleSelectSubject}
             handleRemoveOption={handleRemoveSubject}
             options={options}
+            name="Subjects"
           />
         </div>
         <div className="lg:w-[30%] sm:w-full">

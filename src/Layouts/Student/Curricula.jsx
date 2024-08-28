@@ -39,7 +39,7 @@ const SubjectButton = styled.button`
 const subjects = [
   { name: "الرياضيات", icon: mathicon },
   { name: "عربي", icon: arabicicon },
-  { name: "دراسات", icon: Socialicon },
+  // { name: "دراسات", icon: Socialicon },
   { name: "علوم", icon: arabicicon },
   { name: "اللغة الفرنسية", icon: arabicicon },
   { name: "اللغة الإنجليزية", icon: arabicicon },
