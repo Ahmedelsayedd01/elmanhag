@@ -99,6 +99,7 @@ import AdminUser from "./Layouts/Admin/AdminUser";
 import LayoutAdmin from "./Layouts/Admin/LayoutAdmin";
 import EditProfilePage from "./Layouts/Admin/EditeProfileStudent";
 import EditCategoryLayout from "./Layouts/Admin/EditCategoryLayout";
+import NavbarStudent from "./Components/NavbarStudent";
 
 export const ContextNumper = createContext()
 const AppLayoutAuthentication = () => (
@@ -230,8 +231,9 @@ const AppLayoutStudent = () => (
     <div className="relative flex gap-x-4 directionAR">
       <SidebarStudent />
       <div className="contentSection w-4/5 min-h-screen ">
-        <HeaderStudent />
+        {/* <HeaderStudent /> */}
         <UserContext>
+        <NavbarStudent />
           <Outlet />
         </UserContext>
       </div>

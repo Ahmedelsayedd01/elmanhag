@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 const DashboardPage = () => {
        return (
               <>
-                     <div>DashboardPage</div>
+                     <div className="flex">DashboardPage</div>
               </>
        )
 }

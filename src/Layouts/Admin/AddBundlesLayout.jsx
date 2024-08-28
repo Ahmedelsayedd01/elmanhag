@@ -1,6 +1,7 @@
 import React from 'react'
 import { AddBundlesPage } from '../../Pages/AllPages'
 import HeaderPageSection from '../../Components/HeaderPageSection'
+import { useNavigate } from 'react-router-dom';
 
 const AddBundlesLayout = () => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ const AddBundlesLayout = () => {
   };
   return (
     <>
-      <HeaderPageSection handleClick={handleGoBack} name="Add" />
+      <HeaderPageSection handleClick={handleGoBack} name="Add Bundle" />
       <AddBundlesPage />
     </>
   )
