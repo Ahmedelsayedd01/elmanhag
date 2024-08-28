@@ -60,10 +60,8 @@ const CategoriesPage = () => {
               handleCloseDialog();
 
               if (success) {
-                     auth.toastSuccess('Categories deleted successfully!');
-                     setCategories((prevCategories) =>
-                            prevCategories.filter((category) => category.id !== categoriesId)
-                     );
+                     auth.toastSuccess('Category deleted successfully!');
+                     setCategoriesChanged(!categoriesChanged)
               } else {
                      auth.toastError('Failed to delete category.');
               }

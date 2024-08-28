@@ -89,7 +89,7 @@ const EditCategoryPage = () => {
               navigate(-1, { replace: true });
        };
 
-       const handleSubmitAdd = async (categoryID, event) => {
+       const handleSubmitEdit = async (categoryID, event) => {
               event.preventDefault();
 
               if (!selectParentId) {
@@ -168,7 +168,7 @@ const EditCategoryPage = () => {
 
        return (
               <>
-                     <form onSubmit={(event) => handleSubmitAdd(categoryContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-3">
+                     <form onSubmit={(event) => handleSubmitEdit(categoryContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-3">
                             <div className="w-full flex flex-wrap items-center justify-start gap-3">
                                    <div className="lg:w-[30%] sm:w-full">
                                           <InputCustom

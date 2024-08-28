@@ -92,8 +92,8 @@ const SubjextPage = () => {
         },
       });
       if (response.status === 200) {
-        setSubjects(response.data);
-        setSubject(response.data.subjects);
+        setSubjects(response.data.subjects);
+        setSubject(response.data);
       }
     } catch (error) {
       console.error('Error fetching Subjects data:', error);
@@ -122,10 +122,7 @@ const SubjextPage = () => {
 
     if (success) {
       auth.toastSuccess('Subject deleted successfully!');
-      setSubject((prevSubject) => ({
-        ...prevSubject,
-        subjects: prevSubject.subjects.filter((subject) => subject.id !== subjectId),
-      }));
+      setSubjectsChanged(!subjectsChanged)
     } else {
       auth.toastError('Failed to delete Subject.');
     }
@@ -164,12 +161,8 @@ const SubjextPage = () => {
     return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Subject data available</div>;
   }
 
-  localStorage.setItem("subjects", JSON.stringify(subjects));
-  // useEffect(() => {
-  //   const subject = localStorage.setItem("subjects", JSON.stringify(subjects));
-  //   setSubject()
+  localStorage.setItem("subjects", JSON.stringify(subject));
 
-  // }, [])
 
   return (
     <>
@@ -183,7 +176,6 @@ const SubjextPage = () => {
               handleOpenOption={handleOptionSemester}
               stateoption={selectedOptionSemester}
               openMenu={openSemester}
-              // options={[{ id: 1, name: 'Free' }, { id: 2, name: 'Paid' }]}
               options={subject.semester || []}
             />
           </div>
@@ -233,7 +225,7 @@ const SubjextPage = () => {
               </tr>
             </thead>
             <tbody className="w-full">
-              {subject.map((subject, index) => (
+              {subjects.map((subject, index) => (
 
                 <tr className="w-full border-b-2" key={subject.id}>
                   <td
@@ -305,45 +297,45 @@ const SubjextPage = () => {
                       <button type="button" onClick={() => handleOpenDialog(subject.id)}>
                         <DeleteIcon />
                       </button>
-                      {/* {openDialog === subject.id && (
-                      <Dialog open={true} onClose={handleCloseDialog} className="relative z-10">
-                        <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-                        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                            <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                              <div className="flex flex-col items-center justify-center bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                                <Wroning Width='28' Height='28' aria-hidden="true" />
-                                <div className="flex items-center">
-                                  <div className="mt-2 text-center">
-                                    <DialogTitle as="h3" className="text-xl font-semibold leading-10 text-gray-900">
-                                      You will delete {subject?.name || "null"}
-                                    </DialogTitle>
+                      {openDialog === subject.id && (
+                        <Dialog open={true} onClose={handleCloseDialog} className="relative z-10">
+                          <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                              <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                <div className="flex flex-col items-center justify-center bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                  <Wroning Width='28' Height='28' aria-hidden="true" />
+                                  <div className="flex items-center">
+                                    <div className="mt-2 text-center">
+                                      <DialogTitle as="h3" className="text-xl font-semibold leading-10 text-gray-900">
+                                        You will delete {subject?.name || "null"}
+                                      </DialogTitle>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                <button
-                                  type="button"
-                                  onClick={() => handleDelete(subject.id)}
-                                  disabled={isDeleting}
-                                  className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
-                                >
-                                  {isDeleting ? <div className="flex w-10 h-5"><Loading /></div> : 'Delete'}
-                                </button>
-                                <button
-                                  type="button"
-                                  data-autofocus
-                                  onClick={handleCloseDialog}
-                                  className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
-                                >
-                                  Cancel
-                                </button>
-                              </div>
-                            </DialogPanel>
+                                <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                  <button
+                                    type="button"
+                                    onClick={() => handleDelete(subject.id)}
+                                    disabled={isDeleting}
+                                    className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
+                                  >
+                                    {isDeleting ? <div className="flex w-10 h-5"><Loading /></div> : 'Delete'}
+                                  </button>
+                                  <button
+                                    type="button"
+                                    data-autofocus
+                                    onClick={handleCloseDialog}
+                                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              </DialogPanel>
+                            </div>
                           </div>
-                        </div>
-                      </Dialog>
-                    )} */}
+                        </Dialog>
+                      )}
                     </div>
                   </td>
                 </tr>

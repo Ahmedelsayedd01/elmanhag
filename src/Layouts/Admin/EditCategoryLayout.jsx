@@ -43,7 +43,7 @@ const EditCategoryLayout = () => {
 
   return (
     <>
-      <HeaderPageSection handleClick={handleGoBack} name="Edit" />
+      <HeaderPageSection handleClick={handleGoBack} name="Edit Category" />
       <CategoryDataContext.Provider value={categoryEdit}>
         <EditCategoryPage />
       </CategoryDataContext.Provider>

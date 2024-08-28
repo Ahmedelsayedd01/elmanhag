@@ -126,10 +126,7 @@ const StudentPage = () => {
 
               if (success) {
                      auth.toastSuccess('Student deleted successfully!');
-                     setStudent((prevStudent) => ({
-                            ...prevStudent,
-                            students: prevStudent.students.filter((student) => student.id !== studentId),
-                     }));
+                     setStudentsChanged(!studentsChanged)
               } else {
                      auth.toastError('Failed to delete student.');
               }

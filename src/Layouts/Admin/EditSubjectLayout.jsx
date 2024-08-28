@@ -14,11 +14,13 @@ const EditSubjectLayout = () => {
 
 
   useEffect(() => {
-    const allSubjects = JSON.parse(localStorage.getItem('subjects')) || [];
-    console.log('Subject from local storage:', allSubjects); // Debugging log
+    const subjectsData = JSON.parse(localStorage.getItem('subjects')) || [];
+    const subjectList = subjectsData.subjects;
+    console.log('Subject from local storage:', subjectsData); // Debugging log
+    console.log('subjectList from subjectData:', subjectList); // Debugging log
 
-    if (allSubjects.length > 0) {
-      const Subject = allSubjects.find(c => c.id === parseInt(subjectId));
+    if (subjectList.length > 0) {
+      const Subject = subjectList.find(c => c.id === parseInt(subjectId));
       console.log('Selected Subject:', Subject); // Debugging log
 
       setSubjectEdit(Subject)
@@ -34,7 +36,7 @@ const EditSubjectLayout = () => {
 
   return (
     <>
-      <HeaderPageSection handleClick={handleGoBack} name="Edit" />
+      <HeaderPageSection handleClick={handleGoBack} name="Edit Subject" />
       <SubjectEditContext.Provider value={subjectEdit}>
         <EditSubjectPage />
       </SubjectEditContext.Provider>
