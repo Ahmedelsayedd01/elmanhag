@@ -41,10 +41,10 @@ const AddBundlesPage = () => {
 
   const dropdownCategoryRef = useRef();
   const dropdownSemesterRef = useRef();
+  const dropdownSubjectRef = useRef();
   const uploadThumbnailRef = useRef();
   const uploadCoverPhotoRef = useRef();
   const uploadDemoVideoRef = useRef();
-  // const dropdownSubjectRef = useRef();
 
   const handleOpenSelectCategory = () => {
     setOpenSelectCategory(!openSelectCategory);
@@ -96,6 +96,24 @@ const AddBundlesPage = () => {
 
   const handleRemoveSubject = (subjectName) => {
     setSelectSubject(selectSubject.filter(subject => subject !== subjectName));
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleClickOutside = (event) => {
+      if (dropdownCategoryRef.current && !dropdownCategoryRef.current.contains(event.target) &&
+          dropdownSemesterRef.current && !dropdownSemesterRef.current.contains(event.target)&&
+          dropdownSubjectRef.current &&  !dropdownSubjectRef.current.contains(event.target)
+      ) {
+          setOpenSelectCategory(false);
+          setOpenSelectSemester(false);
+          setOpenSelectSubject(false);
+      }
   };
 
 
@@ -280,12 +298,14 @@ const AddBundlesPage = () => {
         </div>
         <div className="lg:w-[30%] sm:w-full">
           <MultipleChoiceMenu
+            ref={dropdownSubjectRef}
             handleOpen={handleOpenSelectSubject}
             selectedOptions={selectSubject}
             openMenu={openSelectSubject}
             handleSelectOption={handleSelectSubject}
             handleRemoveOption={handleRemoveSubject}
             options={options}
+            name="Subjects"
           />
         </div>
         <div className="lg:w-[30%] sm:w-full">

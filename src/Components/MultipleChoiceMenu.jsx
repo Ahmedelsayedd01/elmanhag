@@ -10,6 +10,7 @@ const MultipleChoiceMenu = forwardRef(({
     handleSelectOption, // Function to handle option selection
     handleRemoveOption, // Function to handle option removal
     options = [],
+    name
 }, ref) => {
 
     return (
@@ -26,7 +27,7 @@ const MultipleChoiceMenu = forwardRef(({
                                 {option}
                                 <FaTimes className="ml-2 text-sm cursor-pointer" onClick={() => handleRemoveOption(option)} />
                             </div>
-                        )) : <span>Select Options</span>}
+                        )) : <span>Select {name}</span>}
                     </div>
                     <IoIosArrowDown className={`${openMenu ? "rotate-180" : "rotate-0"} text-mainColor text-xl transition-all duration-300`} />
                 </button>
