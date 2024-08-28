@@ -31,6 +31,8 @@ const EditBundlesPage = () => {
     const [selectSubject, setSelectSubject] = useState([]);
     const [openSelectSubject, setOpenSelectSubject] = useState(false);
     const [description, setDescription] = useState('');
+    const [expiredDate, setExpiredDate] = useState('');
+    const [bundleTags, setBundleTags] = useState('')
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -45,7 +47,7 @@ const EditBundlesPage = () => {
     const uploadThumbnailRef = useRef();
     const uploadCoverPhotoRef = useRef();
     const uploadDemoVideoRef = useRef();
-    // const dropdownSubjectRef = useRef();
+    const dropdownSubjectRef = useRef();
 
     useEffect(() => {
         if (bundleEdit) {
@@ -112,10 +114,12 @@ const EditBundlesPage = () => {
 
     const handleClickOutside = (event) => {
         if (dropdownCategoryRef.current && !dropdownCategoryRef.current.contains(event.target) &&
-            dropdownSemesterRef.current && !dropdownSemesterRef.current.contains(event.target)
+            dropdownSemesterRef.current && !dropdownSemesterRef.current.contains(event.target)&&
+            dropdownSubjectRef.current &&  !dropdownSubjectRef.current.contains(event.target)
         ) {
             setOpenSelectCategory(false);
             setOpenSelectSemester(false);
+            setOpenSelectSubject(false);
         }
     };
     
@@ -160,141 +164,158 @@ const EditBundlesPage = () => {
 
   return (
     <form className="w-full flex flex-col items-center justify-center gap-y-3" onSubmit={handleFormSubmit}>
-      <div className="w-full flex flex-wrap items-center justify-start gap-3">
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            type="text"
-            placeholder="Name En"
-            value={nameEn}
-            onChange={(e) => setNameEn(e.target.value)}
-          />
+        <div className="w-full flex flex-wrap items-center justify-start gap-3">
+            <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+                type="text"
+                placeholder="Name En"
+                value={nameEn}
+                onChange={(e) => setNameEn(e.target.value)}
+            />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+                type="text"
+                placeholder="Name Ar"
+                value={nameAr}
+                onChange={(e) => setNameAr(e.target.value)}
+            />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+                type="text"
+                placeholder="Price"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+            />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+            <DropDownMenu
+                ref={dropdownCategoryRef}
+                handleOpen={handleOpenSelectCategory}
+                handleOpenOption={handleSelectCategory}
+                stateoption={selectCategory}
+                openMenu={openSelectCategory}
+                options={[{ id: 1, name: 'Category 1' }, { id: 2, name: 'Category 2' }]}
+            />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+            <DropDownMenu
+                ref={dropdownSemesterRef}
+                handleOpen={handleOpenSelectSemester}
+                handleOpenOption={handleSelectSemester}
+                stateoption={selectSemester}
+                openMenu={openSelectSemester}
+                options={[{ id: 1, name: 'Semester 1' }, { id: 2, name: 'Semester 2' }]}
+            />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+            <MultipleChoiceMenu
+                ref={dropdownSubjectRef}
+                handleOpen={handleOpenSelectSubject}
+                selectedOptions={selectSubject}
+                openMenu={openSelectSubject}
+                handleSelectOption={handleSelectSubject}
+                handleRemoveOption={handleRemoveSubject}
+                options={options}
+                name="Subjects"
+            />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+                type="text"
+                placeholder="Thumbnail Photo"
+                value={thumbnail}
+                readOnly
+                onClick={() => handleInputClick(uploadThumbnailRef)}
+            />
+            <input
+                type="file"
+                className="hidden"
+                onChange={handleThumbnailFileChange}
+                ref={uploadThumbnailRef}
+            />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+                type="text"
+                placeholder="Cover Photo"
+                value={coverPhoto}
+                readOnly
+                onClick={() => handleInputClick(uploadCoverPhotoRef)}
+            />
+            <input
+                type="file"
+                className="hidden"
+                onChange={handleCoverPhotoChange}
+                ref={uploadCoverPhotoRef}
+            />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+                type="text"
+                placeholder="Demo Video"
+                value={demoVideo}
+                readOnly
+                onClick={() => handleInputClick(uploadDemoVideoRef)}
+            />
+            <input
+                type="file"
+                accept="video/mp4,video/x-m4v,video/*"
+                className="hidden"
+                onChange={handleDemoVideoChange}
+                ref={uploadDemoVideoRef}
+            />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+                type="text"
+                placeholder="URL"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+            />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+                type="text"
+                placeholder="Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+            />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+                    type="text"
+                    placeholder="Tags"
+                    value={bundleTags}
+                    onChange={(e) => setBundleTags(e.target.value)}
+            />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+                type="date"
+                placeholder="Expired Date"
+                value={expiredDate}
+                onChange={(e) => setExpiredDate(e.target.value)}
+            />
+            </div>
         </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <DropDownMenu
-            ref={dropdownCategoryRef}
-            handleOpen={handleOpenSelectCategory}
-            handleOpenOption={handleSelectCategory}
-            stateoption={selectCategory}
-            openMenu={openSelectCategory}
-            options={[{ id: 1, name: 'Category 1' }, { id: 2, name: 'Category 2' }]}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            type="text"
-            placeholder="Thumbnail Photo"
-            value={thumbnail}
-            readOnly
-            onClick={() => handleInputClick(uploadThumbnailRef)}
-          />
-          <input
-            type="file"
-            className="hidden"
-            onChange={handleThumbnailFileChange}
-            ref={uploadThumbnailRef}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            type="text"
-            placeholder="Name Ar"
-            value={nameAr}
-            onChange={(e) => setNameAr(e.target.value)}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <DropDownMenu
-            ref={dropdownSemesterRef}
-            handleOpen={handleOpenSelectSemester}
-            handleOpenOption={handleSelectSemester}
-            stateoption={selectSemester}
-            openMenu={openSelectSemester}
-            options={[{ id: 1, name: 'Semester 1' }, { id: 2, name: 'Semester 2' }]}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            type="text"
-            placeholder="Cover Photo"
-            value={coverPhoto}
-            readOnly
-            onClick={() => handleInputClick(uploadCoverPhotoRef)}
-          />
-          <input
-            type="file"
-            className="hidden"
-            onChange={handleCoverPhotoChange}
-            ref={uploadCoverPhotoRef}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            type="text"
-            placeholder="URL"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            type="text"
-            placeholder="Price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            type="text"
-            placeholder="Demo Video"
-            value={demoVideo}
-            readOnly
-            onClick={() => handleInputClick(uploadDemoVideoRef)}
-          />
-          <input
-            type="file"
-            accept="video/mp4,video/x-m4v,video/*"
-            className="hidden"
-            onChange={handleDemoVideoChange}
-            ref={uploadDemoVideoRef}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <MultipleChoiceMenu
-            handleOpen={handleOpenSelectSubject}
-            selectedOptions={selectSubject}
-            openMenu={openSelectSubject}
-            handleSelectOption={handleSelectSubject}
-            handleRemoveOption={handleRemoveSubject}
-            options={options}
-            name="Subjects"
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            type="text"
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-      </div>
       {/* Buttons */}
-      <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
-                          <div className="flex items-center justify-center w-72">
-                                <Button
-                                        type="submit"
-                                        Text="Done"
-                                        BgColor="bg-mainColor"
-                                        Color="text-white"
-                                        Width="full"
-                                        Size="text-2xl"
-                                        px="px-28"
-                                        rounded="rounded-2xl"
-                                        stateLoding={isLoading}
-                                />
-                          </div>
-                          <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
+        <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
+                            <div className="flex items-center justify-center w-72">
+                                    <Button
+                                            type="submit"
+                                            Text="Done"
+                                            BgColor="bg-mainColor"
+                                            Color="text-white"
+                                            Width="full"
+                                            Size="text-2xl"
+                                            px="px-28"
+                                            rounded="rounded-2xl"
+                                            stateLoding={isLoading}
+                                    />
+                            </div>
+                            <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
         </div>
     </form>
   );
