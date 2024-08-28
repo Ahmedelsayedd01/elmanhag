@@ -19,6 +19,7 @@ const BundlesPage = () => {
        const auth = useAuth();
        const [isLoading, setIsLoading] = useState(true);
        const [bundles, setBundles] = useState(null);
+       const [education , SetEducation]=useState(null)
        const [selectedOptionCategory, setSelectedOptionCategory] = useState('Filter By Category');
        const [selectedOptionStatus, setSelectedOptionStatus] = useState('Filter By Status');
        const [selectedOptionSemester, setSelectedOptionSemester] = useState('Filter By Semester');
@@ -100,6 +101,7 @@ const BundlesPage = () => {
                      });
                      if (response.status === 200) {
                             setBundles(response.data.bundles);
+                            SetEducation(response.data.education)
                             console.log(response.data)
 
                             // Extract unique semesters
@@ -174,8 +176,8 @@ const BundlesPage = () => {
               return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Bundles data available</div>;
        }
 
-
        localStorage.setItem("bundles", JSON.stringify(bundles));
+       // localStorage.setItem("Education", JSON.stringify(education));
 
        return (
               <>
