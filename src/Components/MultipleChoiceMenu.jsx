@@ -32,13 +32,14 @@ const MultipleChoiceMenu = forwardRef(({
                     <IoIosArrowDown className={`${openMenu ? "rotate-180" : "rotate-0"} text-mainColor text-xl transition-all duration-300`} />
                 </button>
                 <div className={`${openMenu ? "block" : "hidden"} scrollSec absolute w-full min-h-10 max-h-32 top-14 bg-white rounded-xl drop-shadow-sm overflow-y-scroll z-10`}>
-                    {options.map((option) => (
+                    {options.map((option,index) => (
                         <div
-                            key={option.id}
+                            key={option.id || index }
                             className={`flex items-center py-1 gap-1 justify-center text-xl font-medium text-mainColor hover:cursor-pointer hover:bg-mainColor hover:text-secoundColor transition-all duration-300 ${selectedOptions.includes(option.name) ? 'bg-mainColor text-secoundColor' : ''}`}
-                            onClick={() => handleSelectOption(option.name)}
+                            onClick={handleSelectOption}
                         >
                             {option.name}
+                            <input type="hidden" value={option?.id || option.name} className='inputVal' />
                         </div>
                     ))}
                 </div>
