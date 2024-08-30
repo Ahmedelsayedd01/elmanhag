@@ -420,6 +420,7 @@ const AddBundlesPage = () => {
         <div className="lg:w-[30%] sm:w-full">
           <InputCustom
             type="text"
+            upload={true}
             placeholder="Thumbnail Photo"
             value={thumbnail}
             readOnly
@@ -435,6 +436,7 @@ const AddBundlesPage = () => {
         <div className="lg:w-[30%] sm:w-full">
           <InputCustom
             type="text"
+            upload={true}
             placeholder="Cover Photo"
             value={coverPhoto}
             readOnly
@@ -450,6 +452,7 @@ const AddBundlesPage = () => {
         <div className="lg:w-[30%] sm:w-full">
           <InputCustom
             type="text"
+            upload={true}
             placeholder="Demo Video"
             value={demoVideo}
             readOnly
