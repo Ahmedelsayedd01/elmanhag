@@ -353,7 +353,9 @@ const EditBundlesPage = () => {
       formData.append('category_id', selectCategoryId);
       formData.append('education_id', selectEducationId);
       formData.append('semester', selectSemesterName);
-      formData.append('subjects', JSON.stringify(selectSubjectId));
+      selectSubjectId.forEach((subjectId, index) => {
+        formData.append(`subjects[${index}]`, subjectId);
+      });      
       formData.append('thumbnail', thumbnailFile);
       formData.append('cover_photo', coverPhotoFile);
       formData.append('demo_video', demoVideoFile);
