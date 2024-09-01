@@ -13,7 +13,9 @@ const ChapterSubjectLayout = () => {
   const [subjectChapter, setSubjectChapter] = useState(null)
 
   useEffect(() => {
-    const allChapters = JSON.parse(localStorage.getItem('subjects')) || [];
+    const Data = JSON.parse(localStorage.getItem('subjects')) || [];
+    const allChapters = Data.subjects;
+    // const allchapter = allChapters.subjects.chapters;
     console.log("allChapters", allChapters)
 
 
@@ -29,9 +31,13 @@ const ChapterSubjectLayout = () => {
 
     if (allChapters.length > 0) {
       const Chapter = allChapters.find((c) => (c.id === parseInt(subjectId)));
-
-      console.log('Selected Chapter:', Chapter); // Debugging log
-      setSubjectChapter(Chapter)
+      if (Chapter) {
+        console.log('Selected Chapter:', Chapter.chapters); // Debugging log
+        setSubjectChapter(Chapter.chapters)
+      } else {
+        console.warn('No chapter found with the given subjectId.');
+        // Optionally, handle this case (e.g., navigate away, display error UI, etc.)
+      }
     } else {
       console.warn('No Subject available in local storage.'); // Warn if no countries are found
 
@@ -45,8 +51,8 @@ const ChapterSubjectLayout = () => {
   };
   return (
     <>
-      <HeaderPageSection handleClick={handleGoBack} name="Chapter" />
-      <ChapterContext.Provider value={subjectChapter}>
+      <HeaderPageSection handleClick={handleGoBack} name="Chapters" />
+      <ChapterContext.Provider value={{ subjectChapter, subjectId }}>
         <ChapterSubjectPage />
       </ChapterContext.Provider>
     </>

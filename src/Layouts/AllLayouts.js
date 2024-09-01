@@ -18,7 +18,12 @@ export { default as EditCategoryLayout } from "./Admin/EditCategoryLayout";
 export { default as SubjectEducationLayout } from "./Admin/SubjectEducationLayout";
 export { default as AddSubjectLayout } from "./Admin/AddSubjectLayout";
 export { default as EditSubjectLayout } from "./Admin/EditSubjectLayout";
+
 export { default as ChapterSubjectLayout } from "./Admin/ChapterSubjectLayout";
+export { default as AddChapterLayout } from "./Admin/AddChapterLayout";
+export { default as EditChapterLayout } from "./Admin/EditChapterLayout";
+
+
 export { default as StudentsSubjectLayout } from "./Admin/StudentsSubjectLayout";
 
 export { default as BundlesEducationLayout } from "./Admin/BundlesEducationLayout";
@@ -28,7 +33,10 @@ export {default as StudentsBundlesLayout} from "./Admin/StudentsBundlesLayout";
 
 export { default as QuestionsBankEducation } from "./Admin/QuestionsBankEducation";
 /* ////Education */
-export { default as HomeWorkAD } from "./Admin/HomeWorkAD";
+export { default as HomeWorkLayout } from "./Admin/HomeWorkLayout";
+export { default as AddHomeWorkLayout } from "./Admin/AddHomeWorkLayout";
+
+
 export { default as RevisionAD } from "./Admin/RevisionAD";
 export { default as ExamsAD } from "./Admin/ExamsAD";
 export { default as LiveAD } from "./Admin/LiveAD";

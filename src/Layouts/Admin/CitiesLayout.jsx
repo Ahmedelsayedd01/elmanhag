@@ -4,10 +4,6 @@ import { CitiesPage } from "../../Pages/AllPages";
 import { useNavigate } from "react-router-dom";
 
 const CitiesLayout = () => {
-  const handleButtonClick = () => {
-    alert("Button clicked!");
-  };
-
   const navigate = useNavigate();
 
   const handleGoBack = () => {

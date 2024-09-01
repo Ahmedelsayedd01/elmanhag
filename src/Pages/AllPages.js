@@ -23,9 +23,18 @@ export { default as StudentsBundlesPage } from "./Admin/EducationPage/Bundles/St
 export { default as SubjectPage } from "./Admin/EducationPage/SubjectPage/SubjectPage";
 export { default as AddSubjectPage } from "./Admin/EducationPage/SubjectPage/AddSubjectPage";
 export { default as EditSubjectPage } from "./Admin/EducationPage/SubjectPage/EditSubjectPage";
+
 export { default as ChapterSubjectPage } from "./Admin/EducationPage/SubjectPage/ChapterSubjectPage";
+export { default as AddChapterPage } from "./Admin/EducationPage/SubjectPage/AddChapterPage";
+export { default as EditChapterPage } from "./Admin/EducationPage/SubjectPage/EditChapterPage";
+
 export { default as StudentsSubjectPage } from "./Admin/EducationPage/SubjectPage/StudentsSubjectPage";
 export { default as QuestionsBankPage } from "./Admin/EducationPage/QuestionsBankPage";
+
+/* H.W Page */
+export { default as HomeWorkPage } from "./Admin/HomeWorkPage/HomeWorkPage";
+export { default as AddHomeWorkPage } from "./Admin/HomeWorkPage/AddHomeWorkPage";
+
 /* Setting Page */
 export { default as AdminRolesPage } from "./Admin/SettingPage/AdminRolesPage";
 export { default as CountriesPage } from "./Admin/SettingPage/Countries/CountriesPage";

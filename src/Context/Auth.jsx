@@ -30,6 +30,7 @@ export const ContextProvider = ({ children }) => {
     localStorage.removeItem("students")
     localStorage.removeItem("Categories")
     localStorage.removeItem("subjects")
+    localStorage.removeItem("Countries")
 
   };
     const toastSuccess = (text) => {

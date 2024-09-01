@@ -3,6 +3,7 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../Context/Auth';
 
 const ProtectedRoute = ({ allowedRoles }) => {
+       
        const location = useLocation();
        const auth = useAuth();
 
