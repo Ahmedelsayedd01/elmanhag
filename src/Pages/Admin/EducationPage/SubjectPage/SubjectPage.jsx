@@ -277,7 +277,7 @@ const SubjextPage = () => {
                   >
                     <span className='text-thirdColor text-xl border-b-2 border-thirdColor'>
                       <Link to={`students/${subject.id}`}>
-                        {subject?.students || 'Null'}
+                        {subject?.students_count || 'Null'}
                       </Link>
                     </span>
                   </td>
