@@ -117,15 +117,14 @@ const EditBundlesPage = () => {
               }
             }
 
-            // if (subjectData !== null) {
-            //   const filteredEducationBundle = subjectData.find(
-            //         (education) => education.id === bundleEdit.education_id
-            //   );
-            //   if (filteredEducationBundle) {
-            //     setSelectEducation(filteredEducationBundle.name);
-            //     setSelectEducationId(filteredEducationBundle.id);
-
-            //   }}
+            if (bundleEdit.subjects && bundleEdit.subjects.length > 0) {              
+              setSelectSubject(bundleEdit.subjects.map(subject => subject.name)); 
+              setSelectSubjectId(bundleEdit.subjects.map(subject => subject.id));
+            } else {
+              setSelectSubject('Select subjects');
+              setSelectSubjectId([null]);
+            }
+            
     }
     }, [bundleEdit]);
 

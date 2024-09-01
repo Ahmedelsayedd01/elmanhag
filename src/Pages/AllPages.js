@@ -26,6 +26,11 @@ export { default as EditSubjectPage } from "./Admin/EducationPage/SubjectPage/Ed
 export { default as ChapterSubjectPage } from "./Admin/EducationPage/SubjectPage/ChapterSubjectPage";
 export { default as StudentsSubjectPage } from "./Admin/EducationPage/SubjectPage/StudentsSubjectPage";
 export { default as QuestionsBankPage } from "./Admin/EducationPage/QuestionsBankPage";
+
+/* H.W Page */
+export { default as HomeWorkPage } from "./Admin/HomeWorkPage/HomeWorkPage";
+export { default as AddHomeWorkPage } from "./Admin/HomeWorkPage/AddHomeWorkPage";
+
 /* Setting Page */
 export { default as AdminRolesPage } from "./Admin/SettingPage/AdminRolesPage";
 export { default as CountriesPage } from "./Admin/SettingPage/Countries/CountriesPage";

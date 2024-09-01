@@ -10,7 +10,7 @@ import {
   FinalReviews,
   SolveExams,
   DashboardAD,
-  HomeWorkAD,
+  HomeWorkLayout,
   RevisionAD,
   ExamsAD,
   LiveAD,
@@ -508,7 +508,7 @@ export const router = createBrowserRouter([
           ,
           {
             path: 'homework',
-            element: <HomeWorkAD />,
+            element: <HomeWorkLayout />,
           },
           {
             path: 'revision',
