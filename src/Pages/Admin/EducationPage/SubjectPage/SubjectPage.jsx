@@ -269,7 +269,7 @@ const SubjextPage = () => {
                     className="min-w-[120px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center  text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                   >
                     <span className='text-mainColor text-xl border-b-2 border-mainColor font-semibold'>
-                      <Link to={`chapter/${subject.id}`}>View</Link>
+                      <Link to={`chapter/${subject.id}`} state={`${subject.id}`}>View</Link>
                     </span>
                   </td>
                   <td
@@ -343,7 +343,7 @@ const SubjextPage = () => {
             </tbody>
           </table>
         </div>
-      </div>
+      </div >
     </>
   );
 };

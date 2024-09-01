@@ -10,7 +10,6 @@ import {
   FinalReviews,
   SolveExams,
   DashboardAD,
-  HomeWorkLayout,
   RevisionAD,
   ExamsAD,
   LiveAD,
@@ -49,6 +48,8 @@ import {
   StudentsBundlesLayout,
   AddChapterLayout,
   EditChapterLayout,
+  HomeWorkLayout,
+  AddHomeWorkLayout,
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -162,6 +163,12 @@ const AppLayoutSubject = () => (
   </>
 );
 const AppLayoutChapterAdd = () => (
+  <>
+    <Outlet />
+  </>
+);
+/* Home Work */
+const AppLayoutHomeWork = () => (
   <>
     <Outlet />
   </>
@@ -530,7 +537,18 @@ export const router = createBrowserRouter([
           ,
           {
             path: 'homework',
-            element: <HomeWorkLayout />,
+            // element: <HomeWorkLayout />,
+            element: <AppLayoutHomeWork />,
+            children: [
+              {
+                path: '',
+                element: <HomeWorkLayout />
+              },
+              {
+                path: 'add',
+                element: <AddHomeWorkLayout />
+              },
+            ]
           },
           {
             path: 'revision',

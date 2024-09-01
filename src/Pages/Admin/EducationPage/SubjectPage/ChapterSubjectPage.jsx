@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { ChapterContext } from '../../../../Layouts/Admin/ChapterSubjectLayout'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { ButtonAdd } from '../../../../Components/Button'
 import { FaPlus } from 'react-icons/fa'
 import { IoIosArrowDown } from 'react-icons/io'
@@ -24,6 +24,9 @@ const ChapterSubjectPage = () => {
 
   const ChapterData = useContext(ChapterContext)
   const auth = useAuth();
+  const location = useLocation();
+
+  console.log('location', location)
 
   useEffect(() => {
     if (ChapterData.subjectChapter && ChapterData.subjectChapter.length > 0) {
