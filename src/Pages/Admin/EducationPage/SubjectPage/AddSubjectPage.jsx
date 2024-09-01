@@ -210,7 +210,6 @@ const AddSubjectPage = () => {
       if (errorMessages) {
         errorMessageString = Object.values(errorMessages).flat().join(' ');
       }
-      localStorage.setItem('formData', JSON.stringify(formData))
       auth.toastError('Error', errorMessageString);
     } finally {
       setIsLoading(false);
