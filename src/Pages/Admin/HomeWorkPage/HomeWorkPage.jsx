@@ -195,7 +195,7 @@ const HomeWorkPage = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [homeWorksChanged]);
+  }, []);
 
   const fetchHomeWork = async () => {
     setIsLoading(true);
@@ -223,7 +223,7 @@ const HomeWorkPage = () => {
 
   useEffect(() => {
     fetchHomeWork(); // Fetch Subject initially and whenever Subjects Changed changes
-  }, []);
+  }, [homeWorksChanged]);
 
   const handleOpenDialog = (homeWorkId) => {
     setOpenDialog(homeWorkId);
