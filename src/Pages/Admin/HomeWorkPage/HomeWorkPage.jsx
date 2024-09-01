@@ -286,104 +286,104 @@ const HomeWorkPage = () => {
     <>
       <div className="w-full">
             <div className="w-full flex flex-wrap items-center justify-start gap-4">
-                    <div className="sm:w-full xl:w-1/5">
-                          <DropDownMenu
-                                  ref={dropdownSemesterRef}
-                                  iconMenu={<SettingFilter />}
-                                  handleOpen={handleOpenSelectSemester}
-                                  handleOpenOption={handleOptionSemester}
-                                  stateoption={selectSemester}
-                                  openMenu={openSelectSemester}
-                                  options={semesterData}
-                          />
-                    </div>
-                    <div className="sm:w-full xl:w-1/5">
-                          <DropDownMenu
-                                  ref={dropdownLessonRef}
-                                  iconMenu={<SettingFilter />}
-                                  handleOpen={handleOpenSelectLesson}
-                                  handleOpenOption={handleOptionLesson}
-                                  stateoption={selectLesson}
-                                  openMenu={openSelectLesson}
-                                  options={lessonData}
-                          />
-                    </div>
-                    <div className="sm:w-full xl:w-1/5">
-                          <DropDownMenu
-                                  ref={dropdownHWLevelRef}
-                                  iconMenu={<SettingFilter />}
-                                  handleOpen={handleOpenSelectHWLevel}
-                                  handleOpenOption={handleOptionHWLevel}
-                                  stateoption={selectHWLevel}
-                                  openMenu={openSelectHWLevel}
-                                  options={homeWorkLevel}
-                          />
-                    </div>
-                    <div className="sm:w-full xl:w-1/5">
-                          <DropDownMenu
-                                  ref={dropdownChapterRef}
-                                  iconMenu={<SettingFilter />}
-                                  handleOpen={handleOpenSelectChapter}
-                                  handleOpenOption={handleOptionChapter}
-                                  stateoption={selectChapter}
-                                  openMenu={openSelectChapter}
-                                  options={chapterData}
-                          />
-                    </div>
-                    <div className="sm:w-full xl:w-1/5">
-                          <DropDownMenu
-                                  ref={dropdownSubjectRef}
-                                  iconMenu={<SettingFilter />}
-                                  handleOpen={handleOpenSelectSubject}
-                                  handleOpenOption={handleOptionSubject}
-                                  stateoption={selectSubject}
-                                  openMenu={openSelectSubject}
-                                  options={subjectData}
-                          />
-                    </div>
-                    <div className="sm:w-full xl:w-1/5">
-                          <DropDownMenu
-                                  ref={dropdownCategoryRef}
-                                  iconMenu={<SettingFilter />}
-                                  handleOpen={handleOpenSelectCategory}
-                                  handleOpenOption={handleOptionCategory}
-                                  stateoption={selectCategory}
-                                  openMenu={openSelectCategory}
-                                  options={categoryData}
-                          />
-                    </div>
-                    <div className="sm:w-full xl:w-1/5">
-                          <DropDownMenu
-                                  ref={dropdownStatusRef}
-                                  iconMenu={<SettingFilter />}
-                                  handleOpen={handleOpenSelectStatus}
-                                  handleOpenOption={handleOptionStatus}
-                                  stateoption={selectStatus}
-                                  openMenu={openSelectStatus}
-                                  options={[{ id: 1, name: 'Active' }, { id: 2, name: 'Disable' }]}
-                              //     options={homeWorkActive}
-                          />
-                    </div>
-
-                    <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
-                      <div className="flex items-center justify-center w-72">
-                            <Button
-                                    type="submit"
-                                    Text="Submit"
-                                    BgColor="bg-mainColor"
-                                    Color="text-white"
-                                    Width="full"
-                                    Size="text-2xl"
-                                    px="px-28"
-                                    rounded="rounded-2xl"
-                            />
-                      </div>
-                      <div className="flex items-center justify-center w-72 xl:text-left border border-red-600 rounded-2xl">
-                            <Link to="add">
-                                  <ButtonAdd Text={"Add"} BgColor={"bg-mainColor"} Color={"thirdColor"} Size={"xl"} />
-                            </Link>
-                      </div>                                 
+                  <div className="sm:w-full xl:w-1/5">
+                        <DropDownMenu
+                              ref={dropdownSemesterRef}
+                              iconMenu={<SettingFilter />}
+                              handleOpen={handleOpenSelectSemester}
+                              handleOpenOption={handleOptionSemester}
+                              stateoption={selectSemester}
+                              openMenu={openSelectSemester}
+                              options={semesterData}
+                        />
                   </div>
+                  <div className="sm:w-full xl:w-1/5">
+                        <DropDownMenu
+                              ref={dropdownLessonRef}
+                              iconMenu={<SettingFilter />}
+                              handleOpen={handleOpenSelectLesson}
+                              handleOpenOption={handleOptionLesson}
+                              stateoption={selectLesson}
+                              openMenu={openSelectLesson}
+                              options={lessonData}
+                        />
+                  </div>
+                  <div className="sm:w-full xl:w-1/5">
+                        <DropDownMenu
+                              ref={dropdownHWLevelRef}
+                              iconMenu={<SettingFilter />}
+                              handleOpen={handleOpenSelectHWLevel}
+                              handleOpenOption={handleOptionHWLevel}
+                              stateoption={selectHWLevel}
+                              openMenu={openSelectHWLevel}
+                              options={homeWorkLevel}
+                        />
+                  </div>
+                  <div className="sm:w-full xl:w-1/5">
+                        <DropDownMenu
+                              ref={dropdownChapterRef}
+                              iconMenu={<SettingFilter />}
+                              handleOpen={handleOpenSelectChapter}
+                              handleOpenOption={handleOptionChapter}
+                              stateoption={selectChapter}
+                              openMenu={openSelectChapter}
+                              options={chapterData}
+                        />
+                  </div>
+                  <div className="sm:w-full xl:w-1/5">
+                        <DropDownMenu
+                              ref={dropdownSubjectRef}
+                              iconMenu={<SettingFilter />}
+                              handleOpen={handleOpenSelectSubject}
+                              handleOpenOption={handleOptionSubject}
+                              stateoption={selectSubject}
+                              openMenu={openSelectSubject}
+                              options={subjectData}
+                        />
+                  </div>
+                  <div className="sm:w-full xl:w-1/5">
+                        <DropDownMenu
+                              ref={dropdownCategoryRef}
+                              iconMenu={<SettingFilter />}
+                              handleOpen={handleOpenSelectCategory}
+                              handleOpenOption={handleOptionCategory}
+                              stateoption={selectCategory}
+                              openMenu={openSelectCategory}
+                              options={categoryData}
+                        />
+                  </div>
+                  <div className="sm:w-full xl:w-1/5">
+                        <DropDownMenu
+                              ref={dropdownStatusRef}
+                              iconMenu={<SettingFilter />}
+                              handleOpen={handleOpenSelectStatus}
+                              handleOpenOption={handleOptionStatus}
+                              stateoption={selectStatus}
+                              openMenu={openSelectStatus}
+                              options={[{ id: 1, name: 'Active' }, { id: 2, name: 'Disable' }]}
+                        //     options={homeWorkActive}
+                        />
+                  </div>
+
+            <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
+                  <div className="flex items-center justify-center w-72">
+                        <Button
+                              type="submit"
+                              Text="Submit"
+                              BgColor="bg-mainColor"
+                              Color="text-white"
+                              Width="full"
+                              Size="text-2xl"
+                              px="px-28"
+                              rounded="rounded-2xl"
+                        />
+                  </div>
+                  <div className="flex items-center justify-center w-72 xl:text-left border border-red-600 rounded-2xl">
+                        <Link to="add">
+                              <ButtonAdd Text={"Add"} BgColor={"bg-mainColor"} Color={"thirdColor"} Size={"xl"} />
+                        </Link>
+                  </div>                                 
+            </div>
       </div>
 
       <div className="w-full flex items-center justify-between mt-4 overflow-x-auto">
