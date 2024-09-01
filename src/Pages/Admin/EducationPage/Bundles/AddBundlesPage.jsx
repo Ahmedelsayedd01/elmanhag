@@ -10,6 +10,12 @@ import CheckBox from '../../../../Components/CheckBox';
 
 const AddBundlesPage = () => {
   const auth = useAuth();
+
+  const [categoryData, setCategoryData] = useState([]);
+  const [educationData, setEducationData] = useState([]);
+  const [subjectData, setSubjectData] = useState([]);
+  const [semesterData, setSemesterData] = useState([{ name: 'First' }, { name: 'Second' }]);
+
   const [nameEn, setNameEn] = useState('');
   const [nameAr, setNameAr] = useState('');
 
@@ -21,7 +27,7 @@ const AddBundlesPage = () => {
   const [thumbnailFile, setThumbnailFile] = useState(null);
 
   const [selectSemester, setSelectSemester] = useState('Select Semester');
-  const [selectSemesterId, setSelectSemesterId] = useState(null);
+  const [selectSemesterName, setSelectSemesterName] = useState(null);
   const [openSelectSemester, setOpenSelectSemester] = useState(false);
 
   const [selectEducation, setSelectEducation] = useState('Select Education');
@@ -32,6 +38,7 @@ const AddBundlesPage = () => {
   const [coverPhotoFile, setCoverPhotoFile] = useState(null);
 
   const [selectSubject, setSelectSubject] = useState([]);
+  const [selectSubjectId, setSelectSubjectId] = useState([]);
   const [openSelectSubject, setOpenSelectSubject] = useState(false);
 
   const [url, setUrl] = useState('');
@@ -44,7 +51,7 @@ const AddBundlesPage = () => {
   const [expiredDate, setExpiredDate] = useState('');
   const [bundleTags, setBundleTags] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [bundleActive, setBundleActive] = useState(0);
+  const [bundleActive, setBundleActive] = useState(false);
 
   const navigate = useNavigate();
   // const [adminData, setAdminData] = useState([]);
@@ -59,6 +66,18 @@ const AddBundlesPage = () => {
   const uploadCoverPhotoRef = useRef();
   const uploadDemoVideoRef = useRef();
 
+  useEffect(() => {
+    const StorageCategoryData = JSON.parse(localStorage.getItem('Categories'));
+    // const educationData = JSON.parse(localStorage.getItem('Education'));
+    const StorageBundlesData = JSON.parse(localStorage.getItem('BundlesData'));
+
+
+    setCategoryData(StorageCategoryData.categories);
+    setEducationData(StorageBundlesData.education);
+    setSubjectData(StorageBundlesData.subjects)
+
+  }, []);
+
   const handleOpenSelectCategory = () => {
     setOpenSelectCategory(!openSelectCategory);
     setOpenSelectSemester(false);
@@ -72,7 +91,7 @@ const AddBundlesPage = () => {
   };
 
   const handleOpenSelectSubject = () => {
-    setOpenSelectSubject(!openSelectSubject);
+    setOpenSelectSubject(prev => !prev);
     setOpenSelectCategory(false);
     setOpenSelectSemester(false);
     setOpenSelectEducation(false)
@@ -88,9 +107,9 @@ const AddBundlesPage = () => {
   const handleSelectCategory = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
     const selectedOptionName = e.currentTarget.textContent.trim();
-    const selectedOptionValue = inputElement ? parseInt(inputElement.value) : null;
+    const selectedOptionValue = inputElement ? inputElement.value : null;
     setSelectCategory(selectedOptionName);
-    setSelectCategoryId(selectedOptionValue);
+    setSelectCategoryId(parseInt(selectedOptionValue));
     setOpenSelectCategory(false);
     console.log('Selected Category:', selectedOptionName);
     console.log('Category ID:', selectedOptionValue);
@@ -99,34 +118,64 @@ const AddBundlesPage = () => {
   const handleSelectSemester = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
     const selectedOptionName = e.currentTarget.textContent.trim();
-    const selectedOptionValue = inputElement ? parseInt(inputElement.value) : null;
+    const selectedOptionValue = inputElement ? inputElement.value.toLowerCase() : '';
     setSelectSemester(selectedOptionName);
-    setSelectSemesterId(selectedOptionValue);
+    setSelectSemesterName(selectedOptionValue);
     setOpenSelectSemester(false);
     console.log('Selected Semester:', selectedOptionName);
-    console.log('Semester ID:', selectedOptionValue);
+    // console.log('Semester ID:', selectedOptionValue);
   };
 
   const handleSelectEducation = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
     const selectedOptionName = e.currentTarget.textContent.trim();
-    const selectedOptionValue = inputElement ? parseInt(inputElement.value) : '';
+    const selectedOptionValue = inputElement ?inputElement.value : '';
     setSelectEducation(selectedOptionName);
-    setSelectEducationId(selectedOptionValue);
+    setSelectEducationId(parseInt(selectedOptionValue));
     setOpenSelectEducation(false);
     console.log('Selected Education:', selectedOptionName);
     console.log('Education ID:', selectedOptionValue);
   };
 
-  const handleSelectSubject = (subjectName) => {
-    if (!selectSubject.includes(subjectName)) {
-      setSelectSubject([...selectSubject, subjectName]);
-    }
+   // Handle selection of a subject
+   const handleSelectSubject = (e) => {
+    const inputElement = e.currentTarget.querySelector('.inputVal');
+    const selectedOptionName = e.currentTarget.textContent.trim();
+    const selectedOptionValue = inputElement ? parseInt(inputElement.value) : '';
+
+    setSelectSubject(prev =>
+      prev.includes(selectedOptionName)
+        ? prev.filter(name => name !== selectedOptionName)
+        : [...prev, selectedOptionName]
+    );
+
+    setSelectSubjectId(prev =>
+      prev.includes(selectedOptionValue)
+        ? prev.filter(id => id !== selectedOptionValue)
+        : [...prev, selectedOptionValue]
+    );
+
+    // Optionally close the dropdown
+    setOpenSelectSubject(false);
+
+    console.log('Selected Subject Name:', selectedOptionName);
+    console.log('Selected Subject ID:', selectedOptionValue);
   };
+
+  // Handle removal of a subject
+  // const handleRemoveSubject = (subjectId) => {
+  //   setSelectSubject(prevNames =>
+  //     prevNames.filter((name, index) => subjectData.find(subject => subject.id === subjectId)?.name !== name)
+  //   );
+  //   setSelectSubjectId(prevIds =>
+  //     prevIds.filter(id => id !== subjectId)
+  //   );
+  // };
 
   const handleRemoveSubject = (subjectName) => {
     setSelectSubject(selectSubject.filter(subject => subject !== subjectName));
   };
+
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
@@ -202,36 +251,44 @@ const AddBundlesPage = () => {
       auth.toastError('Please Enter Price.');
       return;
     }
-    if (selectCategoryId) {
-      auth.toastError('Please Select category.');
+    if (!selectCategoryId) {
+      auth.toastError('Please Select Category.');
       return;
     }
-    if (selectSemesterId) {
+    if (!selectSemesterName) {
       auth.toastError('Please Select Semester.');
       return;
     }
-    if (!coverPhotoFile) {
-      auth.toastError('Please Enter Cover Photo.');
-      return;
-    }
-    if (!description) {
-      auth.toastError('Please Enter Description.');
-      return;
-    }
-    if (!educationId) {
+    if (!selectEducationId) {
       auth.toastError('Please Select Education.');
       return;
     }
-    if (!bundleTags) {
-      auth.toastError('Please Enter Tags.');
+    if (!selectSubjectId) {
+      auth.toastError('Please Select Subject.');
+      return;
+    }
+    if (!thumbnail) {
+      auth.toastError('Please Enter Thumbnail Photo.');
+      return;
+    }
+    if (!coverPhoto) {
+      auth.toastError('Please Enter Cover Photo.');
+      return;
+    }
+    if (!demoVideo) {
+      auth.toastError('Please Enter Video.');
       return;
     }
     if (!url) {
       auth.toastError('Please Enter Url.');
       return;
     }
-    if (!demoVideoFile) {
-      auth.toastError('Please Enter Video.');
+    if (!description) {
+      auth.toastError('Please Enter Description.');
+      return;
+    }
+    if (!bundleTags) {
+      auth.toastError('Please Enter Tags.');
       return;
     }
     if (!expiredDate) {
@@ -240,25 +297,36 @@ const AddBundlesPage = () => {
     }
 
     setIsLoading(true);
-
+    // try {
     const formData = new FormData();
     formData.append('name', nameEn);
     formData.append('ar_name', nameAr);
     formData.append('price', price);
     formData.append('category_id', selectCategoryId);
-    formData.append('semester_id', selectSemesterId);
-    formData.append('subjects', JSON.stringify(selectSubject));
+    formData.append('education_id', selectEducationId);
+    formData.append('semester', selectSemesterName);
+    // formData.append('subjects', JSON.stringify(selectSubjectId));
+     // Append the subjects array
+    selectSubjectId.forEach((subjectId, index) => {
+      formData.append(`subjects[${index}]`, subjectId);
+    });
     formData.append('thumbnail', thumbnailFile);
     formData.append('cover_photo', coverPhotoFile);
     formData.append('demo_video', demoVideoFile);
     formData.append('url', url);
     formData.append('description', description);
-    formData.append('expiredDate', expiredDate);
+    formData.append('expired_date', expiredDate);
     formData.append('tags', bundleTags);
-    bundleTags
+    formData.append('status', bundleActive);
+
+    for (let pair of formData.entries()) {
+      console.log(pair[0]+ ', '+ pair[1]); 
+    }
+    
+
 
     try {
-      await axios.post('https://bdev.elmanhag.shop/admin/bundle/add', formData, {
+        const response = await axios.post('https://bdev.elmanhag.shop/admin/bundle/add', formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'multipart/form-data',
@@ -282,7 +350,7 @@ const AddBundlesPage = () => {
       } finally {
       setIsLoading(false);
       }
-        };
+  };
 
   return (
     <form className="w-full flex flex-col items-center justify-center gap-y-3" onSubmit={handleSubmit}>
@@ -318,7 +386,7 @@ const AddBundlesPage = () => {
             handleOpenOption={handleSelectCategory}
             stateoption={selectCategory}
             openMenu={openSelectCategory}
-            options={CategoryData}
+            options={categoryData}
           />
         </div>
         <div className="lg:w-[30%] sm:w-full">
@@ -328,7 +396,7 @@ const AddBundlesPage = () => {
             handleOpenOption={handleSelectSemester}
             stateoption={selectSemester}
             openMenu={openSelectSemester}
-            options={SemesterData}
+            options={semesterData}
           />
         </div>
         <div className="lg:w-[30%] sm:w-full">
@@ -338,7 +406,7 @@ const AddBundlesPage = () => {
             handleOpenOption={handleSelectEducation}
             stateoption={selectEducation}
             openMenu={openSelectEducation}
-            options={EducationData}
+            options={educationData}
           />
         </div>
         <div className="lg:w-[30%] sm:w-full">
@@ -349,13 +417,14 @@ const AddBundlesPage = () => {
             openMenu={openSelectSubject}
             handleSelectOption={handleSelectSubject}
             handleRemoveOption={handleRemoveSubject}
-            options={SubjectData}
+            options={subjectData}
             name="Subjects"
           />
         </div>
         <div className="lg:w-[30%] sm:w-full">
           <InputCustom
             type="text"
+            upload={true}
             placeholder="Thumbnail Photo"
             value={thumbnail}
             readOnly
@@ -371,6 +440,7 @@ const AddBundlesPage = () => {
         <div className="lg:w-[30%] sm:w-full">
           <InputCustom
             type="text"
+            upload={true}
             placeholder="Cover Photo"
             value={coverPhoto}
             readOnly
@@ -386,6 +456,7 @@ const AddBundlesPage = () => {
         <div className="lg:w-[30%] sm:w-full">
           <InputCustom
             type="text"
+            upload={true}
             placeholder="Demo Video"
             value={demoVideo}
             readOnly
@@ -434,26 +505,26 @@ const AddBundlesPage = () => {
         <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
             <span className="text-2xl text-thirdColor font-medium">Active:</span>
             <div>
-              <CheckBox handleClick={handleClick} />
+              <CheckBox checked={bundleActive} handleClick={handleClick} />
             </div>
         </div>
       </div>
       {/* Buttons */}
       <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
-                          <div className="flex items-center justify-center w-72">
-                                <Button
-                                        type="submit"
-                                        Text="Done"
-                                        BgColor="bg-mainColor"
-                                        Color="text-white"
-                                        Width="full"
-                                        Size="text-2xl"
-                                        px="px-28"
-                                        rounded="rounded-2xl"
-                                        stateLoding={isLoading}
-                                />
-                          </div>
-                          <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
+          <div className="flex items-center justify-center w-72">
+                <Button
+                        type="submit"
+                        Text="Done"
+                        BgColor="bg-mainColor"
+                        Color="text-white"
+                        Width="full"
+                        Size="text-2xl"
+                        px="px-28"
+                        rounded="rounded-2xl"
+                        stateLoding={isLoading}
+                />
+          </div>
+          <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
         </div>
     </form>
   );

@@ -33,7 +33,10 @@ export {default as StudentsBundlesLayout} from "./Admin/StudentsBundlesLayout";
 
 export { default as QuestionsBankEducation } from "./Admin/QuestionsBankEducation";
 /* ////Education */
-export { default as HomeWorkAD } from "./Admin/HomeWorkAD";
+export { default as HomeWorkLayout } from "./Admin/HomeWorkLayout";
+export { default as AddHomeWorkLayout } from "./Admin/AddHomeWorkLayout";
+
+
 export { default as RevisionAD } from "./Admin/RevisionAD";
 export { default as ExamsAD } from "./Admin/ExamsAD";
 export { default as LiveAD } from "./Admin/LiveAD";
