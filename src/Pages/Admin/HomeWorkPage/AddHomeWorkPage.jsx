@@ -13,16 +13,19 @@ import CheckBox from '../../../Components/CheckBox';
 const AddHomeWorkPage = () => {
 
   const auth = useAuth();
+  const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState(true);
   const [homeWorkData, setHomeWorkData] = useState(null);
   const [homeWorks, setHomeWorks] = useState(null);
+  const [activeSection, setActiveSection] = useState('HWInfo');
 
   const [semesterData, setSemesterData] = useState([{ name: 'First' }, { name: 'Second' }]);
   const [lessonData, setLessonData] = useState([]);
   const [chapterData, setChapterData] = useState([]);
   const [subjectData, setSubjectData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
-  const [HWData, setHWData] = useState([{ title: 'H.W1' }, { title: 'H.W2' }, { title: 'H.W3' }]);
+  const [HWData, setHWData] = useState([{ name: 'H.W 1' }, { name: 'H.W 2' },{name: 'H.W 3'}]);
   const [homeWorkActive, setHomeWorkActive] = useState(false);
 
   useEffect(() => {
@@ -230,9 +233,6 @@ const AddHomeWorkPage = () => {
     navigate(-1, { replace: true });
   };
 
-  const [activeSection, setActiveSection] = useState('HWInfo');
-
-
   return (
     <>
     {/* Buttons to switch between sections */}
@@ -364,8 +364,28 @@ const AddHomeWorkPage = () => {
       )}
 
       {activeSection === 'Question' && (
-        <form id="Question">
-          <h1>Add Questions Group</h1>
+        <form id="Question" className='w-full'>
+          <div className="sm:w-full flex justify-center mx-auto">
+                    <ButtonAdd Text={"Add question group"} BgColor={"white"} Color={"thirdColor"} Size={"xl"} />
+            </div>
+            {/* Buttons */}
+          <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
+            <div className="flex items-center justify-center w-72">
+              <Button
+                type="submit"
+                Text="Submit"
+                BgColor="bg-mainColor"
+                Color="text-white"
+                Width="full"
+                Size="text-2xl"
+                px="px-28"
+                rounded="rounded-2xl"
+              />
+            </div>
+            <button className="text-2xl text-mainColor">
+                Preview H.W
+            </button>
+          </div>
         </form>
       )}
     </>
