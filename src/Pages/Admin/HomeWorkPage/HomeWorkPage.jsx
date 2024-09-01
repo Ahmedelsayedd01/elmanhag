@@ -285,7 +285,7 @@ const HomeWorkPage = () => {
   return (
     <>
       <div className="w-full">
-          <div className="w-full flex flex-wrap items-center justify-start gap-4">
+            <div className="w-full flex flex-wrap items-center justify-start gap-4">
                     <div className="sm:w-full xl:w-1/5">
                           <DropDownMenu
                                   ref={dropdownSemesterRef}
