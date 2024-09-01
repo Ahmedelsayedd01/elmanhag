@@ -47,6 +47,8 @@ import {
   AddBundlesLayout,
   EditBundlesLayout,
   StudentsBundlesLayout,
+  AddChapterLayout,
+  EditChapterLayout,
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -155,6 +157,11 @@ const AppLayoutCategories = () => (
   </>
 );
 const AppLayoutSubject = () => (
+  <>
+    <Outlet />
+  </>
+);
+const AppLayoutChapterAdd = () => (
   <>
     <Outlet />
   </>
@@ -451,24 +458,39 @@ export const router = createBrowserRouter([
             element: <AppLayoutSubject />,
             children: [
               {
-                path: '', // Default route for "subject"
+                path: '',
                 element: <SubjectEducationLayout />,
               },
               /* Add and Edit And show Students and Chapter Page */
               {
-                path: 'add', // Default route for "subject"
+                path: 'add',
                 element: <AddSubjectLayout />,
               },
               {
-                path: 'edit/:subjectId', // Default route for "subject"
+                path: 'edit/:subjectId',
                 element: <EditSubjectLayout />,
               },
               {
-                path: 'chapter/:subjectId', // Default route for "subject"
-                element: <ChapterSubjectLayout />,
+                path: 'chapter/:subjectId',
+                element: <AppLayoutChapterAdd />,
+                children: [
+                  {
+                    path: '',
+                    element: <ChapterSubjectLayout />,
+                  },
+                  {
+                    path: 'add_chapter',
+                    element: <AddChapterLayout />,
+                  },
+                  {
+                    path: 'edit_chapter/:chapterID',
+                    element: <EditChapterLayout />,
+                  },
+
+                ],
               },
               {
-                path: 'students/:subjectId', // Default route for "subject"
+                path: 'students/:subjectId',
                 element: <StudentsSubjectLayout />,
               },
             ]
@@ -482,15 +504,15 @@ export const router = createBrowserRouter([
                 element: <BundlesEducationLayout />,
               },
               {
-                path: 'add', // Default route for "subject"
+                path: 'add',
                 element: <AddBundlesLayout />,
               },
               {
-                path: 'edit/:bundleId', // Default route for "subject"
+                path: 'edit/:bundleId',
                 element: <EditBundlesLayout />,
               },
               {
-                path: 'students/:bundleId', // Default route for "subject"
+                path: 'students/:bundleId',
                 element: <StudentsBundlesLayout />,
               },
             ]
