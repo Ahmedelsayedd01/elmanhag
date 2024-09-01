@@ -474,7 +474,7 @@ const HomeWorkPage = () => {
                                                                                                 <div className="flex items-center">
                                                                                                       <div className="mt-2 text-center">
                                                                                                             <DialogTitle as="h3" className="text-xl font-semibold leading-10 text-gray-900">
-                                                                                                                  You will delete {homeWork?.name || "null"}
+                                                                                                                  You will delete {homeWork?.title || "null"}
                                                                                                             </DialogTitle>
                                                                                                       </div>
                                                                                                 </div>
