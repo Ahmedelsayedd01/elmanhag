@@ -50,6 +50,9 @@ import {
   EditChapterLayout,
   HomeWorkLayout,
   AddHomeWorkLayout,
+  AddLessonLayout,
+  EditLessonLayout,
+  MaterialLessonLayout,
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -104,11 +107,12 @@ import LayoutAdmin from "./Layouts/Admin/LayoutAdmin";
 import EditProfilePage from "./Layouts/Admin/EditeProfileStudent";
 import EditCategoryLayout from "./Layouts/Admin/EditCategoryLayout";
 import NavbarStudent from "./Components/NavbarStudent";
+import SignUpAffiliatePage from "./Pages/RegisterPage/SignUpAffiliatePage";
 
 export const ContextNumper = createContext()
 const AppLayoutAuthentication = () => (
   <>
-    <Authentication />
+    <Outlet />
   </>
 );
 const AppLayoutForgetPass = () => (
@@ -336,19 +340,30 @@ export const router = createBrowserRouter([
         element: <AppLayoutAuthentication />,
         children: [
           {
-            path: 'login',
-            element: <LoginUser />,
-          },
-          {
-            path: 'signup',
-            element: <SignUpPage />,
-          },
-          {
-            index: true, // This makes it the default route for "/authentication"
-            element: <Navigate to="login" replace />,
+            path: '',
+            element: <Authentication />,
+            children: [
+              {
+                path: 'signup',
+                element: <SignUpPage />,
+              },
+              {
+                path: 'login',
+                element: <LoginUser />,
+              },
+              {
+                path: 'signup_affiliate',
+                element: <SignUpAffiliatePage />,
+              },
+              {
+                // index: true, // This makes it the default route for "/authentication"
+                // element: <LoginPage />,
+              },
+            ]
           },
         ],
       },
+
     ]
 
   },
@@ -492,6 +507,18 @@ export const router = createBrowserRouter([
                   {
                     path: 'edit_chapter/:chapterID',
                     element: <EditChapterLayout />,
+                  },
+                  {
+                    path: 'add_Lesson',
+                    element: <AddLessonLayout />,
+                  },
+                  {
+                    path: 'edit_lesson/:lessonID',
+                    element: <EditLessonLayout />,
+                  },
+                  {
+                    path: 'material_lesson/:lessonID',
+                    element: <MaterialLessonLayout />,
                   },
 
                 ],
