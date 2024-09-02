@@ -14,6 +14,7 @@ export { default as RevisionIcon } from "./AdminIcons/RevisionIcon.jsx";
 export { default as SettingsIcon } from "./AdminIcons/SettingsIcon.jsx";
 export { default as SupportIcon } from "./AdminIcons/SupportIcon.jsx";
 export { default as UserIcon } from "./AdminIcons/UserIcon.jsx";
+export { default as ApplayIcon } from "./AdminIcons/ApplayIcon.jsx";
 /* Student Icons */
 export { default as CurriculaIcon } from "./StudentIcons/CurriculaIcon.jsx";
 export { default as DutiesIcon } from "./StudentIcons/DutiesIcon.jsx";
