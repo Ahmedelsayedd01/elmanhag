@@ -9,6 +9,7 @@ import Loading from '../../../Components/Loading';
 import InputCustom from '../../../Components/InputCustom';
 import { useNavigate } from 'react-router-dom';
 import CheckBox from '../../../Components/CheckBox';
+import TextTitle from '../../../Components/TextTitle'
 
 const AddHomeWorkPage = () => {
 
@@ -65,6 +66,17 @@ const AddHomeWorkPage = () => {
   const [selectHWId, setSelectHWId] = useState(null);
   const [openSelectHW, setOpenSelectHW] = useState(false);
 
+  const [questGroupTitle, setQuestGroupTitle] = useState('');
+  const [questionTypeData, setQuestionTypeData] = useState('');
+
+  const [questGroupTypeData, setQuestGroupTypeData]= useState([]);
+  const [selectQuestGroupType, setSelectQuestGroupType] = useState('Select Type');
+  const [questGroupTypeId, setQuestGroupTypeId] = useState(null);
+  const [openSelectQuestGroupType, setOpenSelectQuestGroupType] = useState(false);
+
+  const [questLevel, setQuestLevel] = useState([{ name: 'A' }, { name: 'B' },{ name: 'C' }]);
+  const [selectQuestLevel, setSelectQuestLevel] = useState('Select Difficulty');
+  const [openSelectQuestLevel, setOpenSelectQuestLevel] = useState(false);
 
   const dropdownSemesterRef = useRef(null);
   const dropdownLessonRef = useRef(null);
@@ -72,6 +84,10 @@ const AddHomeWorkPage = () => {
   const dropdownSubjectRef = useRef(null);
   const dropdownCategoryRef = useRef(null);
   const dropdownHWRef= useRef(null);
+
+  const dropdownQuestTypeRef= useRef(null);
+  const dropdownQuestLevelRef= useRef(null);
+
 
   const handleOpenSelectSemester = () => {
     setOpenSelectSemester(!openSelectSemester);
@@ -132,6 +148,16 @@ const AddHomeWorkPage = () => {
     setOpenSelectCategory(false);
     setOpenSelectStatus(false);
   };
+
+  const handleOpenQuestGroupType= () => {
+    setOpenSelectQuestGroupType(!openSelectQuestGroupType);
+    setOpenSelectQuestLevel(false)
+  }
+
+  const handleOpenQuestLevel= () => {
+    setOpenSelectQuestGroupType(false);
+    setOpenSelectQuestLevel(!openSelectQuestLevel)
+  }
 
   const handleSelectSemester = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
@@ -199,6 +225,28 @@ const AddHomeWorkPage = () => {
     console.log('HW ID:', selectedOptionValue);
   };
 
+  const handleSelectQuestGroupType = (e) => {
+    const inputElement = e.currentTarget.querySelector('.inputVal');
+    const selectedOptionName = e.currentTarget.textContent.trim();
+    const selectedOptionValue = inputElement ?inputElement.value : '';
+    setSelectQuestGroupType(selectedOptionName);
+    setQuestGroupTypeId(parseInt(selectedOptionValue));
+    setOpenSelectQuestGroupType(false);
+    console.log('Selected Question Group Type:', selectedOptionName);
+    console.log('Question Group Type ID:', selectedOptionValue);
+  };
+
+  const handleSelectQuestGroupLevel = (e) => {
+    const inputElement = e.currentTarget.querySelector('.inputVal');
+    const selectedOptionName = e.currentTarget.textContent.trim();
+    // const selectedOptionValue = inputElement ?inputElement.value : '';
+    setSelectQuestLevel(selectedOptionName);
+    // setSelectQuestLevelId(parseInt(selectedOptionValue));
+    setOpenSelectQuestLevel(false);
+    console.log('Selected Question Group Level:', selectedOptionName);
+    // console.log('HW ID:', selectedOptionValue);
+  };
+
   const handleClickOutside = (event) => {
     if (
       (dropdownSemesterRef.current && !dropdownSemesterRef.current.contains(event.target))&&
@@ -233,26 +281,39 @@ const AddHomeWorkPage = () => {
     navigate(-1, { replace: true });
   };
 
+  const [questionGroups, setQuestionGroups] = useState([]);
+  const [initialButtonVisible, setInitialButtonVisible] = useState(true);
+
+  const handleAddFirstGroup = () => {
+    setInitialButtonVisible(false);
+    setQuestionGroups((prevGroups) => [...prevGroups, prevGroups.length]);
+  };
+
+  const handleAddGroup = () => {
+    setQuestionGroups((prevGroups) => [...prevGroups, prevGroups.length]);
+  };
+
+
   return (
     <>
-    {/* Buttons to switch between sections */}
+  {/* Buttons to switch between sections */}
   <div className='w-full flex justify-start gap-3 p-3'>
-    <button
-      className={`w-1/6 text-center text-xl font-medium ${
-        activeSection === 'HWInfo' ? 'p-3 text-mainColor border-b-8 border-mainColor rounded' : 'p-3 text-thirdColor'
-      }`}
-      onClick={() => setActiveSection('HWInfo')}
-    >
-      H.W Info
-    </button>
-    <button
-      className={`w-1/6 text-center text-xl font-medium ${
-        activeSection === 'Question' ? 'p-3 text-mainColor border-b-8 border-mainColor rounded' : 'p-3 text-thirdColor'
-      }`}
-      onClick={() => setActiveSection('Question')}
-    >
-      Questions
-    </button>
+        <button
+          className={`w-1/6 text-center text-xl font-medium ${
+            activeSection === 'HWInfo' ? 'p-3 text-mainColor border-b-8 border-mainColor rounded' : 'p-3 text-thirdColor'
+          }`}
+          onClick={() => setActiveSection('HWInfo')}
+        >
+          H.W Info
+        </button>
+        <button
+          className={`w-1/6 text-center text-xl font-medium ${
+            activeSection === 'Question' ? 'p-3 text-mainColor border-b-8 border-mainColor rounded' : 'p-3 text-thirdColor'
+          }`}
+          onClick={() => setActiveSection('Question')}
+        >
+          Questions
+        </button>
   </div>
 
     {/* Conditional rendering based on activeSection */}
@@ -363,34 +424,88 @@ const AddHomeWorkPage = () => {
         </form>
       )}
 
-      {activeSection === 'Question' && (
+    {activeSection === 'Question' && (
         <form id="Question" className='w-full'>
-          <div className="sm:w-full flex justify-center mx-auto">
-                    <ButtonAdd Text={"Add question group"} BgColor={"white"} Color={"thirdColor"} Size={"xl"} />
+          {/* Initial Button to add the first question group */}
+          {initialButtonVisible && (
+            <div className="sm:w-full flex justify-center mx-auto">
+            <ButtonAdd Text="Add Question Group" handleClick={handleAddFirstGroup} />
             </div>
-            {/* Buttons */}
+          )}
+
+          {/* Render the question groups */}
+          {!initialButtonVisible && (
+            <>
+              {questionGroups.map((group, index) => (
+                <div key={index} className="w-full flex flex-col items-center p-4 gap-4p-4 mt-4 border border-gray-300 rounded-lg">
+                  <TextTitle text="MCQ" />
+                  <div className="w-full flex flex-wrap items-center justify-start gap-3">
+                  <div className="lg:w-[25%] sm:w-full">
+                    <InputCustom
+                      type="text"
+                      placeholder="question Group Title"
+                      value={questGroupTitle}
+                      onChange={(e) => setQuestGroupTitle(e.target.value)}
+                    />
+                  </div>
+                  <div className="lg:w-[25%] sm:w-full">
+                  <DropDownMenu
+                    ref={dropdownQuestTypeRef}
+                    handleOpen={handleOpenQuestGroupType}
+                    handleOpenOption={handleSelectQuestGroupType}
+                    stateoption={selectQuestGroupType}
+                    openMenu={openSelectQuestGroupType}
+                    options={questGroupTypeData}
+                  />
+                </div>
+                <div className="lg:w-[25%] sm:w-full">
+                  <DropDownMenu
+                    ref={dropdownQuestLevelRef}
+                    handleOpen={handleOpenQuestLevel}
+                    handleOpenOption={handleSelectQuestGroupLevel}
+                    stateoption={selectQuestLevel}
+                    openMenu={openSelectQuestLevel}
+                    options={questLevel}
+                  />
+                </div>
+
+                <button
+                    type="submit"
+                    className="bg-mainColor text-white text-2xl px-28 py-3 rounded-2xl"
+                  >
+                    Submit
+                  </button>
+                  </div>
+                </div>
+              ))}
+
+              {/* Button at the bottom to add more question groups */}
+              <div className="sm:w-full flex justify-center mx-auto mt-4">
+                <ButtonAdd Text="Add Question Group" handleClick={handleAddGroup} />
+              </div>
+            </>
+          )}
+
+          {/* Buttons */}
           <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
             <div className="flex items-center justify-center w-72">
-              <Button
+              <button
                 type="submit"
-                Text="Submit"
-                BgColor="bg-mainColor"
-                Color="text-white"
-                Width="full"
-                Size="text-2xl"
-                px="px-28"
-                rounded="rounded-2xl"
-              />
+                className="bg-mainColor text-white text-2xl p-3 px-28 rounded-2xl"
+              >
+                Submit
+              </button>
             </div>
             <button className="text-2xl text-mainColor">
-                Preview H.W
+              Preview H.W
             </button>
           </div>
         </form>
-      )}
+    )}
+     
     </>
-    
   )
 }
 
 export default AddHomeWorkPage
+
