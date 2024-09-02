@@ -1,7 +1,7 @@
 // src/pages/SignupPage.jsx
 import React from 'react';
-import Layout from './../../../Layouts/Student/loginlayout';
-import SignupForm from './../../../Layouts/Student/SignupForm';
+import Layout from '../../../Layouts/Student/loginlayout';
+import SignupForm from '../../../Layouts/Student/signupstudent/SignupForm';
 
 const SignupPage = () => {
   return (

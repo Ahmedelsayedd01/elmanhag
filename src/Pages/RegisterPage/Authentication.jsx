@@ -42,7 +42,6 @@ const Authentication = () => {
                                    </div>
                             </div>
                             <div className="hidden lg:flex items-center justify-center w-6/12">
-                                   {/* <img src={Logo} alt="" /> */}
                                    <Logo Height='250' />
                             </div>
                      </div >

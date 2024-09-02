@@ -25,30 +25,24 @@ const HomeWorkPage = () => {
   const [chapterData, setChapterData] = useState([]);
   const [subjectData, setSubjectData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
-  const [homeWorkActive, setHomeWorkActive] = useState(false);
+//   const [homeWorkActive, setHomeWorkActive] = useState(false);
 
   const [selectSemester, setSelectSemester] = useState('Filter By Semester');
-  const [selectSemesterId, setSelectSemesterId] = useState(null);
   const [openSelectSemester, setOpenSelectSemester] = useState(false);
 
   const [selectLesson, setSelectLesson] = useState('Filter By Lesson');
-  const [selectLessonId, setSelectLessonId] = useState(null);
   const [openSelectLesson, setOpenSelectLesson] = useState(false);
 
   const [selectHWLevel, setSelectHWLevel] = useState('Filter By Difficulty');
-  const [selectHWLevelId, setSelectHWLevelId] = useState(null);
   const [openSelectHWLevel, setOpenSelectHWLevel] = useState(false);
 
   const [selectChapter, setSelectChapter] = useState('Filter By Chapter');
-  const [selectChapterId, setSelectChapterId] = useState(null);
   const [openSelectChapter, setOpenSelectChapter] = useState(false);
 
   const [selectSubject, setSelectSubject] = useState('Filter By Subject');
-  const [selectSubjectId, setSelectSubjectId] = useState(null);
   const [openSelectSubject, setOpenSelectSubject] = useState(false);
 
   const [selectCategory, setSelectCategory] = useState('Filter By Category');
-  const [selectCategoryId, setSelectCategoryId] = useState(null);
   const [openSelectCategory, setOpenSelectCategory] = useState(false);
 
   const [selectStatus, setSelectStatus] = useState('Filter By Status');
@@ -195,7 +189,7 @@ const HomeWorkPage = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [homeWorksChanged]);
+  }, []);
 
   const fetchHomeWork = async () => {
     setIsLoading(true);
@@ -207,7 +201,7 @@ const HomeWorkPage = () => {
       });
       if (response.status === 200) {
         console.log(response.data)
-        // setSubjects(response.data.subjects);
+        setHomeWorkData(response.data);
         setHomeWorks(response.data.homeworks);
         setLessonData(response.data.lessons);
         setChapterData(response.data.chapters);
@@ -223,7 +217,7 @@ const HomeWorkPage = () => {
 
   useEffect(() => {
     fetchHomeWork(); // Fetch Subject initially and whenever Subjects Changed changes
-  }, []);
+  }, [homeWorksChanged]);
 
   const handleOpenDialog = (homeWorkId) => {
     setOpenDialog(homeWorkId);
@@ -280,7 +274,8 @@ const HomeWorkPage = () => {
     return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Home Work data available</div>;
   }
 
-  // localStorage.setItem("homeWork", JSON.stringify(homeWorks));
+  localStorage.setItem("homeWork", JSON.stringify(homeWorks));
+  localStorage.setItem("AllhomeWork", JSON.stringify(homeWorkData));
 
   return (
     <>
