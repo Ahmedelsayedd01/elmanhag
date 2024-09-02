@@ -22,6 +22,9 @@ export { default as EditSubjectLayout } from "./Admin/EditSubjectLayout";
 export { default as ChapterSubjectLayout } from "./Admin/ChapterSubjectLayout";
 export { default as AddChapterLayout } from "./Admin/AddChapterLayout";
 export { default as EditChapterLayout } from "./Admin/EditChapterLayout";
+export { default as AddLessonLayout } from "./Admin/AddLessonLayout";
+export { default as EditLessonLayout } from "./Admin/EditLessonLayout";
+export { default as MaterialLessonLayout } from "./Admin/MaterialLessonLayout";
 
 
 export { default as StudentsSubjectLayout } from "./Admin/StudentsSubjectLayout";
