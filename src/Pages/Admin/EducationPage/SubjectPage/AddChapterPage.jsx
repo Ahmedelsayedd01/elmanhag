@@ -99,7 +99,7 @@ const AddChapterPage = () => {
 
       if (response.status === 200) {
         auth.toastSuccess('Chapter added successfully!');
-        navigate(-2, { replace: true });
+        navigate(-1, { replace: true });
       } else {
         auth.toastError('Failed to add Chapter.');
       }
