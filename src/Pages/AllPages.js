@@ -27,6 +27,9 @@ export { default as EditSubjectPage } from "./Admin/EducationPage/SubjectPage/Ed
 export { default as ChapterSubjectPage } from "./Admin/EducationPage/SubjectPage/ChapterSubjectPage";
 export { default as AddChapterPage } from "./Admin/EducationPage/SubjectPage/AddChapterPage";
 export { default as EditChapterPage } from "./Admin/EducationPage/SubjectPage/EditChapterPage";
+export { default as AddLessonPage } from "./Admin/EducationPage/SubjectPage/AddLessonPage";
+export { default as EditLessonPage } from "./Admin/EducationPage/SubjectPage/EditLessonPage";
+export { default as MaterialLessonPage } from "./Admin/EducationPage/SubjectPage/MaterialLessonPage";
 
 export { default as StudentsSubjectPage } from "./Admin/EducationPage/SubjectPage/StudentsSubjectPage";
 export { default as QuestionsBankPage } from "./Admin/EducationPage/QuestionsBankPage";
