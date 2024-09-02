@@ -1,97 +1,160 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { ChapterContext } from '../../../../Layouts/Admin/ChapterSubjectLayout'
-import { Link, useLocation } from 'react-router-dom'
-import { ButtonAdd } from '../../../../Components/Button'
-import { FaPlus } from 'react-icons/fa'
-import { IoIosArrowDown } from 'react-icons/io'
-import EditIcon from '../../../../Components/Icons/AdminIcons/EditIcon'
-import DeleteIcon from '../../../../Components/Icons/AdminIcons/DeleteIcon'
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import { Wroning } from '../../../../Components/Icons/All_Icons'
-import Loading from '../../../../Components/Loading'
-import { AiOutlineDrag } from 'react-icons/ai'
-import { useAuth } from '../../../../Context/Auth'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { ButtonAdd } from '../../../../Components/Button';
+import { FaPlus } from 'react-icons/fa';
+import { IoIosArrowDown } from 'react-icons/io';
+import EditIcon from '../../../../Components/Icons/AdminIcons/EditIcon';
+import DeleteIcon from '../../../../Components/Icons/AdminIcons/DeleteIcon';
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
+import { ApplayIcon, Wroning } from '../../../../Components/Icons/All_Icons';
+import Loading from '../../../../Components/Loading';
+import { AiOutlineDrag } from 'react-icons/ai';
+import { useAuth } from '../../../../Context/Auth';
+import axios from 'axios';
 
 const ChapterSubjectPage = () => {
-  const [chapterContent, setChapterContent] = useState([])
-  const [subjectID, setSubjectID] = useState(null)
-  const [stateDate, setStateDate] = useState(false)
-  const [openChapterId, setOpenChapterId] = useState(null) // Changed to track open chapter ID
+  const [chapters, setChapters] = useState([]);
+  const [stateDate, setStateDate] = useState(false);
+  const [openChapterId, setOpenChapterId] = useState(null);
+  const [isDeletingChapter, setIsDeletingChapter] = useState(false);
+  const [isDeletingLesson, setIsDeletingLesson] = useState(false);
+  const [openChapterDialog, setOpenChapterDialog] = useState(null);
+  const [openLessonDialog, setOpenLessonDialog] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [chaptersChanged, setChaptersChanged] = useState(false);
 
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [openDialog, setOpenDialog] = useState(null);
-
-  const ChapterData = useContext(ChapterContext)
   const auth = useAuth();
   const location = useLocation();
+  const subjectID = location.state || {};
 
-  console.log('location', location)
+  console.log('location', location);
+  console.log('subjectID', subjectID);
+
+  const fetchChapter = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(`https://bdev.elmanhag.shop/admin/chapter/${subjectID}`, {
+        headers: {
+          Authorization: `Bearer ${auth.user.token}`,
+        },
+      });
+      if (response.status === 200) {
+        const fetchedChapters = response.data.chapters;
+        setChapters(fetchedChapters);
+        setStateDate(fetchedChapters.length === 0);
+      }
+    } catch (error) {
+      console.error('Error fetching Chapters data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (ChapterData.subjectChapter && ChapterData.subjectChapter.length > 0) {
-      setChapterContent(ChapterData.subjectChapter);
-      setSubjectID(ChapterData.subjectId || '');
-      setStateDate(false);
+    if (subjectID) {
+      fetchChapter();
     } else {
-      setSubjectID(ChapterData.subjectId || '');
-      setStateDate(true);
+      auth.toastError('No subjectID found in the state.');
     }
-  }, [ChapterData, stateDate]);
+  }, [subjectID, chaptersChanged]);
 
   const handleOpen = (chapterId) => {
-    if (openChapterId === chapterId) {
-      setOpenChapterId(null); // Close the currently open menu
-    } else {
-      setOpenChapterId(chapterId); // Open the clicked chapter's menu
-    }
-  }
-
-  const handleOpenDialog = (chapterId) => {
-    setOpenDialog(chapterId);
+    setOpenChapterId(openChapterId === chapterId ? null : chapterId);
   };
+
+  const handleOpenChapterDialog = (chapterId) => setOpenChapterDialog(chapterId);
+  const handleCloseChapterDialog = () => setOpenChapterDialog(null);
+
+  const handleOpenLessonDialog = (lessonId) => setOpenLessonDialog(lessonId);
+  const handleCloseLessonDialog = () => setOpenLessonDialog(null);
 
   const handleCloseDialog = () => {
-    setOpenDialog(null);
+    setOpenChapterDialog(null);
+    setOpenLessonDialog(null);
   };
 
-  const handleDelete = async (chapterId) => {
-    setIsDeleting(true);
-    const success = await deleteChapter(chapterId, auth.user.token);
-    setIsDeleting(false);
+  const handleDeleteChapter = async (chapterId) => {
+    setIsDeletingChapter(true);
+    const success = await deleteChapter(chapterId, auth.user.token); // Implement deleteChapter function separately
+    setIsDeletingChapter(false);
     handleCloseDialog();
 
     if (success) {
       auth.toastSuccess('Chapter deleted successfully!');
+      setChaptersChanged(!chaptersChanged);
     } else {
       auth.toastError('Failed to delete Chapter.');
     }
   };
 
+  const handleDeleteLesson = async (lessonId) => {
+    setIsDeletingLesson(true);
+    const success = await deleteLesson(lessonId, auth.user.token); // Implement deleteLesson function separately
+    setIsDeletingLesson(false);
+    handleCloseDialog();
+
+    if (success) {
+      auth.toastSuccess('Lesson deleted successfully!');
+      setChaptersChanged(!chaptersChanged);
+    } else {
+      auth.toastError('Failed to delete Lesson.');
+    }
+  };
+
   const deleteChapter = async (chapterId, authToken) => {
     try {
-      const response = await axios.delete(`https://bdev.elmanhag.shop/admin/category/delete/${chapterId}`, {
+      const response = await axios.delete(`https://bdev.elmanhag.shop/admin/chapter/delete/${chapterId}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
       });
 
       if (response.status === 200) {
+        console.log('Chapter deleted successfully');
         return true;
       } else {
         console.error('Failed to delete Chapter:', response.status, response.statusText);
         return false;
       }
     } catch (error) {
-      console.error('Error deleting categories:', error);
+      console.error('Error deleting Chapter:', error);
+      return false;
+    }
+  };
+  const deleteLesson = async (lessonId, authToken) => {
+    try {
+      const response = await axios.delete(`https://bdev.elmanhag.shop/admin/lesson/delete/${lessonId}`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+
+      if (response.status === 200) {
+        console.log('Lesson deleted successfully');
+        return true;
+      } else {
+        console.error('Failed to delete Lesson:', response.status, response.statusText);
+        return false;
+      }
+    } catch (error) {
+      console.error('Error deleting Lesson:', error);
       return false;
     }
   };
 
+
+  if (isLoading) {
+    return (
+      <div className="w-1/4 flex items-start mt-[10%] justify-center h-full m-auto">
+        <Loading />
+      </div>
+    );
+  }
+
   return (
     <>
       {stateDate ? (
-        <div className='w-full mt-56 flex flex-col items-center justify-center '>
+        <div className='w-full mt-56 flex flex-col items-center justify-center'>
           <span className='text-2xl text-thirdColor font-semibold'>No Chapters Available Yet</span>
           <Link className='mt-4' to={'add_chapter'} state={{ subjectID }}>
             <ButtonAdd />
@@ -104,15 +167,15 @@ const ChapterSubjectPage = () => {
               <ButtonAdd />
             </Link>
           </div>
-          <div className="mt-4 w-full flex flex-col items-center justify-center gap-4 ">
-            {chapterContent.map((chapter, index) => (
-              <div className="w-full flex flex-col rounded-3xl bg-white p-4" key={index}>
+          <div className="mt-4 w-full flex flex-col items-center justify-center gap-4">
+            {chapters.map((chapter) => (
+              <div className="w-full flex flex-col rounded-3xl bg-white p-4" key={chapter.id}>
                 <div className="w-full flex items-center justify-between">
                   <span className='text-mainColor text-2xl font-semibold hover:cursor-pointer'>{chapter.name}</span>
                   <div className="flex items-center justify-center gap-x-3">
-                    <Link to={`add_lesson/${chapter.id}`} className='text-thirdColor text-xl'><FaPlus /></Link>
+                    <Link to={'add_lesson'} state={`${chapter.id}`} className='text-thirdColor text-xl'><FaPlus /></Link>
                     <Link to={`edit_chapter/${chapter.id}`}><EditIcon /></Link>
-                    <button type="button" onClick={() => handleOpenDialog(chapter.id)}>
+                    <button type="button" onClick={() => handleOpenChapterDialog(chapter.id)}>
                       <DeleteIcon />
                     </button>
                     <AiOutlineDrag className='text-thirdColor text-2xl hover:cursor-move' />
@@ -125,8 +188,60 @@ const ChapterSubjectPage = () => {
                 {openChapterId === chapter.id && (
                   <div className="w-full mt-4 flex flex-col items-start gap-4">
                     {chapter.lessons && chapter.lessons.length > 0 ? (
-                      chapter.lessons.map((lesson, index) => (
-                        <span className='text-xl text-thirdColor font-semibold' key={index}>{lesson.name}</span>
+                      chapter.lessons.map((lesson) => (
+                        <div className="w-full flex items-center justify-between gap-y-5" key={lesson.id}>
+                          <span className='text-xl text-thirdColor font-semibold'>{lesson.name}</span>
+                          <div className="flex gap-x-2">
+                            <Link to={`edit_lesson/${lesson.id}`}><EditIcon /></Link>
+
+                            <Link to={`material_lesson/${lesson.id}`} state={lesson.id}><ApplayIcon /></Link>
+
+                            <button type="button" onClick={() => handleOpenLessonDialog(lesson.id)}>
+                              <DeleteIcon />
+                            </button>
+
+                            {openLessonDialog === lesson.id && (
+                              <Dialog open={true} onClose={handleCloseDialog} className="relative z-10">
+                                <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                                <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                                  <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                    <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                      <div className="flex flex-col items-center justify-center bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                        <Wroning Width='28' Height='28' aria-hidden="true" />
+                                        <div className="flex items-center">
+                                          <div className="mt-2 text-center">
+                                            <DialogTitle as="h3" className="text-xl font-semibold leading-10 text-gray-900">
+                                              You will delete {lesson?.name || "null"}
+                                            </DialogTitle>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                        <button
+                                          type="button"
+                                          onClick={() => handleDeleteLesson(lesson.id)}
+                                          disabled={isDeletingLesson}
+                                          className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
+                                        >
+                                          {isDeletingLesson ? <div className="flex w-10 h-5"><Loading /></div> : 'Delete'}
+                                        </button>
+                                        <button
+                                          type="button"
+                                          data-autofocus
+                                          onClick={handleCloseDialog}
+                                          className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
+                                        >
+                                          Cancel
+                                        </button>
+                                      </div>
+                                    </DialogPanel>
+                                  </div>
+                                </div>
+                              </Dialog>
+                            )}
+                            <AiOutlineDrag className='text-thirdColor text-2xl hover:cursor-move' />
+                          </div>
+                        </div>
                       ))
                     ) : (
                       <h2 className='text-xl text-mainColor font-semibold'>Not Found</h2>
@@ -134,7 +249,7 @@ const ChapterSubjectPage = () => {
                   </div>
                 )}
 
-                {openDialog === chapter.id && (
+                {openChapterDialog === chapter.id && (
                   <Dialog open={true} onClose={handleCloseDialog} className="relative z-10">
                     <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
                     <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -153,11 +268,11 @@ const ChapterSubjectPage = () => {
                           <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                             <button
                               type="button"
-                              onClick={() => handleDelete(chapter.id)}
-                              disabled={isDeleting}
+                              onClick={() => handleDeleteChapter(chapter.id)}
+                              disabled={isDeletingChapter}
                               className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
                             >
-                              {isDeleting ? <div className="flex w-10 h-5"><Loading /></div> : 'Delete'}
+                              {isDeletingChapter ? <div className="flex w-10 h-5"><Loading /></div> : 'Delete'}
                             </button>
                             <button
                               type="button"
@@ -180,6 +295,6 @@ const ChapterSubjectPage = () => {
       )}
     </>
   );
-}
+};
 
 export default ChapterSubjectPage;
