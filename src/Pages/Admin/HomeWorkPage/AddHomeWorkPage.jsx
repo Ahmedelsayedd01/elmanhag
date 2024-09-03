@@ -10,10 +10,11 @@ import InputCustom from '../../../Components/InputCustom';
 import { useNavigate } from 'react-router-dom';
 import CheckBox from '../../../Components/CheckBox';
 import TextTitle from '../../../Components/TextTitle'
+import { NavLink } from 'react-router-dom'
+
 
 const AddHomeWorkPage = () => {
 
-  const auth = useAuth();
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -66,17 +67,17 @@ const AddHomeWorkPage = () => {
   const [selectHWId, setSelectHWId] = useState(null);
   const [openSelectHW, setOpenSelectHW] = useState(false);
 
-  const [questGroupTitle, setQuestGroupTitle] = useState('');
-  const [questionTypeData, setQuestionTypeData] = useState('');
+  // const [questGroupTitle, setQuestGroupTitle] = useState('');
+  // const [questionTypeData, setQuestionTypeData] = useState('');
 
-  const [questGroupTypeData, setQuestGroupTypeData]= useState([]);
-  const [selectQuestGroupType, setSelectQuestGroupType] = useState('Select Type');
-  const [questGroupTypeId, setQuestGroupTypeId] = useState(null);
-  const [openSelectQuestGroupType, setOpenSelectQuestGroupType] = useState(false);
+  // const [questGroupTypeData, setQuestGroupTypeData]= useState([]);
+  // const [selectQuestGroupType, setSelectQuestGroupType] = useState('Select Type');
+  // const [questGroupTypeId, setQuestGroupTypeId] = useState(null);
+  // const [openSelectQuestGroupType, setOpenSelectQuestGroupType] = useState(false);
 
-  const [questLevel, setQuestLevel] = useState([{ name: 'A' }, { name: 'B' },{ name: 'C' }]);
-  const [selectQuestLevel, setSelectQuestLevel] = useState('Select Difficulty');
-  const [openSelectQuestLevel, setOpenSelectQuestLevel] = useState(false);
+  // const [questLevel, setQuestLevel] = useState([{ name: 'A' }, { name: 'B' },{ name: 'C' }]);
+  // const [selectQuestLevel, setSelectQuestLevel] = useState('Select Difficulty');
+  // const [openSelectQuestLevel, setOpenSelectQuestLevel] = useState(false);
 
   const dropdownSemesterRef = useRef(null);
   const dropdownLessonRef = useRef(null);
@@ -84,10 +85,6 @@ const AddHomeWorkPage = () => {
   const dropdownSubjectRef = useRef(null);
   const dropdownCategoryRef = useRef(null);
   const dropdownHWRef= useRef(null);
-
-  const dropdownQuestTypeRef= useRef(null);
-  const dropdownQuestLevelRef= useRef(null);
-
 
   const handleOpenSelectSemester = () => {
     setOpenSelectSemester(!openSelectSemester);
@@ -148,16 +145,6 @@ const AddHomeWorkPage = () => {
     setOpenSelectCategory(false);
     setOpenSelectStatus(false);
   };
-
-  const handleOpenQuestGroupType= () => {
-    setOpenSelectQuestGroupType(!openSelectQuestGroupType);
-    setOpenSelectQuestLevel(false)
-  }
-
-  const handleOpenQuestLevel= () => {
-    setOpenSelectQuestGroupType(false);
-    setOpenSelectQuestLevel(!openSelectQuestLevel)
-  }
 
   const handleSelectSemester = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
@@ -225,28 +212,6 @@ const AddHomeWorkPage = () => {
     console.log('HW ID:', selectedOptionValue);
   };
 
-  const handleSelectQuestGroupType = (e) => {
-    const inputElement = e.currentTarget.querySelector('.inputVal');
-    const selectedOptionName = e.currentTarget.textContent.trim();
-    const selectedOptionValue = inputElement ?inputElement.value : '';
-    setSelectQuestGroupType(selectedOptionName);
-    setQuestGroupTypeId(parseInt(selectedOptionValue));
-    setOpenSelectQuestGroupType(false);
-    console.log('Selected Question Group Type:', selectedOptionName);
-    console.log('Question Group Type ID:', selectedOptionValue);
-  };
-
-  const handleSelectQuestGroupLevel = (e) => {
-    const inputElement = e.currentTarget.querySelector('.inputVal');
-    const selectedOptionName = e.currentTarget.textContent.trim();
-    // const selectedOptionValue = inputElement ?inputElement.value : '';
-    setSelectQuestLevel(selectedOptionName);
-    // setSelectQuestLevelId(parseInt(selectedOptionValue));
-    setOpenSelectQuestLevel(false);
-    console.log('Selected Question Group Level:', selectedOptionName);
-    // console.log('HW ID:', selectedOptionValue);
-  };
-
   const handleClickOutside = (event) => {
     if (
       (dropdownSemesterRef.current && !dropdownSemesterRef.current.contains(event.target))&&
@@ -254,7 +219,9 @@ const AddHomeWorkPage = () => {
       (dropdownChapterRef.current && !dropdownChapterRef.current.contains(event.target))&&
       (dropdownSubjectRef.current && !dropdownSubjectRef.current.contains(event.target)) &&
       (dropdownCategoryRef.current && !dropdownCategoryRef.current.contains(event.target)) &&
-      (dropdownHWRef.current && !dropdownHWRef.current.contains(event.target)) 
+      (dropdownHWRef.current && !dropdownHWRef.current.contains(event.target))
+      // (dropdownQuestTypeRef.current && !dropdownQuestTypeRef.current.contains(event.target))&&
+      // (dropdownQuestLevelRef.current && !dropdownQuestLevelRef.current.contains(event.target))
     ) {
       setOpenSelectSemester(false);
       setOpenSelectLesson(false);
@@ -262,6 +229,8 @@ const AddHomeWorkPage = () => {
       setOpenSelectSubject(false);
       setOpenSelectCategory(false);
       setOpenSelectHW(false);
+      // openQuestGroupType(false);
+      // openQuestGroupLevel(false);
     }
   };
 
@@ -281,17 +250,95 @@ const AddHomeWorkPage = () => {
     navigate(-1, { replace: true });
   };
 
-  const [questionGroups, setQuestionGroups] = useState([]);
+  const handleNext = () => {
+    setActiveSection('Question');
+  };
+
+  // const [questionGroups, setQuestionGroups] = useState([]);
+  // const [initialButtonVisible, setInitialButtonVisible] = useState(true);
+
+  // const handleAddFirstGroup = () => {
+  //   setInitialButtonVisible(false);
+  //   setQuestionGroups((prevGroups) => [...prevGroups, prevGroups.length]);
+  // };
+
+  // const handleAddGroup = () => {
+  //   setQuestionGroups((prevGroups) => [...prevGroups, prevGroups.length]);
+  // };
+
+    /* Question Group Section */
+  // State to manage multiple Groups form
+  const [questGroups, setQuestGroups] = useState([]);
   const [initialButtonVisible, setInitialButtonVisible] = useState(true);
+ 
+  const dropdownQuestTypeRef= useRef(null);
+  const dropdownQuestLevelRef= useRef(null);
 
   const handleAddFirstGroup = () => {
     setInitialButtonVisible(false);
-    setQuestionGroups((prevGroups) => [...prevGroups, prevGroups.length]);
+    setQuestGroups([...questGroups, { titleInput: '', QuestGroupType: '', QuestGroupLevel: '', openQuestGroupType: false, openQuestGroupLevel: false }]);
   };
 
   const handleAddGroup = () => {
-    setQuestionGroups((prevGroups) => [...prevGroups, prevGroups.length]);
+    setQuestGroups([...questGroups, { titleInput: '', QuestGroupType: '', QuestGroupLevel: '', openQuestGroupType: false, openQuestGroupLevel: false }]);
   };
+
+  // Dropdown options for demonstration
+  const options1 = [
+    { id: '1', name: 'Option 1' },
+    { id: '2', name: 'Option 2' },
+  ];
+
+  const options2 = [
+    { id: 'A', name: 'Option A' },
+    { id: 'B', name: 'Option B' },
+  ];
+
+  const handleTitleInputChange = (index, event) => {
+    const newGroup = [...questGroups];
+    newGroup[index].titleInput = event.target.value;
+    setQuestGroups(newGroup);
+  };
+
+  const handleSelectQuestGroupType = (index, e) => {
+    const inputElement = e.currentTarget.querySelector('.inputVal');
+    const selectedOptionName = e.currentTarget.textContent.trim();
+    const selectedOptionValue = inputElement ? inputElement.value : '';
+  
+    const newGroup = [...questGroups];
+    newGroup[index].QuestGroupType = selectedOptionName;
+    setQuestGroups(newGroup);
+  
+    console.log('Selected QuestGroupType:', selectedOptionName);
+    console.log('QuestGroupType ID:', selectedOptionValue);
+  };
+
+  const handleSelectQuestGroupLevel = (index, e) => {
+    const inputElement = e.currentTarget.querySelector('.inputVal');
+    const selectedOptionName = e.currentTarget.textContent.trim();
+    const selectedOptionValue = inputElement ? inputElement.value : '';
+  
+    const newGroup = [...questGroups];
+    newGroup[index].QuestGroupLevel = selectedOptionName;
+    setQuestGroups(newGroup);
+  
+    console.log('Selected QuestGroupLevel:', selectedOptionName);
+    console.log('QuestGroupLevel ID:', selectedOptionValue);
+  };
+
+  const handleOpen = (index, dropdownIndex) => {
+    const newGroup = [...questGroups];
+    if (dropdownIndex === 1) {
+      newGroup[index].openQuestGroupType = !newGroup[index].openQuestGroupType;
+      newGroup[index].openQuestGroupLevel = false; // Close the other dropdown if open
+    } else if (dropdownIndex === 2) {
+      newGroup[index].openQuestGroupLevel = !newGroup[index].openQuestGroupLevel;
+      newGroup[index].openQuestGroupType = false; // Close the other dropdown if open
+    }
+    setQuestGroups(newGroup);
+  };
+
+  
 
 
   return (
@@ -406,7 +453,7 @@ const AddHomeWorkPage = () => {
           {/* Buttons */}
           <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
             <div className="flex items-center justify-center w-72">
-              <Button
+                <Button
                 type="submit"
                 Text="Next"
                 BgColor="bg-mainColor"
@@ -415,6 +462,7 @@ const AddHomeWorkPage = () => {
                 Size="text-2xl"
                 px="px-28"
                 rounded="rounded-2xl"
+                handleClick={handleNext}
               />
             </div>
             <button onClick={handleGoBack} className="text-2xl text-mainColor">
@@ -436,51 +484,81 @@ const AddHomeWorkPage = () => {
           {/* Render the question groups */}
           {!initialButtonVisible && (
             <>
-              {questionGroups.map((group, index) => (
-                <div key={index} className="w-full flex flex-col items-center p-4 gap-4p-4 mt-4 border border-gray-300 rounded-lg">
+              {questGroups.map((group, index) => (
+                <div key={index} className="w-full flex flex-col items-center p-4 gap-4p-4 m-4 rounded-lg">
                   <TextTitle text="MCQ" />
                   <div className="w-full flex flex-wrap items-center justify-start gap-3">
-                  <div className="lg:w-[25%] sm:w-full">
-                    <InputCustom
+                  <div className="lg:w-[30%] sm:w-full">
+                    {/* <InputCustom
                       type="text"
                       placeholder="question Group Title"
                       value={questGroupTitle}
                       onChange={(e) => setQuestGroupTitle(e.target.value)}
+                    /> */}
+                    <InputCustom
+                      type="text"
+                      placeholder="question Group Title"
+                      value={group.titleInput}
+                      onChange={(event) => handleTitleInputChange(index, event)}
                     />
                   </div>
-                  <div className="lg:w-[25%] sm:w-full">
-                  <DropDownMenu
-                    ref={dropdownQuestTypeRef}
-                    handleOpen={handleOpenQuestGroupType}
-                    handleOpenOption={handleSelectQuestGroupType}
-                    stateoption={selectQuestGroupType}
-                    openMenu={openSelectQuestGroupType}
-                    options={questGroupTypeData}
-                  />
+                  <div className="lg:w-[30%] sm:w-full">
+                    <DropDownMenu
+                      ref={dropdownQuestTypeRef}
+                      stateoption={group.QuestGroupType || 'Select an option'}  // Display selected option or default text
+                      openMenu={group.openQuestGroupType}  // Manage dropdown open/close state
+                      handleOpen={() => handleOpen(index, 1)}  // Toggle dropdown visibility
+                      handleOpenOption={(e) => handleSelectQuestGroupType(index, e)}  // Use specific handler for dropdown 1
+                      options={options1}  // Options for the first dropdown
+                    />
                 </div>
-                <div className="lg:w-[25%] sm:w-full">
-                  <DropDownMenu
-                    ref={dropdownQuestLevelRef}
-                    handleOpen={handleOpenQuestLevel}
+                <div className="lg:w-[30%] sm:w-full">
+                  {/* <DropDownMenu
+                    handleOpen={QuestGroupLevel}
                     handleOpenOption={handleSelectQuestGroupLevel}
                     stateoption={selectQuestLevel}
                     openMenu={openSelectQuestLevel}
                     options={questLevel}
+                  /> */}
+                  <DropDownMenu
+                    ref={dropdownQuestLevelRef}
+                    stateoption={group.QuestGroupLevel || 'Select an option'}  // Display selected option or default text
+                    openMenu={group.openQuestGroupLevel}  // Manage dropdown open/close state
+                    handleOpen={() => handleOpen(index, 2)}  // Toggle dropdown visibility
+                    handleOpenOption={(e) => handleSelectQuestGroupLevel(index, e)}  // Use specific handler for dropdown 1
+                    options={options2}  // Options for the second dropdown
                   />
                 </div>
 
-                <button
-                    type="submit"
-                    className="bg-mainColor text-white text-2xl px-28 py-3 rounded-2xl"
-                  >
-                    Submit
-                  </button>
+        <div className="w-full flex items-center justify-between mt-4 overflow-x-auto gap-12">
+          <table className="w-full sm:min-w-0 border">
+                <thead>
+                        <tr className="border-b-2">
+                              <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
+                              <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Question</th>
+                              <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Difficulty</th>
+                              <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
+                        </tr>
+                </thead>
+          </table>
+
+          <table className="w-full sm:min-w-0 border">
+                <thead>
+                        <tr className="border-b-2">
+                              <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
+                              <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Question</th>
+                              <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Difficulty</th>
+                              <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
+                        </tr>
+                </thead>
+          </table>
+      </div>
                   </div>
                 </div>
               ))}
 
               {/* Button at the bottom to add more question groups */}
-              <div className="sm:w-full flex justify-center mx-auto mt-4">
+              <div className="sm:w-full flex mx-auto m-4">
                 <ButtonAdd Text="Add Question Group" handleClick={handleAddGroup} />
               </div>
             </>
@@ -508,4 +586,3 @@ const AddHomeWorkPage = () => {
 }
 
 export default AddHomeWorkPage
-
