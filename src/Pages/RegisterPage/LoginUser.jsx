@@ -30,7 +30,7 @@ const LoginPage = () => {
 
                             navigate("/dashboard", { replace: true });
                      }
-                     if (type === "affilate") {
+                     else if (type === "affilate") {
 
                             navigate("/dashboard_affilate", { replace: true });
                      }

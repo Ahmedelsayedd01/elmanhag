@@ -20,7 +20,6 @@ const SignUpAffilatePage = () => {
   const [password, setPassword] = useState('');
   const [conf_password, setconfirmPassword] = useState('');
   const [data, setData] = useState(null);
-  const [type, setType] = useState('');
   const [error, setError] = useState('');
   const [isloading, setIsLoading] = useState(false);
 
@@ -119,19 +118,17 @@ const SignUpAffilatePage = () => {
       conf_password
     }
     try {
-      const response = await axios.post('https://bdev.elmanhag.shop/affilate/auth/signup', {
-
-      });
+      const response = await axios.post('https://bdev.elmanhag.shop/affilate/auth/signup', data);
 
       if (response.status === 200) {
         const userData = {
-          ...data,
-          roles: ['affilate'] // Assuming type represents the user's role
+          ...response.data.detailes,
+          roles: [response.data.detailes.role] // Assuming type represents the user's role
         };
         auth.toastSuccess(`Welcome ${name}`);
         console.log('Login response:', response); // Debugging line
         setData(userData);
-        setType('affilate');
+        setRole(response.data.detailes.role);
         console.log("response", response);
 
       } else {
