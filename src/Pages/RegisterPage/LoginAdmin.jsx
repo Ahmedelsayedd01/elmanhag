@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link, Navigate, NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Logo from "../../Assets/Images/logoBlack"
 import Loading from '../../Components/Loading';
 import { useAuth } from '../../Context/Auth';
@@ -62,7 +62,7 @@ const LoginAdmin = () => {
                             setData(userData);
                             setType(response.data.detailes.role);
                             console.log("response", response);
-                            
+
                      } else {
                             auth.toastError('Failed to post data');
                             setError('Failed to post data');

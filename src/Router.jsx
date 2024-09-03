@@ -75,6 +75,7 @@ import LoginUser from "./Pages/RegisterPage/LoginUser";
 import SignUpPage from "./Pages/RegisterPage/SignUpPage";
 
 import {
+  AffiliatePage,
   HomePage,
   LoginHistoryPage,
   ParentPage,
