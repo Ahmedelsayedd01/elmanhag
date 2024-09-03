@@ -11,6 +11,8 @@ import { BundleDataContext } from '../../../../Layouts/Admin/EditBundlesLayout';
 
 const EditBundlesPage = () => {
     const bundleEdit = useContext(BundleDataContext);
+    const auth = useAuth();
+
 
     const [categoryData, setCategoryData] = useState([]);
     const [educationData, setEducationData] = useState([]);
@@ -132,12 +134,14 @@ const EditBundlesPage = () => {
         setOpenSelectCategory(!openSelectCategory);
         setOpenSelectSemester(false);
         setOpenSelectSubject(false);
+        setOpenSelectEducation(false)
     };
     
     const handleOpenSelectSemester = () => {
         setOpenSelectSemester(!openSelectSemester);
         setOpenSelectCategory(false);
         setOpenSelectSubject(false);
+        setOpenSelectEducation(false)
     };
     
     const handleOpenSelectSubject = () => {
@@ -283,117 +287,126 @@ const EditBundlesPage = () => {
     };
 
   const handleSubmitEdit = async (bundleID, event) => {
-    e.preventDefault();
+    event.preventDefault();
 
+    // Validate input fields
     if (!nameEn) {
-      auth.toastError('Please Enter NameEn.');
-      return;
+        auth.toastError('Please Enter NameEn.');
+        return;
     }
     if (!nameAr) {
-      auth.toastError('Please Enter NameAr.');
-      return;
+        auth.toastError('Please Enter NameAr.');
+        return;
     }
     if (!price) {
-      auth.toastError('Please Enter Price.');
-      return;
+        auth.toastError('Please Enter Price.');
+        return;
     }
     if (!selectCategoryId) {
-      auth.toastError('Please Select Category.');
-      return;
+        auth.toastError('Please Select Category.');
+        return;
     }
     if (!selectSemesterName) {
-      auth.toastError('Please Select Semester.');
-      return;
+        auth.toastError('Please Select Semester.');
+        return;
     }
     if (!selectEducationId) {
-      auth.toastError('Please Select Education.');
-      return;
+        auth.toastError('Please Select Education.');
+        return;
     }
     if (!selectSubjectId) {
-      auth.toastError('Please Select Subject.');
-      return;
+        auth.toastError('Please Select Subject.');
+        return;
     }
     if (!thumbnail) {
-      auth.toastError('Please Enter Thumbnail Photo.');
-      return;
+        auth.toastError('Please Enter Thumbnail Photo.');
+        return;
     }
     if (!coverPhoto) {
-      auth.toastError('Please Enter Cover Photo.');
-      return;
+        auth.toastError('Please Enter Cover Photo.');
+        return;
     }
     if (!demoVideo) {
-      auth.toastError('Please Enter Video.');
-      return;
+        auth.toastError('Please Enter Video.');
+        return;
     }
     if (!url) {
-      auth.toastError('Please Enter Url.');
-      return;
+        auth.toastError('Please Enter Url.');
+        return;
     }
     if (!description) {
-      auth.toastError('Please Enter Description.');
-      return;
+        auth.toastError('Please Enter Description.');
+        return;
     }
     if (!bundleTags) {
-      auth.toastError('Please Enter Tags.');
-      return;
+        auth.toastError('Please Enter Tags.');
+        return;
     }
     if (!expiredDate) {
-      auth.toastError('Please Enterexpired Date.');
-      return;
+        auth.toastError('Please Enter Expired Date.');
+        return;
     }
 
     setIsLoading(true);
 
-     // try {
-      const formData = new FormData();
-      formData.append('name', nameEn);
-      formData.append('ar_name', nameAr);
-      formData.append('price', price);
-      formData.append('category_id', selectCategoryId);
-      formData.append('education_id', selectEducationId);
-      formData.append('semester', selectSemesterName);
-      selectSubjectId.forEach((subjectId, index) => {
-        formData.append(`subjects[${index}]`, subjectId);
-      });      
-      formData.append('thumbnail', thumbnailFile);
-      formData.append('cover_photo', coverPhotoFile);
-      formData.append('demo_video', demoVideoFile);
-      formData.append('url', url);
-      formData.append('description', description);
-      formData.append('expired_date', expiredDate);
-      formData.append('tags', bundleTags);
-      formData.append('status', bundleActive);
-  
-      for (let pair of formData.entries()) {
-        console.log(pair[0]+ ', '+ pair[1]); 
-      }
-      
-      try {
-          const response = await axios.put(`https://bdev.elmanhag.shop/admin/bundle/update/${bundleID}`, formData, {
-          headers: {
-            Authorization: `Bearer ${auth.user.token}`,
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+    // Prepare query parameters
+    const params = new URLSearchParams({
+        name: nameEn,
+        ar_name: nameAr,
+        price: price,
+        category_id: selectCategoryId,
+        education_id: selectEducationId,
+        semester: selectSemesterName,
+        url: url,
+        description: description,
+        expired_date: expiredDate,
+        tags: bundleTags,
+        status: bundleActive,
+    });
+
+    // Add subjects to the params
+    selectSubjectId.forEach((subjectId, index) => {
+        params.append(`subjects[${index}]`, subjectId);
+    });
+
+    // Handle file uploads separately if needed (optional step depending on your backend setup)
+    const formData = new FormData();
+    formData.append('thumbnail', thumbnailFile);
+    formData.append('cover_photo', coverPhotoFile);
+    formData.append('demo_video', demoVideoFile);
+
+    try {
+        const response = await axios.put(
+            `https://bdev.elmanhag.shop/admin/bundle/update/${bundleID}?${params.toString()}`,
+            formData,
+            {
+                headers: {
+                    Authorization: `Bearer ${auth.user.token}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+            }
+        );
+
         if (response.status === 200) {
-          auth.toastSuccess('Bundles updated successfully!');
-          handleGoBack();
+            auth.toastSuccess('Bundles updated successfully!');
+            handleGoBack();
         } else {
-                auth.toastError('Failed to updated Bundle.');
+            auth.toastError('Failed to update Bundle.');
         }
-        } catch (error) {
+    } catch (error) {
         const errorMessages = error?.response?.data.errors;
         let errorMessageString = 'Error occurred';
-  
+
         if (errorMessages) {
-                errorMessageString = Object.values(errorMessages).flat().join(' ');
+            errorMessageString = Object.values(errorMessages).flat().join(' ');
         }
-  
+
         auth.toastError('Error', errorMessageString);
-        } finally {
+    } finally {
         setIsLoading(false);
-        }
-  };
+    }
+};
+
 
   return (
     <form className="w-full flex flex-col items-center justify-center gap-y-3" onSubmit={(event) => handleSubmitEdit(bundleEdit.id, event)}>
