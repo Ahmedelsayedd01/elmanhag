@@ -1,7 +1,7 @@
 /* Landing Page (Home) */
 export { default as HomePage } from "./HomePage/Homepage";
-/* Super Admin Page */
-/* Student Page */
+/* Admin Dashboard Page */
+/* User -> Student Page */
 export { default as StudentPage } from "./Admin/StudentPage/StudentPage";
 export { default as AddPage } from "./Admin/StudentPage/AddPage";
 export { default as EditProfilePage } from "./Admin/StudentPage/EditProfilePage";
@@ -56,15 +56,17 @@ export { default as EditPaymentMethodPage } from "./Admin/SettingPage/PaymentMet
 
 export { default as OperationsPage } from "./Admin/SettingPage/Operations/OperationsPage";
 
-/* Admin Page */
-/* Teachers Page */
-/* Parent Page */
-/* Affiliate Page */
+/* /////Admin Dashboard Page */
 
-/* Student Page */
+/* Student Dashboard Page */
 export { default as CurriculaPage } from "./Student/CurriculaPage/CurriculaPage";
 export { default as DutiesPage } from "./Student/DutiesPage/DutiesPage";
 export { default as LiveClassesPage } from "./Student/LiveClassesPage/LiveClassesPage";
 export { default as MonthsreviewsPage } from "./Student/MonthsReviewsPage/MonthsReviewsPage";
 export { default as FinalReviewsPage } from "./Student/FinalReviewsPage/FinalReviewsPage";
 export { default as SolveExamsPage } from "./Student/SolveExamsPage/SolveExamsPage";
+/* /////Student Dashboard Page */
+
+/* Affiliate Dashboard Page */
+export { default as AffiliatePage } from "./Affiliate/AffiliatePage";
+/* /////Affiliate Dashboard Page */
