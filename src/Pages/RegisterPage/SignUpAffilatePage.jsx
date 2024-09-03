@@ -7,7 +7,7 @@ import { useAuth } from '../../Context/Auth';
 import TextTitle from '../../Components/TextTitle';
 import InputCustom from '../../Components/InputCustom';
 
-const SignUpAffiliatePage = () => {
+const SignUpAffilatePage = () => {
 
   const auth = useAuth();
   const [show, setShow] = useState(false)
@@ -90,7 +90,7 @@ const SignUpAffiliatePage = () => {
       auth.login(data); // Call auth.login with the updated data
 
       setIsLoading(false);
-      navigate("/dashboardAffiliate", { replace: true });
+      navigate("/dashboard_affilate", { replace: true });
     }
   }, [data]);
 
@@ -126,12 +126,12 @@ const SignUpAffiliatePage = () => {
       if (response.status === 200) {
         const userData = {
           ...data,
-          roles: ['affiliate'] // Assuming type represents the user's role
+          roles: ['affilate'] // Assuming type represents the user's role
         };
         auth.toastSuccess(`Welcome ${name}`);
         console.log('Login response:', response); // Debugging line
         setData(userData);
-        setType('affiliate');
+        setType('affilate');
         console.log("response", response);
 
       } else {
@@ -173,4 +173,4 @@ const SignUpAffiliatePage = () => {
   )
 }
 
-export default SignUpAffiliatePage
+export default SignUpAffilatePage

@@ -29,9 +29,10 @@ const LoginPage = () => {
                      if (type === "student") {
 
                             navigate("/dashboard", { replace: true });
-                     } else {
+                     }
+                     if (type === "affilate") {
 
-                            navigate("/dashboardUser", { replace: true });
+                            navigate("/dashboard_affilate", { replace: true });
                      }
               }
        }, [data]);

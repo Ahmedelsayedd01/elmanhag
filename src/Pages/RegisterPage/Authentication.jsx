@@ -6,7 +6,7 @@ import TextTitle from '../../Components/TextTitle';
 const Authentication = () => {
        const [isActiveLogin, setIsActiveLogin] = useState(false);
        const [isActiveSignUP, setIsActiveSignUP] = useState(true);
-       const [isActiveAffilliate, setIsActiveAffilliate] = useState(false);
+       const [isActiveAffilate, setIsActiveAffilate] = useState(false);
 
        const handleClickLogin = () => {
               setIsActiveLogin(!isActiveLogin);
@@ -16,10 +16,10 @@ const Authentication = () => {
               setIsActiveSignUP(!isActiveSignUP);
               setIsActiveLogin(false);
        };
-       const handleClickAffilliate = () => {
+       const handleClickAffilate = () => {
               setIsActiveSignUP(false);
               setIsActiveLogin(false);
-              setIsActiveAffilliate(true);
+              setIsActiveAffilate(true);
        };
 
        return (
@@ -29,7 +29,7 @@ const Authentication = () => {
                             <div className="flex items-center justify-center w-full lg:w-6/12 h-full">
                                    <div className="flex flex-col items-center justify-start h-5/6 gap-8 w-10/12">
                                           <TextTitle text={'Hello guys!'} color={'mainColor'} font={'medium'} />
-                                          {isActiveAffilliate ?
+                                          {isActiveAffilate ?
                                                  ('') : (
 
                                                         <nav className="flex items-center w-full justify-center gap-8 mt-4">
@@ -38,7 +38,7 @@ const Authentication = () => {
                                                         </nav>
                                                  )}
                                           <Outlet />
-                                          <NavLink to={"signup_affiliate"} className={isActiveAffilliate ? "hidden text-2xl font-medium text-secoundColor px-6 py-3 bg-mainColor rounded-xl" : "text-2xl font-medium px-6 py-3 text-mainColor"} onClick={handleClickAffilliate}>Sign As Affilliate</NavLink>
+                                          <NavLink to={"signup_affilate"} className={isActiveAffilate ? "hidden text-2xl font-medium text-secoundColor px-6 py-3 bg-mainColor rounded-xl" : "text-2xl font-medium px-6 py-3 text-mainColor"} onClick={handleClickAffilate}>Sign As Affilate</NavLink>
                                    </div>
                             </div>
                             <div className="hidden lg:flex items-center justify-center w-6/12">

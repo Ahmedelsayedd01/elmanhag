@@ -67,6 +67,6 @@ export { default as FinalReviewsPage } from "./Student/FinalReviewsPage/FinalRev
 export { default as SolveExamsPage } from "./Student/SolveExamsPage/SolveExamsPage";
 /* /////Student Dashboard Page */
 
-/* Affiliate Dashboard Page */
-export { default as AffiliatePage } from "./Affiliate/AffiliatePage";
-/* /////Affiliate Dashboard Page */
+/* Affilate Dashboard Page */
+export { default as AffilatePage } from "./Affilate/AffilatePage";
+/* /////Affilate Dashboard Page */

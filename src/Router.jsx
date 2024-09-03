@@ -75,7 +75,7 @@ import LoginUser from "./Pages/RegisterPage/LoginUser";
 import SignUpPage from "./Pages/RegisterPage/SignUpPage";
 
 import {
-  AffiliatePage,
+  AffilatePage,
   HomePage,
   LoginHistoryPage,
   ParentPage,
@@ -108,7 +108,7 @@ import LayoutAdmin from "./Layouts/Admin/LayoutAdmin";
 import EditProfilePage from "./Layouts/Admin/EditeProfileStudent";
 import EditCategoryLayout from "./Layouts/Admin/EditCategoryLayout";
 import NavbarStudent from "./Components/NavbarStudent";
-import SignUpAffiliatePage from "./Pages/RegisterPage/SignUpAffiliatePage";
+import SignUpAffiliatePage from "./Pages/RegisterPage/SignUpAffilatePage";
 
 export const ContextNumper = createContext()
 const AppLayoutAuthentication = () => (
@@ -273,9 +273,9 @@ const AppLayoutTeacher = () => (
     </div>
   </>
 );
-const AppLayoutAffiliate = () => (
+const AppLayoutAffilate = () => (
   <>
-    <AffiliatePage />
+    <AffilatePage />
   </>
 );
 const AppLayoutParent = () => (
@@ -345,7 +345,7 @@ export const router = createBrowserRouter([
                 element: <LoginUser />,
               },
               {
-                path: 'signup_affiliate',
+                path: 'signup_affilate',
                 element: <SignUpAffiliatePage />,
               },
               {
@@ -710,7 +710,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    element: <ProtectedRoute allowedRoles={['teacher', 'parent', 'affiliate']} />,
+    element: <ProtectedRoute allowedRoles={['teacher', 'parent']} />,
     path: '/dashboardUser',
     children: [
       {
@@ -751,12 +751,11 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    // element: <AppLayoutAffiliate />,
-    element: <ProtectedRoute allowedRoles={['affiliate']} />,
+    element: <ProtectedRoute allowedRoles={['affilate']} />,
     children: [
       {
-        path: '/dashboardAffiliate',
-        element: <AppLayoutAffiliate />,
+        path: '/dashboard_affilate',
+        element: <AppLayoutAffilate />,
       }
     ],
   },
