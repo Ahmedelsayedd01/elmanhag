@@ -75,6 +75,7 @@ import LoginUser from "./Pages/RegisterPage/LoginUser";
 import SignUpPage from "./Pages/RegisterPage/SignUpPage";
 
 import {
+  AffiliatePage,
   HomePage,
   LoginHistoryPage,
   ParentPage,
@@ -274,15 +275,7 @@ const AppLayoutTeacher = () => (
 );
 const AppLayoutAffiliate = () => (
   <>
-    <div className="relative flex gap-x-4">
-      <SidebarAffiliate />
-      <div className="contentSection w-4/5 min-h-screen ">
-        <HeaderAffiliate />
-        <UserContext>
-          <Outlet />
-        </UserContext>
-      </div>
-    </div>
+    <AffiliatePage />
   </>
 );
 const AppLayoutParent = () => (
@@ -758,11 +751,12 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    element: <AppLayoutAffiliate />,
+    // element: <AppLayoutAffiliate />,
+    element: <ProtectedRoute allowedRoles={['affiliate']} />,
     children: [
       {
-        path: '/DashboardAffiliate',
-        element: <App />,
+        path: '/dashboardAffiliate',
+        element: <AppLayoutAffiliate />,
       }
     ],
   },
