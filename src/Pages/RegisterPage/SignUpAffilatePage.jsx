@@ -153,8 +153,10 @@ const SignUpAffilatePage = () => {
       <form onSubmit={handleSubmit} className="w-full flex flex-col items-start justify-center gap-4">
         <span className='text-thirdColor text-2xl font-medium'>Come on, Sign up</span>
         <div className="w-full flex flex-col gap-6 items-end">
+        <div className="w-full flex gap-4">
           <InputCustom type={"name"} placeholder={"Name"} value={name} onChange={(e) => setName(e.target.value)} />
           <InputCustom type={"phone"} placeholder={"Phone"} value={phone} onChange={(e) => setPhone(e.target.value)} />
+        </div>
           <InputCustom type={"country"} placeholder={"Country"} value={country_id} onChange={(e) => setCountry(e.target.value)} />
           <InputCustom type={"city"} placeholder={"City"} value={city_id} onChange={(e) => setCity(e.target.value)} />
           <InputCustom type={"email"} placeholder={"Email"} value={email} onChange={(e) => setEmail(e.target.value)} />

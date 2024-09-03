@@ -70,11 +70,11 @@ const EditBundlesPage = () => {
     const uploadDemoVideoRef = useRef();
 
     useEffect(() => {
-      const StorageCategoryData = JSON.parse(localStorage.getItem('Categories'));
+      const StorageCategoryData = JSON.parse(localStorage.getItem('BundlesCategoryData'));
       // const educationData = JSON.parse(localStorage.getItem('Education'));
       const StorageBundlesData = JSON.parse(localStorage.getItem('BundlesData'));
 
-      setCategoryData(StorageCategoryData.categories);
+      setCategoryData(StorageCategoryData);
       setEducationData(StorageBundlesData.education);
       setSubjectData(StorageBundlesData.subjects)
   

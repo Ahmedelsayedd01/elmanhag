@@ -25,7 +25,7 @@ const HomeWorkPage = () => {
   const [chapterData, setChapterData] = useState([]);
   const [subjectData, setSubjectData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
-//   const [homeWorkActive, setHomeWorkActive] = useState(false);
+  const [questionsData, setQuestionsData] = useState([]);
 
   const [selectSemester, setSelectSemester] = useState('Filter By Semester');
   const [openSelectSemester, setOpenSelectSemester] = useState(false);
@@ -207,6 +207,7 @@ const HomeWorkPage = () => {
         setChapterData(response.data.chapters);
         setSubjectData(response.data.subjects);
         setCategoryData(response.data.categories);
+        setQuestionsData(response.data.questions);
       }
     } catch (error) {
       console.error('Error fetching Subjects data:', error);
@@ -276,7 +277,7 @@ const HomeWorkPage = () => {
 
   localStorage.setItem("homeWork", JSON.stringify(homeWorks));
   localStorage.setItem("AllhomeWork", JSON.stringify(homeWorkData));
-
+  localStorage.setItem("QuestionsData", JSON.stringify(questionsData));
   return (
     <>
       <div className="w-full">
