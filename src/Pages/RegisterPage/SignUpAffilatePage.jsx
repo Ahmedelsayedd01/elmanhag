@@ -22,6 +22,7 @@ const SignUpAffilatePage = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState('');
   const [isloading, setIsLoading] = useState(false);
+  const [role, setRole] = useState('');
 
   const navigate = useNavigate();
 
@@ -123,12 +124,12 @@ const SignUpAffilatePage = () => {
       if (response.status === 200) {
         const userData = {
           ...response.data.detailes,
-          roles: [response.data.detailes.role] // Assuming type represents the user's role
+          roles: [response.data.role] // Assuming type represents the user's role
         };
         auth.toastSuccess(`Welcome ${name}`);
         console.log('Login response:', response); // Debugging line
         setData(userData);
-        setRole(response.data.detailes.role);
+        setRole(response.data.role);
         console.log("response", response);
 
       } else {
