@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { LuUpload } from "react-icons/lu";
+import { FaExternalLinkAlt } from "react-icons/fa";
+import { FaLink } from "react-icons/fa6";
 
 
-const InputCustom = ({ type, borderColor = "none", placeholder, value, readonly = false, onChange, onClick, upload = false }) => {
+
+
+const InputCustom = ({ type, borderColor = "none", placeholder, value, readonly = false, onChange, onClick, upload = false, source }) => {
        const [show, setShow] = useState(false)
        const [currentDay, setCurrentDay] = useState(new Date());
 
@@ -41,13 +45,18 @@ const InputCustom = ({ type, borderColor = "none", placeholder, value, readonly 
                             <input type={type}
                                    placeholder={placeholder}
                                    className={`w-full border-2 rounded-2xl border-${borderColor} 
-                       outline-none px-2 py-3 text-2xl font-normal ${upload ? "text-mainColor cursor-pointer pr-10" : "text-thirdColor"}`}
+                       outline-none px-2 py-3 pr-11 text-2xl font-normal ${upload ? "text-mainColor cursor-pointer pr-10" : "text-thirdColor"}`}
                                    value={value}
                                    onChange={onChange}
                                    onClick={onClick}
                                    readOnly={readonly}
                                    required />
                             {upload ? <LuUpload className='absolute right-4 top-1/3 text-mainColor text-2xl cursor-pointer' /> : ''}
+                            {source == 'external' ? <FaExternalLinkAlt className='absolute right-4 top-1/3 text-mainColor text-2xl cursor-pointer' /> :
+                                   source == 'embedded' ? <FaLink className='absolute right-4 top-1/3 text-mainColor text-2xl cursor-pointer' /> :
+                                          source == 'upload' ? <LuUpload className='absolute right-4 top-1/3 text-mainColor text-2xl cursor-pointer' />
+                                                 : ''}
+                            {/* external, embedded, upload */}
                      </div>
 
 
