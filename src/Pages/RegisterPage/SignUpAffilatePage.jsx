@@ -14,8 +14,8 @@ const SignUpAffilatePage = () => {
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [country, setCountry] = useState('');
-  const [city, setCity] = useState('');
+  const [country_id, setCountry] = useState('');
+  const [city_id, setCity] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [conf_password, setconfirmPassword] = useState('');
@@ -111,8 +111,8 @@ const SignUpAffilatePage = () => {
     const data = {
       name,
       phone,
-      country,
-      city,
+      country_id,
+      city_id,
       email,
       password,
       conf_password
@@ -153,10 +153,12 @@ const SignUpAffilatePage = () => {
       <form onSubmit={handleSubmit} className="w-full flex flex-col items-start justify-center gap-4">
         <span className='text-thirdColor text-2xl font-medium'>Come on, Sign up</span>
         <div className="w-full flex flex-col gap-6 items-end">
+        <div className="w-full flex gap-4">
           <InputCustom type={"name"} placeholder={"Name"} value={name} onChange={(e) => setName(e.target.value)} />
           <InputCustom type={"phone"} placeholder={"Phone"} value={phone} onChange={(e) => setPhone(e.target.value)} />
-          <InputCustom type={"country"} placeholder={"Country"} value={country} onChange={(e) => setCountry(e.target.value)} />
-          <InputCustom type={"city"} placeholder={"City"} value={city} onChange={(e) => setCity(e.target.value)} />
+        </div>
+          <InputCustom type={"country"} placeholder={"Country"} value={country_id} onChange={(e) => setCountry(e.target.value)} />
+          <InputCustom type={"city"} placeholder={"City"} value={city_id} onChange={(e) => setCity(e.target.value)} />
           <InputCustom type={"email"} placeholder={"Email"} value={email} onChange={(e) => setEmail(e.target.value)} />
           <InputCustom type={"password"} placeholder={"Password"} value={password} onChange={(e) => setPassword(e.target.value)} />
           <InputCustom type={"password"} placeholder={"Confirm Password"} value={conf_password} onChange={(e) => setconfirmPassword(e.target.value)} />

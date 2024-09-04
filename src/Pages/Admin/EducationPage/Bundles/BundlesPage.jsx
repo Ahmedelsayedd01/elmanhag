@@ -19,6 +19,7 @@ const BundlesPage = () => {
        const auth = useAuth();
        const [isLoading, setIsLoading] = useState(true);
        const [bundlesData, setBundlesData] = useState(null);
+       const [ bundlesCategory ,setBundlesCategory]=useState([])
        const [bundles, setBundles] = useState(null);
        const [education , SetEducation]=useState(null)
        const [selectedOptionCategory, setSelectedOptionCategory] = useState('Filter By Category');
@@ -106,6 +107,7 @@ const BundlesPage = () => {
                             setBundles(response.data.bundles);
                             SetEducation(response.data.education)
                             setSubject(response.data.subjects)
+                            setBundlesCategory(response.data.categories)
                             console.log(response.data)
 
                             // Extract unique semesters
@@ -181,6 +183,7 @@ const BundlesPage = () => {
        }
 
        localStorage.setItem("BundlesData", JSON.stringify(bundlesData));
+       localStorage.setItem("BundlesCategoryData", JSON.stringify(bundlesCategory));
        // localStorage.setItem("Education", JSON.stringify(education));
        // localStorage.setItem("subjects", JSON.stringify(subjects));
 
