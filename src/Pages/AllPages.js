@@ -37,6 +37,7 @@ export { default as QuestionsBankPage } from "./Admin/EducationPage/QuestionsBan
 /* H.W Page */
 export { default as HomeWorkPage } from "./Admin/HomeWorkPage/HomeWorkPage";
 export { default as AddHomeWorkPage } from "./Admin/HomeWorkPage/AddHomeWorkPage";
+export { default as EditHomeWorkPage } from "./Admin/HomeWorkPage/EditHomeWorkPage";
 
 /* Setting Page */
 export { default as AdminRolesPage } from "./Admin/SettingPage/AdminRolesPage";

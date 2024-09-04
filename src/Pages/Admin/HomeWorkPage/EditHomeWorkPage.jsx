@@ -1,18 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useAuth } from '../../../Context/Auth';
-import { ButtonAdd } from '../../../Components/Button';
-import { Button } from '../../../Components/Button';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import DropDownMenu from '../../../Components/DropDownMenu';
-import Loading from '../../../Components/Loading';
+import React, { useRef, useState ,useEffect ,useContext} from 'react';
 import InputCustom from '../../../Components/InputCustom';
+import { Button } from '../../../Components/Button';
+import { useAuth } from '../../../Context/Auth';
+import DropDownMenu from '../../../Components/DropDownMenu';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import CheckBox from '../../../Components/CheckBox';
-import TextTitle from '../../../Components/TextTitle'
-import { NavLink } from 'react-router-dom'
+import { HomeWorkDataContext } from '../../../Layouts/Admin/EditHomeWorkLayout';
 
-const AddHomeWorkPage = () => {
+const EditHomeWorkPage = () => {
+  const homeworkEdit = useContext(HomeWorkDataContext);
 
   const navigate = useNavigate();
   const auth = useAuth();
@@ -342,62 +339,6 @@ const applyFilter = (index, event)=>{
   // setDisplayedQuestions(filteredQuestions);
 };
 
-const handleFormSubmit = async (e) => {
-  e.preventDefault(); // Prevent the default form submission behavior
-
-  // title, semester, category_id, subject_id, chapter_id, lesson_id, difficulty, mark, pass, status
-        // groups[$iteration]
-        // questions[$iteration][]
-  
-  const formData = new FormData();
-  formData.append('title', selectHW);
-  formData.append('semester', selectSemester);
-  formData.append('category_id', selectCategoryId);
-  formData.append('subject_id', selectSubjectId);
-  formData.append('chapter_id', selectChapterId);
-  formData.append('lesson_id', selectLessonId);
-  formData.append('mark', parseInt(mark));
-  formData.append('pass', parseInt(pass));
-  formData.append('status', homeWorkActive);
-
-  // Adding groups and questions to formData
-  questGroups.forEach((group, groupIndex) => {
-    // Add group details
-    formData.append(`groups[${groupIndex}]`, group.titleInput);
-
-    // Add questions for this group
-    group.selectedQuestions.forEach((question, questionIndex) => {
-      formData.append(`questions[${groupIndex}][${questionIndex}]`, question.id);
-  });
-
-});
-
-// Log the formData entries
-for (let pair of formData.entries()) {
-  console.log(pair[0] + ', ' + pair[1]);
-}
-  
-  try {
-      const response = await axios.post('https://bdev.elmanhag.shop/admin/homework/add', formData, {
-          headers: {
-            Authorization: `Bearer ${auth.user.token}`,
-              'Content-Type': 'application/json',
-            },
-      });
-      
-      if (response.status === 200) {
-          alert('Homework added successfully');
-      }
-    } catch (error) {
-      const errorMessages = error?.response?.data.errors;
-      let errorMessageString = 'Error occurred';
-
-      if (errorMessages) {
-              errorMessageString = Object.values(errorMessages).flat().join(' ');
-      }
-
-      auth.toastError('Error', errorMessageString);    } 
-};
 
   return (
     <>
@@ -698,5 +639,4 @@ for (let pair of formData.entries()) {
   )
 }
 
-export default AddHomeWorkPage
-
+export default EditHomeWorkPage

@@ -35,9 +35,10 @@ export {default as EditBundlesLayout} from "./Admin/EditBundlesLayout";
 export {default as StudentsBundlesLayout} from "./Admin/StudentsBundlesLayout";
 
 export { default as QuestionsBankEducation } from "./Admin/QuestionsBankEducation";
-/* ////Education */
+/* HomeWork */
 export { default as HomeWorkLayout } from "./Admin/HomeWorkLayout";
 export { default as AddHomeWorkLayout } from "./Admin/AddHomeWorkLayout";
+export { default as EditHomeWorkLayout } from "./Admin/EditHomeWorkLayout";
 
 
 export { default as RevisionAD } from "./Admin/RevisionAD";
