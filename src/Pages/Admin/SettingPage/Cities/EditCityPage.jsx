@@ -20,7 +20,7 @@ const EditCityPage = () => {
     // Form state
     const [nameEn, setNameEn] = useState('');
     const [nameAr, setNameAr] = useState('');
-    const [cityActive, setCityActive] = useState('');
+    const [cityActive, setCityActive] = useState(0);
     const [countryId, setCountryId] = useState('');
     const [selectedCountry, setSelectedCountry] = useState('Choose Country');
     const [openCountry, setOpenCountry] = useState(false);

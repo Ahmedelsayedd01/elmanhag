@@ -51,7 +51,7 @@ const AddBundlesPage = () => {
   const [expiredDate, setExpiredDate] = useState('');
   const [bundleTags, setBundleTags] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [bundleActive, setBundleActive] = useState(false);
+  const [bundleActive, setBundleActive] = useState(0);
 
   const navigate = useNavigate();
   // const [adminData, setAdminData] = useState([]);

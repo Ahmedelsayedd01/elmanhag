@@ -22,13 +22,14 @@ const AddHomeWorkPage = () => {
   const [homeWorks, setHomeWorks] = useState(null);
   const [activeSection, setActiveSection] = useState('HWInfo');
 
-  const [semesterData, setSemesterData] = useState([{ name: 'First' }, { name: 'Second' }]);
+  const [semesterData, setSemesterData] = useState([{ name: 'first' }, { name: 'second' }]);
   const [lessonData, setLessonData] = useState([]);
   const [chapterData, setChapterData] = useState([]);
   const [subjectData, setSubjectData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
-  const [HWData, setHWData] = useState([{ name: 'H.W 1' }, { name: 'H.W 2' },{name: 'H.W 3'}]);
-  const [homeWorkActive, setHomeWorkActive] = useState(false);
+  const [HWData, setHWData] = useState([{ name: 'H.W1' }, { name: 'H.W2' },{name: 'H.W3'}]);
+  const [homeWorkLevel, setHomeWorkLevel] = useState([{ name: 'A' }, { name: 'B' }, { name: 'C' }]);
+  const [homeWorkActive, setHomeWorkActive] = useState(0);
 
   useEffect(() => {
     const StorageHWData = JSON.parse(localStorage.getItem('AllhomeWork'));
@@ -63,6 +64,10 @@ const AddHomeWorkPage = () => {
   const [selectSubjectId, setSelectSubjectId] = useState(null);
   const [openSelectSubject, setOpenSelectSubject] = useState(false);
 
+  const [selectHomeWorkLevel, setSelectHomeWorkLevel] = useState('Select By Difficulty');
+  const [selectHomeWorkLevelId, setSelectHomeWorkLevelId] = useState(null);
+  const [openSelectHomeWorkLevel, setOpenSelectHomeWorkLevel] = useState(false);
+
   const [selectHW, setSelectHW] = useState('Select By H.W');
   const [selectHWId, setSelectHWId] = useState(null);
   const [openSelectHW, setOpenSelectHW] = useState(false);
@@ -73,6 +78,7 @@ const AddHomeWorkPage = () => {
   const dropdownSubjectRef = useRef(null);
   const dropdownCategoryRef = useRef(null);
   const dropdownHWRef= useRef(null);
+  const dropdownHomeWorkLevelRef= useRef(null);
 
   const handleOpenSelectSemester = () => {
     setOpenSelectSemester(!openSelectSemester);
@@ -81,6 +87,7 @@ const AddHomeWorkPage = () => {
     setOpenSelectChapter(false);
     setOpenSelectSubject(false);
     setOpenSelectCategory(false);
+    setOpenSelectHomeWorkLevel(false);
   };
 
   const handleOpenSelectChapter = () => {
@@ -90,6 +97,7 @@ const AddHomeWorkPage = () => {
     setOpenSelectChapter(!openSelectChapter);
     setOpenSelectSubject(false);
     setOpenSelectCategory(false);
+    setOpenSelectHomeWorkLevel(false);
   };
 
   const handleOpenSelectCategory = () => {
@@ -99,6 +107,7 @@ const AddHomeWorkPage = () => {
     setOpenSelectChapter(false);
     setOpenSelectSubject(false);
     setOpenSelectCategory(!openSelectCategory);
+    setOpenSelectHomeWorkLevel(false);
   };
 
   const handleOpenSelectLesson = () => {
@@ -108,6 +117,7 @@ const AddHomeWorkPage = () => {
     setOpenSelectChapter(false);
     setOpenSelectSubject(false);
     setOpenSelectCategory(false);
+    setOpenSelectHomeWorkLevel(false);
   };
 
   const handleOpenSelectHW = () => {
@@ -117,6 +127,7 @@ const AddHomeWorkPage = () => {
     setOpenSelectChapter(false);
     setOpenSelectSubject(false);
     setOpenSelectCategory(false);
+    setOpenSelectHomeWorkLevel(false);
   };
 
   const handleOpenSelectSubject= () => {
@@ -126,6 +137,16 @@ const AddHomeWorkPage = () => {
     setOpenSelectChapter(false);
     setOpenSelectSubject(!openSelectSubject);
     setOpenSelectCategory(false);
+    setOpenSelectHomeWorkLevel(false);
+  };
+  const handleOpenSelectHomeWorkLevel= () => {
+    setOpenSelectSemester(false);
+    setOpenSelectLesson(false);
+    setOpenSelectHW(false);
+    setOpenSelectChapter(false);
+    setOpenSelectSubject(false);
+    setOpenSelectCategory(false);
+    setOpenSelectHomeWorkLevel(!openSelectHomeWorkLevel);
   };
 
   const handleSelectSemester = (e) => {
@@ -192,6 +213,17 @@ const AddHomeWorkPage = () => {
     setOpenSelectHW(false);
     console.log('Selected HW:', selectedOptionName);
     console.log('HW ID:', selectedOptionValue);
+  };
+
+  const handleSelectHomeWorkLevel = (e) => {
+    const inputElement = e.currentTarget.querySelector('.inputVal');
+    const selectedOptionName = e.currentTarget.textContent.trim();
+    const selectedOptionValue = inputElement ?inputElement.value : '';
+    setSelectHomeWorkLevel(selectedOptionName);
+    setSelectHomeWorkLevelId(parseInt(selectedOptionValue));
+    setOpenSelectHomeWorkLevel(false);
+    console.log('Selected HomeWorkLevel:', selectedOptionName);
+    console.log('HomeWorkLevel ID:', selectedOptionValue);
   };
 
   const handleClickOutside = (event) => {
@@ -345,10 +377,6 @@ const applyFilter = (index, event)=>{
 const handleFormSubmit = async (e) => {
   e.preventDefault(); // Prevent the default form submission behavior
 
-  // title, semester, category_id, subject_id, chapter_id, lesson_id, difficulty, mark, pass, status
-        // groups[$iteration]
-        // questions[$iteration][]
-  
   const formData = new FormData();
   formData.append('title', selectHW);
   formData.append('semester', selectSemester);
@@ -356,48 +384,55 @@ const handleFormSubmit = async (e) => {
   formData.append('subject_id', selectSubjectId);
   formData.append('chapter_id', selectChapterId);
   formData.append('lesson_id', selectLessonId);
+  formData.append('difficulty', selectHomeWorkLevel);
   formData.append('mark', parseInt(mark));
   formData.append('pass', parseInt(pass));
   formData.append('status', homeWorkActive);
 
   // Adding groups and questions to formData
-  questGroups.forEach((group, groupIndex) => {
+  questGroups.forEach((group, index) => {
     // Add group details
-    formData.append(`groups[${groupIndex}]`, group.titleInput);
+    formData.append(`groups[${index}]`, group.titleInput);
 
     // Add questions for this group
     group.selectedQuestions.forEach((question, questionIndex) => {
-      formData.append(`questions[${groupIndex}][${questionIndex}]`, question.id);
+      formData.append(`questions[${index}][${questionIndex}]`, question.id);
+    });
   });
 
-});
-
-// Log the formData entries
-for (let pair of formData.entries()) {
-  console.log(pair[0] + ', ' + pair[1]);
-}
+  // Log the formData entries
+  for (let pair of formData.entries()) {
+    console.log(pair[0] + ', ' + pair[1]);
+  }
   
   try {
-      const response = await axios.post('https://bdev.elmanhag.shop/admin/homework/add', formData, {
-          headers: {
-            Authorization: `Bearer ${auth.user.token}`,
-              'Content-Type': 'application/json',
-            },
-      });
-      
-      if (response.status === 200) {
-          alert('Homework added successfully');
+    const response = await axios.post('https://bdev.elmanhag.shop/admin/homework/add', formData, {
+      headers: {
+        Authorization: `Bearer ${auth.user.token}`,
+      },
+    });
+    
+    if (response.status === 200) {
+      auth.toastSuccess('HomeWork added successfully!');
+      handleGoBack();
+    } else {
+            auth.toastError('Failed to add HomeWork.');
+    }
+  }  catch (error) {
+    console.log(error.response); // Log the full response for debugging
+    console.log(error.response.data.errors);
+    const errorMessages = error?.response?.data?.errors;
+    let errorMessageString = 'Error occurred';
+  
+    if (errorMessages) {
+      errorMessageString = Object.values(errorMessages).flat().join(' ');
+    } 
+    auth.toastError('Error', errorMessageString);
+      } finally {
+      setIsLoading(false);
       }
-    } catch (error) {
-      const errorMessages = error?.response?.data.errors;
-      let errorMessageString = 'Error occurred';
-
-      if (errorMessages) {
-              errorMessageString = Object.values(errorMessages).flat().join(' ');
-      }
-
-      auth.toastError('Error', errorMessageString);    } 
 };
+
 
   return (
     <>
@@ -491,6 +526,16 @@ for (let pair of formData.entries()) {
                 stateoption={selectSubject}
                 openMenu={openSelectSubject}
                 options={subjectData}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <DropDownMenu
+                ref={dropdownHomeWorkLevelRef}
+                handleOpen={handleOpenSelectHomeWorkLevel}
+                handleOpenOption={handleSelectHomeWorkLevel}
+                stateoption={selectHomeWorkLevel}
+                openMenu={openSelectHomeWorkLevel}
+                options={homeWorkLevel}
               />
             </div>
             <div className="lg:w-[30%] sm:w-full">
