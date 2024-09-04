@@ -6,11 +6,15 @@ import DropDownMenu from '../../../Components/DropDownMenu';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CheckBox from '../../../Components/CheckBox';
+import { ButtonAdd } from '../../../Components/Button';
+import { Link } from 'react-router-dom';
+import Loading from '../../../Components/Loading';
+import TextTitle from '../../../Components/TextTitle'
+import { NavLink } from 'react-router-dom'
 import { HomeWorkDataContext } from '../../../Layouts/Admin/EditHomeWorkLayout';
 
 const EditHomeWorkPage = () => {
   const homeworkEdit = useContext(HomeWorkDataContext);
-
   const navigate = useNavigate();
   const auth = useAuth();
 
@@ -19,13 +23,14 @@ const EditHomeWorkPage = () => {
   const [homeWorks, setHomeWorks] = useState(null);
   const [activeSection, setActiveSection] = useState('HWInfo');
 
-  const [semesterData, setSemesterData] = useState([{ name: 'First' }, { name: 'Second' }]);
+  const [semesterData, setSemesterData] = useState([{ name: 'first' }, { name: 'second' }]);
   const [lessonData, setLessonData] = useState([]);
   const [chapterData, setChapterData] = useState([]);
   const [subjectData, setSubjectData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
-  const [HWData, setHWData] = useState([{ name: 'H.W 1' }, { name: 'H.W 2' },{name: 'H.W 3'}]);
-  const [homeWorkActive, setHomeWorkActive] = useState(false);
+  const [HWData, setHWData] = useState([{ name: 'H.W1' }, { name: 'H.W2' },{name: 'H.W3'}]);
+  const [homeWorkLevel, setHomeWorkLevel] = useState([{ name: 'A' }, { name: 'B' }, { name: 'C' }]);
+  const [homeWorkActive, setHomeWorkActive] = useState(0);
 
   useEffect(() => {
     const StorageHWData = JSON.parse(localStorage.getItem('AllhomeWork'));
@@ -35,6 +40,75 @@ const EditHomeWorkPage = () => {
     setCategoryData(StorageHWData?.categories || []);
     setSubjectData(StorageHWData?.subjects || []);
   }, []);
+
+  useEffect(() => {
+    if (homeworkEdit) {
+        setSelectHW(homeworkEdit.title || '');
+        setSelectSemester(homeworkEdit.semester || '');
+        // setCoverPhoto(homeworkEdit.chapter_id || '');
+        // setDemoVideo(homeworkEdit.lesson_id|| '');
+        setSelectHomeWorkLevel(homeworkEdit.difficulty || '');
+        setMark(homeworkEdit.mark || '');
+        setPass(homeworkEdit.pass|| '')
+        setHomeWorkActive(homeworkEdit.status|| false)
+
+        if (categoryData !== null) {
+          const filteredCategoryHW= categoryData.find(
+                (category) => category.id === homeworkEdit.category_id
+          );
+          if (filteredCategoryHW) {
+            setSelectCategory(filteredCategoryHW.name);
+            setSelectCategoryId(filteredCategoryHW.id);
+          }
+          else {
+            setSelectCategory('Select By Category');
+            setSelectCategoryId(null);
+          }
+        }
+
+        if (subjectData !== null) {
+          const filteredSubjectHW= subjectData.find(
+                (subject) => subject.id === homeworkEdit.subject_id
+          );
+          if (filteredSubjectHW) {
+            setSelectSubject(filteredSubjectHW.name);
+            setSelectSubjectId(filteredSubjectHW.id);
+          }
+          else {
+            setSelectSubject('Select By Subject');
+            setSelectSubjectId(null);
+          }
+        }
+
+        if (chapterData !== null) {
+          const filteredChapterHW= chapterData.find(
+                (chapter) => chapter.id === homeworkEdit.chapter_id
+          );
+          if (filteredChapterHW) {
+            setSelectChapter(filteredChapterHW.name);
+            setSelectChapterId(filteredChapterHW.id);
+          }
+          else {
+            setSelectChapter('Select By Chapter');
+            setSelectChapterId(null);
+          }
+        }
+
+        if (lessonData !== null) {
+          const filteredLessonHW= lessonData.find(
+                (lesson) => lesson.id === homeworkEdit.lesson_id
+          );
+          if (filteredLessonHW) {
+            setSelectLesson(filteredLessonHW.name);
+            setSelectLessonId(filteredLessonHW.id);
+          }
+          else {
+            setSelectLesson('Select By Lesson');
+            setSelectLessonId(null);
+          }
+        }      
+}
+}, [homeworkEdit]);
 
   const [selectSemester, setSelectSemester] = useState('Select By Semester');
   const [selectSemesterId, setSelectSemesterId] = useState(null);
@@ -60,6 +134,10 @@ const EditHomeWorkPage = () => {
   const [selectSubjectId, setSelectSubjectId] = useState(null);
   const [openSelectSubject, setOpenSelectSubject] = useState(false);
 
+  const [selectHomeWorkLevel, setSelectHomeWorkLevel] = useState('Select By Difficulty');
+  const [selectHomeWorkLevelId, setSelectHomeWorkLevelId] = useState(null);
+  const [openSelectHomeWorkLevel, setOpenSelectHomeWorkLevel] = useState(false);
+
   const [selectHW, setSelectHW] = useState('Select By H.W');
   const [selectHWId, setSelectHWId] = useState(null);
   const [openSelectHW, setOpenSelectHW] = useState(false);
@@ -70,6 +148,7 @@ const EditHomeWorkPage = () => {
   const dropdownSubjectRef = useRef(null);
   const dropdownCategoryRef = useRef(null);
   const dropdownHWRef= useRef(null);
+  const dropdownHomeWorkLevelRef= useRef(null);
 
   const handleOpenSelectSemester = () => {
     setOpenSelectSemester(!openSelectSemester);
@@ -78,6 +157,7 @@ const EditHomeWorkPage = () => {
     setOpenSelectChapter(false);
     setOpenSelectSubject(false);
     setOpenSelectCategory(false);
+    setOpenSelectHomeWorkLevel(false);
   };
 
   const handleOpenSelectChapter = () => {
@@ -87,6 +167,7 @@ const EditHomeWorkPage = () => {
     setOpenSelectChapter(!openSelectChapter);
     setOpenSelectSubject(false);
     setOpenSelectCategory(false);
+    setOpenSelectHomeWorkLevel(false);
   };
 
   const handleOpenSelectCategory = () => {
@@ -96,6 +177,7 @@ const EditHomeWorkPage = () => {
     setOpenSelectChapter(false);
     setOpenSelectSubject(false);
     setOpenSelectCategory(!openSelectCategory);
+    setOpenSelectHomeWorkLevel(false);
   };
 
   const handleOpenSelectLesson = () => {
@@ -105,6 +187,7 @@ const EditHomeWorkPage = () => {
     setOpenSelectChapter(false);
     setOpenSelectSubject(false);
     setOpenSelectCategory(false);
+    setOpenSelectHomeWorkLevel(false);
   };
 
   const handleOpenSelectHW = () => {
@@ -114,6 +197,7 @@ const EditHomeWorkPage = () => {
     setOpenSelectChapter(false);
     setOpenSelectSubject(false);
     setOpenSelectCategory(false);
+    setOpenSelectHomeWorkLevel(false);
   };
 
   const handleOpenSelectSubject= () => {
@@ -123,6 +207,16 @@ const EditHomeWorkPage = () => {
     setOpenSelectChapter(false);
     setOpenSelectSubject(!openSelectSubject);
     setOpenSelectCategory(false);
+    setOpenSelectHomeWorkLevel(false);
+  };
+  const handleOpenSelectHomeWorkLevel= () => {
+    setOpenSelectSemester(false);
+    setOpenSelectLesson(false);
+    setOpenSelectHW(false);
+    setOpenSelectChapter(false);
+    setOpenSelectSubject(false);
+    setOpenSelectCategory(false);
+    setOpenSelectHomeWorkLevel(!openSelectHomeWorkLevel);
   };
 
   const handleSelectSemester = (e) => {
@@ -189,6 +283,17 @@ const EditHomeWorkPage = () => {
     setOpenSelectHW(false);
     console.log('Selected HW:', selectedOptionName);
     console.log('HW ID:', selectedOptionValue);
+  };
+
+  const handleSelectHomeWorkLevel = (e) => {
+    const inputElement = e.currentTarget.querySelector('.inputVal');
+    const selectedOptionName = e.currentTarget.textContent.trim();
+    const selectedOptionValue = inputElement ?inputElement.value : '';
+    setSelectHomeWorkLevel(selectedOptionName);
+    setSelectHomeWorkLevelId(parseInt(selectedOptionValue));
+    setOpenSelectHomeWorkLevel(false);
+    console.log('Selected HomeWorkLevel:', selectedOptionName);
+    console.log('HomeWorkLevel ID:', selectedOptionValue);
   };
 
   const handleClickOutside = (event) => {
@@ -339,304 +444,313 @@ const applyFilter = (index, event)=>{
   // setDisplayedQuestions(filteredQuestions);
 };
 
+return (
+  <>
+{/* Buttons to switch between sections */}
+<div className='w-full flex justify-start gap-3 p-3'>
+      <button
+        className={`w-1/6 text-center text-xl font-medium ${
+          activeSection === 'HWInfo' ? 'p-3 text-mainColor border-b-8 border-mainColor rounded' : 'p-3 text-thirdColor'
+        }`}
+        onClick={() => setActiveSection('HWInfo')}
+      >
+        H.W Info
+      </button>
+      <button
+        className={`w-1/6 text-center text-xl font-medium ${
+          activeSection === 'Question' ? 'p-3 text-mainColor border-b-8 border-mainColor rounded' : 'p-3 text-thirdColor'
+        }`}
+        onClick={() => setActiveSection('Question')}
+      >
+        Questions
+      </button>
+</div>
 
-  return (
-    <>
-  {/* Buttons to switch between sections */}
-  <div className='w-full flex justify-start gap-3 p-3'>
-        <button
-          className={`w-1/6 text-center text-xl font-medium ${
-            activeSection === 'HWInfo' ? 'p-3 text-mainColor border-b-8 border-mainColor rounded' : 'p-3 text-thirdColor'
-          }`}
-          onClick={() => setActiveSection('HWInfo')}
-        >
-          H.W Info
-        </button>
-        <button
-          className={`w-1/6 text-center text-xl font-medium ${
-            activeSection === 'Question' ? 'p-3 text-mainColor border-b-8 border-mainColor rounded' : 'p-3 text-thirdColor'
-          }`}
-          onClick={() => setActiveSection('Question')}
-        >
-          Questions
-        </button>
-  </div>
+<form>
 
-  <form onSubmit={handleFormSubmit}>
-
-    {/* Conditional rendering based on activeSection */}
-    {activeSection === 'HWInfo' && (
-        <form id="HWInfo" className="w-full flex flex-col items-center justify-center gap-y-3">
-          <div className="w-full flex flex-wrap items-center justify-start gap-3">
-            <div className="lg:w-[30%] sm:w-full">
-              <DropDownMenu
-                ref={dropdownSemesterRef}
-                handleOpen={handleOpenSelectSemester}
-                handleOpenOption={handleSelectSemester}
-                stateoption={selectSemester}
-                openMenu={openSelectSemester}
-                options={semesterData}
-              />
-            </div>
-            <div className="lg:w-[30%] sm:w-full">
-              <DropDownMenu
-                ref={dropdownChapterRef}
-                handleOpen={handleOpenSelectChapter}
-                handleOpenOption={handleSelectChapter}
-                stateoption={selectChapter}
-                openMenu={openSelectChapter}
-                options={chapterData}
-              />
-            </div>
-            <div className="lg:w-[30%] sm:w-full">
-              <InputCustom
-                type="text"
-                placeholder="Pass"
-                value={pass}
-                onChange={(e) => setPass(e.target.value)}
-              />
-            </div>
-            <div className="lg:w-[30%] sm:w-full">
-              <DropDownMenu
-                ref={dropdownCategoryRef}
-                handleOpen={handleOpenSelectCategory}
-                handleOpenOption={handleSelectCategory}
-                stateoption={selectCategory}
-                openMenu={openSelectCategory}
-                options={categoryData}
-              />
-            </div>
-            <div className="lg:w-[30%] sm:w-full">
-              <DropDownMenu
-                ref={dropdownLessonRef}
-                handleOpen={handleOpenSelectLesson}
-                handleOpenOption={handleSelectLesson}
-                stateoption={selectLesson}
-                openMenu={openSelectLesson}
-                options={lessonData}
-              />
-            </div>
-            <div className="lg:w-[30%] sm:w-full">
-              <InputCustom
-                type="text"
-                placeholder="Mark"
-                value={mark}
-                onChange={(e) => setMark(e.target.value)}
-              />
-            </div>
-            <div className="lg:w-[30%] sm:w-full">
-              <DropDownMenu
-                ref={dropdownSubjectRef}
-                handleOpen={handleOpenSelectSubject}
-                handleOpenOption={handleSelectSubject}
-                stateoption={selectSubject}
-                openMenu={openSelectSubject}
-                options={subjectData}
-              />
-            </div>
-            <div className="lg:w-[30%] sm:w-full">
-              <DropDownMenu
-                ref={dropdownHWRef}
-                handleOpen={handleOpenSelectHW}
-                handleOpenOption={handleSelectHW}
-                stateoption={selectHW}
-                openMenu={openSelectHW}
-                options={HWData}
-              />
-            </div>
-            <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
-              <span className="text-2xl text-thirdColor font-medium">Active:</span>
-              <div>
-                <CheckBox checked={homeWorkActive} handleClick={handleClick} />
-              </div>
+  {/* Conditional rendering based on activeSection */}
+  {activeSection === 'HWInfo' && (
+      <form id="HWInfo" className="w-full flex flex-col items-center justify-center gap-y-3">
+        <div className="w-full flex flex-wrap items-center justify-start gap-3">
+          <div className="lg:w-[30%] sm:w-full">
+            <DropDownMenu
+              ref={dropdownSemesterRef}
+              handleOpen={handleOpenSelectSemester}
+              handleOpenOption={handleSelectSemester}
+              stateoption={selectSemester}
+              openMenu={openSelectSemester}
+              options={semesterData}
+            />
+          </div>
+          <div className="lg:w-[30%] sm:w-full">
+            <DropDownMenu
+              ref={dropdownChapterRef}
+              handleOpen={handleOpenSelectChapter}
+              handleOpenOption={handleSelectChapter}
+              stateoption={selectChapter}
+              openMenu={openSelectChapter}
+              options={chapterData}
+            />
+          </div>
+          <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+              type="text"
+              placeholder="Pass"
+              value={pass}
+              onChange={(e) => setPass(e.target.value)}
+            />
+          </div>
+          <div className="lg:w-[30%] sm:w-full">
+            <DropDownMenu
+              ref={dropdownCategoryRef}
+              handleOpen={handleOpenSelectCategory}
+              handleOpenOption={handleSelectCategory}
+              stateoption={selectCategory}
+              openMenu={openSelectCategory}
+              options={categoryData}
+            />
+          </div>
+          <div className="lg:w-[30%] sm:w-full">
+            <DropDownMenu
+              ref={dropdownLessonRef}
+              handleOpen={handleOpenSelectLesson}
+              handleOpenOption={handleSelectLesson}
+              stateoption={selectLesson}
+              openMenu={openSelectLesson}
+              options={lessonData}
+            />
+          </div>
+          <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+              type="text"
+              placeholder="Mark"
+              value={mark}
+              onChange={(e) => setMark(e.target.value)}
+            />
+          </div>
+          <div className="lg:w-[30%] sm:w-full">
+            <DropDownMenu
+              ref={dropdownSubjectRef}
+              handleOpen={handleOpenSelectSubject}
+              handleOpenOption={handleSelectSubject}
+              stateoption={selectSubject}
+              openMenu={openSelectSubject}
+              options={subjectData}
+            />
+          </div>
+          <div className="lg:w-[30%] sm:w-full">
+            <DropDownMenu
+              ref={dropdownHomeWorkLevelRef}
+              handleOpen={handleOpenSelectHomeWorkLevel}
+              handleOpenOption={handleSelectHomeWorkLevel}
+              stateoption={selectHomeWorkLevel}
+              openMenu={openSelectHomeWorkLevel}
+              options={homeWorkLevel}
+            />
+          </div>
+          <div className="lg:w-[30%] sm:w-full">
+            <DropDownMenu
+              ref={dropdownHWRef}
+              handleOpen={handleOpenSelectHW}
+              handleOpenOption={handleSelectHW}
+              stateoption={selectHW}
+              openMenu={openSelectHW}
+              options={HWData}
+            />
+          </div>
+          <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+            <span className="text-2xl text-thirdColor font-medium">Active:</span>
+            <div>
+              <CheckBox checked={homeWorkActive} handleClick={handleClick} />
             </div>
           </div>
-          {/* Buttons */}
-          <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
-            <div className="flex items-center justify-center w-72">
-                <Button
-                type="button"
-                Text="Next"
-                BgColor="bg-mainColor"
-                Color="text-white"
-                Width="full"
-                Size="text-2xl"
-                px="px-28"
-                rounded="rounded-2xl"
-                handleClick={handleNext}
-              />
-            </div>
-            <button onClick={handleGoBack} className="text-2xl text-mainColor">
-              Cancel
-            </button>
+        </div>
+        {/* Buttons */}
+        <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
+          <div className="flex items-center justify-center w-72">
+              <Button
+              type="button"
+              Text="Next"
+              BgColor="bg-mainColor"
+              Color="text-white"
+              Width="full"
+              Size="text-2xl"
+              px="px-28"
+              rounded="rounded-2xl"
+              handleClick={handleNext}
+            />
           </div>
-        </form>
-      )}
+          <button onClick={handleGoBack} className="text-2xl text-mainColor">
+            Cancel
+          </button>
+        </div>
+      </form>
+    )}
 
 {activeSection === 'Question' && (
-  <div id="Question" className="w-full">
-    {/* Initial Button to add the first question group */}
-    {initialButtonVisible && (
-      <div className="sm:w-full flex justify-center mx-auto">
-        <ButtonAdd Text="Add Question Group" handleClick={handleAddFirstGroup} />
-      </div>
-    )}
-
-    {/* Render the question groups */}
-    {!initialButtonVisible && (
-      <>
-        {questGroups.map((group, index) => (
-          <div className="w-full flex flex-col items-center p-4 gap-4 m-4 rounded-lg" key={index}>
-            <TextTitle text="MCQ" />
-            <div className="w-full flex flex-wrap items-center justify-start gap-3">
-              <div className="lg:w-[25%] sm:w-full">
-                <InputCustom
-                  type="text"
-                  placeholder="Question Group Title"
-                  value={group.titleInput}
-                  onChange={(event) => handleTitleInputChange(index, event)}
-                />
-              </div>
-              <div className="lg:w-[25%] sm:w-full">
-                <DropDownMenu
-                  ref={dropdownQuestTypeRef}
-                  stateoption={group.QuestGroupType || 'Select Type'}
-                  openMenu={group.openQuestGroupType}
-                  handleOpen={() => handleOpen(index, 1)}
-                  handleOpenOption={(e) => handleSelectQuestGroupType(index, e)}
-                  options={questType}
-                />
-              </div>
-              <div className="lg:w-[25%] sm:w-full">
-                <DropDownMenu
-                  ref={dropdownQuestLevelRef}
-                  stateoption={group.QuestGroupLevel || 'Select Difficulty'}
-                  openMenu={group.openQuestGroupLevel}
-                  handleOpen={() => handleOpen(index, 2)}
-                  handleOpenOption={(e) => handleSelectQuestGroupLevel(index, e)}
-                  options={questLevel}
-                />
-              </div>
-
-              <div className="flex items-center justify-center w-72">
-                  <Button
-                        Text="Filter"
-                        BgColor="bg-mainColor"
-                        Color="text-white"
-                        Width="full"
-                        Size="text-2xl"
-                        px="px-28"
-                        rounded="rounded-2xl"
-                        handleClick={(e) => applyFilter(index, e)}
-                  />
-              </div>            
-            </div>
-
-            {/* Questions and Selected Questions Tables */}
-            <div className="w-full flex items-center justify-between mt-4 overflow-x-auto gap-12">
-              {/* Available Questions Table */}
-              <table className="w-full sm:min-w-0 border">
-                <thead>
-                  <tr className="border-b-2">
-                    <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
-                    <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Question</th>
-                    <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Difficulty</th>
-                    <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
-                  </tr>
-                </thead>
-                <tbody className="w-full">
-                  {group.displayedQuestions.map((question, qIndex) => (
-                    <tr className="w-full border-b-2" key={question.id}>
-                      <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                        {qIndex + 1}
-                      </td>
-                      <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                        <span className="text-mainColor text-xl border-b-2 border-mainColor font-semibold">
-                          <Link to={`question/${question.id}`} state={{ id: question.id }}>View</Link>
-                        </span>
-                      </td>
-                      <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                        {question?.difficulty || 'Null'}
-                      </td>
-                      <td className="min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center">
-                        <button 
-                          className="text-mainColor text-xl border-b-2 border-mainColor font-semibold" 
-                          onClick={() => handleAddQuestionToGroup(index, question)}
-                        >
-                          Add
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
-              {/* Selected Questions Table */}
-              <table className="w-full sm:min-w-0 border">
-                <thead>
-                  <tr className="border-b-2">
-                    <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
-                    <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Question</th>
-                    <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Difficulty</th>
-                    <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
-                  </tr>
-                </thead>
-                <tbody className="w-full">
-                  {group.selectedQuestions.map((question, qIndex) => (
-                    <tr className="w-full border-b-2" key={question.id}>
-                      <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                        {qIndex + 1}
-                      </td>
-                      <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                        <span className="text-mainColor text-xl border-b-2 border-mainColor font-semibold">
-                          <Link to={`question/${question.id}`} state={{ id: question.id }}>View</Link>
-                        </span>
-                      </td>
-                      <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                        {question?.difficulty || 'Null'}
-                      </td>
-                      <td className="min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center">
-                        <button 
-                          className="text-mainColor text-xl border-b-2 border-mainColor font-semibold" 
-                          onClick={() => handleRemoveQuestionFromGroup(index, question)}
-                        >
-                          Remove
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        ))}
-        <div className="w-full flex justify-center gap-4 mt-6">
-          <ButtonAdd Text="Add Question Group" handleClick={handleAddGroup} />
-        </div>
-
-         {/* Buttons */}
-    <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
-        <div className="flex items-center justify-center w-72">
-            <button
-                type="submit"
-                className="bg-mainColor text-white text-2xl p-3 px-28 rounded-2xl"
-            >
-                Submit
-            </button>
-        </div>
-        <button className="text-2xl text-mainColor">
-            Preview H.W
-        </button>
+<div id="Question" className="w-full">
+  {/* Initial Button to add the first question group */}
+  {initialButtonVisible && (
+    <div className="sm:w-full flex justify-center mx-auto">
+      <ButtonAdd Text="Add Question Group" handleClick={handleAddFirstGroup} />
     </div>
-      </>
-    )}
+  )}
+
+  {/* Render the question groups */}
+  {!initialButtonVisible && (
+    <>
+      {questGroups.map((group, index) => (
+        <div className="w-full flex flex-col items-center p-4 gap-4 m-4 rounded-lg" key={index}>
+          <TextTitle text="MCQ" />
+          <div className="w-full flex flex-wrap items-center justify-start gap-3">
+            <div className="lg:w-[25%] sm:w-full">
+              <InputCustom
+                type="text"
+                placeholder="Question Group Title"
+                value={group.titleInput}
+                onChange={(event) => handleTitleInputChange(index, event)}
+              />
+            </div>
+            <div className="lg:w-[25%] sm:w-full">
+              <DropDownMenu
+                ref={dropdownQuestTypeRef}
+                stateoption={group.QuestGroupType || 'Select Type'}
+                openMenu={group.openQuestGroupType}
+                handleOpen={() => handleOpen(index, 1)}
+                handleOpenOption={(e) => handleSelectQuestGroupType(index, e)}
+                options={questType}
+              />
+            </div>
+            <div className="lg:w-[25%] sm:w-full">
+              <DropDownMenu
+                ref={dropdownQuestLevelRef}
+                stateoption={group.QuestGroupLevel || 'Select Difficulty'}
+                openMenu={group.openQuestGroupLevel}
+                handleOpen={() => handleOpen(index, 2)}
+                handleOpenOption={(e) => handleSelectQuestGroupLevel(index, e)}
+                options={questLevel}
+              />
+            </div>
+
+            <div className="flex items-center justify-center w-72">
+                <Button
+                      Text="Filter"
+                      BgColor="bg-mainColor"
+                      Color="text-white"
+                      Width="full"
+                      Size="text-2xl"
+                      px="px-28"
+                      rounded="rounded-2xl"
+                      handleClick={(e) => applyFilter(index, e)}
+                />
+            </div>            
+          </div>
+
+          {/* Questions and Selected Questions Tables */}
+          <div className="w-full flex items-center justify-between mt-4 overflow-x-auto gap-12">
+            {/* Available Questions Table */}
+            <table className="w-full sm:min-w-0 border">
+              <thead>
+                <tr className="border-b-2">
+                  <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
+                  <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Question</th>
+                  <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Difficulty</th>
+                  <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
+                </tr>
+              </thead>
+              <tbody className="w-full">
+                {group.displayedQuestions.map((question, qIndex) => (
+                  <tr className="w-full border-b-2" key={question.id}>
+                    <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                      {qIndex + 1}
+                    </td>
+                    <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                      <span className="text-mainColor text-xl border-b-2 border-mainColor font-semibold">
+                        <Link to={`question/${question.id}`} state={{ id: question.id }}>View</Link>
+                      </span>
+                    </td>
+                    <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                      {question?.difficulty || 'Null'}
+                    </td>
+                    <td className="min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center">
+                      <button 
+                        className="text-mainColor text-xl border-b-2 border-mainColor font-semibold" 
+                        onClick={() => handleAddQuestionToGroup(index, question)}
+                      >
+                        Add
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {/* Selected Questions Table */}
+            <table className="w-full sm:min-w-0 border">
+              <thead>
+                <tr className="border-b-2">
+                  <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
+                  <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Question</th>
+                  <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Difficulty</th>
+                  <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
+                </tr>
+              </thead>
+              <tbody className="w-full">
+                {group.selectedQuestions.map((question, qIndex) => (
+                  <tr className="w-full border-b-2" key={question.id}>
+                    <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                      {qIndex + 1}
+                    </td>
+                    <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                      <span className="text-mainColor text-xl border-b-2 border-mainColor font-semibold">
+                        <Link to={`question/${question.id}`} state={{ id: question.id }}>View</Link>
+                      </span>
+                    </td>
+                    <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                      {question?.difficulty || 'Null'}
+                    </td>
+                    <td className="min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center">
+                      <button 
+                        className="text-mainColor text-xl border-b-2 border-mainColor font-semibold" 
+                        onClick={() => handleRemoveQuestionFromGroup(index, question)}
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ))}
+      <div className="w-full flex justify-center gap-4 mt-6">
+        <ButtonAdd Text="Add Question Group" handleClick={handleAddGroup} />
+      </div>
+
+       {/* Buttons */}
+  <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
+      <div className="flex items-center justify-center w-72">
+          <button
+              type="submit"
+              className="bg-mainColor text-white text-2xl p-3 px-28 rounded-2xl"
+          >
+              Submit
+          </button>
+      </div>
+      <button className="text-2xl text-mainColor">
+          Preview H.W
+      </button>
   </div>
+    </>
+  )}
+</div>
 )}
 
-  </form>
-      
-    </>
-  )
+</form>
+    
+  </>
+)
 }
 
 export default EditHomeWorkPage

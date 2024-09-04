@@ -50,6 +50,7 @@ import {
   EditChapterLayout,
   HomeWorkLayout,
   AddHomeWorkLayout,
+  EditHomeWorkLayout,
   AddLessonLayout,
   EditLessonLayout,
   MaterialLessonLayout,
@@ -567,6 +568,10 @@ export const router = createBrowserRouter([
               {
                 path: 'add',
                 element: <AddHomeWorkLayout />
+              },
+              {
+                path: 'edit/:homeWorkId',
+                element: <EditHomeWorkLayout />
               },
             ]
           },

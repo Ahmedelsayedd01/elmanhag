@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { EditHomeWorkPage } from '../../Pages/AllPages';
+import HeaderPageSection from '../../Components/HeaderPageSection';
 
 
 export const HomeWorkDataContext = createContext()
@@ -17,7 +18,7 @@ const EditHomeWorkLayout = () => {
           console.log('homeWorkData from local storage:', storedhomeWorkData); // Debugging log
           if (storedhomeWorkData) {
             setHomeWorkData(storedhomeWorkData);
-            allHomeWorks(storedhomeWorkData.homeworks); // Corrected line
+            setAllHomeWorks(storedhomeWorkData.homeworks); // Corrected line
           }
         };
         fetchHomeWorkData(); // Renamed function to avoid shadowing
@@ -39,6 +40,7 @@ const EditHomeWorkLayout = () => {
       console.log('HomeWorkeEdit', homeWorkEdit);
 
 
+      const navigate = useNavigate();
 
     const handleGoBack = () => {
         navigate(-1, { replace: true });
