@@ -43,7 +43,12 @@ export { default as EditHomeWorkLayout } from "./Admin/EditHomeWorkLayout";
 
 export { default as RevisionAD } from "./Admin/RevisionAD";
 export { default as ExamsAD } from "./Admin/ExamsAD";
-export { default as LiveAD } from "./Admin/LiveAD";
+/*Live */
+export { default as LiveLayout } from "./Admin/LiveLayout";
+export { default as AddLiveLayout } from "./Admin/AddLiveLayout";
+export { default as EditLiveLayout } from "./Admin/EditLiveLayout";
+
+
 export { default as MarketingAD } from "./Admin/MarketingAD";
 export { default as FinancialAD } from "./Admin/FinancialAD";
 export { default as AffiliateAD } from "./Admin/AffiliateAD";

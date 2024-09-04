@@ -12,7 +12,7 @@ import {
   DashboardAD,
   RevisionAD,
   ExamsAD,
-  LiveAD,
+  LiveLayout,
   MarketingAD,
   FinancialAD,
   AffiliateAD,
@@ -580,7 +580,7 @@ export const router = createBrowserRouter([
           },
           {
             path: 'live',
-            element: <LiveAD />,
+            element: <LiveLayout />,
           },
           {
             path: 'marketing',

@@ -39,6 +39,11 @@ export { default as HomeWorkPage } from "./Admin/HomeWorkPage/HomeWorkPage";
 export { default as AddHomeWorkPage } from "./Admin/HomeWorkPage/AddHomeWorkPage";
 export { default as EditHomeWorkPage } from "./Admin/HomeWorkPage/EditHomeWorkPage";
 
+/* Live Page */
+export { default as LivePage } from "./Admin/LivePage/LivePage";
+export { default as AddLivePage } from "./Admin/LivePage/AddLivePage";
+export { default as EditLivePage } from "./Admin/LivePage/EditLivePage";
+
 /* Setting Page */
 export { default as AdminRolesPage } from "./Admin/SettingPage/AdminRolesPage";
 export { default as CountriesPage } from "./Admin/SettingPage/Countries/CountriesPage";
