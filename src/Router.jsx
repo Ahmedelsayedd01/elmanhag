@@ -13,6 +13,8 @@ import {
   RevisionAD,
   ExamsAD,
   LiveLayout,
+  AddLiveLayout,
+  EditLiveLayout,
   MarketingAD,
   FinancialAD,
   AffiliateAD,
@@ -189,6 +191,15 @@ const AppLayoutQuestionsBank = () => (
     <Outlet />
   </>
 );
+
+//update here
+/* Live */
+const AppLayoutLive = () => (
+  <>
+    <Outlet />
+  </>
+);
+
 const AppLayoutAdminRoles = () => (
   <>
     <Outlet />
@@ -583,10 +594,33 @@ export const router = createBrowserRouter([
             path: 'exams',
             element: <ExamsAD />,
           },
+          // {
+          //   path: 'live',
+          //   element: <LiveLayout />,
+          // },
+
           {
             path: 'live',
-            element: <LiveLayout />,
+            element: <AppLayoutLive />,
+            children: [
+              {
+                path: '',
+                element: <LiveLayout />
+              },
+              {
+                path: 'add',
+                element: <AddLiveLayout />
+              },
+              {
+                path: 'edit/:liveId',
+                element: <EditLiveLayout />
+              },
+            ]
           },
+
+
+
+
           {
             path: 'marketing',
             element: <MarketingAD />,
