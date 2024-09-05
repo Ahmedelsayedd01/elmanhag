@@ -91,13 +91,13 @@ const LivePage = () => {
           }
     };
 
-    // if (isLoading) {
-    //       return (
-    //               <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
-    //                     <Loading />
-    //               </div>
-    //       );
-    // }
+    if (isLoading) {
+          return (
+                  <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
+                        <Loading />
+                  </div>
+          );
+    }
 
     if (!lives) {
           return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Lives data available</div>;
@@ -105,8 +105,6 @@ const LivePage = () => {
 
     localStorage.setItem("LivesData", JSON.stringify(allLivesData));
     localStorage.setItem("Lives", JSON.stringify(lives));
-    // localStorage.setItem("LiveSubjects", JSON.stringify(liveSubject));
-    // localStorage.setItem("LiveTeacher", JSON.stringify(liveTeacher));
 
   return (
     <>
@@ -150,12 +148,12 @@ const LivePage = () => {
                                                     <td
                                                           className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                     >
-                                                          {live?.subject || "null"}
+                                                          {live.subject?.name || "null"}
                                                     </td>
                                                     <td
                                                           className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                     >
-                                                          {live?.teacher || "null"}
+                                                          {live.teacher?.name || "null"}
                                                     </td>
                                                     <td
                                                           className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
@@ -170,12 +168,12 @@ const LivePage = () => {
                                                     <td
                                                           className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                     >
-                                                          {live?.time_from || "null"}
+                                                          {live?.from || "null"}
                                                     </td>
                                                     <td
                                                           className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                     >
-                                                          {live?.time_to || "null"}
+                                                          {live?.to || "null"}
                                                     </td>
                                                     <td
                                                           className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
@@ -185,7 +183,7 @@ const LivePage = () => {
                                                     <td
                                                           className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                     >
-                                                          {live.status === 1 ? "Active" : "Disabled"}
+                                                          {live.paid === 1 ? "paid" : "free"}
                                                     </td>
                                                     <td
                                                           className="min-w-[100px] sm:min-w-[80px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
