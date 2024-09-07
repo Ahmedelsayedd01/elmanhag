@@ -48,6 +48,11 @@ export { default as LiveLayout } from "./Admin/LiveLayout";
 export { default as AddLiveLayout } from "./Admin/AddLiveLayout";
 export { default as EditLiveLayout } from "./Admin/EditLiveLayout";
 
+/* Marketing Layouts */
+//Discount Layouts
+export { default as DiscountLayout } from "./Admin/DiscountLayout";
+export { default as AddDiscountLayout } from "./Admin/AddDiscountLayout";
+export { default as EditDiscountLayout} from "./Admin/EditDiscountLayout";
 
 export { default as MarketingAD } from "./Admin/MarketingAD";
 export { default as FinancialAD } from "./Admin/FinancialAD";

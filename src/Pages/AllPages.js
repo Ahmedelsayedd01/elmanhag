@@ -44,6 +44,12 @@ export { default as LivePage } from "./Admin/LivePage/LivePage";
 export { default as AddLivePage } from "./Admin/LivePage/AddLivePage";
 export { default as EditLivePage } from "./Admin/LivePage/EditLivePage";
 
+/* Marketing Pages */
+//Discount Pages
+export { default as DiscountPage } from "./Admin/MarketingPage/Discount/DiscountPage";
+export { default as AddDiscountPage } from "./Admin/MarketingPage/Discount/AddDiscountPage";
+export { default as EditDiscountPage } from "./Admin/MarketingPage/Discount/EditDiscountPage";
+
 /* Setting Page */
 export { default as AdminRolesPage } from "./Admin/SettingPage/AdminRolesPage";
 export { default as CountriesPage } from "./Admin/SettingPage/Countries/CountriesPage";
