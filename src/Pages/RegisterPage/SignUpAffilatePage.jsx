@@ -1,11 +1,12 @@
 import { Button } from '../../Components/Button'
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import Loading from '../../Components/Loading';
 import { useAuth } from '../../Context/Auth';
 import TextTitle from '../../Components/TextTitle';
 import InputCustom from '../../Components/InputCustom';
+import DropDownMenu from '../../Components/DropDownMenu'
 
 const SignUpAffilatePage = () => {
 
@@ -24,66 +25,70 @@ const SignUpAffilatePage = () => {
   const [isloading, setIsLoading] = useState(false);
   const [role, setRole] = useState('');
 
+  const [studentCountry, setStudentCountry] = useState('Choose Country')
+  const [countryId, setCountryId] = useState('')
+  const [countries, setCountries] = useState([])
+  const [openCountry, setOpenCountry] = useState(false);
+      
+  const [studentCityState, setStudentCityState] = useState('City')
+  const [cityId, setCityId] = useState('')
+  const [cities, setCities] = useState([])
+  const [allCities, setAllCities] = useState([])
+  const [openCity, setOpenCity] = useState(false);
+
+  const dropdownCountryStudentRef = useRef();
+  const dropdownCityStudentRef = useRef();
+
   const navigate = useNavigate();
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await fetch('https://bdev.elmanhag.shop/student/setting/view');
+        const data = await response.json();
+        console.log(data)
+        setCountries(data.country || []);
+        setAllCities(data.city || []);
+      } catch (error) {
+        console.error('Error fetching countries and cities:', error);
+      }
+    };
+    fetchCountries();
+  }, []);
 
-  // const handleSubmit = async (event) => {
-  //   console.log(email)
-  //   console.log(password)
-  //   event.preventDefault();
 
-  //   // Ensure email and password are defined
-  //   if (!email || !password) {
-  //     console.error("Email or Password is missing");
-  //     return;
-  //   }
+  const handleOpenCountryStudent = () => {
+    setOpenCountry(!openCountry);
+    setOpenCity(false);
+}
+const handleOpenCityStudent = () => {
+    setOpenCountry(false);
+    setOpenCity(!openCity);
+}
 
-  //   console.log('Email:', email);
-  //   console.log('Password:', password);
-
-  //   setIsLoading(true)
-  //   try {
-  //     const response = await axios.post('https://bdev.elmanhag.shop/affilate/auth/signup', {
-  //       name, phone, country, city,
-  //       email,
-  //       password, conf_password
-  //     });
-
-  //     if (response.status === 200) {
-  //       const userData = {
-  //         ...response.data.detailes,
-  //         // roles: [response.data.detailes.type] // Assuming type represents the user's role
-  //       };
-  //       console.log('Login response:', response); // Debugging line
-  //       // setData(userData);
-  //       // setType(response.data.detailes.type);
-  //       console.log("response", response);
-
-  //     } else {
-  //       setError('Failed to post data');
-  //       console.log("error", error);
-  //     }
-  //   } catch (error) {
-  //     setError('There was an error posting the data!');
-  //     console.error(error);
-  //   }
-  // };
-
-  // if (isloading) {
-  //   return (
-  //     <div className="w-1/4 h-full flex items-center justify-center m-auto">
-  //       <Loading />
-  //     </div>
-  //   )
-  // }
-
-  // if (type === "password") {
-  //   return (<>
-  //     <div className="relative w-full">
-  //       <input type={show ? "text" : "password"} placeholder={placeholder} className=' w-full border rounded-2xl border-mainColor outline-none px-2 py-3 text-2xl font-normal text-thirdColor' required />
-  //       {show ? <IoMdEye className='absolute top-4 right-2 text-2xl text-mainColor cursor-pointer' onClick={() => { setShow(!show) }} /> : <IoMdEyeOff className='absolute top-4 right-2 text-2xl text-mainColor cursor-pointer' onClick={() => setShow(!show)} />}
-  //     </div>
-  //   </>)
-  // }
+const handleCountryStudent = (e) => {
+  const inputElement = e.currentTarget.querySelector('.inputVal');
+  const selectedOptionName = e.currentTarget.textContent.trim();
+  const selectedOptionValue = inputElement ? parseInt(inputElement.value) : '';
+  setStudentCountry(selectedOptionName);
+  setCountryId(selectedOptionValue)
+  setOpenCountry(false);
+  const city=allCities.filter((city) => city.country_id === selectedOptionValue)
+  setCities(city),
+  console.log("mkl",city)
+  setStudentCityState(city.length > 0 ? 'City' : "No cities available"),
+  console.log('Selected Country:', selectedOptionName);
+  console.log('Selected CountryId:', selectedOptionValue);
+}
+const handleCityStudent = (e) => {
+  const inputElement = e.currentTarget.querySelector('.inputVal');
+  const selectedOptionName = e.currentTarget.textContent.trim();
+  const selectedOptionValue = inputElement ? inputElement.value : '';
+  setStudentCityState(selectedOptionName);
+  setCityId(parseInt(selectedOptionValue))
+  setOpenCity(false);
+  console.log('Selected City:', selectedOptionName);
+  console.log('Selected CityId:', selectedOptionValue);
+}
   useEffect(() => {
     if (data) {
       console.log('Calling auth.login with data:', data); // Debugging line
@@ -112,24 +117,26 @@ const SignUpAffilatePage = () => {
     const data = {
       name,
       phone,
-      country_id,
-      city_id,
+      country_id:countryId,
+      city_id:cityId,
       email,
       password,
       conf_password
     }
+    console.log(data)
     try {
       const response = await axios.post('https://bdev.elmanhag.shop/affilate/auth/signup', data);
 
       if (response.status === 200) {
+        console.log(response)
         const userData = {
-          ...response.data.detailes,
-          roles: [response.data.role] // Assuming type represents the user's role
+          ...response.data.user,
+          roles: [response.data.user.role] // Assuming type represents the user's role
         };
         auth.toastSuccess(`Welcome ${name}`);
         console.log('Login response:', response); // Debugging line
         setData(userData);
-        setRole(response.data.role);
+        setRole(response.data.user.role);
         console.log("response", response);
 
       } else {
@@ -158,8 +165,29 @@ const SignUpAffilatePage = () => {
           <InputCustom type={"name"} placeholder={"Name"} value={name} onChange={(e) => setName(e.target.value)} />
           <InputCustom type={"phone"} placeholder={"Phone"} value={phone} onChange={(e) => setPhone(e.target.value)} />
         </div>
-          <InputCustom type={"country"} placeholder={"Country"} value={country_id} onChange={(e) => setCountry(e.target.value)} />
-          <InputCustom type={"city"} placeholder={"City"} value={city_id} onChange={(e) => setCity(e.target.value)} />
+          {/* <InputCustom type={"country"} placeholder={"Country"} value={country_id} onChange={(e) => setCountry(e.target.value)} /> */}
+          {/* <InputCustom type={"city"} placeholder={"City"} value={city_id} onChange={(e) => setCity(e.target.value)} /> */}
+          <div className="w-full flex gap-4">
+              {/* <InputCustom type={"text"} borderColor={"none"} placeholder={"Country"} value={studentCountry} onChange={(e => setStudentCountry(e.target.value))} /> */}
+              <DropDownMenu
+                      ref={dropdownCountryStudentRef}
+                      handleOpen={handleOpenCountryStudent}
+                      handleOpenOption={handleCountryStudent}
+                      stateoption={studentCountry}
+                      openMenu={openCountry}
+                      options={countries}
+              />
+
+              {/* <InputCustom type={"text"} borderColor={"none"} placeholder={"City"} value={studentCity} onChange={(e => setStudentCity(e.target.value))} /> */}
+              <DropDownMenu
+                      ref={dropdownCityStudentRef}
+                      handleOpen={handleOpenCityStudent}
+                      handleOpenOption={handleCityStudent}
+                      stateoption={studentCityState}
+                      openMenu={openCity}
+                      options={cities}
+              />
+          </div>
           <InputCustom type={"email"} placeholder={"Email"} value={email} onChange={(e) => setEmail(e.target.value)} />
           <InputCustom type={"password"} placeholder={"Password"} value={password} onChange={(e) => setPassword(e.target.value)} />
           <InputCustom type={"password"} placeholder={"Confirm Password"} value={conf_password} onChange={(e) => setconfirmPassword(e.target.value)} />
