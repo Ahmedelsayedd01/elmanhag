@@ -16,12 +16,12 @@ const DropDownMenu = forwardRef(({
        return (
               <>
                      <div className="w-full mx-auto relative" ref={ref}>
-                            <button
+                            <button type='button'
                                    className="flex items-center justify-between w-full h-full px-5 py-3  border-2 rounded-2xl outline-none font-medium text-thirdColor text-center bg-secoundColor"
                                    onClick={handleOpen}
                             >
                                    <div className="text-mainColor text-2xl">{iconMenu}</div>
-                                   {stateoption}
+                                   <span className='eleValueDropDown'>{stateoption}</span>
                                    <IoIosArrowDown className={`${openMenu ? "rotate-180" : "rotate-0"} text-mainColor text-xl transition-all duration-300`} />
                             </button>
                             <div className={`${openMenu ? "block" : "hidden"} scrollSec absolute w-full min-h-10 max-h-32 top-14 bg-white rounded-xl drop-shadow-sm overflow-y-scroll z-10`}>
