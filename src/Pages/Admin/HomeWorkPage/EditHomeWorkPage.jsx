@@ -106,7 +106,21 @@ const EditHomeWorkPage = () => {
             setSelectLesson('Select By Lesson');
             setSelectLessonId(null);
           }
-        }      
+        }  
+
+      const updateQuestGroups = homeworkEdit.question_groups || [];
+      setQuestGroups(updateQuestGroups.map(group => ({
+        // ...group,
+        titleInput: group.name,
+        displayedQuestions: group.questions || [], // Ensure questions are included
+        selectedQuestions:group.questions,
+        QuestGroupType: '',
+        QuestGroupLevel: ''
+      })));
+
+      console.log(questGroups)
+
+    
 }
 }, [homeworkEdit]);
 
@@ -444,6 +458,68 @@ const applyFilter = (index, event)=>{
   // setDisplayedQuestions(filteredQuestions);
 };
 
+
+const handleEditSubmit = async (homeWorkID, event) => {
+  event.preventDefault(); // Prevent the default form submission behavior
+
+  const formData = new FormData();
+  formData.append('title', selectHW);
+  formData.append('semester', selectSemester);
+  formData.append('category_id', selectCategoryId);
+  formData.append('subject_id', selectSubjectId);
+  formData.append('chapter_id', selectChapterId);
+  formData.append('lesson_id', selectLessonId);
+  formData.append('difficulty', selectHomeWorkLevel);
+  formData.append('mark', parseInt(mark));
+  formData.append('pass', parseInt(pass));
+  formData.append('status', homeWorkActive);
+
+  // Adding groups and questions to formData
+  questGroups.forEach((group, index) => {
+    // Add group details
+    formData.append(`groups[${index}]`, group.titleInput);
+
+    // Add questions for this group
+    group.selectedQuestions.forEach((question, questionIndex) => {
+      formData.append(`questions[${index}][${questionIndex}]`, question.id);
+    });
+  });
+
+  // Log the formData entries
+  for (let pair of formData.entries()) {
+    console.log(pair[0] + ', ' + pair[1]);
+  }
+  
+  try {
+    const response = await axios.put(`https://bdev.elmanhag.shop/admin/homework/update/${homeWorkID}`, formData, {
+      headers: {
+        Authorization: `Bearer ${auth.user.token}`,
+        // 'Content-Type': 'multipart/form-data',
+      },
+    });
+    
+    if (response.status === 200) {
+      auth.toastSuccess('HomeWork Updated successfully!');
+      handleGoBack();
+    } else {
+            auth.toastError('Failed to update HomeWork.');
+    }
+  }  catch (error) {
+    console.log(error.response); // Log the full response for debugging
+    console.log(error.response.data.errors);
+    const errorMessages = error?.response?.data?.errors;
+    let errorMessageString = 'Error occurred';
+  
+    if (errorMessages) {
+      errorMessageString = Object.values(errorMessages).flat().join(' ');
+    } 
+    auth.toastError('Error', errorMessageString);
+      } finally {
+      setIsLoading(false);
+      }
+};
+
+
 return (
   <>
 {/* Buttons to switch between sections */}
@@ -466,284 +542,284 @@ return (
       </button>
 </div>
 
-<form>
+<form onSubmit={(event) => handleEditSubmit(homeworkEdit.id, event)}>
 
-  {/* Conditional rendering based on activeSection */}
-  {activeSection === 'HWInfo' && (
-      <form id="HWInfo" className="w-full flex flex-col items-center justify-center gap-y-3">
-        <div className="w-full flex flex-wrap items-center justify-start gap-3">
-          <div className="lg:w-[30%] sm:w-full">
-            <DropDownMenu
-              ref={dropdownSemesterRef}
-              handleOpen={handleOpenSelectSemester}
-              handleOpenOption={handleSelectSemester}
-              stateoption={selectSemester}
-              openMenu={openSelectSemester}
-              options={semesterData}
-            />
-          </div>
-          <div className="lg:w-[30%] sm:w-full">
-            <DropDownMenu
-              ref={dropdownChapterRef}
-              handleOpen={handleOpenSelectChapter}
-              handleOpenOption={handleSelectChapter}
-              stateoption={selectChapter}
-              openMenu={openSelectChapter}
-              options={chapterData}
-            />
-          </div>
-          <div className="lg:w-[30%] sm:w-full">
-            <InputCustom
-              type="text"
-              placeholder="Pass"
-              value={pass}
-              onChange={(e) => setPass(e.target.value)}
-            />
-          </div>
-          <div className="lg:w-[30%] sm:w-full">
-            <DropDownMenu
-              ref={dropdownCategoryRef}
-              handleOpen={handleOpenSelectCategory}
-              handleOpenOption={handleSelectCategory}
-              stateoption={selectCategory}
-              openMenu={openSelectCategory}
-              options={categoryData}
-            />
-          </div>
-          <div className="lg:w-[30%] sm:w-full">
-            <DropDownMenu
-              ref={dropdownLessonRef}
-              handleOpen={handleOpenSelectLesson}
-              handleOpenOption={handleSelectLesson}
-              stateoption={selectLesson}
-              openMenu={openSelectLesson}
-              options={lessonData}
-            />
-          </div>
-          <div className="lg:w-[30%] sm:w-full">
-            <InputCustom
-              type="text"
-              placeholder="Mark"
-              value={mark}
-              onChange={(e) => setMark(e.target.value)}
-            />
-          </div>
-          <div className="lg:w-[30%] sm:w-full">
-            <DropDownMenu
-              ref={dropdownSubjectRef}
-              handleOpen={handleOpenSelectSubject}
-              handleOpenOption={handleSelectSubject}
-              stateoption={selectSubject}
-              openMenu={openSelectSubject}
-              options={subjectData}
-            />
-          </div>
-          <div className="lg:w-[30%] sm:w-full">
-            <DropDownMenu
-              ref={dropdownHomeWorkLevelRef}
-              handleOpen={handleOpenSelectHomeWorkLevel}
-              handleOpenOption={handleSelectHomeWorkLevel}
-              stateoption={selectHomeWorkLevel}
-              openMenu={openSelectHomeWorkLevel}
-              options={homeWorkLevel}
-            />
-          </div>
-          <div className="lg:w-[30%] sm:w-full">
-            <DropDownMenu
-              ref={dropdownHWRef}
-              handleOpen={handleOpenSelectHW}
-              handleOpenOption={handleSelectHW}
-              stateoption={selectHW}
-              openMenu={openSelectHW}
-              options={HWData}
-            />
-          </div>
-          <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
-            <span className="text-2xl text-thirdColor font-medium">Active:</span>
-            <div>
-              <CheckBox checked={homeWorkActive} handleClick={handleClick} />
-            </div>
+{/* Conditional rendering based on activeSection */}
+{activeSection === 'HWInfo' && (
+    <div id="HWInfo" className="w-full flex flex-col items-center justify-center gap-y-3">
+      <div className="w-full flex flex-wrap items-center justify-start gap-3">
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownSemesterRef}
+            handleOpen={handleOpenSelectSemester}
+            handleOpenOption={handleSelectSemester}
+            stateoption={selectSemester}
+            openMenu={openSelectSemester}
+            options={semesterData}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownChapterRef}
+            handleOpen={handleOpenSelectChapter}
+            handleOpenOption={handleSelectChapter}
+            stateoption={selectChapter}
+            openMenu={openSelectChapter}
+            options={chapterData}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <InputCustom
+            type="text"
+            placeholder="Pass"
+            value={pass}
+            onChange={(e) => setPass(e.target.value)}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownCategoryRef}
+            handleOpen={handleOpenSelectCategory}
+            handleOpenOption={handleSelectCategory}
+            stateoption={selectCategory}
+            openMenu={openSelectCategory}
+            options={categoryData}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownLessonRef}
+            handleOpen={handleOpenSelectLesson}
+            handleOpenOption={handleSelectLesson}
+            stateoption={selectLesson}
+            openMenu={openSelectLesson}
+            options={lessonData}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <InputCustom
+            type="text"
+            placeholder="Mark"
+            value={mark}
+            onChange={(e) => setMark(e.target.value)}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownSubjectRef}
+            handleOpen={handleOpenSelectSubject}
+            handleOpenOption={handleSelectSubject}
+            stateoption={selectSubject}
+            openMenu={openSelectSubject}
+            options={subjectData}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownHomeWorkLevelRef}
+            handleOpen={handleOpenSelectHomeWorkLevel}
+            handleOpenOption={handleSelectHomeWorkLevel}
+            stateoption={selectHomeWorkLevel}
+            openMenu={openSelectHomeWorkLevel}
+            options={homeWorkLevel}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownHWRef}
+            handleOpen={handleOpenSelectHW}
+            handleOpenOption={handleSelectHW}
+            stateoption={selectHW}
+            openMenu={openSelectHW}
+            options={HWData}
+          />
+        </div>
+        <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+          <span className="text-2xl text-thirdColor font-medium">Active:</span>
+          <div>
+            <CheckBox checked={homeWorkActive} handleClick={handleClick} />
           </div>
         </div>
-        {/* Buttons */}
-        <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
-          <div className="flex items-center justify-center w-72">
-              <Button
-              type="button"
-              Text="Next"
-              BgColor="bg-mainColor"
-              Color="text-white"
-              Width="full"
-              Size="text-2xl"
-              px="px-28"
-              rounded="rounded-2xl"
-              handleClick={handleNext}
-            />
-          </div>
-          <button onClick={handleGoBack} className="text-2xl text-mainColor">
-            Cancel
-          </button>
+      </div>
+      {/* Buttons */}
+      <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
+        <div className="flex items-center justify-center w-72">
+            <Button
+            type="button"
+            Text="Next"
+            BgColor="bg-mainColor"
+            Color="text-white"
+            Width="full"
+            Size="text-2xl"
+            px="px-28"
+            rounded="rounded-2xl"
+            handleClick={handleNext}
+          />
         </div>
-      </form>
-    )}
-
-{activeSection === 'Question' && (
-<div id="Question" className="w-full">
-  {/* Initial Button to add the first question group */}
-  {initialButtonVisible && (
-    <div className="sm:w-full flex justify-center mx-auto">
-      <ButtonAdd Text="Add Question Group" handleClick={handleAddFirstGroup} />
+        <button onClick={handleGoBack} className="text-2xl text-mainColor">
+          Cancel
+        </button>
+      </div>
     </div>
   )}
 
-  {/* Render the question groups */}
-  {!initialButtonVisible && (
-    <>
-      {questGroups.map((group, index) => (
-        <div className="w-full flex flex-col items-center p-4 gap-4 m-4 rounded-lg" key={index}>
-          <TextTitle text="MCQ" />
-          <div className="w-full flex flex-wrap items-center justify-start gap-3">
-            <div className="lg:w-[25%] sm:w-full">
-              <InputCustom
-                type="text"
-                placeholder="Question Group Title"
-                value={group.titleInput}
-                onChange={(event) => handleTitleInputChange(index, event)}
-              />
-            </div>
-            <div className="lg:w-[25%] sm:w-full">
-              <DropDownMenu
-                ref={dropdownQuestTypeRef}
-                stateoption={group.QuestGroupType || 'Select Type'}
-                openMenu={group.openQuestGroupType}
-                handleOpen={() => handleOpen(index, 1)}
-                handleOpenOption={(e) => handleSelectQuestGroupType(index, e)}
-                options={questType}
-              />
-            </div>
-            <div className="lg:w-[25%] sm:w-full">
-              <DropDownMenu
-                ref={dropdownQuestLevelRef}
-                stateoption={group.QuestGroupLevel || 'Select Difficulty'}
-                openMenu={group.openQuestGroupLevel}
-                handleOpen={() => handleOpen(index, 2)}
-                handleOpenOption={(e) => handleSelectQuestGroupLevel(index, e)}
-                options={questLevel}
-              />
-            </div>
-
-            <div className="flex items-center justify-center w-72">
-                <Button
-                      Text="Filter"
-                      BgColor="bg-mainColor"
-                      Color="text-white"
-                      Width="full"
-                      Size="text-2xl"
-                      px="px-28"
-                      rounded="rounded-2xl"
-                      handleClick={(e) => applyFilter(index, e)}
-                />
-            </div>            
-          </div>
-
-          {/* Questions and Selected Questions Tables */}
-          <div className="w-full flex items-center justify-between mt-4 overflow-x-auto gap-12">
-            {/* Available Questions Table */}
-            <table className="w-full sm:min-w-0 border">
-              <thead>
-                <tr className="border-b-2">
-                  <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
-                  <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Question</th>
-                  <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Difficulty</th>
-                  <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
-                </tr>
-              </thead>
-              <tbody className="w-full">
-                {group.displayedQuestions.map((question, qIndex) => (
-                  <tr className="w-full border-b-2" key={question.id}>
-                    <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                      {qIndex + 1}
-                    </td>
-                    <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                      <span className="text-mainColor text-xl border-b-2 border-mainColor font-semibold">
-                        <Link to={`question/${question.id}`} state={{ id: question.id }}>View</Link>
-                      </span>
-                    </td>
-                    <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                      {question?.difficulty || 'Null'}
-                    </td>
-                    <td className="min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center">
-                      <button 
-                        className="text-mainColor text-xl border-b-2 border-mainColor font-semibold" 
-                        onClick={() => handleAddQuestionToGroup(index, question)}
-                      >
-                        Add
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            {/* Selected Questions Table */}
-            <table className="w-full sm:min-w-0 border">
-              <thead>
-                <tr className="border-b-2">
-                  <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
-                  <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Question</th>
-                  <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Difficulty</th>
-                  <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
-                </tr>
-              </thead>
-              <tbody className="w-full">
-                {group.selectedQuestions.map((question, qIndex) => (
-                  <tr className="w-full border-b-2" key={question.id}>
-                    <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                      {qIndex + 1}
-                    </td>
-                    <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                      <span className="text-mainColor text-xl border-b-2 border-mainColor font-semibold">
-                        <Link to={`question/${question.id}`} state={{ id: question.id }}>View</Link>
-                      </span>
-                    </td>
-                    <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                      {question?.difficulty || 'Null'}
-                    </td>
-                    <td className="min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center">
-                      <button 
-                        className="text-mainColor text-xl border-b-2 border-mainColor font-semibold" 
-                        onClick={() => handleRemoveQuestionFromGroup(index, question)}
-                      >
-                        Remove
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ))}
-      <div className="w-full flex justify-center gap-4 mt-6">
-        <ButtonAdd Text="Add Question Group" handleClick={handleAddGroup} />
-      </div>
-
-       {/* Buttons */}
-  <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
-      <div className="flex items-center justify-center w-72">
-          <button
-              type="submit"
-              className="bg-mainColor text-white text-2xl p-3 px-28 rounded-2xl"
-          >
-              Submit
-          </button>
-      </div>
-      <button className="text-2xl text-mainColor">
-          Preview H.W
-      </button>
+{activeSection === 'Question' && (
+<div id="Question" className="w-full">
+{/* Initial Button to add the first question group */}
+{initialButtonVisible && (
+  <div className="sm:w-full flex justify-center mx-auto">
+    <ButtonAdd Text="Add Question Group" handleClick={handleAddFirstGroup} />
   </div>
-    </>
-  )}
+)}
+
+{/* Render the question groups */}
+{!initialButtonVisible && (
+  <>
+    {questGroups.map((group, index) => (
+      <div className="w-full flex flex-col items-center p-4 gap-4 m-4 rounded-lg" key={index}>
+        <TextTitle text="MCQ" />
+        <div className="w-full flex flex-wrap items-center justify-start gap-3">
+          <div className="lg:w-[25%] sm:w-full">
+            <InputCustom
+              type="text"
+              placeholder="Question Group Title"
+              value={group.titleInput}
+              onChange={(event) => handleTitleInputChange(index, event)}
+            />
+          </div>
+          <div className="lg:w-[25%] sm:w-full">
+            <DropDownMenu
+              ref={dropdownQuestTypeRef}
+              stateoption={group.QuestGroupType || 'Select Type'}
+              openMenu={group.openQuestGroupType}
+              handleOpen={() => handleOpen(index, 1)}
+              handleOpenOption={(e) => handleSelectQuestGroupType(index, e)}
+              options={questType}
+            />
+          </div>
+          <div className="lg:w-[25%] sm:w-full">
+            <DropDownMenu
+              ref={dropdownQuestLevelRef}
+              stateoption={group.QuestGroupLevel || 'Select Difficulty'}
+              openMenu={group.openQuestGroupLevel}
+              handleOpen={() => handleOpen(index, 2)}
+              handleOpenOption={(e) => handleSelectQuestGroupLevel(index, e)}
+              options={questLevel}
+            />
+          </div>
+
+          <div className="flex items-center justify-center w-72">
+              <Button
+                    Text="Filter"
+                    BgColor="bg-mainColor"
+                    Color="text-white"
+                    Width="full"
+                    Size="text-2xl"
+                    px="px-28"
+                    rounded="rounded-2xl"
+                    handleClick={(e) => applyFilter(index, e)}
+              />
+          </div>            
+        </div>
+
+        {/* Questions and Selected Questions Tables */}
+        <div className="w-full flex items-center justify-between mt-4 overflow-x-auto gap-12">
+          {/* Available Questions Table */}
+          <table className="w-full sm:min-w-0 border">
+            <thead>
+              <tr className="border-b-2">
+                <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
+                <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Question</th>
+                <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Difficulty</th>
+                <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
+              </tr>
+            </thead>
+            <tbody className="w-full">
+              {group.displayedQuestions.map((question, qIndex) => (
+                <tr className="w-full border-b-2" key={question.id}>
+                  <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                    {qIndex + 1}
+                  </td>
+                  <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                    <span className="text-mainColor text-xl border-b-2 border-mainColor font-semibold">
+                      <Link to={`question/${question.id}`} state={{ id: question.id }}>View</Link>
+                    </span>
+                  </td>
+                  <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                    {question?.difficulty || 'Null'}
+                  </td>
+                  <td className="min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center">
+                    <button 
+                      className="text-mainColor text-xl border-b-2 border-mainColor font-semibold" 
+                      onClick={() => handleAddQuestionToGroup(index, question)}
+                    >
+                      Add
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {/* Selected Questions Table */}
+          <table className="w-full sm:min-w-0 border">
+            <thead>
+              <tr className="border-b-2">
+                <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
+                <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Question</th>
+                <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Difficulty</th>
+                <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
+              </tr>
+            </thead>
+            <tbody className="w-full">
+              {group.selectedQuestions.map((question, qIndex) => (
+                <tr className="w-full border-b-2" key={question.id}>
+                  <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                    {qIndex + 1}
+                  </td>
+                  <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                    <span className="text-mainColor text-xl border-b-2 border-mainColor font-semibold">
+                      <Link to={`question/${question.id}`} state={{ id: question.id }}>View</Link>
+                    </span>
+                  </td>
+                  <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                    {question?.difficulty || 'Null'}
+                  </td>
+                  <td className="min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center">
+                    <button 
+                      className="text-mainColor text-xl border-b-2 border-mainColor font-semibold" 
+                      onClick={() => handleRemoveQuestionFromGroup(index, question)}
+                    >
+                      Remove
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    ))}
+    <div className="w-full flex justify-center gap-4 mt-6">
+      <ButtonAdd Text="Add Question Group" handleClick={handleAddGroup} />
+    </div>
+
+     {/* Buttons */}
+<div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
+    <div className="flex items-center justify-center w-72">
+        <button
+            type="submit"
+            className="bg-mainColor text-white text-2xl p-3 px-28 rounded-2xl"
+        >
+            Submit
+        </button>
+    </div>
+    <button className="text-2xl text-mainColor">
+        Preview H.W
+    </button>
+</div>
+  </>
+)}
 </div>
 )}
 

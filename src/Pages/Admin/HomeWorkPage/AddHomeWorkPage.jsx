@@ -460,7 +460,7 @@ const handleFormSubmit = async (e) => {
 
     {/* Conditional rendering based on activeSection */}
     {activeSection === 'HWInfo' && (
-        <form id="HWInfo" className="w-full flex flex-col items-center justify-center gap-y-3">
+        <div id="HWInfo" className="w-full flex flex-col items-center justify-center gap-y-3">
           <div className="w-full flex flex-wrap items-center justify-start gap-3">
             <div className="lg:w-[30%] sm:w-full">
               <DropDownMenu
@@ -574,7 +574,7 @@ const handleFormSubmit = async (e) => {
               Cancel
             </button>
           </div>
-        </form>
+        </div>
       )}
 
 {activeSection === 'Question' && (
