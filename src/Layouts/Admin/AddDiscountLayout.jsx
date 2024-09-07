@@ -1,8 +1,11 @@
 import React from 'react'
+import { AddDiscountPage } from '../../Pages/AllPages'
 
 const AddDiscountLayout = () => {
   return (
-    <div>AddDiscountLayout</div>
+    <>
+      <AddDiscountPage />
+    </>
   )
 }
 
