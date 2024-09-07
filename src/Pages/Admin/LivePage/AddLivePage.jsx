@@ -202,7 +202,7 @@ const AddLivePage = () => {
       const formattedEndTime = endTime ? `${endTime}:00` : '';
       
     setIsLoading(true);
-    // try {
+    try {
     const formData = new FormData();
     formData.append('name', name);
     formData.append('from', formattedStartTime);
@@ -219,7 +219,7 @@ const AddLivePage = () => {
       console.log(pair[0]+ ', '+ pair[1]); 
     }
     
-    try {
+    // try {
         const response = await axios.post(' https://bdev.elmanhag.shop/admin/live/add', formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,

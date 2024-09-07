@@ -286,9 +286,17 @@ const AppLayoutTeacher = () => (
   </>
 );
 const AppLayoutAffilate = () => (
-  <>
-    <AffilatePage />
-  </>
+  <div className="relative flex gap-x-4 directionAR">
+  <SidebarStudent />
+  <div className="contentSection w-4/5 min-h-screen ">
+    {/* <AffilatePage /> */}
+    <UserContext>
+      <NavbarStudent />
+      <AffilatePage />
+      {/* <Outlet /> */}
+    </UserContext>
+  </div>
+</div>
 );
 const AppLayoutParent = () => (
   <>

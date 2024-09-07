@@ -377,6 +377,55 @@ const applyFilter = (index, event)=>{
 const handleFormSubmit = async (e) => {
   e.preventDefault(); // Prevent the default form submission behavior
 
+   // Validation checks
+   if (!selectHW) {
+    auth.toastError('Please Enter Homework Title.');
+    return;
+  }
+  if (!selectSemester) {
+    auth.toastError('Please Select Semester.');
+    return;
+  }
+  if (!selectCategoryId) {
+    auth.toastError('Please Select Category.');
+    return;
+  }
+  if (!selectSubjectId) {
+    auth.toastError('Please Select Subject.');
+    return;
+  }
+  if (!selectChapterId) {
+    auth.toastError('Please Select Chapter.');
+    return;
+  }
+  if (!selectLessonId) {
+    auth.toastError('Please Select Lesson.');
+    return;
+  }
+  if (!selectHomeWorkLevel) {
+    auth.toastError('Please Select Homework Difficulty.');
+    return;
+  }
+  if (!mark) {
+    auth.toastError('Please Enter Mark.');
+    return;
+  }
+  if (!pass) {
+    auth.toastError('Please Enter Passing Mark.');
+    return;
+  }
+
+   // Check if each group has at least one question
+   for (let i = 0; i < questGroups.length; i++) {
+    if (questGroups[i].selectedQuestions.length === 0) {
+      auth.toastError(`Please Enter Questions for Group ${i + 1}.`);
+      return;
+    }
+  }
+
+  setIsLoading(true);
+
+  try {
   const formData = new FormData();
   formData.append('title', selectHW);
   formData.append('semester', selectSemester);
@@ -405,7 +454,6 @@ const handleFormSubmit = async (e) => {
     console.log(pair[0] + ', ' + pair[1]);
   }
   
-  try {
     const response = await axios.post('https://bdev.elmanhag.shop/admin/homework/add', formData, {
       headers: {
         Authorization: `Bearer ${auth.user.token}`,

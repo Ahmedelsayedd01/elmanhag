@@ -73,7 +73,7 @@ const EditLivePage = () => {
         setSelectDay(liveEdit.day|| '')
         setSelectStatus(liveEdit.paid ===1 ?"Paid" : "Free"|| '');
         setPrice(liveEdit.price || 0);
-        setLiveIncluded(liveEdit.inculded|| '') 
+        setLiveIncluded(liveEdit.inculded||0) 
         
         if (subjectData !== null) {
           const filteredSubjectLive= subjectData.find(
@@ -240,48 +240,31 @@ const EditLivePage = () => {
       return;
     }
 
+    try {
     // Convert time to H:i:s format
     const formattedStartTime = startTime ? `${startTime}:00` : '';
     const formattedEndTime = endTime ? `${endTime}:00` : '';
-    
+      // Prepare query parameters
+      const params = new URLSearchParams({
+        name: name,
+        from: startTime,
+        to: endTime,
+        date: date,
+        day: selectDay,
+        teacher_id: selectTeacherId,
+        subject_id: selectSubjectId,
+        paid: selectStatus === "Paid" ? 1 : 0,
+        price: price || 0,
+        inculded: liveIncluded,
+    }).toString();
+
     setIsLoading(true);
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('from', startTime);
-    formData.append('to', endTime);
-    formData.append('date', date);
-    formData.append('day', selectDay);
-    formData.append('teacher_id', selectTeacherId);
-    formData.append('subject_id', selectSubjectId);
-    formData.append('paid', selectStatus ==="Paid"? 1:0);
-    formData.append('price', price || 0);
-    formData.append('inculded', liveIncluded);
 
-    // Prepare query parameters
-  //   const params = new URLSearchParams({
-  //     name: name,
-  //     from: startTime,
-  //     to: endTime,
-  //     date: date,
-  //     day: selectDay,
-  //     teacher_id: selectTeacherId,
-  //     subject_id: selectSubjectId,
-  //     paid: selectStatus ==="Paid"? 1:0,
-  //     price: price || 0,
-  //     inculded: liveIncluded,
-  // });
-
-    for (let pair of formData.entries()) {
-      console.log(pair[0]+ ', '+ pair[1]); 
-    }
-    
-    try {
-      const response = await axios.put(`https://bdev.elmanhag.shop/admin/live/update/${liveID}`, formData, {
-        headers: {
-              Authorization: `Bearer ${auth.user.token}`,
-              'Content-Type': 'multipart/form-data',
-        },
-      });
+        const response = await axios.put(`https://bdev.elmanhag.shop/admin/live/update/${liveID}?${params}`, {}, {
+            headers: {
+                Authorization: `Bearer ${auth.user.token}`,
+            },
+        });
       if (response.status === 200) {
         auth.toastSuccess('Live Updated successfully!');
         handleGoBack();

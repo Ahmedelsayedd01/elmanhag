@@ -462,39 +462,85 @@ const applyFilter = (index, event)=>{
 const handleEditSubmit = async (homeWorkID, event) => {
   event.preventDefault(); // Prevent the default form submission behavior
 
-  const formData = new FormData();
-  formData.append('title', selectHW);
-  formData.append('semester', selectSemester);
-  formData.append('category_id', selectCategoryId);
-  formData.append('subject_id', selectSubjectId);
-  formData.append('chapter_id', selectChapterId);
-  formData.append('lesson_id', selectLessonId);
-  formData.append('difficulty', selectHomeWorkLevel);
-  formData.append('mark', parseInt(mark));
-  formData.append('pass', parseInt(pass));
-  formData.append('status', homeWorkActive);
+   // Validation checks
+   if (!selectHW) {
+    auth.toastError('Please Enter Homework Title.');
+    return;
+  }
+  if (!selectSemester) {
+    auth.toastError('Please Select Semester.');
+    return;
+  }
+  if (!selectCategoryId) {
+    auth.toastError('Please Select Category.');
+    return;
+  }
+  if (!selectSubjectId) {
+    auth.toastError('Please Select Subject.');
+    return;
+  }
+  if (!selectChapterId) {
+    auth.toastError('Please Select Chapter.');
+    return;
+  }
+  if (!selectLessonId) {
+    auth.toastError('Please Select Lesson.');
+    return;
+  }
+  if (!selectHomeWorkLevel) {
+    auth.toastError('Please Select Homework Difficulty.');
+    return;
+  }
+  if (!mark) {
+    auth.toastError('Please Enter Mark.');
+    return;
+  }
+  if (!pass) {
+    auth.toastError('Please Enter Passing Mark.');
+    return;
+  }
 
-  // Adding groups and questions to formData
-  questGroups.forEach((group, index) => {
-    // Add group details
-    formData.append(`groups[${index}]`, group.titleInput);
+    // Check if each group has at least one question
+    for (let i = 0; i < questGroups.length; i++) {
+      if (questGroups[i].selectedQuestions.length === 0) {
+        auth.toastError(`Please Enter Questions for Group ${i + 1}.`);
+        return;
+      }
+    }
+  setIsLoading(true);
+  try {
+  // Construct query parameters manually
+  let params = new URLSearchParams({
+    title: selectHW,
+    semester: selectSemester,
+    category_id: selectCategoryId,
+    subject_id: selectSubjectId,
+    chapter_id: selectChapterId,
+    lesson_id: selectLessonId,
+    difficulty: selectHomeWorkLevel,
+    mark: parseInt(mark),
+    pass: parseInt(pass),
+    status: homeWorkActive ? 1 : 0,
+  });
 
-    // Add questions for this group
+  // Adding groups and questions to the query parameters
+  questGroups.forEach((group, groupIndex) => {
+    params.append(`groups[${groupIndex}]`, group.titleInput);
     group.selectedQuestions.forEach((question, questionIndex) => {
-      formData.append(`questions[${index}][${questionIndex}]`, question.id);
+      params.append(`questions[${groupIndex}][${questionIndex}]`, question.id);
     });
   });
 
-  // Log the formData entries
-  for (let pair of formData.entries()) {
-    console.log(pair[0] + ', ' + pair[1]);
-  }
-  
-  try {
-    const response = await axios.put(`https://bdev.elmanhag.shop/admin/homework/update/${homeWorkID}`, formData, {
+  // To print params in a readable format
+console.log('Submitted Parameters:');
+params.forEach((value, key) => {
+  console.log(`${key}: ${value}`);
+});
+
+
+    const response = await axios.put(`https://bdev.elmanhag.shop/admin/homework/update/${homeWorkID}?${params}`, {}, {
       headers: {
         Authorization: `Bearer ${auth.user.token}`,
-        // 'Content-Type': 'multipart/form-data',
       },
     });
     
@@ -665,15 +711,15 @@ return (
 
 {activeSection === 'Question' && (
 <div id="Question" className="w-full">
-{/* Initial Button to add the first question group */}
+{/* Initial Button to add the first question group
 {initialButtonVisible && (
   <div className="sm:w-full flex justify-center mx-auto">
     <ButtonAdd Text="Add Question Group" handleClick={handleAddFirstGroup} />
   </div>
-)}
+)} */}
 
 {/* Render the question groups */}
-{!initialButtonVisible && (
+{/* {!initialButtonVisible && ( */}
   <>
     {questGroups.map((group, index) => (
       <div className="w-full flex flex-col items-center p-4 gap-4 m-4 rounded-lg" key={index}>
@@ -819,7 +865,7 @@ return (
     </button>
 </div>
   </>
-)}
+{/* )} */}
 </div>
 )}
 
