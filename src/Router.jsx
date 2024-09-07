@@ -15,7 +15,6 @@ import {
   LiveLayout,
   AddLiveLayout,
   EditLiveLayout,
-  MarketingAD,
   FinancialAD,
   AffiliateAD,
   SupportAD,
@@ -56,6 +55,17 @@ import {
   AddLessonLayout,
   EditLessonLayout,
   MaterialLessonLayout,
+  DiscountLayout,
+  AddDiscountLayout,
+  EditDiscountLayout,
+  PromoCodeLayout,
+  AddPromoCodeLayout,
+  EditPromoCodeLayout,
+  ReviewLayout,
+  PopUpLayout,
+  AddPopUpLayout,
+  EditPopUpLayout,
+  EditReviewLayout,
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -192,9 +202,29 @@ const AppLayoutQuestionsBank = () => (
   </>
 );
 
-//update here
 /* Live */
 const AppLayoutLive = () => (
+  <>
+    <Outlet />
+  </>
+);
+/* Marketing */
+const AppLayoutMarketing = () => (
+  <>
+    <Outlet />
+  </>
+);
+const AppLayoutPromoCode = () => (
+  <>
+    <Outlet />
+  </>
+);
+const AppLayoutReview = () => (
+  <>
+    <Outlet />
+  </>
+);
+const AppLayoutPopUp = () => (
   <>
     <Outlet />
   </>
@@ -287,16 +317,16 @@ const AppLayoutTeacher = () => (
 );
 const AppLayoutAffilate = () => (
   <div className="relative flex gap-x-4 directionAR">
-  <SidebarStudent />
-  <div className="contentSection w-4/5 min-h-screen ">
-    {/* <AffilatePage /> */}
-    <UserContext>
-      <NavbarStudent />
-      <AffilatePage />
-      {/* <Outlet /> */}
-    </UserContext>
+    <SidebarStudent />
+    <div className="contentSection w-4/5 min-h-screen ">
+      {/* <AffilatePage /> */}
+      <UserContext>
+        <NavbarStudent />
+        <AffilatePage />
+        {/* <Outlet /> */}
+      </UserContext>
+    </div>
   </div>
-</div>
 );
 const AppLayoutParent = () => (
   <>
@@ -403,7 +433,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    element: <ProtectedRoute allowedRoles={['admin', 'super admin']} />,
+    element: <ProtectedRoute allowedRoles={['admin', 'supAdmin']} />,
     path: '/dashboardAdmin',
     children: [
       {
@@ -602,11 +632,6 @@ export const router = createBrowserRouter([
             path: 'exams',
             element: <ExamsAD />,
           },
-          // {
-          //   path: 'live',
-          //   element: <LiveLayout />,
-          // },
-
           {
             path: 'live',
             element: <AppLayoutLive />,
@@ -628,10 +653,82 @@ export const router = createBrowserRouter([
 
 
 
-
+          /* Marketing */
           {
-            path: 'marketing',
-            element: <MarketingAD />,
+            path: 'discount',
+            element: <AppLayoutMarketing />,
+            children: [
+              {
+                path: '',
+                element: <DiscountLayout />,
+                children: [
+                  {
+                    path: 'add',
+                    element: <AddDiscountLayout />,
+                  },
+                  {
+                    path: 'edit/:marketingId',
+                    element: <EditDiscountLayout />,
+                  }
+                ]
+              },
+            ]
+          },
+          {
+            path: 'promo_code',
+            element: <AppLayoutPromoCode />,
+            children: [
+              {
+                path: '',
+                element: <PromoCodeLayout />,
+                children: [
+                  {
+                    path: 'add',
+                    element: <AddPromoCodeLayout />,
+                  },
+                  {
+                    path: 'edit/:marketingId',
+                    element: <EditPromoCodeLayout />,
+                  }
+                ]
+              },
+            ]
+          },
+          {
+            path: 'review',
+            element: <AppLayoutReview />,
+            children: [
+              {
+                path: '',
+                element: <ReviewLayout />,
+                children: [
+                  {
+                    path: 'edit/:marketingId',
+                    element: <EditReviewLayout />,
+                  }
+                ]
+              },
+            ]
+          },
+          {
+            path: 'pop_up',
+            element: <AppLayoutPopUp />,
+            children: [
+              {
+                path: '',
+                element: <PopUpLayout />,
+                children: [
+                  {
+                    path: 'add',
+                    element: <AddPopUpLayout />,
+                  },
+                  {
+                    path: 'edit/:marketingId',
+                    element: <EditPopUpLayout />,
+                  }
+                ]
+              },
+            ]
           },
           {
             path: 'financial',
