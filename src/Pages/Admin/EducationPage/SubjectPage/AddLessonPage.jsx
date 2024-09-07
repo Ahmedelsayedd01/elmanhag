@@ -1,36 +1,32 @@
 import React, { useEffect, useRef, useState } from 'react';
 import InputCustom from '../../../../Components/InputCustom';
-import { ButtonAdd } from '../../../../Components/Button';
+import { Button, ButtonAdd } from '../../../../Components/Button';
 import CheckBox from '../../../../Components/CheckBox';
 import DropDownMenu from '../../../../Components/DropDownMenu';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../../Context/Auth';
+import axios from 'axios';
 
 const AddLessonPage = () => {
-  const dropdownMaterial = useRef();
-  const dropdownMaterialType = useRef();
-  const uploadRef = useRef();
+  const dropdownMaterialRefs = useRef([]);
+  const dropdownMaterialTypeRefs = useRef([]);
+  const uploadRefs = useRef([]);
 
-  /* Material */
-  const [materialData, setMaterialData] = useState([{ name: 'Voice' }, { name: 'Video' }, { name: 'Pdf' }]);
-  const [materialTypeData, setMaterialTypeData] = useState([{ name: 'External' }, { name: 'Embedded' }, { name: 'Upload' }]);
+  const [materialData] = useState([{ name: 'Voice' }, { name: 'Video' }, { name: 'Pdf' }]);
+  const [materialTypeData] = useState([{ name: 'External' }, { name: 'Embedded' }, { name: 'Upload' }]);
   const [materialList, setMaterialList] = useState([]);
-  /* ///Material */
 
-  /* Material Source */
-  const [material, setMaterial] = useState('Select Material');
-  const [materialName, setMaterialName] = useState();
-  const [openMaterial, setOpenMaterial] = useState(false);
+  const [material, setMaterial] = useState([]);
+  const [materialType, setMaterialType] = useState([]);
+  const [materialName, setMaterialName] = useState([]);
+  const [materialTypeName, setMaterialTypeName] = useState([]);
+  const [openMaterial, setOpenMaterial] = useState([]);
+  const [openMaterialType, setOpenMaterialType] = useState([]);
 
-  const [materialType, setMaterialType] = useState('Select Source');
-  const [materialTypeName, setMaterialTypeName] = useState();
-  const [openMaterialType, setOpenMaterialType] = useState(false);
-  /* //Material Source */
-
-  /* Material File */
-  const [lessonExternal, setLessonExternal] = useState('');
-  const [lessonEmbedded, setLessonEmbedded] = useState('');
-  const [lessonVideoFile, setLessonVideoFile] = useState();
-  const [lessonVideo, setLessonVideo] = useState('');
-  /* ///Material File */
+  const [lessonExternal, setLessonExternal] = useState([]);
+  const [lessonEmbedded, setLessonEmbedded] = useState([]);
+  const [lessonVideoFile, setLessonVideoFile] = useState([]);
+  const [lessonVideo, setLessonVideo] = useState([]);
 
   const [lessonNameEn, setLessonNameEn] = useState('');
   const [lessonNameAr, setLessonNameAr] = useState('');
@@ -39,161 +35,236 @@ const AddLessonPage = () => {
 
   const [lessonDripContent, setLessonDripContent] = useState(0);
   const [lessonFree, setLessonFree] = useState(0);
-  const [lessonPaid, setLessonPaid] = useState(0);
+  // const [lessonPaid, setLessonPaid] = useState(0);
   const [lessonActive, setLessonActive] = useState(0);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [materials, setMaterials] = useState([]);
+  const [dataArr, setDataArr] = useState(null);
+
+  const location = useLocation();
+  const chapterID = location.state || {};
+
+  const navigate = useNavigate();
+  const auth = useAuth();
 
   const handleDripContentClick = (e) => {
     const isChecked = e.target.checked;
+
     setLessonDripContent(isChecked ? 1 : 0);
   };
 
   const handleFreeClick = (e) => {
     const isChecked = e.target.checked;
-    setLessonFree(isChecked ? 1 : 0);
+    setLessonFree(isChecked ? 0 : 1);
   };
 
-  const handlePaidClick = (e) => {
-    const isChecked = e.target.checked;
-    setLessonPaid(isChecked ? 1 : 0);
-  };
+  // const handlePaidClick = (e) => {
+  //   const isChecked = e.target.checked;
+  //   setLessonPaid(isChecked ? 1 : 0);
+  // };
 
   const handleActiveClick = (e) => {
     const isChecked = e.target.checked;
     setLessonActive(isChecked ? 1 : 0);
   };
 
-  const handleSubmitAdd = () => { };
+  const handleOpenMaterial = (index) => {
+    const newOpenMaterial = [...openMaterial];
+    newOpenMaterial[index] = !openMaterial[index];
+    setOpenMaterial(newOpenMaterial);
 
-  /* Material Source */
-  const handleOpenMaterial = () => {
-    console.log("Toggling Material Dropdown:", !openMaterial);
-    setOpenMaterial(!openMaterial);
-    setOpenMaterialType(false);
+    const newOpenMaterialType = [...openMaterialType];
+    newOpenMaterialType[index] = false;
+    setOpenMaterialType(newOpenMaterialType);
   };
 
-  const handleOpenMaterialType = (count) => {
-    console.log("count:", count);
-    console.log("Toggling openMaterialType:", !openMaterialType);
-    setOpenMaterialType(!openMaterialType);
-    setOpenMaterial(false);
+  const handleOpenMaterialType = (index) => {
+    const newOpenMaterialType = [...openMaterialType];
+    newOpenMaterialType[index] = !openMaterialType[index];
+    setOpenMaterialType(newOpenMaterialType);
+
+    const newOpenMaterial = [...openMaterial];
+    newOpenMaterial[index] = false;
+    setOpenMaterial(newOpenMaterial);
   };
 
-  const handleMaterial = (e) => {
+  const handleMaterial = (index, e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
     const selectedOptionName = e.currentTarget.textContent.trim();
     const selectedOptionValue = inputElement ? inputElement.value.toLowerCase() : '';
-    setMaterial(selectedOptionName);
-    setMaterialName(parseInt(selectedOptionValue));
-    setOpenMaterial(false);
+
+    const newMaterial = [...material];
+    const newMaterialName = [...materialName];
+
+    newMaterial[index] = selectedOptionName;
+    newMaterialName[index] = parseInt(selectedOptionValue);
+
+    setMaterial(newMaterial);
+    setMaterialName(newMaterialName);
+
+    const newOpenMaterial = [...openMaterial];
+    newOpenMaterial[index] = false;
+    setOpenMaterial(newOpenMaterial);
   };
 
-  const handleMaterialType = (e) => {
+  const handleMaterialType = (index, e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
     const selectedOptionName = e.currentTarget.textContent.trim();
     const selectedOptionValue = inputElement ? inputElement.value.toLowerCase() : '';
-    setMaterialType(selectedOptionName);
-    setMaterialTypeName(selectedOptionValue);
-    setOpenMaterialType(false);
-  };
-  /* ///Material Source */
 
-  /* Material File */
-  const handleVideoClick = () => {
-    if (uploadRef.current) {
-      uploadRef.current.click(); // Trigger a click on the hidden file input
+    const newMaterialType = [...materialType];
+    const newMaterialTypeName = [...materialTypeName];
+
+    newMaterialType[index] = selectedOptionName;
+    newMaterialTypeName[index] = selectedOptionValue;
+
+    setMaterialType(newMaterialType);
+    setMaterialTypeName(newMaterialTypeName);
+
+    const newOpenMaterialType = [...openMaterialType];
+    newOpenMaterialType[index] = false;
+    setOpenMaterialType(newOpenMaterialType);
+  };
+
+  const handleVideoClick = (index) => {
+    if (uploadRefs.current[index]) {
+      uploadRefs.current[index].click();
     }
   };
 
-  const handleVideoChange = (e) => {
+  const handleVideoChange = (index, e) => {
     const file = e.target.files[0];
     if (file) {
-      setLessonVideoFile(file); // Set file object for upload
-      setLessonVideo(file.name); // Display file name in the text input
+      const newLessonVideoFile = [...lessonVideoFile];
+      const newLessonVideo = [...lessonVideo];
+      newLessonVideoFile[index] = file;
+      newLessonVideo[index] = file.name;
+      setLessonVideoFile(newLessonVideoFile);
+      setLessonVideo(newLessonVideo);
     }
   };
-  /* ///Material File */
-  /* Add Material */
-  const handleAdd = () => {
-    // setMaterialList([
-    //   ...materialList,
-    //   <div key={materialList.length} className="w-full flex flex-wrap items-center justify-start gap-3 material">
-    //     <div className="lg:w-[30%] sm:w-full">
-    //       <DropDownMenu
-    //         ref={dropdownMaterial}
-    //         handleOpen={handleOpenMaterial}
-    //         handleOpenOption={handleMaterial}
-    //         stateoption={material}
-    //         openMenu={openMaterial}
-    //         options={materialData}
-    //       />
-    //     </div>
-    //     <div className="lg:w-[30%] sm:w-full">
-    //       <DropDownMenu
-    //         ref={dropdownMaterialType}
-    //         handleOpen={()=>handleOpenMaterialType(materialList.length)}
-    //         handleOpenOption={handleMaterialType}
-    //         stateoption={materialType}
-    //         openMenu={openMaterialType}
-    //         options={materialTypeData}
-    //       />
-    //     </div>
-    //     {materialTypeName === 'external' && (
-    //       <div className="lg:w-[30%] sm:w-full">
-    //         <InputCustom
-    //           type="text"
-    //           source='external'
-    //           placeholder="Paste The External Link"
-    //           value={lessonExternal}
-    //           readonly={false}
-    //           onChange={(e) => setLessonExternal(e.target.value)}
-    //         />
-    //       </div>
-    //     )}
-    //     {materialTypeName === 'embedded' && (
-    //       <div className="lg:w-[30%] sm:w-full">
-    //         <InputCustom
-    //           type="text"
-    //           source='embedded'
-    //           placeholder="Paste Whole Of The Iframe Code"
-    //           value={lessonEmbedded}
-    //           readonly={false}
-    //           onChange={(e) => setLessonEmbedded(e.target.value)}
-    //         />
-    //       </div>
-    //     )}
-    //     {materialTypeName === 'upload' && (
-    //       <div className="lg:w-[30%] sm:w-full">
-    //         <InputCustom
-    //           type="text"
-    //           source='upload'
-    //           placeholder="Upload Video"
-    //           value={lessonVideo}
-    //           readonly={true}
-    //           onClick={handleVideoClick}
-    //         />
-    //         <input
-    //           ref={uploadRef}
-    //           type="file"
-    //           className="hidden"
-    //           onChange={handleVideoChange}
-    //         />
-    //       </div>
-    //     )}
-    //   </div>,
-    // ]);
+  const setUploadRef = (el, newIndex) => {
+    if (el) uploadRefs.current[newIndex] = el;
   };
-  /* ///Add Material */
+  const addMaterialElement = () => {
+    const newIndex = materialList.length;
+
+    dropdownMaterialRefs.current[newIndex] = React.createRef();
+    dropdownMaterialTypeRefs.current[newIndex] = React.createRef();
+
+    // Callback ref to ensure the ref is correctly attached to the input element
+    const setUploadRef = (el) => {
+      if (el) uploadRefs.current[newIndex] = el;
+    };
+
+    setOpenMaterial((prev) => [...prev, false]);
+    setOpenMaterialType((prev) => [...prev, false]);
+    setLessonVideoFile((prev) => [...prev, '']);
+    setLessonVideo((prev) => [...prev, '']);
+
+    setMaterial((prev) => [...prev, 'Select Material']);
+    setMaterialType((prev) => [...prev, 'Select Source']);
+    setMaterialName((prev) => [...prev, null]);
+    setMaterialTypeName((prev) => [...prev, null]);
+    setLessonExternal((prev) => [...prev, '']);
+    setLessonEmbedded((prev) => [...prev, '']);
+
+    const ele = (
+      <div key={newIndex} className="w-full flex flex-wrap items-center justify-start gap-3 material">
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownMaterialRefs.current[newIndex]}
+            handleOpen={() => handleOpenMaterial(newIndex)}
+            handleOpenOption={(e) => handleMaterial(newIndex, e)}
+            stateoption={material[newIndex]}
+            openMenu={openMaterial[newIndex]}
+            options={materialData}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownMaterialTypeRefs.current[newIndex]}
+            handleOpen={() => handleOpenMaterialType(newIndex)}
+            handleOpenOption={(e) => handleMaterialType(newIndex, e)}
+            stateoption={materialType[newIndex]}
+            openMenu={openMaterialType[newIndex]}
+            options={materialTypeData}
+          />
+        </div>
+        {materialTypeName[newIndex] === 'external' && (
+          <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+              type="text"
+              source="external"
+              placeholder="Paste The External Link"
+              value={lessonExternal[newIndex]}
+              readonly={false}
+              onChange={(e) => {
+                const newLessonExternal = [...lessonExternal];
+                newLessonExternal[newIndex] = e.target.value;
+                setLessonExternal(newLessonExternal);
+              }}
+            />
+          </div>
+        )}
+        {materialTypeName[newIndex] === 'embedded' && (
+          <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+              type="text"
+              source="embedded"
+              placeholder="Paste Whole Of The Iframe Code"
+              value={lessonEmbedded[newIndex]}
+              readonly={false}
+              onChange={(e) => {
+                const newLessonEmbedded = [...lessonEmbedded];
+                newLessonEmbedded[newIndex] = e.target.value;
+                setLessonEmbedded(newLessonEmbedded);
+              }}
+            />
+          </div>
+        )}
+        {materialTypeName[newIndex] === 'upload' && (
+          <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+              type="text"
+              source="upload"
+              placeholder="Upload Video"
+              value={lessonVideo[newIndex]}
+              readonly={true}
+              onClick={() => handleVideoClick(newIndex)}
+            />
+            <input
+              ref={setUploadRef}
+              type="file"
+              className="hidden"
+              onChange={(e) => handleVideoChange(newIndex, e)}
+            />
+          </div>
+        )}
+      </div>
+    );
+
+    setMaterialList((prevList) => [...prevList, ele]);
+
+  };
 
   const handleClickOutside = (event) => {
-    if (
-      dropdownMaterial.current &&
-      !dropdownMaterial.current.contains(event.target) &&
-      dropdownMaterialType.current &&
-      !dropdownMaterialType.current.contains(event.target)
-    ) {
-      setOpenMaterial(false);
-      setOpenMaterialType(false);
-    }
+    dropdownMaterialRefs.current.forEach((ref, index) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        const newOpenMaterial = [...openMaterial];
+        newOpenMaterial[index] = false;
+        setOpenMaterial(newOpenMaterial);
+      }
+    });
+
+    dropdownMaterialTypeRefs.current.forEach((ref, index) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        const newOpenMaterialType = [...openMaterialType];
+        newOpenMaterialType[index] = false;
+        setOpenMaterialType(newOpenMaterialType);
+      }
+    });
   };
 
   useEffect(() => {
@@ -201,12 +272,261 @@ const AddLessonPage = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [openMaterial, openMaterialType]);
+
+  const handleGoBack = () => {
+    navigate(-1, { replace: true });
+  };
+
+  // const handleSubmitAdd = async (event) => {
+  //   event.preventDefault()
+
+  //   setIsLoading(true);
+
+
+  //   if (lessonNameEn == '') {
+  //     auth.toastError('Please Enter NameEn.');
+  //     setIsLoading(false)
+  //     return;
+  //   }
+  //   if (lessonNameAr == '') {
+  //     auth.toastError('Please Enter NameAr.');
+  //     setIsLoading(false)
+  //     return;
+  //   }
+  //   if (lessonOrder == '') {
+  //     auth.toastError('Please Enter Order.');
+  //     setIsLoading(false)
+  //     return;
+  //   }
+  //   if (lessonDescription == '') {
+  //     auth.toastError('Please Enter Description.');
+  //     setIsLoading(false)
+  //     return;
+  //   }
+
+  //   const myMaterials = [];
+  //   const allMaterial = document.querySelectorAll('.material');
+
+  //   allMaterial.forEach((ele) => {
+  //     const materialName = ele.getElementsByClassName('materialName')[0].getElementsByClassName('eleValueDropDown')[0].innerText.toLowerCase();
+  //     const materialSource = ele.getElementsByClassName('materialSource')[0].getElementsByClassName('eleValueDropDown')[0].innerText.toLowerCase();
+  //     let materialData = null;
+  //     console.log('materialSource', materialSource)
+
+  //     if (materialName == 'select material' || materialName == '') {
+  //       auth.toastError('Please Enter Material Name.');
+  //       setIsLoading(false)
+  //       return;
+  //     }
+
+
+  //     if (materialSource == 'select source' || materialSource == '') {
+  //       auth.toastError('Please Enter Material Source.');
+  //       setIsLoading(false)
+  //       return;
+  //     }
+
+  //     if (materialSource == "external" || materialSource == "embedded") {
+  //       materialData = ele.getElementsByClassName('materialData')[0].getElementsByClassName('eleValueInput')[0].value;
+  //     } else {
+  //       materialData = ele.getElementsByClassName('materialData')[0].getElementsByClassName('eleValueFile')[0].files[0];
+  //     }
+
+  //     if (materialData == '') {
+  //       auth.toastError('Please Enter Material Data.');
+  //       setIsLoading(false)
+  //       return;
+  //     }
+
+  //     const object = {
+  //       type: materialName,
+  //       source: materialSource,
+  //       material: materialData,
+  //     }
+  //     myMaterials.push(object)
+  //     console.log('materialName', materialName)
+  //     console.log('materialSource', materialSource)
+  //     console.log('materialData', materialData)
+  //     console.log('object', object)
+  //   }
+  //   );
+  //   setMaterials(myMaterials)
+  //   console.log('materials', materials)
+
+  //   if (!materials) {
+  //     auth.toastError('Please Enter Materials.');
+  //     setIsLoading(false)
+  //     return;
+  //   }
+
+  //   console.log('myMaterials', myMaterials)
+  //   console.log('materials', materials)
+  //   console.log('dataArr', dataArr)
+
+  //   setDataArr(
+  //     {
+  //       name: lessonNameEn,
+  //       ar_name: lessonNameAr,
+  //       description: lessonDescription,
+  //       materials: materials,
+  //       paid: lessonFree,
+  //       status: lessonActive,
+  //       order: lessonOrder,
+  //       drip_content: lessonDripContent,
+  //     }
+  //   )
+  //   console.log('materialssss', materials)
+  //   if (materials == []) {
+  //     return;
+  //   } else {
+  //     try {
+  //       const response = await axios.post(`https://bdev.elmanhag.shop/admin/lesson/add/${chapterID}`, dataArr, {
+  //         headers: {
+  //           Authorization: `Bearer ${auth.user.token}`,
+  //           // 'Content-Type': 'multipart/form-data',
+  //         },
+  //       });
+  //       if (response.status === 200) {
+  //         auth.toastSuccess('Lesson added successfully!');
+  //         handleGoBack();
+  //       } else {
+  //         auth.toastError('Failed to add Lesson.');
+
+  //       }
+  //     } catch (error) {
+  //       const errorMessages = error?.response;
+  //       let errorMessageString = 'Error occurred';
+  //       console.log('errorMessages', errorMessages)
+
+  //       if (errorMessages) {
+  //         errorMessageString = Object.values(errorMessages).flat().join(' ');
+  //       }
+  //       auth.toastError('Error', errorMessageString)
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   }
+  //   // console.log('myMaterials', myMaterials)
+  // }
+
+  const handleSubmitAdd = async (event) => {
+    event.preventDefault();
+
+    setIsLoading(true);
+
+    if (!lessonNameEn) {
+      auth.toastError('Please Enter NameEn.');
+      setIsLoading(false);
+      return;
+    }
+    if (!lessonNameAr) {
+      auth.toastError('Please Enter NameAr.');
+      setIsLoading(false);
+      return;
+    }
+    if (!lessonOrder) {
+      auth.toastError('Please Enter Order.');
+      setIsLoading(false);
+      return;
+    }
+    if (!lessonDescription) {
+      auth.toastError('Please Enter Description.');
+      setIsLoading(false);
+      return;
+    }
+
+    const myMaterials = [];
+    const allMaterial = document.querySelectorAll('.material');
+
+    allMaterial.forEach((ele) => {
+      const materialName = ele.getElementsByClassName('materialName')[0].getElementsByClassName('eleValueDropDown')[0].innerText.toLowerCase();
+      const materialSource = ele.getElementsByClassName('materialSource')[0].getElementsByClassName('eleValueDropDown')[0].innerText.toLowerCase();
+      let materialData = null;
+
+      if (materialName === 'select material' || materialName === '') {
+        auth.toastError('Please Enter Material Name.');
+        setIsLoading(false);
+        return;
+      }
+
+      if (materialSource === 'select source' || materialSource === '') {
+        auth.toastError('Please Enter Material Source.');
+        setIsLoading(false);
+        return;
+      }
+
+      if (materialSource === 'external' || materialSource === 'embedded') {
+        materialData = ele.getElementsByClassName('materialData')[0].getElementsByClassName('eleValueInput')[0].value;
+      } else {
+        materialData = ele.getElementsByClassName('materialData')[0].getElementsByClassName('eleValueFile')[0]?.files[0];
+      }
+
+      if (!materialData) {
+        auth.toastError('Please Enter Material Data.');
+        setIsLoading(false);
+        return;
+      }
+
+      const object = {
+        type: materialName,
+        source: materialSource,
+        material: materialData,
+      };
+      myMaterials.push(object);
+    });
+
+    if (myMaterials.length === 0) {
+      auth.toastError('Please Enter Materials.');
+      setIsLoading(false);
+      return;
+    }
+
+    const payload = {
+      name: lessonNameEn,
+      ar_name: lessonNameAr,
+      description: lessonDescription,
+      materials: myMaterials,
+      paid: lessonFree,
+      status: lessonActive,
+      order: lessonOrder,
+      drip_content: lessonDripContent,
+    };
+
+    try {
+      const response = await axios.post(`https://bdev.elmanhag.shop/admin/lesson/add/${chapterID}`, payload, {
+        headers: {
+          Authorization: `Bearer ${auth.user.token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        auth.toastSuccess('Lesson added successfully!');
+        handleGoBack();
+      } else {
+        auth.toastError('Failed to add Lesson.');
+      }
+    } catch (error) {
+      const errorMessages = error?.response?.data?.errors || {};
+      let errorMessageString = 'Error occurred';
+
+      if (errorMessages) {
+        errorMessageString = Object.values(errorMessages).flat().join(' ');
+      }
+      auth.toastError('Error', errorMessageString);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    console.log('Updated dataArr:', dataArr);
+  }, [dataArr]);
 
   return (
     <>
       <form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-3">
-        <div className="w-full flex flex-col items-center justify-center gap-10">
+        <div className="w-full mb-10 flex flex-col items-center justify-center gap-10">
+
           <div className="w-full flex flex-wrap items-center justify-start gap-3">
             <div className="lg:w-[30%] sm:w-full">
               <InputCustom
@@ -244,71 +564,80 @@ const AddLessonPage = () => {
 
           <div className="w-full">
             <div className="w-full flex flex-col gap-y-3 materialList">
-              {/* {materialList} */}
-              <div className="w-full flex flex-wrap items-center justify-start gap-3 material">
-                <div className="lg:w-[30%] sm:w-full">
-                  <DropDownMenu
-                    ref={dropdownMaterial}
-                    handleOpen={handleOpenMaterial}
-                    handleOpenOption={handleMaterial}
-                    stateoption={material}
-                    openMenu={openMaterial}
-                    options={materialData}
-                  />
+              {materialList.map((ele, newIndex) => (
+                <div key={newIndex} className="w-full flex flex-wrap items-center justify-start gap-3 material">
+                  <div className="lg:w-[30%] sm:w-full materialName">
+                    <DropDownMenu
+                      ref={dropdownMaterialRefs.current[newIndex]}
+                      handleOpen={() => handleOpenMaterial(newIndex)}
+                      handleOpenOption={(e) => handleMaterial(newIndex, e)}
+                      stateoption={material[newIndex]}
+                      openMenu={openMaterial[newIndex]}
+                      options={materialData}
+                    />
+                  </div>
+                  <div className="lg:w-[30%] sm:w-full materialSource">
+                    <DropDownMenu
+                      ref={dropdownMaterialTypeRefs.current[newIndex]}
+                      handleOpen={() => handleOpenMaterialType(newIndex)}
+                      handleOpenOption={(e) => handleMaterialType(newIndex, e)}
+                      stateoption={materialType[newIndex]}
+                      openMenu={openMaterialType[newIndex]}
+                      options={materialTypeData}
+                    />
+                  </div>
+                  {materialTypeName[newIndex] === 'external' && (
+                    <div className="lg:w-[30%] sm:w-full materialData">
+                      <InputCustom
+                        type="text"
+                        source="external"
+                        placeholder="Paste The External Link"
+                        value={lessonExternal[newIndex]}
+                        readonly={false}
+                        onChange={(e) => {
+                          const newLessonExternal = [...lessonExternal];
+                          newLessonExternal[newIndex] = e.target.value;
+                          setLessonExternal(newLessonExternal);
+                        }}
+                      />
+                    </div>
+                  )}
+                  {materialTypeName[newIndex] === 'embedded' && (
+                    <div className="lg:w-[30%] sm:w-full materialData">
+                      <InputCustom
+                        type="text"
+                        source="embedded"
+                        placeholder="Paste Whole Of The Iframe Code"
+                        value={lessonEmbedded[newIndex]}
+                        readonly={false}
+                        onChange={(e) => {
+                          const newLessonEmbedded = [...lessonEmbedded];
+                          newLessonEmbedded[newIndex] = e.target.value;
+                          setLessonEmbedded(newLessonEmbedded);
+                        }}
+                      />
+                    </div>
+                  )}
+                  {materialTypeName[newIndex] === 'upload' && (
+                    <div className="lg:w-[30%] sm:w-full materialData">
+                      <InputCustom
+                        type="text"
+                        source="upload"
+                        placeholder="Upload Video"
+                        value={lessonVideo[newIndex]}
+                        readonly={true}
+                        onClick={() => handleVideoClick(newIndex)}
+                      />
+                      <input
+                        ref={(el) => setUploadRef(el, newIndex)}
+                        type="file"
+                        className="hidden eleValueFile"
+                        onChange={(e) => handleVideoChange(newIndex, e)}
+                      />
+                    </div>
+                  )}
                 </div>
-                <div className="lg:w-[30%] sm:w-full">
-                  <DropDownMenu
-                    ref={dropdownMaterialType}
-                    handleOpen={handleOpenMaterialType}
-                    handleOpenOption={handleMaterialType}
-                    stateoption={materialType}
-                    openMenu={openMaterialType}
-                    options={materialTypeData}
-                  />
-                </div>
-                {materialTypeName === 'external' && (
-                  <div className="lg:w-[30%] sm:w-full">
-                    <InputCustom
-                      type="text"
-                      source='external'
-                      placeholder="Paste The External Link"
-                      value={lessonExternal}
-                      readonly={false}
-                      onChange={(e) => setLessonExternal(e.target.value)}
-                    />
-                  </div>
-                )}
-                {materialTypeName === 'embedded' && (
-                  <div className="lg:w-[30%] sm:w-full">
-                    <InputCustom
-                      type="text"
-                      source='embedded'
-                      placeholder="Paste Whole Of The Iframe Code"
-                      value={lessonEmbedded}
-                      readonly={false}
-                      onChange={(e) => setLessonEmbedded(e.target.value)}
-                    />
-                  </div>
-                )}
-                {materialTypeName === 'upload' && (
-                  <div className="lg:w-[30%] sm:w-full">
-                    <InputCustom
-                      type="text"
-                      source='upload'
-                      placeholder="Upload Video"
-                      value={lessonVideo}
-                      readonly={true}
-                      onClick={handleVideoClick}
-                    />
-                    <input
-                      ref={uploadRef}
-                      type="file"
-                      className="hidden"
-                      onChange={handleVideoChange}
-                    />
-                  </div>
-                )}
-              </div>
+              ))}
             </div>
 
             <div className="w-full mt-3">
@@ -316,7 +645,7 @@ const AddLessonPage = () => {
                 isWidth="true"
                 BgColor="mainColor"
                 Color="white"
-                handleClick={handleAdd}
+                handleClick={addMaterialElement}
                 iconColor="white"
               />
             </div>
@@ -328,10 +657,7 @@ const AddLessonPage = () => {
                 <span className="text-2xl text-thirdColor font-medium">Drip Content:</span>
                 <div>
                   <CheckBox
-                    id="drip-content"
-                    title=""
-                    active={lessonDripContent === 1}
-                    onClick={handleDripContentClick}
+                    handleClick={handleDripContentClick}
                   />
                 </div>
               </div>
@@ -339,36 +665,45 @@ const AddLessonPage = () => {
                 <span className="text-2xl text-thirdColor font-medium">Free:</span>
                 <div>
                   <CheckBox
-                    id="free"
-                    title=""
-                    active={lessonFree === 1}
-                    onClick={handleFreeClick}
+                    handleClick={handleFreeClick}
                   />
                 </div>
               </div>
-              <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+              {/* <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
                 <span className="text-2xl text-thirdColor font-medium">Paid:</span>
                 <div>
                   <CheckBox
-                    id="paid"
-                    title=""
-                    active={lessonPaid === 1}
-                    onClick={handlePaidClick}
+                    handleClick={handlePaidClick}
                   />
                 </div>
-              </div>
+              </div> */}
               <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
                 <span className="text-2xl text-thirdColor font-medium">Active:</span>
                 <div>
                   <CheckBox
-                    id="active"
-                    title=""
-                    active={lessonActive === 1}
-                    onClick={handleActiveClick}
+                    handleClick={handleActiveClick}
                   />
                 </div>
               </div>
             </div>
+          </div>
+          {/* Buttons */}
+          <div className="w-full  flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
+            <div className="flex items-center justify-center w-72">
+              <Button
+                type="submit"
+                Text="Done"
+                BgColor="bg-mainColor"
+                Color="text-white"
+                Width="full"
+                Size="text-2xl"
+                px="px-28"
+                handleClick={handleSubmitAdd}
+                rounded="rounded-2xl"
+                stateLoding={isLoading}
+              />
+            </div>
+            <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
           </div>
         </div>
       </form>
