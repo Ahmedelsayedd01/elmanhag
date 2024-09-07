@@ -46,7 +46,16 @@ const LinksSidebar = () => {
        const [isActiveRevision, setIsActiveRevision] = useState(savedState.isActiveRevision ?? false);
        const [isActiveExams, setIsActivExams] = useState(savedState.isActiveExams ?? false);
        const [isActiveLive, setIsActiveLive] = useState(savedState.isActiveLive ?? false);
+       /* Marketiwng */
+       /* Childern Marketing */
        const [isActiveMarketing, setIsActiveMarketing] = useState(savedState.isActiveMarketing ?? false);
+       const [openListMarketing, setOpenListMarketing] = useState(savedState.openListMarketing ?? false);
+       const [isActiveDiscount, setIsActiveDiscount] = useState(savedState.isActiveDiscount ?? false);
+       const [isActivePromoCode, setIsActivePromoCode] = useState(savedState.isActivePromoCode ?? false);
+       const [isActiveReview, setIsActiveReview] = useState(savedState.isActiveReview ?? false);
+       const [isActivePopUp, setIsActivePopUp] = useState(savedState.isActivePopUp ?? false);
+       /* ////Childern Marketing */
+       /* ///Marketing */
        const [isActiveFinancial, setIsActiveFinancial] = useState(savedState.isActiveFinancial ?? false);
        const [isActiveAffiliate, setIsActiveAffiliate] = useState(savedState.isActiveAffiliate ?? false);
        const [isActiveSupport, setIsActiveSupport] = useState(savedState.isActiveSupport ?? false);
@@ -84,6 +93,11 @@ const LinksSidebar = () => {
                      isActiveExams,
                      isActiveLive,
                      isActiveMarketing,
+                     openListMarketing,
+                     isActiveDiscount,
+                     isActivePromoCode,
+                     isActiveReview,
+                     isActivePopUp,
                      isActiveFinancial,
                      isActiveAffiliate,
                      isActiveSupport,
@@ -117,6 +131,11 @@ const LinksSidebar = () => {
               isActiveExams,
               isActiveLive,
               isActiveMarketing,
+              openListMarketing,
+              isActiveDiscount,
+              isActivePromoCode,
+              isActiveReview,
+              isActivePopUp,
               isActiveFinancial,
               isActiveAffiliate,
               isActiveSupport,
@@ -633,6 +652,7 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       /* Marketing */
        const handleClickMarketing = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -652,6 +672,11 @@ const LinksSidebar = () => {
               setIsActivExams(false)
               setIsActiveLive(false)
               setIsActiveMarketing(true)
+              setOpenListMarketing(true)
+              setIsActiveDiscount(true)
+              setIsActivePromoCode(false)
+              setIsActiveReview(false)
+              setIsActivePopUp(false)
               setIsActiveFinancial(false)
               setIsActiveAffiliate(false)
               setIsActiveSupport(false)
@@ -666,6 +691,159 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       const handleClickDiscount = () => {
+              setIsActiveDashboard(false);
+              setIsActiveUser(false);
+              setOpenListUser(false);
+              setIsActiveStudent(false);
+              setIsActiveParent(false);
+              setIsActiveTeacher(false);
+              setIsActiveAdmin(false);
+              setIsActiveEducation(false)
+              setOpenListEducation(false)
+              setIsActiveCategories(false)
+              setIsActiveSubject(false)
+              setIsActiveBundles(false)
+              setIsActiveQuestionsBank(false)
+              setIsActiveHomeWork(false)
+              setIsActiveRevision(false)
+              setIsActivExams(false)
+              setIsActiveLive(false)
+              setIsActiveMarketing(true)
+              setOpenListMarketing(true)
+              setIsActiveDiscount(true)
+              setIsActivePromoCode(false)
+              setIsActiveReview(false)
+              setIsActivePopUp(false)
+              setIsActiveFinancial(false)
+              setIsActiveAffiliate(false)
+              setIsActiveSupport(false)
+              setIsActiveReports(false)
+              setIsActiveSetting(false)
+              setOpenListSetting(false)
+              setIsActiveAdminRoles(false)
+              setIsActiveCountries(false)
+              setIsActiveCities(false)
+              setIsActiveParentRelation(false)
+              setIsActiveOperations(false)
+              setIsActivePaymentMethod(false)
+              setIsActiveNoticeBoard(false)
+       }
+       const handleClickPromoCode = () => {
+              setIsActiveDashboard(false);
+              setIsActiveUser(false);
+              setOpenListUser(false);
+              setIsActiveStudent(false);
+              setIsActiveParent(false);
+              setIsActiveTeacher(false);
+              setIsActiveAdmin(false);
+              setIsActiveEducation(false)
+              setOpenListEducation(false)
+              setIsActiveCategories(false)
+              setIsActiveSubject(false)
+              setIsActiveBundles(false)
+              setIsActiveQuestionsBank(false)
+              setIsActiveHomeWork(false)
+              setIsActiveRevision(false)
+              setIsActivExams(false)
+              setIsActiveLive(false)
+              setIsActiveMarketing(true)
+              setOpenListMarketing(true)
+              setIsActiveDiscount(false)
+              setIsActivePromoCode(true)
+              setIsActiveReview(false)
+              setIsActivePopUp(false)
+              setIsActiveFinancial(false)
+              setIsActiveAffiliate(false)
+              setIsActiveSupport(false)
+              setIsActiveReports(false)
+              setIsActiveSetting(false)
+              setOpenListSetting(false)
+              setIsActiveAdminRoles(false)
+              setIsActiveCountries(false)
+              setIsActiveCities(false)
+              setIsActiveParentRelation(false)
+              setIsActiveOperations(false)
+              setIsActivePaymentMethod(false)
+              setIsActiveNoticeBoard(false)
+       }
+       const handleClickReviews = () => {
+              setIsActiveDashboard(false);
+              setIsActiveUser(false);
+              setOpenListUser(false);
+              setIsActiveStudent(false);
+              setIsActiveParent(false);
+              setIsActiveTeacher(false);
+              setIsActiveAdmin(false);
+              setIsActiveEducation(false)
+              setOpenListEducation(false)
+              setIsActiveCategories(false)
+              setIsActiveSubject(false)
+              setIsActiveBundles(false)
+              setIsActiveQuestionsBank(false)
+              setIsActiveHomeWork(false)
+              setIsActiveRevision(false)
+              setIsActivExams(false)
+              setIsActiveLive(false)
+              setIsActiveMarketing(true)
+              setOpenListMarketing(true)
+              setIsActiveDiscount(false)
+              setIsActivePromoCode(false)
+              setIsActiveReview(true)
+              setIsActivePopUp(false)
+              setIsActiveFinancial(false)
+              setIsActiveAffiliate(false)
+              setIsActiveSupport(false)
+              setIsActiveReports(false)
+              setIsActiveSetting(false)
+              setOpenListSetting(false)
+              setIsActiveAdminRoles(false)
+              setIsActiveCountries(false)
+              setIsActiveCities(false)
+              setIsActiveParentRelation(false)
+              setIsActiveOperations(false)
+              setIsActivePaymentMethod(false)
+              setIsActiveNoticeBoard(false)
+       }
+       const handleClickPopUp = () => {
+              setIsActiveDashboard(false);
+              setIsActiveUser(false);
+              setOpenListUser(false);
+              setIsActiveStudent(false);
+              setIsActiveParent(false);
+              setIsActiveTeacher(false);
+              setIsActiveAdmin(false);
+              setIsActiveEducation(false)
+              setOpenListEducation(false)
+              setIsActiveCategories(false)
+              setIsActiveSubject(false)
+              setIsActiveBundles(false)
+              setIsActiveQuestionsBank(false)
+              setIsActiveHomeWork(false)
+              setIsActiveRevision(false)
+              setIsActivExams(false)
+              setIsActiveLive(false)
+              setIsActiveMarketing(true)
+              setOpenListMarketing(true)
+              setIsActiveDiscount(false)
+              setIsActivePromoCode(false)
+              setIsActiveReview(false)
+              setIsActivePopUp(true)
+              setIsActiveFinancial(false)
+              setIsActiveAffiliate(false)
+              setIsActiveSupport(false)
+              setIsActiveReports(false)
+              setIsActiveSetting(false)
+              setOpenListSetting(false)
+              setIsActiveAdminRoles(false)
+              setIsActiveCountries(false)
+              setIsActiveCities(false)
+              setIsActiveParentRelation(false)
+              setIsActiveOperations(false)
+              setIsActivePaymentMethod(false)
+              setIsActiveNoticeBoard(false)
+       }
+       /* ////Marketing */
        const handleClickFinancial = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -1111,10 +1289,18 @@ const LinksSidebar = () => {
                                    <LiveIcon Width={25} Height={23} isActive={isActiveLive} />
                                    <span className={`${isActiveLive ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Live</span>
                             </Link>
-                            <Link to="marketing" onClick={handleClickMarketing} className={`${isActiveMarketing ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                            <Link to="discount" onClick={handleClickMarketing} className={`${isActiveMarketing ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
                                    <MarketingIcon Width={25} Height={23} isActive={isActiveMarketing} />
                                    <span className={`${isActiveMarketing ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Marketing</span>
                             </Link>
+                            <div className={`${openListMarketing ? "h-36" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                   <ul className={`${openListMarketing ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                          <li className={`${isActiveDiscount ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"discount"} onClick={handleClickDiscount}>Discount</Link></li>
+                                          <li className={`${isActivePromoCode ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"promo_code"} onClick={handleClickPromoCode}>PromoCode</Link></li>
+                                          <li className={`${isActiveReview ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"review"} onClick={handleClickReviews}>Reviews</Link></li>
+                                          <li className={`${isActivePopUp ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"pop_up"} onClick={handleClickPopUp}>Pop Up</Link></li>
+                                   </ul>
+                            </div>
                             <Link to="financial" onClick={handleClickFinancial} className={`${isActiveFinancial ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
                                    <FinancialIcon Width={25} Height={23} isActive={isActiveFinancial} />
                                    <span className={`${isActiveFinancial ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Financial</span>
@@ -1153,6 +1339,5 @@ const LinksSidebar = () => {
                      </div>
               </>
        );
-};
-
+}
 export default LinksSidebar;
