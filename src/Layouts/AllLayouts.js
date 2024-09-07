@@ -26,20 +26,18 @@ export { default as AddLessonLayout } from "./Admin/AddLessonLayout";
 export { default as EditLessonLayout } from "./Admin/EditLessonLayout";
 export { default as MaterialLessonLayout } from "./Admin/MaterialLessonLayout";
 
-
 export { default as StudentsSubjectLayout } from "./Admin/StudentsSubjectLayout";
 
 export { default as BundlesEducationLayout } from "./Admin/BundlesEducationLayout";
-export {default as AddBundlesLayout} from "./Admin/AddBundlesLayout";
-export {default as EditBundlesLayout} from "./Admin/EditBundlesLayout";
-export {default as StudentsBundlesLayout} from "./Admin/StudentsBundlesLayout";
+export { default as AddBundlesLayout } from "./Admin/AddBundlesLayout";
+export { default as EditBundlesLayout } from "./Admin/EditBundlesLayout";
+export { default as StudentsBundlesLayout } from "./Admin/StudentsBundlesLayout";
 
 export { default as QuestionsBankEducation } from "./Admin/QuestionsBankEducation";
 /* HomeWork */
 export { default as HomeWorkLayout } from "./Admin/HomeWorkLayout";
 export { default as AddHomeWorkLayout } from "./Admin/AddHomeWorkLayout";
 export { default as EditHomeWorkLayout } from "./Admin/EditHomeWorkLayout";
-
 
 export { default as RevisionAD } from "./Admin/RevisionAD";
 export { default as ExamsAD } from "./Admin/ExamsAD";
@@ -52,9 +50,23 @@ export { default as EditLiveLayout } from "./Admin/EditLiveLayout";
 //Discount Layouts
 export { default as DiscountLayout } from "./Admin/DiscountLayout";
 export { default as AddDiscountLayout } from "./Admin/AddDiscountLayout";
-export { default as EditDiscountLayout} from "./Admin/EditDiscountLayout";
+export { default as EditDiscountLayout } from "./Admin/EditDiscountLayout";
 
-export { default as MarketingAD } from "./Admin/MarketingAD";
+//Ptomo Code Layouts
+export { default as PromoCodeLayout } from "./Admin/PromoCodeLayout";
+export { default as AddPromoCodeLayout } from "./Admin/AddPromoCodeLayout";
+export { default as EditPromoCodeLayout } from "./Admin/EditPromoCodeLayout";
+
+//Ptomo Review Layouts
+export { default as ReviewLayout } from "./Admin/ReviewLayout";
+export { default as AddReviewLayout } from "./Admin/AddReviewLayout";
+export { default as EditReviewLayout } from "./Admin/EditReviewLayout";
+
+//Ptomo Pop Up Layouts
+export { default as PopUpLayout } from "./Admin/PopUpLayout";
+export { default as AddPopUpLayout } from "./Admin/AddPopUpLayout";
+export { default as EditPopUpLayout } from "./Admin/EditPopUpLayout";
+
 export { default as FinancialAD } from "./Admin/FinancialAD";
 export { default as AffiliateAD } from "./Admin/AffiliateAD";
 export { default as SupportAD } from "./Admin/SupportAD";
