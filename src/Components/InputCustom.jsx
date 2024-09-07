@@ -45,7 +45,7 @@ const InputCustom = ({ type, borderColor = "none", placeholder, value, readonly 
                             <input type={type}
                                    placeholder={placeholder}
                                    className={`w-full border-2 rounded-2xl border-${borderColor} 
-                       outline-none px-2 py-3 pr-11 text-2xl font-normal ${upload ? "text-mainColor cursor-pointer pr-10" : "text-thirdColor"}`}
+                       outline-none px-2 py-3 pr-11 text-2xl font-normal eleValueInput ${upload ? "text-mainColor cursor-pointer pr-10" : "text-thirdColor"}`}
                                    value={value}
                                    onChange={onChange}
                                    onClick={onClick}
