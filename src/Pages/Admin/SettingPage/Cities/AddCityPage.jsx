@@ -25,7 +25,7 @@ const AddCityPage = () => {
     const [nameEn, setNameEn] = useState('');
     const [nameAr, setNameAr] = useState('');
     // const [status, setStatus] = useState('');
-    const [cityActive, setCityActive] = useState('');
+    const [cityActive, setCityActive] = useState(0);
 
 
     const dropdownCountryRef = useRef();

@@ -8,12 +8,9 @@ const NavbarStudent = () => {
     const [userName, setUserName] = useState('');
 
     useEffect(() => {
-        const loggedInStatus = localStorage.getItem('user') === 'true';
-        if (loggedInStatus) {
             setUserName(auth.user?.name || '');
-        }
     }, [auth.user]);
-
+console.log('userName',userName)
     return (
         <main className="bg-white p-4 flex flex-col items-center">
             <div className="flex items-center justify-between w-full max-w-6xl">

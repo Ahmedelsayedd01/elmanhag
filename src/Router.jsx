@@ -12,7 +12,9 @@ import {
   DashboardAD,
   RevisionAD,
   ExamsAD,
-  LiveAD,
+  LiveLayout,
+  AddLiveLayout,
+  EditLiveLayout,
   MarketingAD,
   FinancialAD,
   AffiliateAD,
@@ -50,6 +52,7 @@ import {
   EditChapterLayout,
   HomeWorkLayout,
   AddHomeWorkLayout,
+  EditHomeWorkLayout,
   AddLessonLayout,
   EditLessonLayout,
   MaterialLessonLayout,
@@ -188,6 +191,15 @@ const AppLayoutQuestionsBank = () => (
     <Outlet />
   </>
 );
+
+//update here
+/* Live */
+const AppLayoutLive = () => (
+  <>
+    <Outlet />
+  </>
+);
+
 const AppLayoutAdminRoles = () => (
   <>
     <Outlet />
@@ -274,9 +286,17 @@ const AppLayoutTeacher = () => (
   </>
 );
 const AppLayoutAffilate = () => (
-  <>
-    <AffilatePage />
-  </>
+  <div className="relative flex gap-x-4 directionAR">
+  <SidebarStudent />
+  <div className="contentSection w-4/5 min-h-screen ">
+    {/* <AffilatePage /> */}
+    <UserContext>
+      <NavbarStudent />
+      <AffilatePage />
+      {/* <Outlet /> */}
+    </UserContext>
+  </div>
+</div>
 );
 const AppLayoutParent = () => (
   <>
@@ -568,6 +588,10 @@ export const router = createBrowserRouter([
                 path: 'add',
                 element: <AddHomeWorkLayout />
               },
+              {
+                path: 'edit/:homeWorkId',
+                element: <EditHomeWorkLayout />
+              },
             ]
           },
           {
@@ -578,10 +602,33 @@ export const router = createBrowserRouter([
             path: 'exams',
             element: <ExamsAD />,
           },
+          // {
+          //   path: 'live',
+          //   element: <LiveLayout />,
+          // },
+
           {
             path: 'live',
-            element: <LiveAD />,
+            element: <AppLayoutLive />,
+            children: [
+              {
+                path: '',
+                element: <LiveLayout />
+              },
+              {
+                path: 'add',
+                element: <AddLiveLayout />
+              },
+              {
+                path: 'edit/:liveId',
+                element: <EditLiveLayout />
+              },
+            ]
           },
+
+
+
+
           {
             path: 'marketing',
             element: <MarketingAD />,

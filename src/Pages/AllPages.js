@@ -37,6 +37,18 @@ export { default as QuestionsBankPage } from "./Admin/EducationPage/QuestionsBan
 /* H.W Page */
 export { default as HomeWorkPage } from "./Admin/HomeWorkPage/HomeWorkPage";
 export { default as AddHomeWorkPage } from "./Admin/HomeWorkPage/AddHomeWorkPage";
+export { default as EditHomeWorkPage } from "./Admin/HomeWorkPage/EditHomeWorkPage";
+
+/* Live Page */
+export { default as LivePage } from "./Admin/LivePage/LivePage";
+export { default as AddLivePage } from "./Admin/LivePage/AddLivePage";
+export { default as EditLivePage } from "./Admin/LivePage/EditLivePage";
+
+/* Marketing Pages */
+//Discount Pages
+export { default as DiscountPage } from "./Admin/MarketingPage/Discount/DiscountPage";
+export { default as AddDiscountPage } from "./Admin/MarketingPage/Discount/AddDiscountPage";
+export { default as EditDiscountPage } from "./Admin/MarketingPage/Discount/EditDiscountPage";
 
 /* Setting Page */
 export { default as AdminRolesPage } from "./Admin/SettingPage/AdminRolesPage";

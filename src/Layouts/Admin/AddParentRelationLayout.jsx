@@ -3,7 +3,7 @@ import HeaderPageSection from '../../Components/HeaderPageSection'
 import { AddParentRelationPage } from '../../Pages/AllPages'
 import { useNavigate } from 'react-router-dom';
 
-const AddCityLayout = () => {
+const AddParentRelationLayout = () => {
   const navigate = useNavigate();
   const handleGoBack = () => {
     navigate(-1, { replace: true });
@@ -15,4 +15,4 @@ const AddCityLayout = () => {
     </>  )
 }
 
-export default AddCityLayout
+export default AddParentRelationLayout
