@@ -57,7 +57,13 @@ const LinksSidebar = () => {
        /* ////Childern Marketing */
        /* ///Marketing */
        const [isActiveFinancial, setIsActiveFinancial] = useState(savedState.isActiveFinancial ?? false);
+       /* Affiliate */
+       /* Childern Affiliate */
        const [isActiveAffiliate, setIsActiveAffiliate] = useState(savedState.isActiveAffiliate ?? false);
+       const [openListAffiliate, setOpenListAffiliate] = useState(savedState.openListAffiliate ?? false);
+       const [isActiveAffiliateUser, setIsActiveAffiliateUser] = useState(savedState.isActiveAffiliateUser ?? false);
+       /* ////Childern Affiliate */
+       /* ///Affiliate */
        const [isActiveSupport, setIsActiveSupport] = useState(savedState.isActiveSupport ?? false);
        const [isActiveReports, setIsActiveReports] = useState(savedState.isActiveReports ?? false);
        /* Setting */
@@ -100,6 +106,8 @@ const LinksSidebar = () => {
                      isActivePopUp,
                      isActiveFinancial,
                      isActiveAffiliate,
+                     openListAffiliate,
+                     isActiveAffiliateUser,
                      isActiveSupport,
                      isActiveReports,
                      isActiveSetting,
@@ -138,6 +146,8 @@ const LinksSidebar = () => {
               isActivePopUp,
               isActiveFinancial,
               isActiveAffiliate,
+              openListAffiliate,
+              isActiveAffiliateUser,
               isActiveSupport,
               isActiveReports,
               isActiveSetting,
@@ -957,6 +967,7 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       /* Affiliate */
        const handleClickAffiliate = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -983,6 +994,8 @@ const LinksSidebar = () => {
               setIsActivePopUp(false)
               setIsActiveFinancial(false)
               setIsActiveAffiliate(true)
+              setOpenListAffiliate(true)
+              setIsActiveAffiliateUser(true)
               setIsActiveSupport(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
@@ -995,6 +1008,47 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       const handleClickAffiliateUser = () => {
+              setIsActiveDashboard(false);
+              setIsActiveUser(false);
+              setOpenListUser(false);
+              setIsActiveStudent(false);
+              setIsActiveParent(false);
+              setIsActiveTeacher(false);
+              setIsActiveAdmin(false);
+              setIsActiveEducation(false)
+              setOpenListEducation(false)
+              setIsActiveCategories(false)
+              setIsActiveSubject(false)
+              setIsActiveBundles(false)
+              setIsActiveQuestionsBank(false)
+              setIsActiveHomeWork(false)
+              setIsActiveRevision(false)
+              setIsActivExams(false)
+              setIsActiveLive(false)
+              setIsActiveMarketing(false)
+              setOpenListMarketing(false)
+              setIsActiveDiscount(false)
+              setIsActivePromoCode(false)
+              setIsActiveReview(false)
+              setIsActivePopUp(false)
+              setIsActiveFinancial(false)
+              setIsActiveAffiliate(true)
+              setIsActiveAffiliateUser(true)
+              setOpenListAffiliate(true)
+              setIsActiveSupport(false)
+              setIsActiveReports(false)
+              setIsActiveSetting(false)
+              setOpenListSetting(false)
+              setIsActiveAdminRoles(false)
+              setIsActiveCountries(false)
+              setIsActiveCities(false)
+              setIsActiveParentRelation(false)
+              setIsActiveOperations(false)
+              setIsActivePaymentMethod(false)
+              setIsActiveNoticeBoard(false)
+       };
+       /* ///Affiliate */
        const handleClickSupport = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -1440,10 +1494,18 @@ const LinksSidebar = () => {
                                    <FinancialIcon Width={25} Height={23} isActive={isActiveFinancial} />
                                    <span className={`${isActiveFinancial ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Financial</span>
                             </Link>
-                            <Link to="affiliate" onClick={handleClickAffiliate} className={`${isActiveAffiliate ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                            <Link to="affiliate_user" onClick={handleClickAffiliate} className={`${isActiveAffiliate ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
                                    <AffiliateIcon Width={25} Height={23} isActive={isActiveAffiliate} />
                                    <span className={`${isActiveAffiliate ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Affiliate</span>
                             </Link>
+                            <div className={`${openListAffiliate ? "h-36" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                   <ul className={`${openListAffiliate ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                          <li className={`${isActiveAffiliateUser ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_user"} onClick={handleClickAffiliateUser}>User</Link></li>
+                                          {/* <li className={`${isActiveAffiliatePromoCode ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"promo_code"} onClick={handleClickAffiliatePromoCode}>PromoCode</Link></li>
+                                          <li className={`${isActiveAffiliateReview ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"review"} onClick={handleClickAffiliateReviews}>Reviews</Link></li>
+                                          <li className={`${isActiveAffiliatePopUp ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"pop_up"} onClick={handleClickAffiliatePopUp}>Pop Up</Link></li> */}
+                                   </ul>
+                            </div>
                             <Link to="support" onClick={handleClickSupport} className={`${isActiveSupport ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
                                    <SupportIcon Width={25} Height={23} isActive={isActiveSupport} />
                                    <span className={`${isActiveSupport ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Support</span>

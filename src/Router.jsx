@@ -16,7 +16,6 @@ import {
   AddLiveLayout,
   EditLiveLayout,
   FinancialAD,
-  AffiliateAD,
   SupportAD,
   ReportsAD,
   NoticeBoardAD,
@@ -66,6 +65,8 @@ import {
   AddPopUpLayout,
   EditPopUpLayout,
   EditReviewLayout,
+  AffiliateUserLayout,
+  AddAffiliateUserLayout,
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -226,6 +227,12 @@ const AppLayoutPopUp = () => (
     <Outlet />
   </>
 );
+/* Affiliate */
+const AppLayoutAffilate = () => (
+  <>
+    <Outlet />
+  </>
+);
 
 const AppLayoutAdminRoles = () => (
   <>
@@ -306,7 +313,7 @@ const AppLayoutTeacher = () => (
     </div>
   </>
 );
-const AppLayoutAffilate = () => (
+const AppLayoutAffilateDashboard = () => (
   <div className="relative flex gap-x-4 directionAR">
     <SidebarStudent />
     <div className="contentSection w-4/5 min-h-screen ">
@@ -721,9 +728,21 @@ export const router = createBrowserRouter([
             path: 'financial',
             element: <FinancialAD />,
           },
+          /* affiliate */
           {
-            path: 'affiliate',
-            element: <AffiliateAD />,
+            path: 'affiliate_user',
+            element: <AppLayoutAffilate />,
+            children: [
+              {
+                path: '',
+                element: <AffiliateUserLayout />,
+              },
+              {
+                path: 'add',
+                element: <AddAffiliateUserLayout />,
+              },
+
+            ]
           },
           {
             path: 'support',
@@ -886,7 +905,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/dashboard_affilate',
-        element: <AppLayoutAffilate />,
+        element: <AppLayoutAffilateDashboard />,
       }
     ],
   },
