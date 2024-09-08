@@ -83,7 +83,6 @@ import SidebarStudent from "./Components/SidebarStudent";
 
 import { createContext } from "react";
 
-import UserContext from "./Context/UserContext";
 import LoginUser from "./Pages/RegisterPage/LoginUser";
 import SignUpPage from "./Pages/RegisterPage/SignUpPage";
 
@@ -150,9 +149,7 @@ const AppLayoutSuperAdmin = () => (
       <SidebarSuperAdmin />
       <div className="contentSection w-4/5 min-h-screen ">
         {/* <HeaderSuperAdmin /> */}
-        <UserContext>
-          <Outlet />
-        </UserContext>
+        <Outlet />
       </div>
     </div>
   </>
@@ -280,9 +277,7 @@ const AppLayoutUser = () => (
       {/* <SidebarAdmin />
                      <div className="contentSection w-4/5 min-h-screen ">
                             <HeaderAdmin />
-                            <UserContext> */}
       <Outlet />
-      {/* </UserContext>
                      </div> */}
       {/* </ContextProvider> */}
     </div>
@@ -294,10 +289,8 @@ const AppLayoutStudent = () => (
       <SidebarStudent />
       <div className="contentSection w-4/5 min-h-screen ">
         {/* <HeaderStudent /> */}
-        <UserContext>
-          <NavbarStudent />
-          <Outlet />
-        </UserContext>
+        <NavbarStudent />
+        <Outlet />
       </div>
     </div>
   </>
@@ -308,9 +301,7 @@ const AppLayoutTeacher = () => (
       <SidebarTeacher />
       <div className="contentSection w-4/5 min-h-screen ">
         <HeaderTeacher />
-        <UserContext>
-          <Outlet />
-        </UserContext>
+        <Outlet />
       </div>
     </div>
   </>
@@ -320,11 +311,9 @@ const AppLayoutAffilate = () => (
     <SidebarStudent />
     <div className="contentSection w-4/5 min-h-screen ">
       {/* <AffilatePage /> */}
-      <UserContext>
-        <NavbarStudent />
-        <AffilatePage />
-        {/* <Outlet /> */}
-      </UserContext>
+      <NavbarStudent />
+      <AffilatePage />
+      {/* <Outlet /> */}
     </div>
   </div>
 );
@@ -334,9 +323,7 @@ const AppLayoutParent = () => (
       <SidebarParent />
       <div className="contentSection w-4/5 min-h-screen ">
         <HeaderParent />
-        <UserContext>
-          <Outlet />
-        </UserContext>
+        <Outlet />
       </div>
     </div>
   </>
