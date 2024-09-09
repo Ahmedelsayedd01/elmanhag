@@ -27,9 +27,6 @@ const ChapterSubjectPage = () => {
   const location = useLocation();
   const subjectID = location.state || {};
 
-  console.log('location', location);
-  console.log('subjectID', subjectID);
-
   const fetchChapter = async () => {
     setIsLoading(true);
     try {

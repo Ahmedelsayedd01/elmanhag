@@ -49,6 +49,10 @@ export { default as EditLivePage } from "./Admin/LivePage/EditLivePage";
 export { default as DiscountPage } from "./Admin/MarketingPage/Discount/DiscountPage";
 export { default as AddDiscountPage } from "./Admin/MarketingPage/Discount/AddDiscountPage";
 export { default as EditDiscountPage } from "./Admin/MarketingPage/Discount/EditDiscountPage";
+/* //Marketing Pages */
+/* Affiliate Pages */
+export { default as AffiliateUserPage } from "./Admin/AffiliatePage/AffiliateUserPage";
+export { default as AddAffiliateUserPage } from "./Admin/AffiliatePage/AddAffiliateUserPage";
 
 //PromoCode Pages
 export { default as PromoCodePage } from "./Admin/MarketingPage/PromoCode/PromoCodePage";

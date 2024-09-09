@@ -6,6 +6,7 @@ import DropDownMenu from '../../../../Components/DropDownMenu';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../Context/Auth';
 import axios from 'axios';
+import DeleteIcon from '../../../../Components/Icons/AdminIcons/DeleteIcon';
 
 const AddLessonPage = () => {
   const dropdownMaterialRefs = useRef([]);
@@ -147,6 +148,11 @@ const AddLessonPage = () => {
   const setUploadRef = (el, newIndex) => {
     if (el) uploadRefs.current[newIndex] = el;
   };
+  const handleRemoveMaterial = (index, e) => {
+    const ele = e.target.closest('.material');
+    ele.remove();
+    console.log('ele', ele)
+  }
   const addMaterialElement = () => {
     const newIndex = materialList.length;
 
@@ -242,6 +248,11 @@ const AddLessonPage = () => {
             />
           </div>
         )}
+        <div className="lg:w-[5%] sm:w-full flex items-center justify-center bg-white py-3 rounded-xl border-mainColor">
+          <button type="button" onClick={(e) => handleRemoveMaterial(newIndex, e)}>
+            <DeleteIcon Width='30' Height='30' />
+          </button>
+        </div>
       </div>
     );
 
@@ -636,6 +647,11 @@ const AddLessonPage = () => {
                       />
                     </div>
                   )}
+                  <div className="lg:w-[5%] sm:w-full flex items-center justify-center bg-white py-3 rounded-xl border-mainColor">
+                    <button type="button" onClick={(e) => handleRemoveMaterial(newIndex, e)}>
+                      <DeleteIcon Width='30' Height='30' />
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>

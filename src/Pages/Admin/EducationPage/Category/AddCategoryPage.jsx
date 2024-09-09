@@ -19,12 +19,12 @@ const AddCategoryPage = () => {
        const [categoryThumbnailFile, setCategoryThumbnailFile] = useState();
        const [categoryThumbnail, setCategoryThumbnail] = useState('');
        const [categoryTags, setCategoryTags] = useState('');
-       const [categorySelectParent, setCategorySelectParent] = useState();
-       const [categoryOrder, setCategoryOrder] = useState();
+       const [categorySelectParent, setCategorySelectParent] = useState([]);
+       const [categoryOrder, setCategoryOrder] = useState('');
        const [categoryActive, setCategoryActive] = useState(0);
        const [openSelectParent, setOpenSelectParent] = useState(false);
        const [selectParent, setSelectParent] = useState('Select Parent');
-       const [selectParentId, setSelectParentId] = useState();
+       const [selectParentId, setSelectParentId] = useState('');
        const [isLoading, setIsLoading] = useState(false);
 
        useEffect(() => {
@@ -38,8 +38,8 @@ const AddCategoryPage = () => {
        };
 
        const handleClick = (e) => {
-                     const isChecked = e.target.checked;
-                     setCategoryActive(isChecked ? 1 : 0);
+              const isChecked = e.target.checked;
+              setCategoryActive(isChecked ? 1 : 0);
        };
 
        const handleSelectParent = (e) => {
@@ -59,8 +59,9 @@ const AddCategoryPage = () => {
               event.preventDefault();
 
               if (!selectParentId) {
-                     auth.toastError('Please Select Parent.');
-                     return;
+                     setSelectParentId('')
+                     // auth.toastError('Please Select Parent.');
+                     // return; // Prevent form submission if no parent selected
               }
 
               setIsLoading(true);
@@ -83,7 +84,7 @@ const AddCategoryPage = () => {
 
                      if (response.status === 200) {
                             auth.toastSuccess('Category added successfully!');
-                            handleGoBack();
+                            handleGoBack(); // Navigate after everything is done
                      } else {
                             auth.toastError('Failed to add Category.');
                      }
@@ -183,7 +184,7 @@ const AddCategoryPage = () => {
                                    </div>
                                    <div className="lg:w-[30%] sm:w-full">
                                           <InputCustom
-                                                 type="number"
+                                                 type="text"
                                                  placeholder="Order"
                                                  value={categoryOrder}
                                                  onChange={(e) => setCategoryOrder(e.target.value)}
@@ -192,7 +193,7 @@ const AddCategoryPage = () => {
                                    <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
                                           <span className="text-2xl text-thirdColor font-medium">Active:</span>
                                           <div>
-                                                 <CheckBox handleClick={handleClick} />
+                                                 <CheckBox checked={categoryActive} handleClick={handleClick} />
                                           </div>
                                    </div>
                             </div>

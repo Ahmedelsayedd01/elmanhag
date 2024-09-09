@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import InputCustom from '../../../../Components/InputCustom';
 import { Button } from '../../../../Components/Button';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../../../Context/Auth';
 import axios from 'axios'; // Added axios import
 
@@ -11,9 +11,6 @@ const AddChapterPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { subjectID } = location.state || {}; // Destructuring with a fallback
-
-  console.log('location:', location); // Check if subjectID is available
-  console.log('Subject ID:', subjectID); // Check if subjectID is available
 
   // If subjectID is not available, handle the case (optional)
   if (!subjectID) {

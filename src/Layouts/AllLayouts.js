@@ -47,28 +47,28 @@ export { default as AddLiveLayout } from "./Admin/AddLiveLayout";
 export { default as EditLiveLayout } from "./Admin/EditLiveLayout";
 
 /* Marketing Layouts */
-//Discount Layouts
+// Discount Layouts
 export { default as DiscountLayout } from "./Admin/DiscountLayout";
 export { default as AddDiscountLayout } from "./Admin/AddDiscountLayout";
 export { default as EditDiscountLayout } from "./Admin/EditDiscountLayout";
-
-//Ptomo Code Layouts
+// Promo Code Layouts
 export { default as PromoCodeLayout } from "./Admin/PromoCodeLayout";
 export { default as AddPromoCodeLayout } from "./Admin/AddPromoCodeLayout";
 export { default as EditPromoCodeLayout } from "./Admin/EditPromoCodeLayout";
-
-//Ptomo Review Layouts
+// Review Layouts
 export { default as ReviewLayout } from "./Admin/ReviewLayout";
 export { default as AddReviewLayout } from "./Admin/AddReviewLayout";
 export { default as EditReviewLayout } from "./Admin/EditReviewLayout";
-
-//Ptomo Pop Up Layouts
+// Pop Up Layouts
 export { default as PopUpLayout } from "./Admin/PopUpLayout";
 export { default as AddPopUpLayout } from "./Admin/AddPopUpLayout";
 export { default as EditPopUpLayout } from "./Admin/EditPopUpLayout";
 
 export { default as FinancialAD } from "./Admin/FinancialAD";
-export { default as AffiliateAD } from "./Admin/AffiliateAD";
+// Affiliate Layouts
+export { default as AffiliateUserLayout } from "./Admin/AffiliateUserLayout";
+export { default as AddAffiliateUserLayout } from "./Admin/AddAffiliateUserLayout";
+
 export { default as SupportAD } from "./Admin/SupportAD";
 export { default as ReportsAD } from "./Admin/ReportsAD";
 /* Setting */

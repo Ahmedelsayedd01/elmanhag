@@ -16,7 +16,6 @@ import {
   AddLiveLayout,
   EditLiveLayout,
   FinancialAD,
-  AffiliateAD,
   SupportAD,
   ReportsAD,
   NoticeBoardAD,
@@ -66,6 +65,8 @@ import {
   AddPopUpLayout,
   EditPopUpLayout,
   EditReviewLayout,
+  AffiliateUserLayout,
+  AddAffiliateUserLayout,
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -83,7 +84,6 @@ import SidebarStudent from "./Components/SidebarStudent";
 
 import { createContext } from "react";
 
-import UserContext from "./Context/UserContext";
 import LoginUser from "./Pages/RegisterPage/LoginUser";
 import SignUpPage from "./Pages/RegisterPage/SignUpPage";
 
@@ -150,9 +150,7 @@ const AppLayoutSuperAdmin = () => (
       <SidebarSuperAdmin />
       <div className="contentSection w-4/5 min-h-screen ">
         {/* <HeaderSuperAdmin /> */}
-        <UserContext>
-          <Outlet />
-        </UserContext>
+        <Outlet />
       </div>
     </div>
   </>
@@ -229,6 +227,12 @@ const AppLayoutPopUp = () => (
     <Outlet />
   </>
 );
+/* Affiliate */
+const AppLayoutAffilate = () => (
+  <>
+    <Outlet />
+  </>
+);
 
 const AppLayoutAdminRoles = () => (
   <>
@@ -280,9 +284,7 @@ const AppLayoutUser = () => (
       {/* <SidebarAdmin />
                      <div className="contentSection w-4/5 min-h-screen ">
                             <HeaderAdmin />
-                            <UserContext> */}
       <Outlet />
-      {/* </UserContext>
                      </div> */}
       {/* </ContextProvider> */}
     </div>
@@ -294,10 +296,8 @@ const AppLayoutStudent = () => (
       <SidebarStudent />
       <div className="contentSection w-4/5 min-h-screen ">
         {/* <HeaderStudent /> */}
-        <UserContext>
-          <NavbarStudent />
-          <Outlet />
-        </UserContext>
+        <NavbarStudent />
+        <Outlet />
       </div>
     </div>
   </>
@@ -308,23 +308,19 @@ const AppLayoutTeacher = () => (
       <SidebarTeacher />
       <div className="contentSection w-4/5 min-h-screen ">
         <HeaderTeacher />
-        <UserContext>
-          <Outlet />
-        </UserContext>
+        <Outlet />
       </div>
     </div>
   </>
 );
-const AppLayoutAffilate = () => (
+const AppLayoutAffilateDashboard = () => (
   <div className="relative flex gap-x-4 directionAR">
     <SidebarStudent />
     <div className="contentSection w-4/5 min-h-screen ">
       {/* <AffilatePage /> */}
-      <UserContext>
-        <NavbarStudent />
-        <AffilatePage />
-        {/* <Outlet /> */}
-      </UserContext>
+      <NavbarStudent />
+      <AffilatePage />
+      {/* <Outlet /> */}
     </div>
   </div>
 );
@@ -334,9 +330,7 @@ const AppLayoutParent = () => (
       <SidebarParent />
       <div className="contentSection w-4/5 min-h-screen ">
         <HeaderParent />
-        <UserContext>
-          <Outlet />
-        </UserContext>
+        <Outlet />
       </div>
     </div>
   </>
@@ -726,9 +720,21 @@ export const router = createBrowserRouter([
             path: 'financial',
             element: <FinancialAD />,
           },
+          /* affiliate */
           {
-            path: 'affiliate',
-            element: <AffiliateAD />,
+            path: 'affiliate_user',
+            element: <AppLayoutAffilate />,
+            children: [
+              {
+                path: '',
+                element: <AffiliateUserLayout />,
+              },
+              {
+                path: 'add',
+                element: <AddAffiliateUserLayout />,
+              },
+
+            ]
           },
           {
             path: 'support',
@@ -891,7 +897,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/dashboard_affilate',
-        element: <AppLayoutAffilate />,
+        element: <AppLayoutAffilateDashboard />,
       }
     ],
   },
