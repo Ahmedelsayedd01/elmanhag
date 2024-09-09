@@ -50,6 +50,11 @@ export { default as DiscountPage } from "./Admin/MarketingPage/Discount/Discount
 export { default as AddDiscountPage } from "./Admin/MarketingPage/Discount/AddDiscountPage";
 export { default as EditDiscountPage } from "./Admin/MarketingPage/Discount/EditDiscountPage";
 
+//PromoCode Pages
+export { default as PromoCodePage } from "./Admin/MarketingPage/PromoCode/PromoCodePage";
+export { default as AddPromoCodePage } from "./Admin/MarketingPage/PromoCode/AddPromoCodePage";
+export { default as EditPromoCodePage } from "./Admin/MarketingPage/PromoCode/EditPromoCodePage";
+
 /* Setting Page */
 export { default as AdminRolesPage } from "./Admin/SettingPage/AdminRolesPage";
 export { default as CountriesPage } from "./Admin/SettingPage/Countries/CountriesPage";

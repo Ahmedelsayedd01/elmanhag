@@ -661,17 +661,15 @@ export const router = createBrowserRouter([
               {
                 path: '',
                 element: <DiscountLayout />,
-                children: [
-                  {
-                    path: 'add',
-                    element: <AddDiscountLayout />,
-                  },
-                  {
-                    path: 'edit/:marketingId',
-                    element: <EditDiscountLayout />,
-                  }
-                ]
               },
+              {
+                path: 'add',
+                element: <AddDiscountLayout />,
+              },
+              {
+                path: 'edit/:discountId',
+                element: <EditDiscountLayout />,
+              }
             ]
           },
           {
@@ -680,18 +678,16 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: '',
-                element: <PromoCodeLayout />,
-                children: [
-                  {
-                    path: 'add',
-                    element: <AddPromoCodeLayout />,
-                  },
-                  {
-                    path: 'edit/:marketingId',
-                    element: <EditPromoCodeLayout />,
-                  }
-                ]
+                element: <PromoCodeLayout />
               },
+              {
+                path: 'add',
+                element: <AddPromoCodeLayout />,
+              },
+              {
+                path: 'edit/:promoCodeId',
+                element: <EditPromoCodeLayout />,
+              }
             ]
           },
           {
@@ -700,15 +696,13 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: '',
-                element: <ReviewLayout />,
-                children: [
-                  {
-                    path: 'edit/:marketingId',
-                    element: <EditReviewLayout />,
-                  }
-                ]
+                element: <ReviewLayout />
               },
-            ]
+              {
+                path: 'edit/:reviewId',
+                element: <EditReviewLayout />,
+              }
+                ]
           },
           {
             path: 'pop_up',
@@ -716,18 +710,16 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: '',
-                element: <PopUpLayout />,
-                children: [
-                  {
-                    path: 'add',
-                    element: <AddPopUpLayout />,
-                  },
-                  {
-                    path: 'edit/:marketingId',
-                    element: <EditPopUpLayout />,
-                  }
-                ]
+                element: <PopUpLayout />
               },
+              {
+                path: 'add',
+                element: <AddPopUpLayout />,
+              },
+              {
+                path: 'edit/:popUpId',
+                element: <EditPopUpLayout />,
+              }
             ]
           },
           {
