@@ -16,14 +16,14 @@ const DiscountPage = () => {
 
   const auth = useAuth();
   const [isLoading, setIsLoading] = useState(true);
-  // const [discountData, setDiscountData] = useState(null);
-  // const [discountsCategory ,setBundlesCategory]=useState([])
+  const [discountData, setDiscountData] = useState(null);
   const [discounts, setDiscounts] = useState(null);
   const [discountCategory ,setDiscountCategory]=useState([])
-  const [subjectCategory ,setSubjectCategory]=useState([])
+//   const [subjectCategory ,setSubjectCategory]=useState([])
   const [selectedOptionCategory, setSelectedOptionCategory] = useState('Filter By Category');
   const [selectedOptionStatus, setSelectedOptionStatus] = useState('Filter By Status');
   const [openCategory, setOpenCategory] = useState(false);
+  const [discountStatus, setDiscountStatus] =  useState([{ name: 'Active' }, { name: 'Disable' }]);
   const [openStatus, setOpenStatus] = useState(false);
   const [discountChanged, setDiscountChanged] = useState(false);
 
@@ -82,7 +82,9 @@ const DiscountPage = () => {
               });
               if (response.status === 200) {
                       console.log(response.data)
+                      setDiscountData(response.data)
                       setDiscounts(response.data.discounts)
+                      setDiscountCategory(response.data.categories)
               }
         } catch (error) {
               console.error('Error fetching discount data:', error);
@@ -103,59 +105,56 @@ const DiscountPage = () => {
           setOpenDialog(null);
     };
 
-// const handleDelete = async (discountId) => {
-//       setIsDeleting(true);
-//       const success = await deleteBundle(discountId, auth.user.token);
-//       setIsDeleting(false);
-//       handleCloseDialog();
+const handleDelete = async (discountId) => {
+      setIsDeleting(true);
+      const success = await deleteDiscount(discountId, auth.user.token);
+      setIsDeleting(false);
+      handleCloseDialog();
 
-//       if (success) {
-//              auth.toastSuccess('Bundle deleted successfully!');
-//              setBundles((prevBundle) =>
-//                     prevBundle.filter((discount) => discount.id !== discountId)
-//              );
-//       } else {
-//              auth.toastError('Failed to delete Bundle.');
-//       }
-// };
+      if (success) {
+            auth.toastSuccess('Discount deleted successfully!');
+            setDiscountChanged(!discountChanged)
 
-// const deleteBundle = async (discountId, authToken) => {
-//       try {
-//              const response = await axios.delete(`https://bdev.elmanhag.shop/admin/discount/delete/${discountId}`, {
-//                     headers: {
-//                            Authorization: `Bearer ${authToken}`,
-//                     },
-//              });
+      } else {
+                  auth.toastError('Failed to delete Discount.');
+            }
+      };
 
-//              if (response.status === 200) {
-//                     console.log('discount deleted successfully');
-//                     return true;
-//              } else {
-//                     console.error('Failed to delete discount:', response.status, response.statusText);
-//                     return false;
-//              }
-//       } catch (error) {
-//              console.error('Error deleting discount:', error);
-//              return false;
-//       }
-// };
+      const deleteDiscount = async (discountId, authToken) => {
+      try {
+                  const response = await axios.delete(`https://bdev.elmanhag.shop/admin/discount/delete/${discountId}`, {
+                        headers: {
+                              Authorization: `Bearer ${authToken}`,
+                        },
+                  });
 
-// if (isLoading) {
-//       return (
-//              <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
-//                     <Loading />
-//              </div>
-//       );
-// }
+                  if (response.status === 200) {
+                        console.log('discount deleted successfully');
+                        return true;
+                  } else {
+                        console.error('Failed to delete discount:', response.status, response.statusText);
+                        return false;
+                  }
+      } catch (error) {
+                  console.error('Error deleting discount:', error);
+                  return false;
+      }
+      };
 
-// if (!discounts) {
-//       return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Bundles data available</div>;
-// }
+      if (isLoading) {
+            return (
+                  <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
+                        <Loading />
+                  </div>
+            );
+      }
 
-// localStorage.setItem("Education", JSON.stringify(education));
-// localStorage.setItem("subjects", JSON.stringify(subjects));
+      if (!discounts) {
+            return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Bundles data available</div>;
+      }
 
-
+      localStorage.setItem("AllDiscountData", JSON.stringify(discountData));
+      // localStorage.setItem("Discounts", JSON.stringify(discounts));
 
   return (
     <>
@@ -169,7 +168,7 @@ const DiscountPage = () => {
                                   handleOpenOption={handleOptionCategory}
                                   stateoption={selectedOptionCategory}
                                   openMenu={openCategory}
-                                  // options={discounts.map(discount => ({ name: discount.category?.name || 'N/A' }))}
+                                  options={discountCategory}
                           />
                     </div>
                     <div className="sm:w-full xl:w-1/5">
@@ -180,8 +179,7 @@ const DiscountPage = () => {
                                   handleOpenOption={handleOptionStatus}
                                   stateoption={selectedOptionStatus}
                                   openMenu={openStatus}
-                                  // options={discounts.map(discount => ({ name: discount.status===1?"Active" :"Disable" || 'N/A' }))}
-                                  // options={discounts.status || []}
+                                  options={discountStatus}
 
                           />
                     </div>
@@ -194,69 +192,60 @@ const DiscountPage = () => {
 
 
             <div className="w-full flex items-center justify-between mt-4 overflow-x-auto">
-                    <table className="w-full sm:min-w-0">
-                          <thead className="w-full">
-                                  <tr className="w-full border-b-2">
-                                        <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
-                                        <th className="min-w-[120px] sm:w-1/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Category</th>
-                                        <th className="min-w-[120px] sm:w-1/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Service</th>
-                                        <th className="min-w-[120px] sm:w-1/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">OriginalPrice</th>
-                                        <th className="min-w-[120px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">DiscountPrice</th>
-                                        <th className="min-w-[120px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Discount</th>
-                                        <th className="min-w-[120px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">From_To</th>
-                                        <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Status</th>
-                                        <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
-                                  </tr>
-                          </thead>
-                          <tbody className="w-full">
-                                  {/* {discounts.map((discount, index) => ( */}
-
-                                        {/* <tr className="w-full border-b-2" key={discount.id}> */}
-                                                {/* <td
+                  <table className="w-full sm:min-w-0">
+                        <thead className="w-full">
+                              <tr className="w-full border-b-2">
+                                    <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
+                                    <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Category</th>
+                                    <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Service</th>
+                                    <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Discount</th>
+                                    <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">From_To</th>
+                                    <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Status</th>
+                                    <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
+                              </tr>
+                        </thead>
+                        <tbody className="w-full">
+                                    {discounts.map((discount, index) => (
+                                          <tr className="w-full border-b-2" key={discount.id}> 
+                                                <td
                                                       className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                 >
                                                       {index + 1}
-                                                </td> */}
-                                                {/* <td
-                                                      className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
-                                                >
-                                                      {discount?.category|| 'Null'}
-                                                </td> */}
-                                                {/* <td
-                                                      className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
-                                                >
-                                                      {discount.category?.name || 'Null'}
-                                                </td> */}
-                                                {/* <td
-                                                      className="min-w-[150px] px-2 sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
-                                                >
-                                                      {discount.price_discount == undefined ? `${discount?.price || 'null'}` :
-                                                              <>
-                                                                    <del className='text-mainColor'>{discount?.price || 'Null'}</del>  / {discount?.price_discount || 'Null'} EGP
-                                                              </>
-                                                      }
-                                                </td> */}
-                                                {/* <td
+                                                </td>
+                                                <td
                                                       className="min-w-[120px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                 >
-                                                      {discount?.subjects_count || 'Null'}
-                                                </td> */}
-                                                {/* <td
+                                                      {discount.category?.name|| 'Null'}
+                                                </td>
+                                                <td
                                                       className="min-w-[120px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center  text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
-                                                >
-                                                      <span className='text-thirdColor text-xl border-b-2 border-thirdColor'>
-                                                              <Link to={`view/${discount.id}`}>
-                                                                    {discount?.users_count || 'Null'}
-                                                              </Link>
+                                                      >
+                                                      <span className='text-mainColor text-xl border-b-2 border-mainColor font-semibold'>
+                                                      <Link to={`view/${discount.id}`}>View</Link>
                                                       </span>
-                                                </td> */}
-                                                {/* <td
+                                                </td>
+                                                <td
+                                                      className="min-w-[120px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                      >
+                                                      {discount?.amount 
+                                                      ? discount?.type === 'percentage' 
+                                                            ? `${discount.amount}%` 
+                                                            : discount.amount 
+                                                      : 'Null'}
+                                                      </td>
+                                                <td
+                                                      className="min-w-[120px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                      >
+                                                      {discount?.start_date ? new Date(discount.start_date).toLocaleDateString('en-GB') : 'Null' || 'Null'}<br />
+                                                      {discount?.end_date ? new Date(discount.end_date).toLocaleDateString('en-GB') : 'Null' || 'Null'}
+                                                </td>
+                                                <td
                                                       className="min-w-[120px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                 >
-                                                      {discount?.status === 1 ? "Active" : "Disable" || 'Null'}
-                                                </td> */}
+                                                      {discount?.statue === 1 ? "Active" : "Disable" || 'Null'}
+                                                </td>
 
-                                                {/* <td
+                                                <td
                                                       className="min-w-[100px] sm:min-w-[80px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                 >
                                                       <div className="flex items-center justify-center gap-x-3">
@@ -277,7 +266,7 @@ const DiscountPage = () => {
                                                                                                         <div className="flex items-center">
                                                                                                               <div className="mt-2 text-center">
                                                                                                                       <DialogTitle as="h3" className="text-xl font-semibold leading-10 text-gray-900">
-                                                                                                                            You will delete {discount?.name || "null"}
+                                                                                                                            You will delete Discount ID : {discount?.id || "null"}
                                                                                                                       </DialogTitle>
                                                                                                               </div>
                                                                                                         </div>
@@ -306,9 +295,9 @@ const DiscountPage = () => {
                                                                     </Dialog>
                                                               )}
                                                       </div>
-                                                </td> */}
-                                        {/* </tr> */}
-                                  {/* ))} */}
+                                                </td>
+                                          </tr> 
+                                   ))} 
                           </tbody>
                     </table>
             </div>

@@ -415,6 +415,12 @@ const EditPromoCodePage = () => {
       params.append('value', value || 0);
       params.append('precentage', percentage || 0);
       params.append('status', activePromoCode);
+
+       // To print params in a readable format
+    console.log('Submitted Parameters:');
+    params.forEach((value, key) => {
+      console.log(`${key}: ${value}`);
+    });
   
       // Convert params to query string
       // const queryString = params.toString();
