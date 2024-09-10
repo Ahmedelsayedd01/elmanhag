@@ -50,9 +50,19 @@ export { default as DiscountPage } from "./Admin/MarketingPage/Discount/Discount
 export { default as AddDiscountPage } from "./Admin/MarketingPage/Discount/AddDiscountPage";
 export { default as EditDiscountPage } from "./Admin/MarketingPage/Discount/EditDiscountPage";
 /* //Marketing Pages */
+
 /* Affiliate Pages */
+// User
 export { default as AffiliateUserPage } from "./Admin/AffiliatePage/AffiliateUserPage";
 export { default as AddAffiliateUserPage } from "./Admin/AffiliatePage/AddAffiliateUserPage";
+export { default as EditAffiliateUserPage } from "./Admin/AffiliatePage/EditAffiliateUserPage";
+// Payment Method
+export { default as AffiliatePaymentMethodPage } from "./Admin/AffiliatePage/AffiliatePaymentMethodPage";
+export { default as AddAffiliatePaymentMethodPage } from "./Admin/AffiliatePage/AddAffiliatePaymentMethodPage";
+export { default as EditAffiliatePaymentMethodPage } from "./Admin/AffiliatePage/EditAffiliatePaymentMethodPage";
+// Commissions
+export { default as AffiliateCommissionsPage } from "./Admin/AffiliatePage/AffiliateCommissionsPage";
+/* ////Affiliate Pages */
 
 /* Setting Page */
 export { default as AdminRolesPage } from "./Admin/SettingPage/AdminRolesPage";

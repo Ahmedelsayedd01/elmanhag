@@ -6,7 +6,6 @@ import { useAuth } from '../../../../Context/Auth';
 import axios from 'axios'; // Added axios import
 
 const AddChapterPage = () => {
-  // const { subjectID } = useParams();
   const auth = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
