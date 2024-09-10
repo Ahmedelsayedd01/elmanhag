@@ -49,7 +49,18 @@ export { default as EditLivePage } from "./Admin/LivePage/EditLivePage";
 export { default as DiscountPage } from "./Admin/MarketingPage/Discount/DiscountPage";
 export { default as AddDiscountPage } from "./Admin/MarketingPage/Discount/AddDiscountPage";
 export { default as EditDiscountPage } from "./Admin/MarketingPage/Discount/EditDiscountPage";
-/* //Marketing Pages */
+
+//PromoCode Pages
+export { default as PromoCodePage } from "./Admin/MarketingPage/PromoCode/PromoCodePage";
+export { default as AddPromoCodePage } from "./Admin/MarketingPage/PromoCode/AddPromoCodePage";
+export { default as EditPromoCodePage } from "./Admin/MarketingPage/PromoCode/EditPromoCodePage";
+
+/* Finacial Pages */
+//Pending Payments Pages
+export { default as PendingPaymentsPage } from "./Admin/Financial/FinancialPendingPayments/PendingPaymentsPage";
+//Payments Pages
+export { default as FinancialPaymentsPage } from "./Admin/Financial/FinancialPayments/FinancialPaymentsPage";
+
 
 /* Affiliate Pages */
 // User
@@ -63,11 +74,6 @@ export { default as EditAffiliatePaymentMethodPage } from "./Admin/AffiliatePage
 // Commissions
 export { default as AffiliateCommissionsPage } from "./Admin/AffiliatePage/AffiliateCommissionsPage";
 /* ////Affiliate Pages */
-
-//PromoCode Pages
-export { default as PromoCodePage } from "./Admin/MarketingPage/PromoCode/PromoCodePage";
-export { default as AddPromoCodePage } from "./Admin/MarketingPage/PromoCode/AddPromoCodePage";
-export { default as EditPromoCodePage } from "./Admin/MarketingPage/PromoCode/EditPromoCodePage";
 
 /* Setting Page */
 export { default as AdminRolesPage } from "./Admin/SettingPage/AdminRolesPage";
