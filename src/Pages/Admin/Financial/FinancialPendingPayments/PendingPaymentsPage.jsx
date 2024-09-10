@@ -12,6 +12,7 @@ const PendingPaymentsPage = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedPaymentId, setSelectedPaymentId] = useState(null);
   const [rejectReason, setRejectReason] = useState("");
+  const [paymentStatuses, setPaymentStatuses] = useState({});
 
   // Handle the option change
   const handleOptionChange = (event) => {
@@ -61,6 +62,11 @@ const PendingPaymentsPage = () => {
         if (response.status === 200) {
           console.log(`${selectedOption} Action sent successfully`);
           // Optionally, refresh the payments list or handle success here
+          // Update the paymentStatuses state based on the selected option
+        setPaymentStatuses(prevStatuses => ({
+          ...prevStatuses,
+          [selectedPaymentId]: selectedOption
+        }));
         } else {
           console.error(`Failed to send ${selectedOption} action`);
         }
@@ -151,17 +157,24 @@ const PendingPaymentsPage = () => {
                       <Link to={payment?.receipt_link}>view</Link>
                     </span>
                   </td>
-                  <td className="min-w-[120px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden rounded">
-                    <button
-                      onClick={() => {
-                        setSelectedPaymentId(payment.id);
-                        setShowPopup(true);
-                      }}
-                      className="bg-mainColor text-white py-2 px-4 rounded"
-                    >
-                        Pending
-                    </button>
-                  </td>
+                <td className="min-w-[120px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden rounded">
+                  <button
+                    onClick={() => {
+                      setSelectedPaymentId(payment.id);
+                      setShowPopup(true);
+                    }}
+                    className={`w-[100px] flex justify-center py-2 px-4 rounded ${
+                      paymentStatuses[payment.id] === "Approve"
+                        ? "bg-green-500 text-white"
+                        : paymentStatuses[payment.id] === "Reject"
+                        ? "bg-red-500 text-white"
+                        : "bg-thirdColor text-white"
+                    }`}
+                  >
+                    {paymentStatuses[payment.id] || "Pending"}
+                  </button>
+                </td>
+
                 </tr>
               ))}
               {/* Popup Modal */}
