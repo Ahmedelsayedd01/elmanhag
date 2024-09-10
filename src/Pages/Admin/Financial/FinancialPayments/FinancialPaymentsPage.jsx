@@ -111,7 +111,7 @@ const FinancialPaymentsPage = () => {
                                                             className="min-w-[120px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center  text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                       >
                                                             <span className="text-mainColor text-xl border-b-2 border-mainColor font-semibold cursor-pointer"                                                            >
-                                                                  <Link to="/#">
+                                                                  <Link to="#">
                                                                     view
                                                                   </Link>
                                                             </span>
