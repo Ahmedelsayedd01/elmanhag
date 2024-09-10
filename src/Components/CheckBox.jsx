@@ -5,7 +5,7 @@ const CheckBox = ({ handleClick, checked }) => {
   return (
     <StyledWrapper>
       <label className="switch">
-        <input type="checkbox" onClick={handleClick} checked={checked} readOnly/>
+        <input type="checkbox" onClick={handleClick} checked={checked} readOnly />
         <span className="slider" />
       </label>
     </StyledWrapper>
