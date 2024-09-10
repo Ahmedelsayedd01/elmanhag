@@ -19,7 +19,7 @@ const BundlesPage = () => {
        const auth = useAuth();
        const [isLoading, setIsLoading] = useState(false);
        const [bundlesData, setBundlesData] = useState(null);
-       const [ bundlesCategory ,setBundlesCategory]=useState([])
+       const [bundlesCategory ,setBundlesCategory]=useState([])
        const [bundles, setBundles] = useState(null);
        const [education , SetEducation]=useState(null)
        const [selectedOptionCategory, setSelectedOptionCategory] = useState('Filter By Category');
@@ -30,7 +30,7 @@ const BundlesPage = () => {
        const [openSemester, setOpenSemester] = useState(false);
        const [bundlesChanged, setBundlesChanged] = useState(false);
 
-       const [semester, setSemester] = useState();
+       const [semester, setSemester] = useState([{ name: 'first' }, { name: 'second' }]);
        const [subjects, setSubject] = useState();
 
 
@@ -109,10 +109,6 @@ const BundlesPage = () => {
                             setSubject(response.data.subjects)
                             setBundlesCategory(response.data.categories)
                             console.log(response.data)
-
-                            // Extract unique semesters
-                            const uniqueSemesters = [...new Set(response.data.bundles.map(bundle => bundle.semester))];
-                            setSemester(uniqueSemesters);
                      }
               } catch (error) {
                      console.error('Error fetching bundles data:', error);
@@ -199,7 +195,7 @@ const BundlesPage = () => {
                                                  handleOpenOption={handleOptionSemester}
                                                  stateoption={selectedOptionSemester}
                                                  openMenu={openSemester}
-                                                 options={bundles.map(bundle => ({ name: bundle?.semester || 'N/A' }))}
+                                                 options={semester}
                                           />
                                    </div>
                                    <div className="sm:w-full xl:w-1/5">
@@ -210,7 +206,7 @@ const BundlesPage = () => {
                                                  handleOpenOption={handleOptionCategory}
                                                  stateoption={selectedOptionCategory}
                                                  openMenu={openCategory}
-                                                 options={bundles.map(bundle => ({ name: bundle.category?.name || 'N/A' }))}
+                                                 options={bundlesCategory}
                                           />
                                    </div>
                                    <div className="sm:w-full xl:w-1/5">

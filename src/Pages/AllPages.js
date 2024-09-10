@@ -64,6 +64,11 @@ export { default as EditAffiliatePaymentMethodPage } from "./Admin/AffiliatePage
 export { default as AffiliateCommissionsPage } from "./Admin/AffiliatePage/AffiliateCommissionsPage";
 /* ////Affiliate Pages */
 
+//PromoCode Pages
+export { default as PromoCodePage } from "./Admin/MarketingPage/PromoCode/PromoCodePage";
+export { default as AddPromoCodePage } from "./Admin/MarketingPage/PromoCode/AddPromoCodePage";
+export { default as EditPromoCodePage } from "./Admin/MarketingPage/PromoCode/EditPromoCodePage";
+
 /* Setting Page */
 export { default as AdminRolesPage } from "./Admin/SettingPage/AdminRolesPage";
 export { default as CountriesPage } from "./Admin/SettingPage/Countries/CountriesPage";

@@ -3,7 +3,6 @@ import InputCustom from '../../../Components/InputCustom';
 import { Button } from '../../../Components/Button';
 import { useAuth } from '../../../Context/Auth';
 import DropDownMenu from '../../../Components/DropDownMenu';
-import MultipleChoiceMenu from '../../../Components/MultipleChoiceMenu';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CheckBox from '../../../Components/CheckBox';
