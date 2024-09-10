@@ -394,7 +394,7 @@ const EditDiscountPage = () => {
       params.append('description', description);
       params.append('start_date', startDate);
       params.append('end_date', endDate);
-      params.append('type', selectValueTypeName);
+      params.append('type', selectValueType);
       params.append('amount', value || 0);
       params.append('statue', activeDiscount);
 

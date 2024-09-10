@@ -409,7 +409,7 @@ const EditPromoCodePage = () => {
       // Append other fields
       params.append('title', title);
       params.append('code', code);
-      params.append('usage_type', selectUsageTypeName);
+      params.append('usage_type', selectUsageType);
       params.append('usage', usage || 0);
       params.append('number_users', userNumber);
       params.append('value', value || 0);

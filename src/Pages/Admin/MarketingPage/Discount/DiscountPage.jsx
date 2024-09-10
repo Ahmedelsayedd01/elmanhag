@@ -33,6 +33,18 @@ const DiscountPage = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [openDialog, setOpenDialog] = useState(null);
 
+  const [selectedDiscountId, setSelectedDiscountId] = useState(null);
+
+       // Function to open modal and set the selected promo code ID
+       const handleOpenModal = (id) => {
+         setSelectedDiscountId(id);
+       };
+     
+       // Function to close modal
+       const handleCloseModal = () => {
+         setSelectedDiscountId(null); // Set to null to close the modal
+       };
+
   const handleOpenCategory = () => {
     setOpenCategory(!openCategory);
     setOpenStatus(false);
@@ -204,8 +216,9 @@ const handleDelete = async (discountId) => {
                                     <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
                               </tr>
                         </thead>
+                        {discounts.map((discount, index) => (
+
                         <tbody className="w-full">
-                                    {discounts.map((discount, index) => (
                                           <tr className="w-full border-b-2" key={discount.id}> 
                                                 <td
                                                       className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
@@ -217,13 +230,21 @@ const handleDelete = async (discountId) => {
                                                 >
                                                       {discount.category?.name|| 'Null'}
                                                 </td>
-                                                <td
+                                                {/* <td
                                                       className="min-w-[120px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center  text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                       >
                                                       <span className='text-mainColor text-xl border-b-2 border-mainColor font-semibold'>
                                                       <Link to={`view/${discount.id}`}>View</Link>
                                                       </span>
-                                                </td>
+                                                </td> */}
+                                                <td className="min-w-[120px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                                            <span
+                                                                  className="text-mainColor text-xl border-b-2 border-mainColor font-semibold cursor-pointer"
+                                                                  onClick={() => handleOpenModal(discount.id)} // Open modal for specific ID
+                                                                  >
+                                                                  View
+                                                            </span>
+                                                      </td>
                                                 <td
                                                       className="min-w-[120px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                       >
@@ -297,8 +318,27 @@ const handleDelete = async (discountId) => {
                                                       </div>
                                                 </td>
                                           </tr> 
-                                   ))} 
+
+                                          {selectedDiscountId === discount.id && (
+                                                      <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+                                                            <div className="bg-white rounded-lg p-8 max-w-lg w-full shadow-lg">
+                                                            <h2 className="text-2xl font-bold mb-4">Promo Code Details</h2>
+                                                            <p className="text-2xl">ID: {discount.id}</p>
+                                                            <p className="text-2xl">Description: {discount?.description}</p>
+                                                            <p className="text-2xl">Category: {discount.category?.name}</p>
+                                                            <p className="text-2xl">Bundles included: {discount.bundle?.map(bundle => bundle.name).join(', ') || 'No bundles'}</p>
+                                                            <p className="text-2xl">Subjects included: {discount.subject?.map(subject => subject.name).join(', ') || 'No subjects'}</p>
+                                                            <button
+                                                                  className="mt-4 px-4 py-2 bg-mainColor text-white text-xl rounded hover:bg-opacity-90"
+                                                                  onClick={handleCloseModal} // Close modal
+                                                            >
+                                                                  Close
+                                                            </button>
+                                                            </div>
+                                                      </div>
+                                          )}
                           </tbody>
+                        ))} 
                     </table>
             </div>
 
