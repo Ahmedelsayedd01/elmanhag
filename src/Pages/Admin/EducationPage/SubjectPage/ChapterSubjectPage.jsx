@@ -20,7 +20,7 @@ const ChapterSubjectPage = () => {
   const [isDeletingLesson, setIsDeletingLesson] = useState(false);
   const [openChapterDialog, setOpenChapterDialog] = useState(null);
   const [openLessonDialog, setOpenLessonDialog] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [chaptersChanged, setChaptersChanged] = useState(false);
 
   const auth = useAuth();

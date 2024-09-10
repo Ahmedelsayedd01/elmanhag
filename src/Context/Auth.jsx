@@ -33,10 +33,10 @@ export const ContextProvider = ({ children }) => {
     localStorage.removeItem("Countries")
 
   };
-    const toastSuccess = (text) => {
-      toast.success(text);
+  const toastSuccess = (text) => {
+    toast.success(text);
 
-    };
+  };
   const toastError = (text) => {
     toast.error(text);
 
