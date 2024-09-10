@@ -15,7 +15,6 @@ import {
   LiveLayout,
   AddLiveLayout,
   EditLiveLayout,
-  FinancialAD,
   SupportAD,
   ReportsAD,
   NoticeBoardAD,
@@ -67,6 +66,12 @@ import {
   EditReviewLayout,
   AffiliateUserLayout,
   AddAffiliateUserLayout,
+  EditAffiliatePaymentMethodLayout,
+  AddAffiliatePaymentMethodLayout,
+  AffiliatePaymentMethodLayout,
+  AffiliateCommissionsLayout,
+  FinancialPendingPaymentsLayout,
+  FinancialPaymentsLayout,
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -122,6 +127,7 @@ import EditProfilePage from "./Layouts/Admin/EditeProfileStudent";
 import EditCategoryLayout from "./Layouts/Admin/EditCategoryLayout";
 import NavbarStudent from "./Components/NavbarStudent";
 import SignUpAffiliatePage from "./Pages/RegisterPage/SignUpAffilatePage";
+import EditAffiliateUserLayout from "./Layouts/Admin/EditAffiliateUserLayout";
 
 export const ContextNumper = createContext()
 const AppLayoutAuthentication = () => (
@@ -229,6 +235,16 @@ const AppLayoutPopUp = () => (
 );
 /* Affiliate */
 const AppLayoutAffilate = () => (
+  <>
+    <Outlet />
+  </>
+);
+const AppLayoutAffilatePaymentMethod = () => (
+  <>
+    <Outlet />
+  </>
+);
+const AppLayoutAffilateCommissions = () => (
   <>
     <Outlet />
   </>
@@ -428,7 +444,7 @@ export const router = createBrowserRouter([
   },
   {
     element: <ProtectedRoute allowedRoles={['admin', 'supAdmin']} />,
-    path: '/dashboardAdmin',
+    path: '/dashboard_admin',
     children: [
       {
         path: '',
@@ -725,9 +741,14 @@ export const router = createBrowserRouter([
             ]
           },
           {
-            path: 'financial',
-            element: <FinancialAD />,
+            path: 'financial_pending_Payments',
+            element: <FinancialPendingPaymentsLayout />,
           },
+          {
+            path: 'financial_payments',
+            element: <FinancialPaymentsLayout />
+          },
+
           /* affiliate */
           {
             path: 'affiliate_user',
@@ -741,7 +762,39 @@ export const router = createBrowserRouter([
                 path: 'add',
                 element: <AddAffiliateUserLayout />,
               },
+              {
+                path: 'edit/:affiliateId',
+                element: <EditAffiliateUserLayout />,
+              },
 
+            ]
+          },
+          {
+            path: 'affiliate_Payment_method',
+            element: <AppLayoutAffilatePaymentMethod />,
+            children: [
+              {
+                path: '',
+                element: <AffiliatePaymentMethodLayout />,
+              },
+              {
+                path: 'add',
+                element: <AddAffiliatePaymentMethodLayout />,
+              },
+              {
+                path: 'edit/:paymentMethodId',
+                element: <EditAffiliatePaymentMethodLayout />,
+              },
+            ]
+          },
+          {
+            path: 'affiliate_commissions',
+            element: <AppLayoutAffilateCommissions />,
+            children: [
+              {
+                path: '',
+                element: <AffiliateCommissionsLayout />,
+              },
             ]
           },
           {
