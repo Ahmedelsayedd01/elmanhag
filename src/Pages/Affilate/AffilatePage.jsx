@@ -27,7 +27,7 @@ const AffilatePage = () => {
                                    </div>
                             </div>
 
-                            <div className='flex gap-5'>
+                            <div className='flex items-center gap-5'>
                                    <h1 className='w-52'>Download IOS App :</h1>
                                    <div className="flex items-center justify-center w-100">
                                           <Button
