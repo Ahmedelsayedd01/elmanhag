@@ -17,7 +17,7 @@ import { MdBlockFlipped } from 'react-icons/md';
 
 const AffiliateUserPage = () => {
        const auth = useAuth();
-       const [isLoading, setIsLoading] = useState(true);
+       const [isLoading, setIsLoading] = useState(false);
        const [user, setUser] = useState(null);
        const [search, setSearch] = useState('');
        const [selectedOptionCountry, setSelectedOptionCountry] = useState('Filter By Country');
@@ -208,8 +208,6 @@ const AffiliateUserPage = () => {
        if (!user) {
               return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No users data available</div>;
        }
-
-       // localStorage.setItem("students", JSON.stringify(student));
 
        const handleChange = (e) => {
               setSearch(e.target.value);

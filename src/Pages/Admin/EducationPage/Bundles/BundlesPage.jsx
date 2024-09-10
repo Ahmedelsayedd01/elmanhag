@@ -17,7 +17,7 @@ import { Wroning } from '../../../../Components/Icons/All_Icons';
 const BundlesPage = () => {
 
        const auth = useAuth();
-       const [isLoading, setIsLoading] = useState(true);
+       const [isLoading, setIsLoading] = useState(false);
        const [bundlesData, setBundlesData] = useState(null);
        const [ bundlesCategory ,setBundlesCategory]=useState([])
        const [bundles, setBundles] = useState(null);
