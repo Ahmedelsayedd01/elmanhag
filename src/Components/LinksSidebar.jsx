@@ -16,10 +16,12 @@ import {
        SupportIcon,
        UserIcon,
 } from "./Icons/All_Icons";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 
 const LinksSidebar = () => {
+       const location = useLocation();
+       console.log('location', location)
        const savedState = JSON.parse(localStorage.getItem('sidebarState')) || {};
 
        // Define the initial state values using the saved state or fallback to default values
@@ -56,12 +58,21 @@ const LinksSidebar = () => {
        const [isActivePopUp, setIsActivePopUp] = useState(savedState.isActivePopUp ?? false);
        /* ////Childern Marketing */
        /* ///Marketing */
+       /* Financial */
        const [isActiveFinancial, setIsActiveFinancial] = useState(savedState.isActiveFinancial ?? false);
+       const [openListFinancial, setOpenListFinancial] = useState(savedState.openListFinancial ?? false);
+       /* Childern Financial */
+       const [isActiveFinancialPendingPayments, setIsActiveFinancialPendingPayments] = useState(savedState.isActiveFinancialPendingPayments ?? false);
+       const [isActiveFinancialPayments, setIsActiveFinancialPayments] = useState(savedState.isActiveFinancialPayments ?? false);
+       /* ////Childern Financial */
+       /* ////Financial */
        /* Affiliate */
-       /* Childern Affiliate */
        const [isActiveAffiliate, setIsActiveAffiliate] = useState(savedState.isActiveAffiliate ?? false);
        const [openListAffiliate, setOpenListAffiliate] = useState(savedState.openListAffiliate ?? false);
+       /* Childern Affiliate */
        const [isActiveAffiliateUser, setIsActiveAffiliateUser] = useState(savedState.isActiveAffiliateUser ?? false);
+       const [isActiveAffiliatePaymentMethod, setIsActiveAffiliatePaymentMethod] = useState(savedState.isActiveAffiliateCommissions ?? false);
+       const [isActiveAffiliateCommissions, setIsActiveAffiliateCommissions] = useState(savedState.isActiveAffiliateCommissions ?? false);
        /* ////Childern Affiliate */
        /* ///Affiliate */
        const [isActiveSupport, setIsActiveSupport] = useState(savedState.isActiveSupport ?? false);
@@ -105,9 +116,14 @@ const LinksSidebar = () => {
                      isActiveReview,
                      isActivePopUp,
                      isActiveFinancial,
+                     openListFinancial,
+                     isActiveFinancialPendingPayments,
+                     isActiveFinancialPayments,
                      isActiveAffiliate,
                      openListAffiliate,
                      isActiveAffiliateUser,
+                     isActiveAffiliatePaymentMethod,
+                     isActiveAffiliateCommissions,
                      isActiveSupport,
                      isActiveReports,
                      isActiveSetting,
@@ -145,9 +161,14 @@ const LinksSidebar = () => {
               isActiveReview,
               isActivePopUp,
               isActiveFinancial,
+              openListFinancial,
+              isActiveFinancialPendingPayments,
+              isActiveFinancialPayments,
               isActiveAffiliate,
               openListAffiliate,
               isActiveAffiliateUser,
+              isActiveAffiliatePaymentMethod,
+              isActiveAffiliateCommissions,
               isActiveSupport,
               isActiveReports,
               isActiveSetting,
@@ -199,6 +220,15 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       useEffect(() => {
+
+              const part = location.pathname;
+              // const parts = part.split('/');
+              // const result = parts.slice(0, 3).join('/');
+              if (part == "/dashboard_admin/") {
+                     handleClickDashboard()
+              }
+       }, [location])
        /* User */
        const handleClickUser = () => {
               setIsActiveDashboard(false);
@@ -238,6 +268,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/student") {
+                     handleClickUser()
+              }
+       }, [location])
        /* Childern User */
        const handleClickStudent = () => {
               setIsActiveDashboard(false);
@@ -315,6 +353,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/parent") {
+                     handleClickParent()
+              }
+       }, [location])
        const handleClickTeacher = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(true);
@@ -353,6 +399,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/teacher") {
+                     handleClickTeacher()
+              }
+       }, [location])
        const handleClickAdmin = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(true);
@@ -391,6 +445,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/admin") {
+                     handleClickAdmin()
+              }
+       }, [location])
        /* ///Childern User */
        /* Education */
        const handleClickEducation = () => {
@@ -431,6 +493,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/categories") {
+                     handleClickEducation()
+              }
+       }, [location])
        /* Childern Education */
        const handleClickCategories = () => {
               setIsActiveDashboard(false);
@@ -508,6 +578,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/subject") {
+                     handleClickSubject()
+              }
+       }, [location])
        const handleClickBundles = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -546,6 +624,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/bundles") {
+                     handleClickBundles()
+              }
+       }, [location])
        const handleClickQuestionsBank = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -584,6 +670,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/questionsbank") {
+                     handleClickQuestionsBank()
+              }
+       }, [location])
        /* ///Childern Education */
        const handleClickHomeWork = () => {
               setIsActiveDashboard(false);
@@ -623,6 +717,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/homework") {
+                     handleClickHomeWork()
+              }
+       }, [location])
        const handleClickRevision = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -661,6 +763,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/revision") {
+                     handleClickRevision()
+              }
+       }, [location])
        const handleClickExams = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -699,6 +809,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/exams") {
+                     handleClickExams()
+              }
+       }, [location])
        const handleClickLive = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -737,6 +855,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/live") {
+                     handleClickLive()
+              }
+       }, [location])
        /* Marketing */
        const handleClickMarketing = () => {
               setIsActiveDashboard(false);
@@ -776,6 +902,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/discount") {
+                     handleClickMarketing()
+              }
+       }, [location])
        const handleClickDiscount = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -852,6 +986,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        }
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/promo_code") {
+                     handleClickPromoCode()
+              }
+       }, [location])
        const handleClickReviews = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -890,6 +1032,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        }
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/review") {
+                     handleClickReviews()
+              }
+       }, [location])
        const handleClickPopUp = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -928,7 +1078,16 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        }
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/pop_up") {
+                     handleClickPopUp()
+              }
+       }, [location])
        /* ////Marketing */
+       /* Financial */
        const handleClickFinancial = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -954,6 +1113,9 @@ const LinksSidebar = () => {
               setIsActiveReview(false)
               setIsActivePopUp(false)
               setIsActiveFinancial(true)
+              setOpenListFinancial(true)
+              setIsActiveFinancialPendingPayments(true)
+              setIsActiveFinancialPayments(false)
               setIsActiveAffiliate(false)
               setIsActiveSupport(false)
               setIsActiveReports(false)
@@ -967,6 +1129,105 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/financial_pending_Payments") {
+                     handleClickFinancial()
+              }
+       }, [location])
+       const handleClickFinancialPendingPayments = () => {
+              setIsActiveDashboard(false);
+              setIsActiveUser(false);
+              setOpenListUser(false);
+              setIsActiveStudent(false);
+              setIsActiveParent(false);
+              setIsActiveTeacher(false);
+              setIsActiveAdmin(false);
+              setIsActiveEducation(false)
+              setOpenListEducation(false)
+              setIsActiveCategories(false)
+              setIsActiveSubject(false)
+              setIsActiveBundles(false)
+              setIsActiveQuestionsBank(false)
+              setIsActiveHomeWork(false)
+              setIsActiveRevision(false)
+              setIsActivExams(false)
+              setIsActiveLive(false)
+              setIsActiveMarketing(false)
+              setOpenListMarketing(false)
+              setIsActiveDiscount(false)
+              setIsActivePromoCode(false)
+              setIsActiveReview(false)
+              setIsActivePopUp(false)
+              setIsActiveFinancial(true)
+              setOpenListFinancial(true)
+              setIsActiveFinancialPendingPayments(true)
+              setIsActiveFinancialPayments(false)
+              setIsActiveAffiliate(false)
+              setIsActiveSupport(false)
+              setIsActiveReports(false)
+              setIsActiveSetting(false)
+              setOpenListSetting(false)
+              setIsActiveAdminRoles(false)
+              setIsActiveCountries(false)
+              setIsActiveCities(false)
+              setIsActiveParentRelation(false)
+              setIsActiveOperations(false)
+              setIsActivePaymentMethod(false)
+              setIsActiveNoticeBoard(false)
+       };
+       const handleClickFinancialPayments = () => {
+              setIsActiveDashboard(false);
+              setIsActiveUser(false);
+              setOpenListUser(false);
+              setIsActiveStudent(false);
+              setIsActiveParent(false);
+              setIsActiveTeacher(false);
+              setIsActiveAdmin(false);
+              setIsActiveEducation(false)
+              setOpenListEducation(false)
+              setIsActiveCategories(false)
+              setIsActiveSubject(false)
+              setIsActiveBundles(false)
+              setIsActiveQuestionsBank(false)
+              setIsActiveHomeWork(false)
+              setIsActiveRevision(false)
+              setIsActivExams(false)
+              setIsActiveLive(false)
+              setIsActiveMarketing(false)
+              setOpenListMarketing(false)
+              setIsActiveDiscount(false)
+              setIsActivePromoCode(false)
+              setIsActiveReview(false)
+              setIsActivePopUp(false)
+              setIsActiveFinancial(true)
+              setOpenListFinancial(true)
+              setIsActiveFinancialPendingPayments(false)
+              setIsActiveFinancialPayments(true)
+              setIsActiveAffiliate(false)
+              setIsActiveSupport(false)
+              setIsActiveReports(false)
+              setIsActiveSetting(false)
+              setOpenListSetting(false)
+              setIsActiveAdminRoles(false)
+              setIsActiveCountries(false)
+              setIsActiveCities(false)
+              setIsActiveParentRelation(false)
+              setIsActiveOperations(false)
+              setIsActivePaymentMethod(false)
+              setIsActiveNoticeBoard(false)
+       };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/financial_payments") {
+                     handleClickFinancialPayments()
+              }
+       }, [location])
+       /* ///Financial */
        /* Affiliate */
        const handleClickAffiliate = () => {
               setIsActiveDashboard(false);
@@ -996,6 +1257,8 @@ const LinksSidebar = () => {
               setIsActiveAffiliate(true)
               setOpenListAffiliate(true)
               setIsActiveAffiliateUser(true)
+              setIsActiveAffiliatePaymentMethod(false)
+              setIsActiveAffiliateCommissions(false)
               setIsActiveSupport(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
@@ -1008,6 +1271,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/affiliate_user") {
+                     handleClickAffiliate()
+              }
+       }, [location])
        const handleClickAffiliateUser = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -1034,8 +1305,10 @@ const LinksSidebar = () => {
               setIsActivePopUp(false)
               setIsActiveFinancial(false)
               setIsActiveAffiliate(true)
-              setIsActiveAffiliateUser(true)
               setOpenListAffiliate(true)
+              setIsActiveAffiliateUser(true)
+              setIsActiveAffiliatePaymentMethod(false)
+              setIsActiveAffiliateCommissions(false)
               setIsActiveSupport(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
@@ -1048,6 +1321,106 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       const handleClickAffiliatePaymentMethod = () => {
+              setIsActiveDashboard(false);
+              setIsActiveUser(false);
+              setOpenListUser(false);
+              setIsActiveStudent(false);
+              setIsActiveParent(false);
+              setIsActiveTeacher(false);
+              setIsActiveAdmin(false);
+              setIsActiveEducation(false)
+              setOpenListEducation(false)
+              setIsActiveCategories(false)
+              setIsActiveSubject(false)
+              setIsActiveBundles(false)
+              setIsActiveQuestionsBank(false)
+              setIsActiveHomeWork(false)
+              setIsActiveRevision(false)
+              setIsActivExams(false)
+              setIsActiveLive(false)
+              setIsActiveMarketing(false)
+              setOpenListMarketing(false)
+              setIsActiveDiscount(false)
+              setIsActivePromoCode(false)
+              setIsActiveReview(false)
+              setIsActivePopUp(false)
+              setIsActiveFinancial(false)
+              setIsActiveAffiliate(true)
+              setOpenListAffiliate(true)
+              setIsActiveAffiliateUser(false)
+              setIsActiveAffiliatePaymentMethod(true)
+              setIsActiveAffiliateCommissions(false)
+              setIsActiveSupport(false)
+              setIsActiveReports(false)
+              setIsActiveSetting(false)
+              setOpenListSetting(false)
+              setIsActiveAdminRoles(false)
+              setIsActiveCountries(false)
+              setIsActiveCities(false)
+              setIsActiveParentRelation(false)
+              setIsActiveOperations(false)
+              setIsActivePaymentMethod(false)
+              setIsActiveNoticeBoard(false)
+       };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/affiliate_Payment_method") {
+                     handleClickAffiliatePaymentMethod()
+              }
+       }, [location])
+       const handleClickAffiliateCommissions = () => {
+              setIsActiveDashboard(false);
+              setIsActiveUser(false);
+              setOpenListUser(false);
+              setIsActiveStudent(false);
+              setIsActiveParent(false);
+              setIsActiveTeacher(false);
+              setIsActiveAdmin(false);
+              setIsActiveEducation(false)
+              setOpenListEducation(false)
+              setIsActiveCategories(false)
+              setIsActiveSubject(false)
+              setIsActiveBundles(false)
+              setIsActiveQuestionsBank(false)
+              setIsActiveHomeWork(false)
+              setIsActiveRevision(false)
+              setIsActivExams(false)
+              setIsActiveLive(false)
+              setIsActiveMarketing(false)
+              setOpenListMarketing(false)
+              setIsActiveDiscount(false)
+              setIsActivePromoCode(false)
+              setIsActiveReview(false)
+              setIsActivePopUp(false)
+              setIsActiveFinancial(false)
+              setIsActiveAffiliate(true)
+              setOpenListAffiliate(true)
+              setIsActiveAffiliateUser(false)
+              setIsActiveAffiliatePaymentMethod(false)
+              setIsActiveAffiliateCommissions(true)
+              setIsActiveSupport(false)
+              setIsActiveReports(false)
+              setIsActiveSetting(false)
+              setOpenListSetting(false)
+              setIsActiveAdminRoles(false)
+              setIsActiveCountries(false)
+              setIsActiveCities(false)
+              setIsActiveParentRelation(false)
+              setIsActiveOperations(false)
+              setIsActivePaymentMethod(false)
+              setIsActiveNoticeBoard(false)
+       };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/affiliate_commissions") {
+                     handleClickAffiliateCommissions()
+              }
+       }, [location])
        /* ///Affiliate */
        const handleClickSupport = () => {
               setIsActiveDashboard(false);
@@ -1087,6 +1460,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/support") {
+                     handleClickSupport()
+              }
+       }, [location])
        const handleClickReports = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -1125,6 +1506,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/reports") {
+                     handleClickReports()
+              }
+       }, [location])
        /* Setting */
        const handleClickSetting = () => {
               setIsActiveDashboard(false);
@@ -1164,6 +1553,14 @@ const LinksSidebar = () => {
               setIsActiveNoticeBoard(false)
 
        };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/adminRoles") {
+                     handleClickSetting()
+              }
+       }, [location])
        /* Setting Childern */
        const handleClickAdminRoles = () => {
               setIsActiveDashboard(false);
@@ -1241,6 +1638,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        }
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/countries") {
+                     handleClickCountries()
+              }
+       }, [location])
        const handleClickCities = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -1279,6 +1684,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        }
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/cities") {
+                     handleClickCities()
+              }
+       }, [location])
        const handleClickParentRelatioen = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -1317,6 +1730,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        }
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/parentRelation") {
+                     handleClickParentRelatioen()
+              }
+       }, [location])
        const handleClickOperations = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -1355,6 +1776,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false)
               setIsActiveNoticeBoard(false)
        }
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/operations") {
+                     handleClickOperations()
+              }
+       }, [location])
        const handleClickPaymentMethod = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -1393,6 +1822,14 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(true)
               setIsActiveNoticeBoard(false)
        }
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/paymentMethod") {
+                     handleClickPaymentMethod()
+              }
+       }, [location])
        /* /////Setting Childern */
        const handleClickNoticeBoard = () => {
               setIsActiveDashboard(false);
@@ -1431,10 +1868,18 @@ const LinksSidebar = () => {
               setIsActiveOperations(false)
               setIsActiveNoticeBoard(true)
        };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/noticeboard") {
+                     handleClickNoticeBoard()
+              }
+       }, [location])
        return (
               <>
                      <div className="LinksSidebar w-full h-full flex flex-col items-center justify-start">
-                            <Link to="/dashboardAdmin" onClick={handleClickDashboard} className={`${isActiveDashboard ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                            <Link to="/dashboard_admin" onClick={handleClickDashboard} className={`${isActiveDashboard ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
                                    <DashboardIcon isActive={isActiveDashboard} />
                                    <span className={`${isActiveDashboard ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Dashboard</span>
                             </Link>
@@ -1490,10 +1935,16 @@ const LinksSidebar = () => {
                                           <li className={`${isActivePopUp ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"pop_up"} onClick={handleClickPopUp}>Pop Up</Link></li>
                                    </ul>
                             </div>
-                            <Link to="financial" onClick={handleClickFinancial} className={`${isActiveFinancial ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                            <Link to="financial_pending_Payments" onClick={handleClickFinancial} className={`${isActiveFinancial ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
                                    <FinancialIcon Width={25} Height={23} isActive={isActiveFinancial} />
                                    <span className={`${isActiveFinancial ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Financial</span>
                             </Link>
+                            <div className={`${openListFinancial ? "h-36" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                   <ul className={`${openListFinancial ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                          <li className={`${isActiveFinancialPendingPayments ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"financial_pending_Payments"} onClick={handleClickFinancialPendingPayments}>Pending Payments</Link></li>
+                                          <li className={`${isActiveFinancialPayments ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"financial_payments"} onClick={handleClickFinancialPayments}>Payments</Link></li>
+                                   </ul>
+                            </div>
                             <Link to="affiliate_user" onClick={handleClickAffiliate} className={`${isActiveAffiliate ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
                                    <AffiliateIcon Width={25} Height={23} isActive={isActiveAffiliate} />
                                    <span className={`${isActiveAffiliate ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Affiliate</span>
@@ -1501,6 +1952,8 @@ const LinksSidebar = () => {
                             <div className={`${openListAffiliate ? "h-36" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
                                    <ul className={`${openListAffiliate ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
                                           <li className={`${isActiveAffiliateUser ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_user"} onClick={handleClickAffiliateUser}>User</Link></li>
+                                          <li className={`${isActiveAffiliatePaymentMethod ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_Payment_method"} onClick={handleClickAffiliatePaymentMethod}>Payment Method</Link></li>
+                                          <li className={`${isActiveAffiliateCommissions ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_commissions"} onClick={handleClickAffiliateCommissions}>Commissions</Link></li>
                                           {/* <li className={`${isActiveAffiliatePromoCode ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"promo_code"} onClick={handleClickAffiliatePromoCode}>PromoCode</Link></li>
                                           <li className={`${isActiveAffiliateReview ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"review"} onClick={handleClickAffiliateReviews}>Reviews</Link></li>
                                           <li className={`${isActiveAffiliatePopUp ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"pop_up"} onClick={handleClickAffiliatePopUp}>Pop Up</Link></li> */}

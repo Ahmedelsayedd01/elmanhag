@@ -15,7 +15,7 @@ import { Wroning } from '../../../Components/Icons/All_Icons';
 
 const StudentPage = () => {
        const auth = useAuth();
-       const [isLoading, setIsLoading] = useState(true);
+       const [isLoading, setIsLoading] = useState(false);
        const [student, setStudent] = useState(null);
        const [search, setSearch] = useState('');
        const [selectedOptionCountry, setSelectedOptionCountry] = useState('Filter By Country');

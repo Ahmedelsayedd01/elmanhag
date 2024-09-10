@@ -323,14 +323,6 @@ const AddPage = () => {
               };
        }, []);
 
-       // if (isLoading) {
-       //        return (
-       //               <div className="w-1/4 h-screen flex items-center justify-center m-auto">
-       //                      <Loading />
-       //               </div>
-       //        )
-       // }
-
        return (
               <>
                      <form onSubmit={handleSubmitAdd} className='w-full flex flex-col items-center justify-center gap-y-3'>
@@ -343,7 +335,6 @@ const AddPage = () => {
                                           <InputCustom type={"text"} borderColor={"none"} placeholder={"Student Name"} value={studentName} onChange={(e => setStudentName(e.target.value))} />
                                    </div>
                                    <div className="lg:w-[30%] sm:w-full">
-                                          {/* <InputCustom type={"text"} borderColor={"none"} placeholder={"Country"} value={studentCountry} onChange={(e => setStudentCountry(e.target.value))} /> */}
                                           <DropDownMenu
                                                  ref={dropdownCountryStudentRef}
                                                  handleOpen={handleOpenCountryStudent}
