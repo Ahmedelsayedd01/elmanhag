@@ -36,7 +36,7 @@ const EditeProfileStudent = () => {
     console.log('studentEdit', studentEdit);
 
     const handleGoBack = () => {
-        navigate('/dashboardAdmin/student', { replace: true });
+        navigate('/dashboard_admin/student', { replace: true });
     };
 
     return (
