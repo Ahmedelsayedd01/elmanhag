@@ -11,7 +11,7 @@ import { Wroning } from '../../../../Components/Icons/All_Icons';
 
 const CategoriesPage = () => {
        const auth = useAuth();
-       const [isLoading, setIsLoading] = useState(true);
+       const [isLoading, setIsLoading] = useState(false);
        const [allCategories, setAllCategories] = useState(null);
        const [categories, setCategories] = useState(null);
        const [categoriesChanged, setCategoriesChanged] = useState(false); // Change tracker

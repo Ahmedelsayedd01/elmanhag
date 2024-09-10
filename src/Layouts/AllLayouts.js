@@ -64,10 +64,23 @@ export { default as PopUpLayout } from "./Admin/PopUpLayout";
 export { default as AddPopUpLayout } from "./Admin/AddPopUpLayout";
 export { default as EditPopUpLayout } from "./Admin/EditPopUpLayout";
 
-export { default as FinancialAD } from "./Admin/FinancialAD";
+/* Financial Layout */
+// Pending Payments  Layout
+export { default as FinancialPendingPaymentsLayout } from "./Admin/FinancialPendingPaymentsLayout";
+// Payments  Layout
+export { default as FinancialPaymentsLayout } from "./Admin/FinancialPaymentsLayout";
+/* ///Financial Layout */
 // Affiliate Layouts
+/* Users */
 export { default as AffiliateUserLayout } from "./Admin/AffiliateUserLayout";
 export { default as AddAffiliateUserLayout } from "./Admin/AddAffiliateUserLayout";
+export { default as EditAffiliateUserLayout } from "./Admin/EditAffiliateUserLayout";
+/* Payment Method */
+export { default as AffiliatePaymentMethodLayout } from "./Admin/AffiliatePaymentMethodLayout";
+export { default as AddAffiliatePaymentMethodLayout } from "./Admin/AddAffiliatePaymentMethodLayout";
+export { default as EditAffiliatePaymentMethodLayout } from "./Admin/EditAffiliatePaymentMethodLayout";
+/* Commissions */
+export { default as AffiliateCommissionsLayout } from "./Admin/AffiliateCommissionsLayout";
 
 export { default as SupportAD } from "./Admin/SupportAD";
 export { default as ReportsAD } from "./Admin/ReportsAD";

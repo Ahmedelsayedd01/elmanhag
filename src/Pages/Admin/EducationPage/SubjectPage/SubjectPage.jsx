@@ -13,7 +13,7 @@ import Loading from '../../../../Components/Loading';
 
 const SubjextPage = () => {
   const auth = useAuth();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [subjects, setSubjects] = useState(null);
   const [subject, setSubject] = useState(null);
   const [selectedOptionStatus, setSelectedOptionStatus] = useState('Filter By Status');
@@ -158,7 +158,24 @@ const SubjextPage = () => {
   }
 
   if (!subjects) {
-    return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Subject data available</div>;
+    return (
+      <>
+        <div className='text-mainColor text-2xl font-bold w-full h-full flex flex-col gap-y-3 items-center mt-52'>
+          <span>No Subject data available</span>
+          <Link to="add">
+            <ButtonAdd Text={"Add"} BgColor={"white"} Color={"thirdColor"} Size={"xl"} />
+          </Link>
+        </div>
+        {/* <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Subject data available
+        </div>;
+        <div className="">
+          <Link to="add">
+            <ButtonAdd Text={"Add"} BgColor={"white"} Color={"thirdColor"} Size={"xl"} />
+          </Link>
+        </div> */}
+      </>
+    )
+
   }
 
   localStorage.setItem("subjects", JSON.stringify(subject));
