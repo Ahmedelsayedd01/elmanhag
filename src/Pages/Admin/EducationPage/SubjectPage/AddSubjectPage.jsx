@@ -63,11 +63,39 @@ const AddSubjectPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const categoryDataa = JSON.parse(localStorage.getItem('Categories'));
-    const educationDataa = JSON.parse(localStorage.getItem('subjects'));
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get('https://bdev.elmanhag.shop/admin/category', {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`,
+          },
+        });
+        if (response.status === 200) {
+          setCategoryData(response.data.categories);
+          console.log('response:', response);
+        }
+      } catch (error) {
+        console.error('Error fetching Categories data:', error);
+      }
+    };
 
-    setCategoryData(categoryDataa.categories);
-    setEducationData(educationDataa.education);
+    const fetchSubjects = async () => {
+      try {
+        const response = await axios.get('https://bdev.elmanhag.shop/admin/subject', {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`,
+          },
+        });
+        if (response.status === 200) {
+          setEducationData(response.data.subjects);
+          console.log('responsesup:', response);
+        }
+      } catch (error) {
+        console.error('Error fetching Subjects data:', error);
+      }
+    };
+    fetchCategories()
+    fetchSubjects()
 
   }, []);
 
