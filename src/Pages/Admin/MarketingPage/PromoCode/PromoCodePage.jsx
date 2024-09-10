@@ -253,10 +253,10 @@ const PromoCodePage = () => {
                                                       <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
                                                             <div className="bg-white rounded-lg p-8 max-w-lg w-full shadow-lg">
                                                             <h2 className="text-2xl font-bold mb-4">Promo Code Details</h2>
-                                                            <p className="text-2xl">ID: {promoCode.id}</p>
-                                                            <p className="text-2xl">Title: {promoCode?.title}</p>
-                                                            <p className="text-2xl">Bundles included: {promoCode.bundles?.map(bundle => bundle.name).join(', ') || 'No bundles'}</p>
-                                                            <p className="text-2xl">Subjects included: {promoCode.subjects?.map(subject => subject.name).join(', ') || 'No subjects'}</p>
+                                                            <p className="text-2xl"><span className='text-mainColor'>ID: </span> {promoCode.id}</p>
+                                                            <p className="text-2xl"><span className='text-mainColor'>Title:</span> {promoCode?.title}</p>
+                                                            <p className="text-2xl"><span className='text-mainColor'>Bundles included:</span> {promoCode.bundles?.map(bundle => bundle.name).join(', ') || 'No bundles'}</p>
+                                                            <p className="text-2xl"><span className='text-mainColor'>Subjects included:</span> {promoCode.subjects?.map(subject => subject.name).join(', ') || 'No subjects'}</p>
                                                             <button
                                                                   className="mt-4 px-4 py-2 bg-mainColor text-white text-xl rounded hover:bg-opacity-90"
                                                                   onClick={handleCloseModal} // Close modal

@@ -322,12 +322,12 @@ const handleDelete = async (discountId) => {
                                           {selectedDiscountId === discount.id && (
                                                       <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
                                                             <div className="bg-white rounded-lg p-8 max-w-lg w-full shadow-lg">
-                                                            <h2 className="text-2xl font-bold mb-4">Promo Code Details</h2>
-                                                            <p className="text-2xl">ID: {discount.id}</p>
-                                                            <p className="text-2xl">Description: {discount?.description}</p>
-                                                            <p className="text-2xl">Category: {discount.category?.name}</p>
-                                                            <p className="text-2xl">Bundles included: {discount.bundle?.map(bundle => bundle.name).join(', ') || 'No bundles'}</p>
-                                                            <p className="text-2xl">Subjects included: {discount.subject?.map(subject => subject.name).join(', ') || 'No subjects'}</p>
+                                                            <h2 className="text-2xl font-bold mb-4">Discount Details</h2>
+                                                            <p className="text-2xl"><span className='text-mainColor'>ID:</span> {discount.id}</p>
+                                                            <p className="text-2xl"><span className='text-mainColor'>Description:</span> {discount?.description}</p>
+                                                            <p className="text-2xl"><span className='text-mainColor'>Category:</span> {discount.category?.name}</p>
+                                                            <p className="text-2xl"><span className='text-mainColor'>Bundles included:</span> {discount.bundle?.map(bundle => bundle.name).join(', ') || 'No bundles'}</p>
+                                                            <p className="text-2xl"><span className='text-mainColor'>Subjects included:</span> {discount.subject?.map(subject => subject.name).join(', ') || 'No subjects'}</p>
                                                             <button
                                                                   className="mt-4 px-4 py-2 bg-mainColor text-white text-xl rounded hover:bg-opacity-90"
                                                                   onClick={handleCloseModal} // Close modal
