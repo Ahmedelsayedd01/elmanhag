@@ -27,7 +27,7 @@ const LoginAdmin = () => {
                      auth.login(data); // Call auth.login with the updated data
 
                      setIsLoading(false);
-                     navigate("/dashboardAdmin", { replace: true });
+                     navigate("/dashboard_admin", { replace: true });
               }
        }, [data]);
 

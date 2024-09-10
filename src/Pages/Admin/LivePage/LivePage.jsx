@@ -22,7 +22,7 @@ import {
 const LivePage = () => {
 
   const auth = useAuth();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [allLivesData, setAllLivesData] = useState(null);
   const [lives, setLives] = useState(null);
   const [liveTeacher, setLiveTeacher] = useState(null);
