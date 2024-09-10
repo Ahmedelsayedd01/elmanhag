@@ -1939,7 +1939,7 @@ const LinksSidebar = () => {
                                    <FinancialIcon Width={25} Height={23} isActive={isActiveFinancial} />
                                    <span className={`${isActiveFinancial ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Financial</span>
                             </Link>
-                            <div className={`${openListFinancial ? "h-36" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                            <div className={`${openListFinancial ? "h-24" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
                                    <ul className={`${openListFinancial ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
                                           <li className={`${isActiveFinancialPendingPayments ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"financial_pending_Payments"} onClick={handleClickFinancialPendingPayments}>Pending Payments</Link></li>
                                           <li className={`${isActiveFinancialPayments ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"financial_payments"} onClick={handleClickFinancialPayments}>Payments</Link></li>

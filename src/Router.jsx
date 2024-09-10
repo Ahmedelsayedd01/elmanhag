@@ -292,38 +292,13 @@ const AppLayoutStudentProfile = () => (
     <EditProfilePage />
   </>
 );
-const AppLayoutUser = () => (
-  <>
-    <div className="">
-      {/* <ContextProvider> */}
-
-      {/* <SidebarAdmin />
-                     <div className="contentSection w-4/5 min-h-screen ">
-                            <HeaderAdmin />
-      <Outlet />
-                     </div> */}
-      {/* </ContextProvider> */}
-    </div>
-  </>
-);
-const AppLayoutStudent = () => (
+const AppLayoutStudentDashboard = () => (
   <>
     <div className="relative flex gap-x-4 directionAR">
       <SidebarStudent />
       <div className="contentSection w-4/5 min-h-screen ">
         {/* <HeaderStudent /> */}
         <NavbarStudent />
-        <Outlet />
-      </div>
-    </div>
-  </>
-);
-const AppLayoutTeacher = () => (
-  <>
-    <div className="relative flex gap-x-4">
-      <SidebarTeacher />
-      <div className="contentSection w-4/5 min-h-screen ">
-        <HeaderTeacher />
         <Outlet />
       </div>
     </div>
@@ -339,17 +314,6 @@ const AppLayoutAffilateDashboard = () => (
       {/* <Outlet /> */}
     </div>
   </div>
-);
-const AppLayoutParent = () => (
-  <>
-    <div className="relative flex gap-x-4">
-      <SidebarParent />
-      <div className="contentSection w-4/5 min-h-screen ">
-        <HeaderParent />
-        <Outlet />
-      </div>
-    </div>
-  </>
 );
 
 export const router = createBrowserRouter([
@@ -408,10 +372,6 @@ export const router = createBrowserRouter([
                 path: 'signup_affilate',
                 element: <SignUpAffiliatePage />,
               },
-              {
-                // index: true, // This makes it the default route for "/authentication"
-                // element: <LoginPage />,
-              },
             ]
           },
         ],
@@ -428,18 +388,6 @@ export const router = createBrowserRouter([
         path: '',
         element: <AppLayoutForgetPass />,
       },
-    ],
-  },
-
-
-  {
-    element: <AppLayoutSuperAdmin />,
-    path: '/DashboardSuperAdmin',
-    children: [
-      {
-        path: 'Dashboard',
-        element: <App />,
-      }
     ],
   },
   {
@@ -671,15 +619,17 @@ export const router = createBrowserRouter([
               {
                 path: '',
                 element: <DiscountLayout />,
+                children: [
+                  {
+                    path: 'add',
+                    element: <AddDiscountLayout />,
+                  },
+                  {
+                    path: 'edit/:marketingId',
+                    element: <EditDiscountLayout />,
+                  }
+                ]
               },
-              {
-                path: 'add',
-                element: <AddDiscountLayout />,
-              },
-              {
-                path: 'edit/:discountId',
-                element: <EditDiscountLayout />,
-              }
             ]
           },
           {
@@ -688,16 +638,18 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: '',
-                element: <PromoCodeLayout />
+                element: <PromoCodeLayout />,
+                children: [
+                  {
+                    path: 'add',
+                    element: <AddPromoCodeLayout />,
+                  },
+                  {
+                    path: 'edit/:marketingId',
+                    element: <EditPromoCodeLayout />,
+                  }
+                ]
               },
-              {
-                path: 'add',
-                element: <AddPromoCodeLayout />,
-              },
-              {
-                path: 'edit/:promoCodeId',
-                element: <EditPromoCodeLayout />,
-              }
             ]
           },
           {
@@ -706,13 +658,15 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: '',
-                element: <ReviewLayout />
-              },
-              {
-                path: 'edit/:reviewId',
-                element: <EditReviewLayout />,
-              }
+                element: <ReviewLayout />,
+                children: [
+                  {
+                    path: 'edit/:marketingId',
+                    element: <EditReviewLayout />,
+                  }
                 ]
+              },
+            ]
           },
           {
             path: 'pop_up',
@@ -720,16 +674,18 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: '',
-                element: <PopUpLayout />
+                element: <PopUpLayout />,
+                children: [
+                  {
+                    path: 'add',
+                    element: <AddPopUpLayout />,
+                  },
+                  {
+                    path: 'edit/:marketingId',
+                    element: <EditPopUpLayout />,
+                  }
+                ]
               },
-              {
-                path: 'add',
-                element: <AddPopUpLayout />,
-              },
-              {
-                path: 'edit/:popUpId',
-                element: <EditPopUpLayout />,
-              }
             ]
           },
           {
@@ -905,44 +861,43 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    element: <ProtectedRoute allowedRoles={['teacher', 'parent']} />,
-    path: '/dashboardUser',
-    children: [
-      {
-        path: '',
-        element: <AppLayoutUser />,
-        children: [
-          {
-            index: true,
-            element: <User />,
-          },
-        ],
-      },
-    ],
-  },
-  {
     element: <ProtectedRoute allowedRoles={['student']} />,
     path: '/dashboard',
     children: [
       {
         path: '',
-        element: <AppLayoutStudent />,
+        element: <AppLayoutStudentDashboard />,
         children: [
           {
-            index: true,
+            path: '',
             element: <App />,
+          },
+          {
+            path: "Curricula",
+            element: <Curricula />,
+          },
+          {
+            path: "Duties",
+            element: <Duties />,
+          },
+          {
+            path: "LiveClasses",
+            element: <LiveClasses />,
+          },
+          {
+            path: "MonthsReviews",
+            element: <MonthsReviews />,
+          },
+          {
+            path: "FinalReviews",
+            element: <FinalReviews />,
+          },
+          {
+            path: "SolveExams",
+            element: <SolveExams />,
           },
         ],
       },
-    ],
-  },
-  {
-    element: <AppLayoutTeacher />,
-    children: [
-      {
-        path: '/DashboardTeacher',
-        element: <App />,
-      }
     ],
   },
   {
@@ -952,48 +907,6 @@ export const router = createBrowserRouter([
         path: '/dashboard_affilate',
         element: <AppLayoutAffilateDashboard />,
       }
-    ],
-  },
-  {
-    element: <AppLayoutParent />,
-    children: [
-      {
-        path: '/DashboardParent',
-        element: <App />,
-      }
-    ],
-  },
-  {
-    element: <AppLayoutStudent />,
-    children: [
-      {
-        path: '/DashboardStudent',
-        element: <App />,
-      },
-      {
-        path: "/Curricula",
-        element: <Curricula />,
-      },
-      {
-        path: "/Duties",
-        element: <Duties />,
-      },
-      {
-        path: "/LiveClasses",
-        element: <LiveClasses />,
-      },
-      {
-        path: "/MonthsReviews",
-        element: <MonthsReviews />,
-      },
-      {
-        path: "/FinalReviews",
-        element: <FinalReviews />,
-      },
-      {
-        path: "/SolveExams",
-        element: <SolveExams />,
-      },
     ],
   },
   {
