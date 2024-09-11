@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Dashboard } from './Layouts/AllLayouts'
+import HomeLayout from './Layouts/Student/HomeLayout';
 
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <div className="flex gap-x-4 flex-col">
-        <Dashboard />
+        <HomeLayout />
       </div>
     </>
   )

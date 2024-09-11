@@ -112,15 +112,14 @@ export { default as NoticeBoardAD } from "./Admin/NoticeBoardAD";
 /* Affiliate Layout */
 
 /* Student Layout */
-export { default as LayoutStydent } from "./Student/LayoutStydent";
+export { default as LayoutStudent } from "./Student/LayoutStudent";
+export { default as HomeLayout } from "./Student/HomeLayout";
 export { default as Curricula } from "./Student/Curricula";
-/* Duties */
+// Duties
 export { default as Duties } from "./Student/Duties";
-// Units
-export { default as UnitsLayout } from "./Student/UnitsLayout";
-/* ///Duties */
 export { default as LiveClasses } from "./Student/LiveClasses";
 export { default as MonthsReviews } from "./Student/MonthsReviews";
 export { default as SolveExams } from "./Student/SolveExams";
 export { default as FinalReviews } from "./Student/FinalReviews";
-export { default as SolveExams } from "./Student/SolveExams";
+// Units
+export { default as UnitsLayout } from "./Student/UnitsLayout";

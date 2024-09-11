@@ -1,8 +1,11 @@
 import React from 'react'
+import { CurriculaPage } from '../../Pages/AllPages'
 
 const Curricula = () => {
   return (
-    <div>Curricula</div>
+    <>
+      <CurriculaPage />
+    </>
   )
 }
 

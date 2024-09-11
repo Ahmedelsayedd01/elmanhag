@@ -72,7 +72,8 @@ import {
   AffiliateCommissionsLayout,
   FinancialPendingPaymentsLayout,
   FinancialPaymentsLayout,
-  LayoutStydent,
+  UnitsLayout,
+  LayoutStudent,
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -296,7 +297,7 @@ const AppLayoutStudentProfile = () => (
 /* Student Dashboard */
 const AppLayoutStudentDashboard = () => (
   <>
-    <LayoutStydent />
+    <LayoutStudent />
   </>
 );
 const AppLayoutCurricula = () => (
@@ -874,14 +875,14 @@ export const router = createBrowserRouter([
           },
           {
             path: "curricula",
-            element: AppLayoutCurricula,
+            element: <AppLayoutCurricula />, // Add the JSX brackets
             children: [
               {
                 path: '',
                 element: <Curricula />,
               },
               {
-                path: '/:unitId',
+                path: 'unit/:unitId',
                 element: <UnitsLayout />,
               },
             ]

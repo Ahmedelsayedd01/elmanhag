@@ -61,7 +61,6 @@ export { default as PendingPaymentsPage } from "./Admin/Financial/FinancialPendi
 //Payments Pages
 export { default as FinancialPaymentsPage } from "./Admin/Financial/FinancialPayments/FinancialPaymentsPage";
 
-
 /* Affiliate Pages */
 // User
 export { default as AffiliateUserPage } from "./Admin/AffiliatePage/AffiliateUserPage";
@@ -96,6 +95,7 @@ export { default as OperationsPage } from "./Admin/SettingPage/Operations/Operat
 /* /////Admin Dashboard Page */
 
 /* Student Dashboard Page */
+export { default as StudentHomePage } from "./Student/StudentHomePage/StudentHomePage";
 export { default as CurriculaPage } from "./Student/CurriculaPage/CurriculaPage";
 export { default as DutiesPage } from "./Student/DutiesPage/DutiesPage";
 export { default as LiveClassesPage } from "./Student/LiveClassesPage/LiveClassesPage";

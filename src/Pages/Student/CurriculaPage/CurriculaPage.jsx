@@ -2,9 +2,7 @@ import React from 'react'
 const CurriculaPage = () => {
        return (
               <div>
-                     <div>
-                            
-                     </div>
+                     CurriculaPage
               </div>
        )
 }

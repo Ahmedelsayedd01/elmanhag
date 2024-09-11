@@ -3,12 +3,12 @@ import SidebarStudent from '../../Components/SidebarStudent'
 import NavbarStudent from '../../Components/NavbarStudent'
 import { Outlet } from 'react-router-dom'
 
-const LayoutStydent = () => {
+const LayoutStudent = () => {
        return (
               <>
                      <div className="relative flex gap-x-4 directionAR">
                             <SidebarStudent />
-                            <div className="contentSection w-4/5 min-h-screen ">
+                            <div className="contentSection w-4/5 min-h-screen">
                                    {/* <HeaderStudent /> */}
                                    <NavbarStudent />
                                    <div className="pr-5">
@@ -20,4 +20,4 @@ const LayoutStydent = () => {
        )
 }
 
-export default LayoutStydent
+export default LayoutStudent
