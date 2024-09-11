@@ -22,7 +22,7 @@ const MenuSide = () => {
        const [isActiveSolveExams, setIsActiveSolveExams] = useState(false);
 
        const handleClickHome = () => {
-              setIsActiveHome(!isActiveHome);
+              setIsActiveHome(true);
               setIsActiveCurricula(false);
               setIsActiveDuties(false);
               setIsActiveLiveClasses(false);
@@ -32,7 +32,7 @@ const MenuSide = () => {
        };
        const handleClickCurricula = () => {
               setIsActiveHome(false);
-              setIsActiveCurricula(!isActiveCurricula);
+              setIsActiveCurricula(true);
               setIsActiveDuties(false);
               setIsActiveLiveClasses(false);
               setIsActiveMonthsReviews(false);
@@ -40,7 +40,7 @@ const MenuSide = () => {
               setIsActiveSolveExams(false);
        };
        const handleClickDuties = () => {
-              setIsActiveDuties(!isActiveDuties);
+              setIsActiveDuties(true);
               setIsActiveHome(false);
               setIsActiveCurricula(false);
               setIsActiveLiveClasses(false);
@@ -49,7 +49,7 @@ const MenuSide = () => {
               setIsActiveSolveExams(false);
        };
        const handleClickLiveClasses = () => {
-              setIsActiveLiveClasses(!isActiveLiveClasses);
+              setIsActiveLiveClasses(true);
               setIsActiveHome(false);
               setIsActiveCurricula(false);
               setIsActiveDuties(false);
@@ -58,7 +58,7 @@ const MenuSide = () => {
               setIsActiveSolveExams(false);
        };
        const handleClickMonthsReviews = () => {
-              setIsActiveMonthsReviews(!isActiveMonthsReviews);
+              setIsActiveMonthsReviews(true);
               setIsActiveHome(false);
               setIsActiveCurricula(false);
               setIsActiveDuties(false);
@@ -67,7 +67,7 @@ const MenuSide = () => {
               setIsActiveSolveExams(false);
        };
        const handleClickFinalReviews = () => {
-              setIsActiveFinalReviews(!isActiveFinalReviews);
+              setIsActiveFinalReviews(true);
               setIsActiveHome(false);
               setIsActiveCurricula(false);
               setIsActiveDuties(false);
@@ -76,7 +76,7 @@ const MenuSide = () => {
               setIsActiveSolveExams(false);
        };
        const handleClickSolveExams = () => {
-              setIsActiveSolveExams(!isActiveSolveExams);
+              setIsActiveSolveExams(true);
               setIsActiveHome(false);
               setIsActiveCurricula(false);
               setIsActiveDuties(false);
@@ -88,31 +88,31 @@ const MenuSide = () => {
               <>
                      <div className="w-full h-full mt-4 mb-8 flex justify-end">
                             <div className="MenuSide w-5/6 flex flex-col items-start gap-y-4">
-                                   <NavLink to="/DashboardStudent" onClick={handleClickHome} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium ">
+                                   <NavLink to="/dashboard" onClick={handleClickHome} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium ">
                                           <HomeIcon isActive={isActiveHome} />
                                           <span>الرئيسيه</span>
                                    </NavLink>
-                                   <NavLink to="/Curricula" onClick={handleClickCurricula} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
+                                   <NavLink to="curricula" onClick={handleClickCurricula} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
                                           <CurriculaIcon isActive={isActiveCurricula} />
                                           <span>مناهج</span>
                                    </NavLink>
-                                   <NavLink to="/Duties" onClick={handleClickDuties} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
+                                   <NavLink to="duties" onClick={handleClickDuties} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
                                           <DutiesIcon isActive={isActiveDuties} />
                                           <span>واجبات</span>
                                    </NavLink>
-                                   <NavLink to="/LiveClasses" onClick={handleClickLiveClasses} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
+                                   <NavLink to="live_classes" onClick={handleClickLiveClasses} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
                                           <LiveClassesIcon isActive={isActiveLiveClasses} />
                                           <span>حصص لايف</span>
                                    </NavLink>
-                                   <NavLink to="/MonthsReviews" onClick={handleClickMonthsReviews} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
+                                   <NavLink to="months_reviews" onClick={handleClickMonthsReviews} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
                                           <MonthsReviewsIcon isActive={isActiveMonthsReviews} />
                                           <span>مراجعات شهور </span>
                                    </NavLink>
-                                   <NavLink to="/FinalReviews" onClick={handleClickFinalReviews} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
+                                   <NavLink to="final_reviews" onClick={handleClickFinalReviews} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
                                           <FinalReviewsIcon isActive={isActiveFinalReviews} />
                                           <span>مراجعه نهائيه</span>
                                    </NavLink>
-                                   <NavLink to="/SolveExams" onClick={handleClickSolveExams} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
+                                   <NavLink to="solve_exams" onClick={handleClickSolveExams} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
                                           <SolveExamsIcon isActive={isActiveSolveExams} />
                                           <span>حل امتحانات</span>
                                    </NavLink>
