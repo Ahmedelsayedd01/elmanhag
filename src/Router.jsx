@@ -72,6 +72,7 @@ import {
   AffiliateCommissionsLayout,
   FinancialPendingPaymentsLayout,
   FinancialPaymentsLayout,
+  LayoutStydent,
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -292,16 +293,15 @@ const AppLayoutStudentProfile = () => (
     <EditProfilePage />
   </>
 );
+/* Student Dashboard */
 const AppLayoutStudentDashboard = () => (
   <>
-    <div className="relative flex gap-x-4 directionAR">
-      <SidebarStudent />
-      <div className="contentSection w-4/5 min-h-screen ">
-        {/* <HeaderStudent /> */}
-        <NavbarStudent />
-        <Outlet />
-      </div>
-    </div>
+    <LayoutStydent />
+  </>
+);
+const AppLayoutCurricula = () => (
+  <>
+    <Outlet />
   </>
 );
 const AppLayoutAffilateDashboard = () => (
@@ -873,27 +873,37 @@ export const router = createBrowserRouter([
             element: <App />,
           },
           {
-            path: "Curricula",
-            element: <Curricula />,
+            path: "curricula",
+            element: AppLayoutCurricula,
+            children: [
+              {
+                path: '',
+                element: <Curricula />,
+              },
+              {
+                path: '/:unitId',
+                element: <UnitsLayout />,
+              },
+            ]
           },
           {
-            path: "Duties",
+            path: "duties",
             element: <Duties />,
           },
           {
-            path: "LiveClasses",
+            path: "live_classes",
             element: <LiveClasses />,
           },
           {
-            path: "MonthsReviews",
+            path: "months_reviews",
             element: <MonthsReviews />,
           },
           {
-            path: "FinalReviews",
+            path: "final_reviews",
             element: <FinalReviews />,
           },
           {
-            path: "SolveExams",
+            path: "solve_exams",
             element: <SolveExams />,
           },
         ],
