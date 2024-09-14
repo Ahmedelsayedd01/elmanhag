@@ -358,7 +358,6 @@ const AddPage = () => {
                                           <InputCustom type={"number"} borderColor={"none"} placeholder={"Number"} value={studentNumber} onChange={(e => setStudentNumber(e.target.value))} />
                                    </div>
                                    <div className="lg:w-[30%] sm:w-full">
-                                          {/* <InputCustom type={"text"} borderColor={"none"} placeholder={"City"} value={studentCity} onChange={(e => setStudentCity(e.target.value))} /> */}
                                           <DropDownMenu
                                                  ref={dropdownCityStudentRef}
                                                  handleOpen={handleOpenCityStudent}
