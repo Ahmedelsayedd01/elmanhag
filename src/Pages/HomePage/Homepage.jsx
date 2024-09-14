@@ -6,7 +6,7 @@ const Homepage = () => {
        return (
               <>
                      <div className="w-11/12 m-auto flex flex-row-reverse items-center justify-center">Homepage</div>
-                     {auth.user && <button type='button' onClick={() => auth.logout()}>
+                     {auth.user && <button type='button' onClick={() => auth.logout() }>
                             logout
                      </button>}
               </>

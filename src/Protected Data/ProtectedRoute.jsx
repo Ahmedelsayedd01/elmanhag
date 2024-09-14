@@ -10,7 +10,7 @@ const ProtectedRoute = ({ allowedRoles }) => {
        console.log('Auth userRoute:', auth.user);
 
        if (!auth.user) {
-              return <Navigate to="/authentication" state={{ from: location }} replace />;
+              return <Navigate to="/authentication/login" state={{ from: location }} replace />;
        }
 
        const userRoles = (auth.user.roles || []).map(role => role.toLowerCase());

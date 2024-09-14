@@ -8,7 +8,7 @@ const DashboardAD = () => {
 
   const handleLogout = () => {
     auth.logout();
-    navigate("/authentication", { replace: true });
+    navigate("/authentication/login", { replace: true });
     // return <Navigate to="/authentication" replace />;
   }
 

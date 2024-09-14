@@ -6,6 +6,7 @@ const AffilatePage = () => {
        const auth = useAuth();
        const handleLogOut = () => {
               auth.logout()
+              navigate("/authentication/login", { replace: true });
        }
        return (
               <>

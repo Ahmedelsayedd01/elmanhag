@@ -10,6 +10,7 @@ const HeaderHome = () => {
 
        const handleLogout = () => {
               auth.logout();
+              navigate("/authentication/login", { replace: true });
        }
        const handleGoBack = () => {
               navigate(-1, { replace: true });
