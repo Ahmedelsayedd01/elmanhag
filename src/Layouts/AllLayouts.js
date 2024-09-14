@@ -70,17 +70,21 @@ export { default as FinancialPendingPaymentsLayout } from "./Admin/FinancialPend
 // Payments  Layout
 export { default as FinancialPaymentsLayout } from "./Admin/FinancialPaymentsLayout";
 /* ///Financial Layout */
-// Affiliate Layouts
-/* Users */
+/* Affiliate Layouts */
+// Users
 export { default as AffiliateUserLayout } from "./Admin/AffiliateUserLayout";
 export { default as AddAffiliateUserLayout } from "./Admin/AddAffiliateUserLayout";
 export { default as EditAffiliateUserLayout } from "./Admin/EditAffiliateUserLayout";
-/* Payment Method */
+// Payment Method
 export { default as AffiliatePaymentMethodLayout } from "./Admin/AffiliatePaymentMethodLayout";
 export { default as AddAffiliatePaymentMethodLayout } from "./Admin/AddAffiliatePaymentMethodLayout";
 export { default as EditAffiliatePaymentMethodLayout } from "./Admin/EditAffiliatePaymentMethodLayout";
-/* Commissions */
+// Commissions
 export { default as AffiliateCommissionsLayout } from "./Admin/AffiliateCommissionsLayout";
+// Bonus
+export { default as AffiliateBonusLayout } from "./Admin/AffiliateBonusLayout";
+// Payout
+export { default as AffiliatePayoutLayout } from "./Admin/AffiliatePayoutLayout";
 
 export { default as SupportAD } from "./Admin/SupportAD";
 export { default as ReportsAD } from "./Admin/ReportsAD";

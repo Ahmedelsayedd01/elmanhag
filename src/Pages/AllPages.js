@@ -72,6 +72,12 @@ export { default as AddAffiliatePaymentMethodPage } from "./Admin/AffiliatePage/
 export { default as EditAffiliatePaymentMethodPage } from "./Admin/AffiliatePage/EditAffiliatePaymentMethodPage";
 // Commissions
 export { default as AffiliateCommissionsPage } from "./Admin/AffiliatePage/AffiliateCommissionsPage";
+// Bonus
+export { default as AffiliateBonusPage } from "./Admin/AffiliatePage/AffiliateBonusPage";
+// Payout
+export { default as AffiliatePayoutPage } from "./Admin/AffiliatePage/AffiliatePayoutPage";
+export { default as PayoutPendingPage } from "./Admin/AffiliatePage/PayoutPendingPage";
+export { default as PayoutHistoryPage } from "./Admin/AffiliatePage/PayoutHistoryPage";
 /* ////Affiliate Pages */
 
 /* Setting Page */
@@ -107,3 +113,7 @@ export { default as SolveExamsPage } from "./Student/SolveExamsPage/SolveExamsPa
 /* Affilate Dashboard Page */
 export { default as AffilatePage } from "./Affilate/AffilatePage";
 /* /////Affilate Dashboard Page */
+
+/* Download Mobile Page */
+export { default as DownloadMobilePage } from "./DownloadMobile/DownloadMobilePage";
+/* ///Download Mobile Page */
