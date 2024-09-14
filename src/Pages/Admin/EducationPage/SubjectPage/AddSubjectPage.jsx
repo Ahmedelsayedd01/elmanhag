@@ -87,7 +87,7 @@ const AddSubjectPage = () => {
           },
         });
         if (response.status === 200) {
-          setEducationData(response.data.subjects);
+          setEducationData(response.data.education);
           console.log('responsesup:', response);
         }
       } catch (error) {

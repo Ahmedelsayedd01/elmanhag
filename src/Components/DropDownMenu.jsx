@@ -32,7 +32,8 @@ const DropDownMenu = forwardRef(({
                                                  onClick={handleOpenOption}
                                           >
                                                  {option.name}
-                                                 <input type="hidden" value={option?.id || option.name} className='inputVal' />
+                                                 {option.job}
+                                                 <input type="hidden" value={option?.id || option.name || option.job} className='inputVal' />
                                           </div>
                                    ))}
                             </div>

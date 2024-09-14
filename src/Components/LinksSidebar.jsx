@@ -73,6 +73,8 @@ const LinksSidebar = () => {
        const [isActiveAffiliateUser, setIsActiveAffiliateUser] = useState(savedState.isActiveAffiliateUser ?? false);
        const [isActiveAffiliatePaymentMethod, setIsActiveAffiliatePaymentMethod] = useState(savedState.isActiveAffiliateCommissions ?? false);
        const [isActiveAffiliateCommissions, setIsActiveAffiliateCommissions] = useState(savedState.isActiveAffiliateCommissions ?? false);
+       const [isActiveAffiliateBonus, setIsActiveAffiliateBonus] = useState(savedState.isActiveAffiliateBonus ?? false);
+       const [isActiveAffiliatePayout, setIsActiveAffiliatePayout] = useState(savedState.isActiveAffiliatePayout ?? false);
        /* ////Childern Affiliate */
        /* ///Affiliate */
        const [isActiveSupport, setIsActiveSupport] = useState(savedState.isActiveSupport ?? false);
@@ -124,6 +126,8 @@ const LinksSidebar = () => {
                      isActiveAffiliateUser,
                      isActiveAffiliatePaymentMethod,
                      isActiveAffiliateCommissions,
+                     isActiveAffiliateBonus,
+                     isActiveAffiliatePayout,
                      isActiveSupport,
                      isActiveReports,
                      isActiveSetting,
@@ -169,6 +173,8 @@ const LinksSidebar = () => {
               isActiveAffiliateUser,
               isActiveAffiliatePaymentMethod,
               isActiveAffiliateCommissions,
+              isActiveAffiliateBonus,
+              isActiveAffiliatePayout,
               isActiveSupport,
               isActiveReports,
               isActiveSetting,
@@ -225,7 +231,7 @@ const LinksSidebar = () => {
               const part = location.pathname;
               // const parts = part.split('/');
               // const result = parts.slice(0, 3).join('/');
-              if (part == "/dashboard_admin/") {
+              if (part == "/dashboard_admin" || part == "/dashboard_admin/") {
                      handleClickDashboard()
               }
        }, [location])
@@ -1259,6 +1265,8 @@ const LinksSidebar = () => {
               setIsActiveAffiliateUser(true)
               setIsActiveAffiliatePaymentMethod(false)
               setIsActiveAffiliateCommissions(false)
+              setIsActiveAffiliateBonus(false)
+              setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
@@ -1309,6 +1317,8 @@ const LinksSidebar = () => {
               setIsActiveAffiliateUser(true)
               setIsActiveAffiliatePaymentMethod(false)
               setIsActiveAffiliateCommissions(false)
+              setIsActiveAffiliateBonus(false)
+              setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
@@ -1351,6 +1361,8 @@ const LinksSidebar = () => {
               setIsActiveAffiliateUser(false)
               setIsActiveAffiliatePaymentMethod(true)
               setIsActiveAffiliateCommissions(false)
+              setIsActiveAffiliateBonus(false)
+              setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
@@ -1401,6 +1413,8 @@ const LinksSidebar = () => {
               setIsActiveAffiliateUser(false)
               setIsActiveAffiliatePaymentMethod(false)
               setIsActiveAffiliateCommissions(true)
+              setIsActiveAffiliateBonus(false)
+              setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
@@ -1421,6 +1435,112 @@ const LinksSidebar = () => {
                      handleClickAffiliateCommissions()
               }
        }, [location])
+       const handleClickAffiliateBonus = () => {
+              setIsActiveDashboard(false);
+              setIsActiveUser(false);
+              setOpenListUser(false);
+              setIsActiveStudent(false);
+              setIsActiveParent(false);
+              setIsActiveTeacher(false);
+              setIsActiveAdmin(false);
+              setIsActiveEducation(false)
+              setOpenListEducation(false)
+              setIsActiveCategories(false)
+              setIsActiveSubject(false)
+              setIsActiveBundles(false)
+              setIsActiveQuestionsBank(false)
+              setIsActiveHomeWork(false)
+              setIsActiveRevision(false)
+              setIsActivExams(false)
+              setIsActiveLive(false)
+              setIsActiveMarketing(false)
+              setOpenListMarketing(false)
+              setIsActiveDiscount(false)
+              setIsActivePromoCode(false)
+              setIsActiveReview(false)
+              setIsActivePopUp(false)
+              setIsActiveFinancial(false)
+              setIsActiveAffiliate(true)
+              setOpenListAffiliate(true)
+              setIsActiveAffiliateUser(false)
+              setIsActiveAffiliatePaymentMethod(false)
+              setIsActiveAffiliateCommissions(false)
+              setIsActiveAffiliateBonus(true)
+              setIsActiveAffiliatePayout(false)
+              setIsActiveSupport(false)
+              setIsActiveReports(false)
+              setIsActiveSetting(false)
+              setOpenListSetting(false)
+              setIsActiveAdminRoles(false)
+              setIsActiveCountries(false)
+              setIsActiveCities(false)
+              setIsActiveParentRelation(false)
+              setIsActiveOperations(false)
+              setIsActivePaymentMethod(false)
+              setIsActiveNoticeBoard(false)
+       };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/affiliate_bonus") {
+                     handleClickAffiliateBonus()
+              }
+       }, [location])
+
+       const handleClickAffiliatePayout = () => {
+              setIsActiveDashboard(false);
+              setIsActiveUser(false);
+              setOpenListUser(false);
+              setIsActiveStudent(false);
+              setIsActiveParent(false);
+              setIsActiveTeacher(false);
+              setIsActiveAdmin(false);
+              setIsActiveEducation(false)
+              setOpenListEducation(false)
+              setIsActiveCategories(false)
+              setIsActiveSubject(false)
+              setIsActiveBundles(false)
+              setIsActiveQuestionsBank(false)
+              setIsActiveHomeWork(false)
+              setIsActiveRevision(false)
+              setIsActivExams(false)
+              setIsActiveLive(false)
+              setIsActiveMarketing(false)
+              setOpenListMarketing(false)
+              setIsActiveDiscount(false)
+              setIsActivePromoCode(false)
+              setIsActiveReview(false)
+              setIsActivePopUp(false)
+              setIsActiveFinancial(false)
+              setIsActiveAffiliate(true)
+              setOpenListAffiliate(true)
+              setIsActiveAffiliateUser(false)
+              setIsActiveAffiliatePaymentMethod(false)
+              setIsActiveAffiliateCommissions(false)
+              setIsActiveAffiliateBonus(false)
+              setIsActiveAffiliatePayout(true)
+              setIsActiveSupport(false)
+              setIsActiveReports(false)
+              setIsActiveSetting(false)
+              setOpenListSetting(false)
+              setIsActiveAdminRoles(false)
+              setIsActiveCountries(false)
+              setIsActiveCities(false)
+              setIsActiveParentRelation(false)
+              setIsActiveOperations(false)
+              setIsActivePaymentMethod(false)
+              setIsActiveNoticeBoard(false)
+       };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/affiliate_payout") {
+                     handleClickAffiliatePayout()
+              }
+       }, [location])
+
        /* ///Affiliate */
        const handleClickSupport = () => {
               setIsActiveDashboard(false);
@@ -1949,14 +2069,13 @@ const LinksSidebar = () => {
                                    <AffiliateIcon Width={25} Height={23} isActive={isActiveAffiliate} />
                                    <span className={`${isActiveAffiliate ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Affiliate</span>
                             </Link>
-                            <div className={`${openListAffiliate ? "h-36" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                            <div className={`${openListAffiliate ? "h-44" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
                                    <ul className={`${openListAffiliate ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
                                           <li className={`${isActiveAffiliateUser ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_user"} onClick={handleClickAffiliateUser}>User</Link></li>
                                           <li className={`${isActiveAffiliatePaymentMethod ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_Payment_method"} onClick={handleClickAffiliatePaymentMethod}>Payment Method</Link></li>
                                           <li className={`${isActiveAffiliateCommissions ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_commissions"} onClick={handleClickAffiliateCommissions}>Commissions</Link></li>
-                                          {/* <li className={`${isActiveAffiliatePromoCode ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"promo_code"} onClick={handleClickAffiliatePromoCode}>PromoCode</Link></li>
-                                          <li className={`${isActiveAffiliateReview ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"review"} onClick={handleClickAffiliateReviews}>Reviews</Link></li>
-                                          <li className={`${isActiveAffiliatePopUp ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"pop_up"} onClick={handleClickAffiliatePopUp}>Pop Up</Link></li> */}
+                                          <li className={`${isActiveAffiliateBonus ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_bonus"} onClick={handleClickAffiliateBonus}>Bonus</Link></li>
+                                          <li className={`${isActiveAffiliatePayout ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_payout/pending"} onClick={handleClickAffiliatePayout}>Payout</Link></li>
                                    </ul>
                             </div>
                             <Link to="support" onClick={handleClickSupport} className={`${isActiveSupport ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
