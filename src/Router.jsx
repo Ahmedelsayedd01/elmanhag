@@ -74,6 +74,8 @@ import {
   FinancialPaymentsLayout,
   UnitsLayout,
   LayoutStudent,
+  AffiliateBonusLayout,
+  AffiliatePayoutLayout,
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -96,9 +98,12 @@ import SignUpPage from "./Pages/RegisterPage/SignUpPage";
 
 import {
   AffilatePage,
+  DownloadMobilePage,
   HomePage,
   LoginHistoryPage,
   ParentPage,
+  PayoutHistoryPage,
+  PayoutPendingPage,
   ProfilePage,
   ProgressPage,
   PurchasesPage
@@ -247,6 +252,16 @@ const AppLayoutAffilatePaymentMethod = () => (
   </>
 );
 const AppLayoutAffilateCommissions = () => (
+  <>
+    <Outlet />
+  </>
+);
+const AppLayoutAffilateBonus = () => (
+  <>
+    <Outlet />
+  </>
+);
+const AppLayoutAffilatePayout = () => (
   <>
     <Outlet />
   </>
@@ -747,6 +762,37 @@ export const router = createBrowserRouter([
             ]
           },
           {
+            path: 'affiliate_bonus',
+            element: <AppLayoutAffilateBonus />,
+            children: [
+              {
+                path: '',
+                element: <AffiliateBonusLayout />,
+              },
+            ]
+          },
+          {
+            path: 'affiliate_payout',
+            element: <AppLayoutAffilatePayout />,
+            children: [
+              {
+                path: '',
+                element: <AffiliatePayoutLayout />,
+                children: [
+                  {
+                    index: true,
+                    path: 'pending',
+                    element: <PayoutPendingPage />
+                  },
+                  {
+                    path: 'history',
+                    element: <PayoutHistoryPage />
+                  }
+                ]
+              },
+            ]
+          },
+          {
             path: 'support',
             element: <SupportAD />,
           },
@@ -860,6 +906,16 @@ export const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    element: <ProtectedRoute allowedRoles={['studentSignup']} />,
+    path: '/download',
+    children: [
+      {
+        path: '',
+        element: <DownloadMobilePage />,
+      },
+    ]
   },
   {
     element: <ProtectedRoute allowedRoles={['student']} />,
