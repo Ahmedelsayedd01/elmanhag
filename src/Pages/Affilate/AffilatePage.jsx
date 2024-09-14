@@ -22,7 +22,7 @@ const AffilatePage = () => {
                                                  Size="text-2xl"
                                                  px="px-28"
                                                  rounded="rounded-2xl"
-                                                 // stateLoding={isLoading}
+                                          // stateLoding={isLoading}
                                           />
                                    </div>
                             </div>
@@ -39,12 +39,12 @@ const AffilatePage = () => {
                                                  Size="text-2xl"
                                                  px="px-28"
                                                  rounded="rounded-2xl"
-                                                 // stateLoding={isLoading}
+                                          // stateLoding={isLoading}
                                           />
                                    </div>
                             </div>
 
-                     {/* <Button handleClick={handleLogOut} Text={'LogOut'} /> */}
+                            {/* <Button handleClick={handleLogOut} Text={'LogOut'} /> */}
                      </div>
               </>
        )
