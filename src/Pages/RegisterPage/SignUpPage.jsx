@@ -268,13 +268,14 @@ const SignUpPage = () => {
         return;
       }
       if (!studentEmail) {
-        auth.toastError("Please write the Email")
-        return;
+        setStudentEmail(`${studentPhone}@elmanhag.com`)
+        // auth.toastError("Please write the Email")
+        // return;
       }
-      if (!studentEmail.includes('@')) {
-        auth.toastError("Please include '@' in the email address")
-        return;
-      }
+      // if (!studentEmail.includes('@')) {
+      //   auth.toastError("Please include '@' in the email address")
+      //   return;
+      // }
       if (!studentPassword) {
         auth.toastError("Please write the Password")
         return;
@@ -389,13 +390,14 @@ const SignUpPage = () => {
       return;
     }
     if (!studentEmail) {
-      auth.toastError("Please write the Email")
-      return;
+      setStudentEmail(`${studentPhone}@elmanhag.com`)
+      // auth.toastError("Please write the Email")
+      // return;
     }
-    if (!studentEmail.includes('@')) {
-      auth.toastError("Please include '@' in the email address")
-      return;
-    }
+    // if (!studentEmail.includes('@')) {
+    //   auth.toastError("Please include '@' in the email address")
+    //   return;
+    // }
     if (!studentPassword) {
       auth.toastError("Please write the Password")
       return;
@@ -451,14 +453,15 @@ const SignUpPage = () => {
       auth.toastError("Please write the Parent phone more than 11 numbers")
       return;
     }
-    if (!parentEmail) {
-      auth.toastError("Please write the Parent Email")
-      return;
-    }
-    if (!parentEmail.includes('@')) {
-      auth.toastError("Please include '@' in the email address")
-      return;
-    }
+    // if (!parentEmail) {
+    //   setParentEmail(`${parentPhone}@elmanhag.com`)
+    //   auth.toastError("Please write the Parent Email")
+    //   return;
+    // }
+    // if (!parentEmail.includes('@')) {
+    //   auth.toastError("Please include '@' in the email address")
+    //   return;
+    // }
     if (!parentRelation) {
       auth.toastError("Please choose the Parent Relation")
       return;
@@ -491,6 +494,8 @@ const SignUpPage = () => {
 
     setIsLoading(true)
     try {
+      const parentEmailObj = parentEmail ? parentEmail : parentPhone + '@elmanhag.com';
+
       const response = await axios.post('https://bdev.elmanhag.shop/student/auth/signup/create', {
         'name': studentName,
         'phone': parseInt(studentPhone),
@@ -507,7 +512,7 @@ const SignUpPage = () => {
         // 'image': ' ',
         'parent_name': parentName,
         'parent_phone': parseInt(parentPhone),
-        'parent_email': parentEmail,
+        'parent_email': parentEmailObj,
         'parent_password': parentPassword,
         'affilate_code': affiliateCode,
       });
@@ -662,7 +667,7 @@ const SignUpPage = () => {
                 <InputCustom type={"text"} required={false} placeholder={"Parent Name"} value={parentName} onChange={(e) => setParentName(e.target.value)} />
                 <InputCustom type={"number"} required={false} paddinRight='pr-2' placeholder={"Parent Phone"} value={parentPhone} onChange={(e) => setParentPhone(e.target.value)} />
               </div>
-              <InputCustom type={"email"} required={true} placeholder={"Parent Email"} value={parentEmail} onChange={(e) => setParentEmail(e.target.value)} />
+              <InputCustom type={"email"} required={false} placeholder={"Parent Email"} value={parentEmail} onChange={(e) => setParentEmail(e.target.value)} />
               <div className="w-full">
                 <DropDownMenu
                   ref={ParentRelationRef}
