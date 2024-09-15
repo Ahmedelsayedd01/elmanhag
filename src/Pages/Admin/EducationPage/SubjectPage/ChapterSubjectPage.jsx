@@ -11,6 +11,7 @@ import Loading from '../../../../Components/Loading';
 import { AiOutlineDrag } from 'react-icons/ai';
 import { useAuth } from '../../../../Context/Auth';
 import axios from 'axios';
+import CheckBox from '../../../../Components/CheckBox';
 
 const ChapterSubjectPage = () => {
   const [chapters, setChapters] = useState([]);
@@ -39,6 +40,7 @@ const ChapterSubjectPage = () => {
         const fetchedChapters = response.data.chapters;
         setChapters(fetchedChapters);
         setStateDate(fetchedChapters.length === 0);
+        console.log('response', response)
       }
     } catch (error) {
       console.error('Error fetching Chapters data:', error);
@@ -46,6 +48,90 @@ const ChapterSubjectPage = () => {
       setIsLoading(false);
     }
   };
+
+  // useEffect(() => {
+  const handleCheckLesson = (chapterId, lessonId, lessonName, check) => {
+    const Checked = check === 1 ? 0 : 1;
+    console.log('check', check);
+    console.log('Checked', Checked);
+
+    changeStatus(chapterId, lessonId, lessonName, Checked);
+  };
+
+  const changeStatus = async (chapterId, lessonId, lessonName, check) => {
+    try {
+      const response = await axios.put(
+        `https://bdev.elmanhag.shop/admin/lesson/switch/${lessonId}`,
+        { id: lessonId, switch: check },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        // Create a shallow copy of chapters
+        const updatedChapters = chapters.map((chapter) => {
+          if (chapter.id === chapterId) {
+            // Create a shallow copy of lessons for the specific chapter
+            const updatedLessons = chapter.lessons.map((lesson) => {
+              if (lesson.id === lessonId) {
+                let stateSwitch = null;
+
+                if (lesson.switch === 0) {
+                  stateSwitch = 1;
+                }
+                if (lesson.switch === 1) {
+                  stateSwitch = 0;
+                }
+                console.log('lessonssss', lesson)
+                console.log('checkssss', check)
+                console.log('stateSwitch', stateSwitch)
+                console.log('switchsss', lesson.switch)
+                // Return a new lesson object with updated status
+                return {
+                  ...lesson,
+                  switch: stateSwitch, // Set status based on `check`
+                };
+              }
+              return lesson; // Return unchanged lessons
+            });
+            console.log('updatedLessonsend', updatedLessons)
+
+            // Return a new chapter object with updated lessons
+            return {
+              ...chapter,
+              lessons: updatedLessons,
+            };
+          }
+          return chapter; // Return unchanged chapters
+        });
+
+        // Set the new chapters array to update the state
+        setChapters(updatedChapters);
+
+        console.log('chapterId', chapterId);
+        console.log('lessonId', lessonId);
+        console.log('updatedChapters', updatedChapters);
+        console.log('done');
+
+        // Toast notifications based on the new status
+        if (check === 0) {
+          auth.toastSuccess(`Material ${lessonName} has been set to Inactive`);
+        } else {
+          auth.toastSuccess(`Material ${lessonName} has been set to Active`);
+        }
+      }
+
+    } catch (error) {
+      auth.toastError(error.message || 'Error updating lesson status');
+      console.log('error', error);
+    }
+  };
+
+  // }, [chaptersChanged])
+
 
   useEffect(() => {
     if (subjectID) {
@@ -188,11 +274,13 @@ const ChapterSubjectPage = () => {
                       chapter.lessons.map((lesson) => (
                         <div className="w-full flex items-center justify-between gap-y-5" key={lesson.id}>
                           <span className='text-xl text-thirdColor font-semibold'>{lesson.name}</span>
-                          <div className="flex gap-x-2">
+                          <div className="flex items-end gap-x-2">
+
+                            <CheckBox handleClick={() => handleCheckLesson(chapter.id, lesson.id, lesson.name, lesson.switch)} checked={lesson.switch} />
+
                             <Link to={`edit_lesson/${lesson.id}`}><EditIcon /></Link>
 
                             <Link to={`material_lesson/${lesson.id}`} state={lesson.id}><ApplayIcon /></Link>
-
                             <button type="button" onClick={() => handleOpenLessonDialog(lesson.id)}>
                               <DeleteIcon />
                             </button>
