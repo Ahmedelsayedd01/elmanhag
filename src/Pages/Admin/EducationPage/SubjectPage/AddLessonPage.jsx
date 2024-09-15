@@ -38,6 +38,7 @@ const AddLessonPage = () => {
   const [lessonFree, setLessonFree] = useState(0);
   // const [lessonPaid, setLessonPaid] = useState(0);
   const [lessonActive, setLessonActive] = useState(0);
+  const [lessonMaterialsActive, setLessonMaterialsActive] = useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
   const [materials, setMaterials] = useState([]);
@@ -68,6 +69,10 @@ const AddLessonPage = () => {
   const handleActiveClick = (e) => {
     const isChecked = e.target.checked;
     setLessonActive(isChecked ? 1 : 0);
+  };
+  const handleMaterialsActiveClick = (e) => {
+    const isChecked = e.target.checked;
+    setLessonMaterialsActive(isChecked ? 1 : 0);
   };
 
   const handleOpenMaterial = (index) => {
@@ -500,6 +505,7 @@ const AddLessonPage = () => {
       materials: myMaterials,
       paid: lessonFree,
       status: lessonActive,
+      switch: lessonMaterialsActive,
       order: lessonOrder,
       drip_content: lessonDripContent,
     };
@@ -668,8 +674,8 @@ const AddLessonPage = () => {
           </div>
 
           <div className="w-full">
-            <div className="w-full flex flex-wrap items-center justify-start gap-3">
-              <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+            <div className="w-full flex flex-wrap items-center justify-between gap-x-4 gap-y-8">
+              <div className="flex items-center gap-x-4">
                 <span className="text-2xl text-thirdColor font-medium">Drip Content:</span>
                 <div>
                   <CheckBox
@@ -677,7 +683,7 @@ const AddLessonPage = () => {
                   />
                 </div>
               </div>
-              <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+              <div className="flex items-center gap-x-4">
                 <span className="text-2xl text-thirdColor font-medium">Free:</span>
                 <div>
                   <CheckBox
@@ -685,19 +691,19 @@ const AddLessonPage = () => {
                   />
                 </div>
               </div>
-              {/* <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
-                <span className="text-2xl text-thirdColor font-medium">Paid:</span>
-                <div>
-                  <CheckBox
-                    handleClick={handlePaidClick}
-                  />
-                </div>
-              </div> */}
-              <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+              <div className="flex items-center gap-x-4">
                 <span className="text-2xl text-thirdColor font-medium">Active:</span>
                 <div>
                   <CheckBox
                     handleClick={handleActiveClick}
+                  />
+                </div>
+              </div>
+              <div className="flex items-center gap-x-4">
+                <span className="text-2xl text-thirdColor font-medium">Materials Active:</span>
+                <div>
+                  <CheckBox
+                    handleClick={handleMaterialsActiveClick}
                   />
                 </div>
               </div>
