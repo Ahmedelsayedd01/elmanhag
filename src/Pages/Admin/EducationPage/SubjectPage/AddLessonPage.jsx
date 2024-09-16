@@ -431,6 +431,7 @@ const AddLessonPage = () => {
 
     setIsLoading(true);
 
+    // Validate form data
     if (!lessonNameEn) {
       auth.toastError('Please Enter NameEn.');
       setIsLoading(false);
@@ -452,10 +453,10 @@ const AddLessonPage = () => {
       return;
     }
 
-    const myMaterials = [];
+    const formData = new FormData();
     const allMaterial = document.querySelectorAll('.material');
 
-    allMaterial.forEach((ele) => {
+    allMaterial.forEach((ele, index) => {
       const materialName = ele.getElementsByClassName('materialName')[0].getElementsByClassName('eleValueDropDown')[0].innerText.toLowerCase();
       const materialSource = ele.getElementsByClassName('materialSource')[0].getElementsByClassName('eleValueDropDown')[0].innerText.toLowerCase();
       let materialData = null;
@@ -474,51 +475,45 @@ const AddLessonPage = () => {
 
       if (materialSource === 'external' || materialSource === 'embedded') {
         materialData = ele.getElementsByClassName('materialData')[0].getElementsByClassName('eleValueInput')[0].value;
+        formData.append(`materials[${index}][type]`, materialName);
+        formData.append(`materials[${index}][source]`, materialSource);
+        formData.append(`materials[${index}][material]`, materialData);
       } else {
         materialData = ele.getElementsByClassName('materialData')[0].getElementsByClassName('eleValueFile')[0]?.files[0];
+        if (materialData) {
+          formData.append(`materials[${index}][type]`, materialName);
+          formData.append(`materials[${index}][source]`, materialSource);
+          formData.append(`materials[${index}][material]`, materialData); // File data
+        } else {
+          auth.toastError('Please Enter Material Data.');
+          setIsLoading(false);
+          return;
+        }
       }
-
-      if (!materialData) {
-        auth.toastError('Please Enter Material Data.');
-        setIsLoading(false);
-        return;
-      }
-
-      const object = {
-        type: materialName,
-        source: materialSource,
-        material: materialData,
-      };
-      myMaterials.push(object);
     });
 
-    if (myMaterials.length === 0) {
-      auth.toastError('Please Enter Materials.');
-      setIsLoading(false);
-      return;
-    }
-
-    const payload = {
-      name: lessonNameEn,
-      ar_name: lessonNameAr,
-      description: lessonDescription,
-      materials: myMaterials,
-      paid: lessonFree,
-      status: lessonActive,
-      switch: lessonMaterialsActive,
-      order: lessonOrder,
-      drip_content: lessonDripContent,
-    };
+    // Append other fields to the FormData
+    formData.append('name', lessonNameEn);
+    formData.append('ar_name', lessonNameAr);
+    formData.append('description', lessonDescription);
+    formData.append('paid', lessonFree);
+    formData.append('status', lessonActive);
+    formData.append('switch', lessonMaterialsActive);
+    formData.append('order', lessonOrder);
+    formData.append('drip_content', lessonDripContent);
 
     try {
-      const response = await axios.post(`https://bdev.elmanhag.shop/admin/lesson/add/${chapterID}`, payload, {
+      const response = await axios.post(`https://bdev.elmanhag.shop/admin/lesson/add/${chapterID}`, formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
+          'Content-Type': 'multipart/form-data',
         },
       });
 
       if (response.status === 200) {
         auth.toastSuccess('Lesson added successfully!');
+        console.log('formData', formData)
+        console.log('response', response)
         handleGoBack();
       } else {
         auth.toastError('Failed to add Lesson.');
@@ -535,6 +530,7 @@ const AddLessonPage = () => {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
     console.log('Updated dataArr:', dataArr);
   }, [dataArr]);
