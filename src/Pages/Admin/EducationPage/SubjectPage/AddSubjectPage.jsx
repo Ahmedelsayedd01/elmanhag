@@ -87,7 +87,7 @@ const AddSubjectPage = () => {
           },
         });
         if (response.status === 200) {
-          setEducationData(response.data.education);
+          setEducationData([...response.data.education, { id: 'null', name: 'Together' }]);
           console.log('responsesup:', response);
         }
       } catch (error) {
@@ -125,10 +125,23 @@ const AddSubjectPage = () => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
     const selectedOptionName = e.currentTarget.textContent.trim();
     const selectedOptionValue = inputElement ? inputElement.value : '';
+
+    if (selectedOptionValue == 'null') {
+      setEducationId(' ');
+    } else {
+      setEducationId(parseInt(selectedOptionValue));
+    }
     setEducation(selectedOptionName);
-    setEducationId(parseInt(selectedOptionValue));
+
+    // console.log('educationId', educationId)
+
     setOpenEducation(false);
+    console.log('selectedOptionName', selectedOptionName)
+    console.log('selectedOptionValue', selectedOptionValue)
   };
+  useEffect(() => {
+    console.log('Updated educationId:', educationId);
+  }, [educationId]);
 
   const handleSemester = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
@@ -179,7 +192,7 @@ const AddSubjectPage = () => {
       auth.toastError('Please Enter Description.');
       return;
     }
-    if (!educationId) {
+    if (!educationId && !education) {
       auth.toastError('Please Select Education.');
       return;
     }
@@ -226,6 +239,8 @@ const AddSubjectPage = () => {
       });
 
       if (response.status === 200) {
+        console.log('formData', formData)
+        console.log('responsessss', response)
         auth.toastSuccess('Subject added successfully!');
         handleGoBack();
       } else {
