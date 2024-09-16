@@ -103,6 +103,9 @@ export { default as OperationsPage } from "./Admin/SettingPage/Operations/Operat
 /* Student Dashboard Page */
 export { default as StudentHomePage } from "./Student/StudentHomePage/StudentHomePage";
 export { default as CurriculaPage } from "./Student/CurriculaPage/CurriculaPage";
+export { default as UnitsPage } from "./Student/CurriculaPage/UnitsPage";
+export { default as LessonsPage} from "./Student/CurriculaPage/LessonsPage";
+
 export { default as DutiesPage } from "./Student/DutiesPage/DutiesPage";
 export { default as LiveClassesPage } from "./Student/LiveClassesPage/LiveClassesPage";
 export { default as MonthsreviewsPage } from "./Student/MonthsReviewsPage/MonthsReviewsPage";

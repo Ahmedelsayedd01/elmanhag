@@ -24,6 +24,10 @@
   direction: rtl;
 }
 
+.directionEN {
+  direction: ltr;
+}
+
 
 /* width Scroll*/
 .scrollSec::-webkit-scrollbar {

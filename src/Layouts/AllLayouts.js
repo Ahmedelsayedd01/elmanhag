@@ -127,3 +127,5 @@ export { default as SolveExams } from "./Student/SolveExams";
 export { default as FinalReviews } from "./Student/FinalReviews";
 // Units
 export { default as UnitsLayout } from "./Student/UnitsLayout";
+
+export { default as LessonsLayout} from "./Student/LessonsLayout";
