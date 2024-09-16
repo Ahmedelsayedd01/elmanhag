@@ -9,10 +9,10 @@ import { useAuth } from '../../../Context/Auth'
 const PayoutHistoryPage = () => {
        const auth = useAuth();
        const [search, setSearch] = useState('')
-       const [history, setHistory] = useState(null)
+       const [histories, setHistories] = useState(null)
        const [isLoading, setIsLoading] = useState(false)
 
-       const History = async () => {
+       const fetchHistories = async () => {
               setIsLoading(true)
               try {
                      const response = await axios.get('https://bdev.elmanhag.shop/admin/affilate/payoutsHistory', {
@@ -21,13 +21,13 @@ const PayoutHistoryPage = () => {
                             },
                      });
                      if (response.status === 200) {
-                            setHistory(response.data.payouts)
+                            setHistories(response.data.payouts)
                             console.log('response', response)
                      } else {
-                            console.error('Failed to unblock History:', response.status, response.statusText);
+                            console.error('Failed to unblock Histories:', response.status, response.statusText);
                      }
               } catch (error) {
-                     console.error('Error unblocking History:', error);
+                     console.error('Error unblocking Histories:', error);
               }
               finally {
                      setIsLoading(false)
@@ -36,13 +36,14 @@ const PayoutHistoryPage = () => {
 
 
        useEffect(() => {
-              History(); // Fetch History initially and whenever studentsChanged changes
-       }, []);
+              fetchHistories();
+       }, []);  // Or include dependencies if needed
+
 
        useEffect(() => {
-              console.log('History', history)
+              console.log('Histories', histories)
 
-       }, [history])
+       }, [histories])
 
        if (isLoading) {
               return (
@@ -51,16 +52,24 @@ const PayoutHistoryPage = () => {
                      </div>
               );
        }
+       if (!histories) {
+              return (
+                     <>
+                            <div className='text-mainColor text-2xl font-bold w-full h-full flex flex-col gap-y-3 items-center mt-52'>
+                                   <span>No History data available</span>
+                            </div>
+                     </>
+              )
+
+       }
        return (
               <>
                      <div className="w-full flex flex-col gap-y-3">
                             <div className="w-full flex items-center justify-start gap-6">
                                    <div className="sm:w-full xl:w-2/5">
-                                          <SearchBar type='text' pr={'pr-4'} placeholder={'Search By Date Range'} handleChange={(e) => setSearch(search)} value={search} bg={"white"} />
+                                          <SearchBar type='text' pr={'pr-4'} placeholder={'Search By Date Range'} handleChange={(e) => setSearch(e.target.value)} value={search} bg={"white"} />
+
                                    </div>
-                                   {/* <Link to="add">
-                                          <ButtonAdd Text={"Add"} BgColor={"white"} Color={"thirdColor"} iconColor="mainColor" Size={"xl"} />
-                                   </Link> */}
                             </div>
                             <div className="w-full flex items-center justify-between mt-4 overflow-x-auto">
                                    <table className="w-full sm:min-w-0">
@@ -68,14 +77,15 @@ const PayoutHistoryPage = () => {
                                           <thead className="w-full">
                                                  <tr className="w-full border-b-2">
                                                         <th className="min-w-[80px] sm:w-1/12 lg:w-[8%] text-mainColor text-center font-medium text-xs sm:text-sm lg:text-base xl:text-lg pb-3">#</th>
-                                                        <th className="min-w-[150px] sm:w-[20%] lg:w-[18%] text-mainColor text-center font-medium text-xs sm:text-sm lg:text-base xl:text-lg pb-3">Report</th>
+                                                        <th className="min-w-[150px] sm:w-[20%] lg:w-[15%] text-mainColor text-center font-medium text-xs sm:text-sm lg:text-base xl:text-lg pb-3">Affiliate Name</th>
+                                                        <th className="min-w-[150px] sm:w-[20%] lg:w-[18%] text-mainColor text-center font-medium text-xs sm:text-sm lg:text-base xl:text-lg pb-3">Description</th>
                                                         <th className="min-w-[150px] sm:w-[20%] lg:w-[15%] text-mainColor text-center font-medium text-xs sm:text-sm lg:text-base xl:text-lg pb-3">Date</th>
                                                         <th className="min-w-[120px] sm:w-[18%] lg:w-[14%] text-mainColor text-center font-medium text-xs sm:text-sm lg:text-base xl:text-lg pb-3">Amount</th>
                                                         <th className="min-w-[120px] sm:w-[12%] lg:w-[10%] text-mainColor text-center font-medium text-xs sm:text-sm lg:text-base xl:text-lg pb-3">Status</th>
                                                  </tr>
                                           </thead>
                                           <tbody className="w-full">
-                                                 {/* {history.map((history, index) => (
+                                                 {histories.map((history, index) => (
                                                         <tr className="w-full border-b-2" key={history.id}>
                                                                <td
                                                                       className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
@@ -85,7 +95,12 @@ const PayoutHistoryPage = () => {
                                                                <td
                                                                       className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                                >
-                                                                      {history?.rejected_reason || "-"}
+                                                                      {history?.affilate.name || "-"}
+                                                               </td>
+                                                               <td
+                                                                      className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                               >
+                                                                      {history?.description || "-"}
                                                                </td>
                                                                <td
                                                                       className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
@@ -95,15 +110,15 @@ const PayoutHistoryPage = () => {
                                                                <td
                                                                       className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                                >
-                                                                      {history?.amount || "-"}
+                                                                      {history?.amount || "0"}
                                                                </td>
                                                                <td
                                                                       className="min-w-[120px] sm:min-w-[80px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                                >
-                                                                      {history.status === 1 ? <span className='text-green-500'>Active</span> : <span className='text-mainColor'>Unactive</span>}
+                                                                      {history.status == 1 ? <span className='text-green-500'>Approved</span> : <span className='text-mainColor'>Rejected</span>}
                                                                </td>
                                                         </tr>
-                                                 ))} */}
+                                                 ))}
                                           </tbody>
                                    </table>
                             </div>
