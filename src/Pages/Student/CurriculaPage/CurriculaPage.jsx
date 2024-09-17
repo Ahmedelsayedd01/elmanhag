@@ -51,6 +51,8 @@ const CurriculaPage = () => {
               fetchSubjects();
        }, []);
 
+       localStorage.setItem("StudentSubjects", JSON.stringify(studentSubject));
+       
        return (
               <div className="subjects grid grid-cols-2 gap-10 p-12">
               {/* Subject Boxes */}

@@ -5,19 +5,19 @@ import { useNavigate } from 'react-router-dom';
 
 const LessonsLayout = () => {
        const {lessonId} = useParams()
-       // const { lessonId } = useParams()
+       const { subject_Id } = useParams()
        const navigate = useNavigate();
        const handleGoBack = () => {
        navigate(-1, { replace: true });
        };
 
-       // useEffect(() => {
-       //        console.log("Lesson ID:", lesson_Id);  // Log unitId to check if it's coming correctly
-       //    }, [lesson_Id]);
+       useEffect(() => {
+              console.log("Lesson ID:", lessonId);  // Log unitId to check if it's coming correctly
+          }, [lessonId]);
 
        return (
               <>
-                 <LessonsPage/> 
+                 <LessonsPage lessonId={lessonId} subjectId={subject_Id}/> 
               </>
        )
 }
