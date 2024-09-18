@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <div className="flex gap-x-4 flex-col">
-        <HomeLayout />s
+        <HomeLayout />
       </div>
     </>
   )
