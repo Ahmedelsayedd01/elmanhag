@@ -58,7 +58,7 @@ const AddLessonPage = () => {
 
   const handleFreeClick = (e) => {
     const isChecked = e.target.checked;
-    setLessonFree(isChecked ? 0 : 1);
+    setLessonFree(isChecked ? 1 : 0);
   };
 
   // const handlePaidClick = (e) => {
@@ -676,7 +676,7 @@ const AddLessonPage = () => {
                 </div>
               </div>
               <div className="flex items-center gap-x-4">
-                <span className="text-2xl text-thirdColor font-medium">Free:</span>
+                <span className="text-2xl text-thirdColor font-medium">Piad:</span>
                 <div>
                   <CheckBox
                     handleClick={handleFreeClick}
