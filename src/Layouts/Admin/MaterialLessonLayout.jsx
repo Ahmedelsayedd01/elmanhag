@@ -10,7 +10,7 @@ const MaterialLessonLayout = () => {
        };
        return (
               <>
-                     <HeaderPageSection handleClick={handleGoBack} name="Material Lesson" />
+                     <HeaderPageSection handleClick={handleGoBack} name="Edit Material Lesson" />
                      <MaterialLessonPage />
               </>
        )
