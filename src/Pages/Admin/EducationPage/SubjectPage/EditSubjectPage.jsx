@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { SubjectEditContext } from '../../../../Layouts/Admin/EditSubjectLayout'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../../Context/Auth'
 import InputCustom from '../../../../Components/InputCustom'
 import DropDownMenu from '../../../../Components/DropDownMenu'
 import CheckBox from '../../../../Components/CheckBox'
 import { Button } from '../../../../Components/Button'
+import axios from 'axios'
 
 const EditSubjectPage = () => {
 
@@ -64,63 +65,88 @@ const EditSubjectPage = () => {
   const uploadCoverRef = useRef();
   const navigate = useNavigate();
   const auth = useAuth();
+  const location = useLocation();
+  const path = location.state;
 
-  const subjectEditData = useContext(SubjectEditContext)
-
-  useEffect(() => {
-    setSubjectContent(subjectEditData);
-    setSubjectNameEn(subjectEditData?.name || '');
-    setSubjectNameAr(subjectEditData?.name_ar || '');
-    setSubjectPrice(subjectEditData?.price || '');
-    setSubjectDescription(subjectEditData?.description || '');
-    setSubjectTags(subjectEditData?.tags || '');
-    setSubjectUrl(subjectEditData?.url || '');
-    setSubjectVaildDate(subjectEditData?.expired_date || '');
-
-    setSubjectVideoFile(subjectEditData?.demo_video_url || '');
-    setSubjectVideo(subjectEditData?.demo_video || '');
-
-    setSubjectThumbnailFile(subjectEditData?.thumbnail_url || '');
-    setSubjectThumbnail(subjectEditData?.thumbnail || '');
-
-    setSubjectCoverFile(subjectEditData?.cover_photo_url || '');
-    setSubjectCover(subjectEditData?.cover_photo || '');
-
-    setSemester(subjectEditData?.semester.charAt(0).toUpperCase() + subjectEditData?.semester.slice(1) || '');
-    setSemesterName(subjectEditData?.semester || '');
-
-    const educationID = subjectEditData?.education_id;
-
-    if (educationData.length > 0) {
-      const Education = educationData.find(c => c.id === parseInt(educationID));
-      console.log('Selected Education:', Education);
-
-      setEducation(Education?.name || '');
-      setEducationId(Education?.id || '');
-    } else {
-      console.warn('No Education available.');
+  const subjectEditData = useContext(SubjectEditContext);
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get('https://bdev.elmanhag.shop/admin/category', {
+        headers: {
+          Authorization: `Bearer ${auth.user.token}`,
+        },
+      });
+      if (response.status === 200) {
+        setCategoryData(response.data.categories);
+        console.log('response:', response);
+      }
+    } catch (error) {
+      console.error('Error fetching Categories data:', error);
     }
+  };
 
-    setCategory(subjectEditData?.category.name || '');
-    setCategoryId(subjectEditData?.category.id || '');
-
-
-    setSubjectActive(subjectEditData?.status || '');
-  }, [subjectEditData]);
-
-
-
-
+  const fetchSubjects = async () => {
+    try {
+      const response = await axios.get('https://bdev.elmanhag.shop/admin/subject', {
+        headers: {
+          Authorization: `Bearer ${auth.user.token}`,
+        },
+      });
+      if (response.status === 200) {
+        setEducationData([...response.data.education, { id: 'null', name: 'Together' }]);
+        console.log('responsesup:', response);
+      }
+    } catch (error) {
+      console.error('Error fetching Subjects data:', error);
+    }
+  };
+  useEffect(() => {
+    fetchCategories()
+    fetchSubjects()
+  }, []);
 
   useEffect(() => {
+    if (subjectEditData) {
+      setSubjectContent(subjectEditData);
+      setSubjectNameEn(subjectEditData?.name || '');
+      setSubjectNameAr(subjectEditData?.name_ar || '');
+      setSubjectPrice(subjectEditData?.price || '');
+      setSubjectDescription(subjectEditData?.description || '');
+      setSubjectTags(subjectEditData?.tags || '');
+      setSubjectUrl(subjectEditData?.url || '');
+      setSubjectVaildDate(subjectEditData?.expired_date || '');
+      setSubjectVideoFile(subjectEditData?.demo_video_url || '');
+      setSubjectVideo(subjectEditData?.demo_video || '');
+      setSubjectThumbnailFile(subjectEditData?.thumbnail_url || '');
+      setSubjectThumbnail(subjectEditData?.thumbnail || '');
+      setSubjectCoverFile(subjectEditData?.cover_photo_url || '');
+      setSubjectCover(subjectEditData?.cover_photo || '');
+      setSemester(subjectEditData?.semester?.charAt(0).toUpperCase() + subjectEditData?.semester.slice(1) || '');
+      setSemesterName(subjectEditData?.semester || '');
+      setCategory(subjectEditData?.category?.name || '');
+      setCategoryId(subjectEditData?.category?.id || '');
+      setSubjectActive(subjectEditData?.status || 0);
 
-    const categoryDataa = JSON.parse(localStorage.getItem('Categories'));
-    const educationDataa = JSON.parse(localStorage.getItem('subjects'));
+      // Set education after ensuring educationData is fetched
 
-    setCategoryData(categoryDataa.categories);
-    setEducationData(educationDataa.education);
+      if (educationData.length > 0) {
+        if (subjectEditData?.education_id == null) {
+          setEducation('Together');
+          setEducationId(' ');
+        } else {
+          const educationMatch = educationData.find(
+            (edu) => edu.id === parseInt(subjectEditData.education_id)
+          );
+          setEducation(educationMatch?.name || 'Select Education');
+          setEducationId(educationMatch?.id || null);
+        }
+      } else if (subjectEditData) {
+        console.warn('Education data not available.');
+      }
+    }
+    console.log('educationData', educationData)
+  }, [subjectEditData, educationData]);
 
-  }, []);
 
   const handleOpenEducation = () => {
     setOpenEducation(!openEducation);
@@ -177,6 +203,7 @@ const EditSubjectPage = () => {
 
   const handleSubmitEdit = async (event) => {
     event.preventDefault();
+    console.log('Submit clicked');
 
     if (!subjectNameEn) {
       auth.toastError('Please Enter NameEn.');
@@ -202,7 +229,7 @@ const EditSubjectPage = () => {
       auth.toastError('Please Enter Description.');
       return;
     }
-    if (!educationId) {
+    if (!educationId && !education) {
       auth.toastError('Please Select Education.');
       return;
     }
@@ -229,7 +256,7 @@ const EditSubjectPage = () => {
     formData.append('ar_name', subjectNameAr);
     formData.append('price', subjectPrice);
     formData.append('category_id', categoryId);
-    formData.append('discription', subjectDescription);
+    formData.append('description', subjectDescription);
     formData.append('education_id', educationId);
     formData.append('semester', semesterName);
     formData.append('url', subjectUrl);
@@ -241,7 +268,7 @@ const EditSubjectPage = () => {
     formData.append('status', SubjectActive);
     try {
 
-      const response = await axios.post('https://bdev.elmanhag.shop/admin/subject/edit', formData, {
+      const response = await axios.post(`https://bdev.elmanhag.shop/admin/subject/update/${path}`, formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'multipart/form-data',
@@ -334,6 +361,7 @@ const EditSubjectPage = () => {
           <div className="lg:w-[30%] sm:w-full">
             <InputCustom
               type="text"
+              required={false}
               placeholder="Name En"
               value={subjectNameEn}
               onChange={(e) => setSubjectNameEn(e.target.value)}
@@ -343,6 +371,7 @@ const EditSubjectPage = () => {
           <div className="lg:w-[30%] sm:w-full">
             <InputCustom
               type="text"
+              required={false}
               placeholder="Name Ar"
               value={subjectNameAr}
               onChange={(e) => setSubjectNameAr(e.target.value)}
@@ -385,6 +414,7 @@ const EditSubjectPage = () => {
           <div className="lg:w-[30%] sm:w-full">
             <InputCustom
               type="text"
+              required={false}
               placeholder="Price"
               value={subjectPrice}
               onChange={(e) => setSubjectPrice(e.target.value)}
@@ -392,7 +422,7 @@ const EditSubjectPage = () => {
           </div>
           <div className="lg:w-[30%] sm:w-full">
             <InputCustom
-              type="date"
+              type="dateEdit"
               placeholder="Vaild Date"
               value={subjectVaildDate}
               onChange={(e) => setSubjectVaildDate(e.target.value)}
@@ -419,6 +449,7 @@ const EditSubjectPage = () => {
           <div className="lg:w-[30%] sm:w-full">
             <InputCustom
               type="text"
+              required={false}
               placeholder="Discription"
               value={subjectDescription}
               onChange={(e) => setSubjectDescription(e.target.value)}
@@ -428,6 +459,7 @@ const EditSubjectPage = () => {
           <div className="lg:w-[30%] sm:w-full">
             <InputCustom
               type="text"
+              required={false}
               placeholder="Tags"
               value={subjectTags}
               onChange={(e) => setSubjectTags(e.target.value)}
@@ -438,6 +470,7 @@ const EditSubjectPage = () => {
           <div className="lg:w-[30%] sm:w-full">
             <InputCustom
               type="text"
+              required={false}
               placeholder="URL"
               value={subjectUrl}
               onChange={(e) => setSubjectUrl(e.target.value)}
@@ -486,8 +519,6 @@ const EditSubjectPage = () => {
             </div>
           </div>
         </div>
-
-
         <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
           <div className="flex items-center justify-center w-72">
             <Button
@@ -502,7 +533,7 @@ const EditSubjectPage = () => {
               stateLoding={isLoading}
             />
           </div>
-          <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
+          <button type='button' onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
         </div>
       </form>
     </>
