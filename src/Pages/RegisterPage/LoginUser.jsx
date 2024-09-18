@@ -53,19 +53,19 @@ const LoginPage = () => {
 
               setIsLoading(true)
               try {
-                     const response = await axios.post('https://bdev.elmanhag.shop/api/user/auth/login', {
+                     const response = await axios.post('https://bdev.elmanhag.shop/student/auth/login', {
                             email,
                             password,
                      });
 
                      if (response.status === 200) {
                             const userData = {
-                                   ...response.data.detailes,
-                                   roles: [response.data.detailes.role] // Assuming type represents the user's role
+                                   ...response.data.user,
+                                   roles: [response.data.role] // Assuming type represents the user's role
                             };
                             console.log('Login response:', response); // Debugging line
                             setData(userData);
-                            setType(response.data.detailes.role);
+                            setType(response.data.role);
                             console.log("response", response);
 
                      } else {
