@@ -54,10 +54,21 @@ const CurriculaPage = () => {
        localStorage.setItem("StudentSubjects", JSON.stringify(studentSubject));
        
        return (
-              <div>
-                     CurriculaPage
-              </div>
-       )
+              <div className="subjects grid grid-cols-2 gap-10 p-12">
+              {/* Subject Boxes */}
+              {studentSubject.map((subject) => (
+                     <div
+                     key={subject.id}
+                     className="subject-box flex flex-col justify-center items-center w-full h-52 bg-white rounded-xl shadow-lg hover:cursor-pointer"
+                     style={{ boxShadow: '0px 0px 8px rgba(208, 16, 37, 0.12)' }}
+                     onClick={() => handleNavigate(subject.id)} // Navigate based on the subject ID
+                     >
+                     <span className="text-mainColor text-3xl font-bold mb-3">{subject.name}</span>
+                     <img src={subject.thumbnail_url} alt=''/>
+                     {/* {iconMap[subject.name] || <div>No Icon</div>} Render the corresponding icon */}
+                     </div>
+              ))}
+            </div>       )
 }
 
 export default CurriculaPage
