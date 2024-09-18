@@ -13,16 +13,15 @@ const NavbarStudent = () => {
     }, [auth.user]);
     console.log('userName', userName)
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-       const handleLogout = () => {
-              auth.logout();
-              navigate("/authentication/login", { replace: true });
-       }
-       const handleGoBack = () => {
-              navigate(-1, { replace: true });
-              localStorage.removeItem("sidebarState")
-       }
+    //    const handleLogout = () => {
+    //           auth.logout();
+    //           navigate("/authentication/login", { replace: true });
+    //    }
+    //    const handleGoBack = () => {
+    //           navigate(-1, { replace: true });
+    //    }
     return (
         <main className="bg-white p-4 flex flex-col items-center">
             <div className="flex items-center justify-between w-full max-w-6xl">
@@ -33,7 +32,7 @@ const NavbarStudent = () => {
                     </h3>
                     </div>
                     <div>
-                    <button type='button' className="px-4 py-3 mx-auto text-2xl  text-secoundColor bg-mainColor rounded-2xl" onClick={handleLogout}>Log Out</button>
+                        <button type='button' className="px-4 py-3 mx-auto text-2xl  text-secoundColor bg-mainColor rounded-2xl" onClick={handleLogout}>Log Out</button>
                     </div>
                 </div>
                 <div className="flex items-center">
