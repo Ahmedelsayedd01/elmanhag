@@ -35,8 +35,8 @@ const AddLessonPage = () => {
   const [lessonDescription, setLessonDescription] = useState('');
 
   const [lessonDripContent, setLessonDripContent] = useState(0);
-  const [lessonFree, setLessonFree] = useState(0);
-  // const [lessonPaid, setLessonPaid] = useState(0);
+  // const [lessonFree, setLessonFree] = useState(0);
+  const [lessonPaid, setLessonPaid] = useState(0);
   const [lessonActive, setLessonActive] = useState(0);
   const [lessonMaterialsActive, setLessonMaterialsActive] = useState(0);
 
@@ -56,15 +56,15 @@ const AddLessonPage = () => {
     setLessonDripContent(isChecked ? 1 : 0);
   };
 
-  const handleFreeClick = (e) => {
-    const isChecked = e.target.checked;
-    setLessonFree(isChecked ? 1 : 0);
-  };
-
-  // const handlePaidClick = (e) => {
+  // const handleFreeClick = (e) => {
   //   const isChecked = e.target.checked;
-  //   setLessonPaid(isChecked ? 1 : 0);
+  //   setLessonFree(isChecked ? 1 : 0);
   // };
+
+  const handlePaidClick = (e) => {
+    const isChecked = e.target.checked;
+    setLessonPaid(isChecked ? 1 : 0);
+  };
 
   const handleActiveClick = (e) => {
     const isChecked = e.target.checked;
@@ -496,7 +496,7 @@ const AddLessonPage = () => {
     formData.append('name', lessonNameEn);
     formData.append('ar_name', lessonNameAr);
     formData.append('description', lessonDescription);
-    formData.append('paid', lessonFree);
+    formData.append('paid', lessonPaid);
     formData.append('status', lessonActive);
     formData.append('switch', lessonMaterialsActive);
     formData.append('order', lessonOrder);
@@ -676,10 +676,10 @@ const AddLessonPage = () => {
                 </div>
               </div>
               <div className="flex items-center gap-x-4">
-                <span className="text-2xl text-thirdColor font-medium">Piad:</span>
+                <span className="text-2xl text-thirdColor font-medium">Paid:</span>
                 <div>
                   <CheckBox
-                    handleClick={handleFreeClick}
+                    handleClick={handlePaidClick}
                   />
                 </div>
               </div>
