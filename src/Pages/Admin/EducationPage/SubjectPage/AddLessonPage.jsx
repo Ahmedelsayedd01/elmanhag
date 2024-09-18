@@ -42,7 +42,7 @@ const AddLessonPage = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [materials, setMaterials] = useState([]);
-  const [dataArr, setDataArr] = useState(null);
+  // const [dataArr, setDataArr] = useState(null);
 
   const location = useLocation();
   const chapterID = location.state || {};
@@ -530,10 +530,6 @@ const AddLessonPage = () => {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    console.log('Updated dataArr:', dataArr);
-  }, [dataArr]);
 
   return (
     <>
