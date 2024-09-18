@@ -278,7 +278,7 @@ const ChapterSubjectPage = () => {
 
                             <CheckBox handleClick={() => handleCheckLesson(chapter.id, lesson.id, lesson.name, lesson.switch)} checked={lesson.switch} />
 
-                            <Link to={`edit_lesson/${lesson.id}`}><EditIcon /></Link>
+                            <Link to={`edit_lesson/${lesson.id}`} state={lesson.id}><EditIcon /></Link>
 
                             <Link to={`material_lesson/${lesson.id}`} state={lesson.id}><ApplayIcon /></Link>
                             <button type="button" onClick={() => handleOpenLessonDialog(lesson.id)}>

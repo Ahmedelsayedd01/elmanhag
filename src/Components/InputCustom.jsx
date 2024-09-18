@@ -38,6 +38,21 @@ const InputCustom = ({ type, required = true, borderColor = "none", placeholder,
                      </>
               )
        }
+       if (type === "dateEdit") {
+              return (
+                     <>
+                            <input
+                                   type="date"
+                                   placeholder={placeholder}
+                                   className={`w-full border-2 rounded-2xl border-${borderColor} 
+          outline-none px-2 py-3 text-2xl font-normal text-thirdColor`}
+                                   value={value}
+                                   onChange={onChange}
+                                   required={required}
+                            />
+                     </>
+              )
+       }
        return (
               <>
                      <div className="relative w-full">

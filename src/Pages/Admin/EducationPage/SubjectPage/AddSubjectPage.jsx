@@ -220,7 +220,7 @@ const AddSubjectPage = () => {
       formData.append('ar_name', subjectNameAr);
       formData.append('price', subjectPrice);
       formData.append('category_id', categoryId);
-      formData.append('discription', subjectDescription);
+      formData.append('description', subjectDescription);
       formData.append('education_id', educationId);
       formData.append('semester', semesterName);
       formData.append('url', subjectUrl);
