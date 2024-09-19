@@ -642,17 +642,15 @@ export const router = createBrowserRouter([
               {
                 path: '',
                 element: <DiscountLayout />,
-                children: [
-                  {
-                    path: 'add',
-                    element: <AddDiscountLayout />,
-                  },
-                  {
-                    path: 'edit/:marketingId',
-                    element: <EditDiscountLayout />,
-                  }
-                ]
               },
+              {
+                path: 'add',
+                element: <AddDiscountLayout />,
+              },
+              {
+                path: 'edit/:discountId',
+                element: <EditDiscountLayout />,
+              }
             ]
           },
           {
@@ -662,17 +660,15 @@ export const router = createBrowserRouter([
               {
                 path: '',
                 element: <PromoCodeLayout />,
-                children: [
-                  {
-                    path: 'add',
-                    element: <AddPromoCodeLayout />,
-                  },
-                  {
-                    path: 'edit/:marketingId',
-                    element: <EditPromoCodeLayout />,
-                  }
-                ]
               },
+              {
+                path: 'add',
+                element: <AddPromoCodeLayout />,
+              },
+              {
+                path: 'edit/:promoCodeId',
+                element: <EditPromoCodeLayout />,
+              }
             ]
           },
           {
