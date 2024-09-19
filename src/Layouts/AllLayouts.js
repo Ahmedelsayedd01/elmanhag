@@ -119,6 +119,7 @@ export { default as NoticeBoardAD } from "./Admin/NoticeBoardAD";
 export { default as LayoutStudent } from "./Student/LayoutStudent";
 export { default as HomeLayout } from "./Student/HomeLayout";
 export { default as Curricula } from "./Student/Curricula";
+export { default as ProfileStudent } from "./Student/ProfileStudent";
 // Duties
 export { default as Duties } from "./Student/Duties";
 export { default as LiveClasses } from "./Student/LiveClasses";
@@ -128,4 +129,4 @@ export { default as FinalReviews } from "./Student/FinalReviews";
 // Units
 export { default as UnitsLayout } from "./Student/UnitsLayout";
 
-export { default as LessonsLayout} from "./Student/LessonsLayout";
+export { default as LessonsLayout } from "./Student/LessonsLayout";

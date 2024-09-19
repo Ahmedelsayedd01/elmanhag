@@ -76,7 +76,8 @@ import {
   LayoutStudent,
   AffiliateBonusLayout,
   AffiliatePayoutLayout,
-  LessonsLayout
+  LessonsLayout,
+  ProfileStudent
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -322,10 +323,10 @@ const AppLayoutCurricula = () => (
   </>
 );
 
-const AppLayoutUnit =()=>(
+const AppLayoutUnit = () => (
   <>
     <Outlet />
-  </> 
+  </>
 );
 const AppLayoutAffilateDashboard = () => (
   <div className="relative flex gap-x-4 directionAR">
@@ -947,10 +948,10 @@ export const router = createBrowserRouter([
               {
                 path: 'subject/:subject_Id',
                 element: <AppLayoutUnit />,
-                children :[
+                children: [
                   {
                     path: '',
-                    element: <UnitsLayout/>,
+                    element: <UnitsLayout />,
                   },
                   {
                     path: 'lesson/:lessonId',
@@ -983,6 +984,10 @@ export const router = createBrowserRouter([
           {
             path: "solve_exams",
             element: <SolveExams />,
+          },
+          {
+            path: "profile",
+            element: <ProfileStudent />,
           },
         ],
       },

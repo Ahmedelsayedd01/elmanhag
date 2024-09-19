@@ -23,3 +23,4 @@ export { default as HomeIcon } from "./StudentIcons/HomeIcon.jsx";
 export { default as LiveClassesIcon } from "./StudentIcons/LiveClassesIcon.jsx";
 export { default as MonthsReviewsIcon } from "./StudentIcons/MonthsReviewsIcon.jsx";
 export { default as SolveExamsIcon } from "./StudentIcons/SolveExamsIcon.jsx";
+export { default as ProfileStudentIcon } from "./StudentIcons/ProfileStudentIcon.jsx";
