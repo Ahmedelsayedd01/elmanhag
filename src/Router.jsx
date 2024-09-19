@@ -76,7 +76,8 @@ import {
   LayoutStudent,
   AffiliateBonusLayout,
   AffiliatePayoutLayout,
-  LessonsLayout
+  LessonsLayout,
+  SubscriptionsLayout,
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -979,6 +980,10 @@ export const router = createBrowserRouter([
           {
             path: "solve_exams",
             element: <SolveExams />,
+          },
+          {
+            path: "My_Subscriptions",
+            element: <SubscriptionsLayout/>,
           },
         ],
       },

@@ -14,6 +14,7 @@ const AddBundlesPage = () => {
   const [categoryData, setCategoryData] = useState([]);
   const [educationData, setEducationData] = useState([]);
   const [subjectData, setSubjectData] = useState([]);
+  const [allSubjects, setAllSubjects] = useState([]); // Store all subjects initially
   const [semesterData, setSemesterData] = useState([{ name: 'First' }, { name: 'Second' }]);
 
   const [nameEn, setNameEn] = useState('');
@@ -75,8 +76,37 @@ const AddBundlesPage = () => {
     setCategoryData(StorageCategoryData);
     setEducationData(StorageBundlesData.education);
     setSubjectData(StorageBundlesData.subjects)
+    setAllSubjects(StorageBundlesData.subjects)
 
   }, []);
+
+  // Function to filter subjects by semester, category, or both
+  const filterSubjects = (semesterName, categoryId) => {
+    let filteredSubjects = allSubjects; // Start with all subjects
+
+    // If both semester and category are selected, filter by both
+    if (semesterName && categoryId) {
+      filteredSubjects = filteredSubjects.filter(subject => 
+        subject.semester.toLowerCase() === semesterName.toLowerCase() && 
+        subject.category_id === categoryId
+      ) ;
+    }
+    // If only the semester is selected, filter by semester
+    else if (semesterName) {
+      filteredSubjects = filteredSubjects.filter(subject => 
+        subject.semester.toLowerCase() === semesterName.toLowerCase()
+      );
+    }
+    // If only the category is selected, filter by category
+    else if (categoryId) {
+      filteredSubjects = filteredSubjects.filter(subject => 
+        subject.category_id === categoryId
+      );
+    }
+
+    setSubjectData(filteredSubjects);
+    console.log(filteredSubjects)
+  };
 
   const handleOpenSelectCategory = () => {
     setOpenSelectCategory(!openSelectCategory);
@@ -113,6 +143,9 @@ const AddBundlesPage = () => {
     setOpenSelectCategory(false);
     console.log('Selected Category:', selectedOptionName);
     console.log('Category ID:', selectedOptionValue);
+
+    // Filter subjects based on the new semester and existing category
+    filterSubjects(selectSemesterName, parseInt(selectedOptionValue));
   };
 
   const handleSelectSemester = (e) => {
@@ -124,6 +157,9 @@ const AddBundlesPage = () => {
     setOpenSelectSemester(false);
     console.log('Selected Semester:', selectedOptionName);
     // console.log('Semester ID:', selectedOptionValue);
+
+    // Filter subjects based on the new semester and existing category
+    filterSubjects(selectedOptionName, selectCategoryId);
   };
 
   const handleSelectEducation = (e) => {
@@ -381,12 +417,12 @@ const AddBundlesPage = () => {
         </div>
         <div className="lg:w-[30%] sm:w-full">
           <DropDownMenu
-            ref={dropdownCategoryRef}
-            handleOpen={handleOpenSelectCategory}
-            handleOpenOption={handleSelectCategory}
-            stateoption={selectCategory}
-            openMenu={openSelectCategory}
-            options={categoryData}
+            ref={dropdownEducationRef}
+            handleOpen={handleOpenSelectEducation}
+            handleOpenOption={handleSelectEducation}
+            stateoption={selectEducation}
+            openMenu={openSelectEducation}
+            options={educationData}
           />
         </div>
         <div className="lg:w-[30%] sm:w-full">
@@ -401,12 +437,12 @@ const AddBundlesPage = () => {
         </div>
         <div className="lg:w-[30%] sm:w-full">
           <DropDownMenu
-            ref={dropdownEducationRef}
-            handleOpen={handleOpenSelectEducation}
-            handleOpenOption={handleSelectEducation}
-            stateoption={selectEducation}
-            openMenu={openSelectEducation}
-            options={educationData}
+            ref={dropdownCategoryRef}
+            handleOpen={handleOpenSelectCategory}
+            handleOpenOption={handleSelectCategory}
+            stateoption={selectCategory}
+            openMenu={openSelectCategory}
+            options={categoryData}
           />
         </div>
         <div className="lg:w-[30%] sm:w-full">
