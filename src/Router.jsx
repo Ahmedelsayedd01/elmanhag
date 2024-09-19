@@ -76,7 +76,6 @@ import {
   LayoutStudent,
   AffiliateBonusLayout,
   AffiliatePayoutLayout,
-  LessonsLayout,
   SubscriptionsLayout,
   LessonsLayout,
   ProfileStudent
