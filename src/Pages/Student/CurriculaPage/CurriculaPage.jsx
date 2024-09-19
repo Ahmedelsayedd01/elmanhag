@@ -149,7 +149,7 @@ const CurriculaPage = () => {
                             <img
                                 src={subject.thumbnail_url}
                                 alt={subject.name}
-                                className="w-32 h-32"
+                                // className="w-32 h-32"
                             />
                         </div>
                     ))}

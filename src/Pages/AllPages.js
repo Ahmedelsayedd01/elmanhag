@@ -111,6 +111,11 @@ export { default as LiveClassesPage } from "./Student/LiveClassesPage/LiveClasse
 export { default as MonthsreviewsPage } from "./Student/MonthsReviewsPage/MonthsReviewsPage";
 export { default as FinalReviewsPage } from "./Student/FinalReviewsPage/FinalReviewsPage";
 export { default as SolveExamsPage } from "./Student/SolveExamsPage/SolveExamsPage";
+
+/* StudentSubscriptuons */
+export { default as SubscriptionsPage } from "./Student/StudentSubscriptions/SubscriptionsPage";
+export { default as SubscriptionsPaymentPage } from "./Student/StudentSubscriptions/SubscriptionsPaymentPage";
+
 /* /////Student Dashboard Page */
 
 /* Affilate Dashboard Page */

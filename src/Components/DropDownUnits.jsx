@@ -54,6 +54,9 @@ const DropDownUnits = ({ unit,lessons, onClick, isOpen }) => {
 
    // Sort lessons based on their order
    const sortedLessons = [...lessons].sort((a, b) => a.order - b.order);
+   useEffect(() => {
+    console.log(sortedLessons)
+  }, []);
    
   return (
     <div className="relative mb-6">
