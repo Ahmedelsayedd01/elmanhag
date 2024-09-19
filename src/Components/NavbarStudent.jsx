@@ -28,7 +28,10 @@ const NavbarStudent = () => {
                         مرحباً بك {userName}
                     </h3>
                     </div>
-                    <div>
+                    <div className="flex gap-5">
+                        <Link to="My_Subscriptions">
+                            <button type='button' className="px-4 py-3 mx-auto text-2xl  text-secoundColor bg-mainColor rounded-2xl">My Subscriptions</button>
+                        </Link>
                          <button type='button' className="px-4 py-3 mx-auto text-2xl  text-secoundColor bg-mainColor rounded-2xl" onClick={handleLogout}>Log Out</button>
                     </div>
                 </div>

@@ -126,6 +126,11 @@ export { default as LiveClasses } from "./Student/LiveClasses";
 export { default as MonthsReviews } from "./Student/MonthsReviews";
 export { default as SolveExams } from "./Student/SolveExams";
 export { default as FinalReviews } from "./Student/FinalReviews";
+
+//Subscriptions Student
+export { default as SubscriptionsLayout} from "./Student/SubscriptionsLayout";
+export { default as SubscriptionsPaymentLayout } from "./Student/SubscriptionsPaymentLayout";
+
 // Units
 export { default as UnitsLayout } from "./Student/UnitsLayout";
 

@@ -77,6 +77,8 @@ import {
   AffiliateBonusLayout,
   AffiliatePayoutLayout,
   LessonsLayout,
+  SubscriptionsLayout,
+  LessonsLayout,
   ProfileStudent
 } from "./Layouts/AllLayouts";
 
@@ -643,17 +645,15 @@ export const router = createBrowserRouter([
               {
                 path: '',
                 element: <DiscountLayout />,
-                children: [
-                  {
-                    path: 'add',
-                    element: <AddDiscountLayout />,
-                  },
-                  {
-                    path: 'edit/:marketingId',
-                    element: <EditDiscountLayout />,
-                  }
-                ]
               },
+              {
+                path: 'add',
+                element: <AddDiscountLayout />,
+              },
+              {
+                path: 'edit/:discountId',
+                element: <EditDiscountLayout />,
+              }
             ]
           },
           {
@@ -663,17 +663,15 @@ export const router = createBrowserRouter([
               {
                 path: '',
                 element: <PromoCodeLayout />,
-                children: [
-                  {
-                    path: 'add',
-                    element: <AddPromoCodeLayout />,
-                  },
-                  {
-                    path: 'edit/:marketingId',
-                    element: <EditPromoCodeLayout />,
-                  }
-                ]
               },
+              {
+                path: 'add',
+                element: <AddPromoCodeLayout />,
+              },
+              {
+                path: 'edit/:promoCodeId',
+                element: <EditPromoCodeLayout />,
+              }
             ]
           },
           {
@@ -984,6 +982,10 @@ export const router = createBrowserRouter([
           {
             path: "solve_exams",
             element: <SolveExams />,
+          },
+          {
+            path: "My_Subscriptions",
+            element: <SubscriptionsLayout/>,
           },
           {
             path: "profile",
