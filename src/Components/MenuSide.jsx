@@ -7,6 +7,7 @@ import {
        HomeIcon,
        LiveClassesIcon,
        MonthsReviewsIcon,
+       ProfileStudentIcon,
        SolveExamsIcon,
 } from "./Icons/All_Icons";
 import { NavLink } from "react-router-dom";
@@ -20,6 +21,7 @@ const MenuSide = () => {
        const [isActiveMonthsReviews, setIsActiveMonthsReviews] = useState(false);
        const [isActiveFinalReviews, setIsActiveFinalReviews] = useState(false);
        const [isActiveSolveExams, setIsActiveSolveExams] = useState(false);
+       const [isActiveProfileStudent, setIsActiveProfileStudent] = useState(false);
 
        const handleClickHome = () => {
               setIsActiveHome(true);
@@ -29,6 +31,7 @@ const MenuSide = () => {
               setIsActiveMonthsReviews(false);
               setIsActiveFinalReviews(false);
               setIsActiveSolveExams(false);
+              setIsActiveProfileStudent(false);
        };
        const handleClickCurricula = () => {
               setIsActiveHome(false);
@@ -38,6 +41,7 @@ const MenuSide = () => {
               setIsActiveMonthsReviews(false);
               setIsActiveFinalReviews(false);
               setIsActiveSolveExams(false);
+              setIsActiveProfileStudent(false);
        };
        const handleClickDuties = () => {
               setIsActiveDuties(true);
@@ -47,6 +51,7 @@ const MenuSide = () => {
               setIsActiveMonthsReviews(false);
               setIsActiveFinalReviews(false);
               setIsActiveSolveExams(false);
+              setIsActiveProfileStudent(false);
        };
        const handleClickLiveClasses = () => {
               setIsActiveLiveClasses(true);
@@ -56,6 +61,7 @@ const MenuSide = () => {
               setIsActiveMonthsReviews(false);
               setIsActiveFinalReviews(false);
               setIsActiveSolveExams(false);
+              setIsActiveProfileStudent(false);
        };
        const handleClickMonthsReviews = () => {
               setIsActiveMonthsReviews(true);
@@ -65,6 +71,7 @@ const MenuSide = () => {
               setIsActiveLiveClasses(false);
               setIsActiveFinalReviews(false);
               setIsActiveSolveExams(false);
+              setIsActiveProfileStudent(false);
        };
        const handleClickFinalReviews = () => {
               setIsActiveFinalReviews(true);
@@ -74,9 +81,21 @@ const MenuSide = () => {
               setIsActiveLiveClasses(false);
               setIsActiveMonthsReviews(false);
               setIsActiveSolveExams(false);
+              setIsActiveProfileStudent(false);
        };
        const handleClickSolveExams = () => {
               setIsActiveSolveExams(true);
+              setIsActiveHome(false);
+              setIsActiveCurricula(false);
+              setIsActiveDuties(false);
+              setIsActiveLiveClasses(false);
+              setIsActiveMonthsReviews(false);
+              setIsActiveFinalReviews(false);
+              setIsActiveProfileStudent(false);
+       };
+       const handleClickProfileStudent = () => {
+              setIsActiveProfileStudent(true);
+              setIsActiveSolveExams(false);
               setIsActiveHome(false);
               setIsActiveCurricula(false);
               setIsActiveDuties(false);
@@ -115,6 +134,10 @@ const MenuSide = () => {
                                    <NavLink to="solve_exams" onClick={handleClickSolveExams} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
                                           <SolveExamsIcon isActive={isActiveSolveExams} />
                                           <span>حل امتحانات</span>
+                                   </NavLink>
+                                   <NavLink to="profile" onClick={handleClickProfileStudent} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
+                                          <ProfileStudentIcon isActive={isActiveProfileStudent} />
+                                          <span>حسابى</span>
                                    </NavLink>
                             </div>
                      </div>

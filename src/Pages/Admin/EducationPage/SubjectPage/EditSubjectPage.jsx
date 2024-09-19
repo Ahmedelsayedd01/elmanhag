@@ -175,8 +175,15 @@ const EditSubjectPage = () => {
     const selectedOptionName = e.currentTarget.textContent.trim();
     const selectedOptionValue = inputElement ? inputElement.value : '';
     setEducation(selectedOptionName);
-    setEducationId(parseInt(selectedOptionValue));
+    console.log('selectedOptionValue', selectedOptionValue)
+    if (selectedOptionValue == 'null') {
+
+      setEducationId(' ');
+    } else {
+      setEducationId(parseInt(selectedOptionValue));
+    }
     setOpenEducation(false);
+    console.log('educationIdselect', educationId)
   };
 
   const handleSemester = (e) => {

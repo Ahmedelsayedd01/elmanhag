@@ -76,11 +76,12 @@ import {
   LayoutStudent,
   AffiliateBonusLayout,
   AffiliatePayoutLayout,
-  LessonsLayout,
   SubscriptionsLayout,
   SubscriptionsPaymentLayout,
   AllPlansLayout,
-  PaymentMethodDetailsLayout
+  PaymentMethodDetailsLayout,
+  LessonsLayout,
+  ProfileStudent
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -326,10 +327,10 @@ const AppLayoutCurricula = () => (
   </>
 );
 
-const AppLayoutUnit =()=>(
+const AppLayoutUnit = () => (
   <>
     <Outlet />
-  </> 
+  </>
 );
 
 const AppLayoutSubscriptions =()=>(
@@ -954,10 +955,10 @@ export const router = createBrowserRouter([
               {
                 path: 'subject/:subject_Id',
                 element: <AppLayoutUnit />,
-                children :[
+                children: [
                   {
                     path: '',
-                    element: <UnitsLayout/>,
+                    element: <UnitsLayout />,
                   },
                   {
                     path: 'lesson/:lessonId',
@@ -1014,14 +1015,10 @@ export const router = createBrowserRouter([
               
             ]
           },
-          // {
-          //   path: "My_Subscriptions",
-          //   element: <SubscriptionsLayout/>,
-          // },
-          // {
-          //   path: "paymentmethod",
-          //   element: <SubscriptionsPaymentLayout/>,
-          // },
+          {
+            path: "profile",
+            element: <ProfileStudent />,
+          },
         ],
       },
     ],
