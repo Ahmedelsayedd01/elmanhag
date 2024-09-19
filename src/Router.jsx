@@ -78,6 +78,9 @@ import {
   AffiliatePayoutLayout,
   LessonsLayout,
   SubscriptionsLayout,
+  SubscriptionsPaymentLayout,
+  AllPlansLayout,
+  PaymentMethodDetailsLayout
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -328,6 +331,13 @@ const AppLayoutUnit =()=>(
     <Outlet />
   </> 
 );
+
+const AppLayoutSubscriptions =()=>(
+  <>
+    <Outlet />
+  </> 
+)
+
 const AppLayoutAffilateDashboard = () => (
   <div className="relative flex gap-x-4 directionAR">
     <SidebarStudent />
@@ -983,8 +993,35 @@ export const router = createBrowserRouter([
           },
           {
             path: "My_Subscriptions",
-            element: <SubscriptionsLayout/>,
+            element: <AppLayoutSubscriptions/>,
+            children :[
+              {
+                path: '',
+                element: <SubscriptionsLayout/>,
+              },
+              {
+                path: 'plans',
+                element: <AllPlansLayout/>,
+              },
+              {
+                path: "plansMethod",
+                element: <SubscriptionsPaymentLayout/>,
+              },
+              {
+                path: "method_details",
+                element: <PaymentMethodDetailsLayout/>,
+              },
+              
+            ]
           },
+          // {
+          //   path: "My_Subscriptions",
+          //   element: <SubscriptionsLayout/>,
+          // },
+          // {
+          //   path: "paymentmethod",
+          //   element: <SubscriptionsPaymentLayout/>,
+          // },
         ],
       },
     ],

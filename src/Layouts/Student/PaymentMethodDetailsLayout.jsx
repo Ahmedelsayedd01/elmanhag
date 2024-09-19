@@ -1,10 +1,10 @@
 import React from 'react'
-import { SubscriptionsPaymentPage } from '../../Pages/AllPages'
+import { PaymentMethodDetailsPage } from '../../Pages/AllPages'
 import HeaderPageSection from '../../Components/HeaderPageSection'
 import { useNavigate } from 'react-router-dom';
 
 
-const SubscriptionsPaymentLayout = () => {
+const PaymentMethodDetailsLayout = () => {
 
   const navigate = useNavigate();
   const handleGoBack = () => {
@@ -13,11 +13,11 @@ const SubscriptionsPaymentLayout = () => {
        return (
         <>
         <div className='directionEN'>
-            <HeaderPageSection handleClick={handleGoBack} name="طرق الدفع " />
+            <HeaderPageSection handleClick={handleGoBack} name="تفاصيل الدفع" />
         </div>
-        <SubscriptionsPaymentPage/>
+        <PaymentMethodDetailsPage/>
         </>
     )
 }
 
-export default SubscriptionsPaymentLayout
+export default PaymentMethodDetailsLayout
