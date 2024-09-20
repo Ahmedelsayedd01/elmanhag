@@ -13,7 +13,7 @@ const SubscriptionsPaymentPage = () => {
   const auth = useAuth();
 
   const location = useLocation();
-  const { plan } = location.state || {}; // Access the passed plan data safely
+  const { plan ,planType} = location.state || {}; // Access the passed plan data safely
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
 
   const fetchPlansPayment = async () => {
@@ -59,8 +59,8 @@ const SubscriptionsPaymentPage = () => {
     if (!selectedPaymentMethod) {
       auth.toastError('يجب اختيار طريقة الدفع أولاً');
     } else {
-      console.log(selectedPaymentMethod)
-      navigate('../method_details', { state: { paymentMethod: selectedPaymentMethod } });
+      console.log(plan ,selectedPaymentMethod,planType)
+      navigate('../method_details', { state: {plan:plan, paymentMethod: selectedPaymentMethod , planType:planType} });
     }
   };
 
@@ -80,7 +80,7 @@ const SubscriptionsPaymentPage = () => {
             onClick={() => setSelectedPaymentMethod(method)}
           >
             <div className={`w-6 h-6 rounded-full border-2 ${selectedPaymentMethod.title === method.title ? 'border-red-500 bg-mainColor' : 'border-gray-300'} mr-3`} />
-            <img src={method.thumbnail_link} alt={method.title} className="w-12 h-10" />
+            <img src={method.thumbnail_link} alt={method.title} className="w-10 h-10" />
             <h3 className="text-lg font-semibold ml-2">{method.title}</h3>
           </div>
         ))}
