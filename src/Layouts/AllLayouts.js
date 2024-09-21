@@ -33,7 +33,10 @@ export { default as AddBundlesLayout } from "./Admin/AddBundlesLayout";
 export { default as EditBundlesLayout } from "./Admin/EditBundlesLayout";
 export { default as StudentsBundlesLayout } from "./Admin/StudentsBundlesLayout";
 
-export { default as QuestionsBankEducation } from "./Admin/QuestionsBankEducation";
+export { default as QuestionsBankLayout } from "./Admin/QuestionsBankLayout";
+export { default as AddQuestionLayout } from "./Admin/AddQuestionLayout";
+export { default as EditQuestionLayout } from "./Admin/EditQuestionLayout";
+export { default as QuestionLayout } from "./Admin/QuestionLayout";
 /* HomeWork */
 export { default as HomeWorkLayout } from "./Admin/HomeWorkLayout";
 export { default as AddHomeWorkLayout } from "./Admin/AddHomeWorkLayout";
