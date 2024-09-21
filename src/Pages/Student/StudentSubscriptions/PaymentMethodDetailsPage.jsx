@@ -51,11 +51,18 @@ const PaymentMethodDetailsPage = () => {
     setIsLoading(true);
     try {
       const formData = new FormData();
-      formData.append('amount', plan.price_discount);
+      formData.append('amount', plan.price);
       formData.append('service', planType);
       formData.append('payment_method_id', paymentMethod.id);
       formData.append('receipt', receiptImageFile);
-      formData.append('bundle_id', plan.id);
+      // formData.append('bundle_id', plan.id);
+
+      // Conditionally append either bundle_id or subject_id based on planType
+      if (planType === 'Bundle') {
+        formData.append('bundle_id', plan.id);
+      } else if (planType === 'Subject') {
+        formData.append('subject_id', plan.id);
+      } 
 
       const response = await axios.post('https://bdev.elmanhag.shop/student/order/place', formData, {
         headers: {

@@ -107,7 +107,7 @@ const AllPlansPage = () => {
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{subject.name}</h3>
                   <p className="text-gray-700 mb-2">
-                    {subject.price_discount} جنيه بلا من <span className="line-through">{subject.old_price} جنيه</span>
+                    {subject.price} جنيه بلا من <span className="line-through">{subject.old_price} جنيه</span>
                   </p>
                 </div>
                 <button
