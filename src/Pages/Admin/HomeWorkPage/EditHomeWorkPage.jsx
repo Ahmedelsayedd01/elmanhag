@@ -27,6 +27,9 @@ const EditHomeWorkPage = () => {
   const [lessonData, setLessonData] = useState([]);
   const [chapterData, setChapterData] = useState([]);
   const [subjectData, setSubjectData] = useState([]);
+  const [allLessons, setAllLessons] = useState([]); // Store all subjects initially
+  const [allChapters, setAllChapters] = useState([]); // Store all subjects initially
+  const [allSubjects, setAllSubjects] = useState([]); // Store all subjects initially
   const [categoryData, setCategoryData] = useState([]);
   const [HWData, setHWData] = useState([{ name: 'H.W1' }, { name: 'H.W2' }, { name: 'H.W3' }]);
   const [homeWorkLevel, setHomeWorkLevel] = useState([{ name: 'A' }, { name: 'B' }, { name: 'C' }]);
@@ -164,6 +167,61 @@ const EditHomeWorkPage = () => {
   const dropdownHWRef = useRef(null);
   const dropdownHomeWorkLevelRef = useRef(null);
 
+    // Function to filter subjects by semester, category, or both
+    const filterSubjects = (semesterName, categoryId) => {
+      let filteredSubjects = allSubjects; // Start with all subjects
+  
+      // If both semester and category are selected, filter by both
+      if (semesterName && categoryId) {
+        filteredSubjects = filteredSubjects.filter(subject => 
+          subject.semester.toLowerCase() === semesterName.toLowerCase() && 
+          subject.category_id === categoryId
+        ) ;
+      }
+      // If only the semester is selected, filter by semester
+      else if (semesterName) {
+        filteredSubjects = filteredSubjects.filter(subject => 
+          subject.semester.toLowerCase() === semesterName.toLowerCase()
+        );
+      }
+      // If only the category is selected, filter by category
+      else if (categoryId) {
+        filteredSubjects = filteredSubjects.filter(subject => 
+          subject.category_id === categoryId
+        );
+      }
+      setSubjectData(filteredSubjects);
+      console.log(filteredSubjects)
+    };
+  
+    // Function to filter chapters by subject
+    const filterChapters = (subjectId) => {
+      let filteredChapters = allChapters; // Start with all subjects
+  
+      // If both semester and category are selected, filter by both
+      if (subjectId) {
+        filteredChapters = filteredChapters.filter(chapter => 
+          chapter.subject_id=== subjectId
+        ) ;
+      }
+      setChapterData(filteredChapters);
+      console.log(filteredChapters)
+    };
+  
+      // Function to filter lessons by chapters 
+      const filterLessons = (chapterId) => {
+        let filteredLessons = allLessons; // Start with all subjects
+    
+        // If both semester and category are selected, filter by both
+        if (chapterId) {
+          filteredLessons= filteredLessons.filter(lesson => 
+            lesson.chapter_id === chapterId
+          ) ;
+        }
+        setLessonData(filteredLessons);
+        console.log(filteredLessons)
+      };
+
   const handleOpenSelectSemester = () => {
     setOpenSelectSemester(!openSelectSemester);
     setOpenSelectLesson(false);
@@ -242,6 +300,9 @@ const EditHomeWorkPage = () => {
     setOpenSelectSemester(false);
     console.log('Selected Semester:', selectedOptionName);
     console.log('Semester ID:', selectedOptionValue);
+
+    // Filter subjects based on the new semester and existing category
+    filterSubjects(selectedOptionName, selectCategoryId);
   };
 
   const handleSelectLesson = (e) => {
@@ -264,6 +325,8 @@ const EditHomeWorkPage = () => {
     setOpenSelectChapter(false);
     console.log('Selected Chapter:', selectedOptionName);
     console.log('Chapter ID:', selectedOptionValue);
+
+    filterLessons(parseInt(selectedOptionValue))
   };
 
   const handleSelectSubject = (e) => {
@@ -275,6 +338,8 @@ const EditHomeWorkPage = () => {
     setOpenSelectSubject(false);
     console.log('Selected Subject:', selectedOptionName);
     console.log('Subject ID:', selectedOptionValue);
+
+    filterChapters(parseInt(selectedOptionValue))
   };
 
   const handleSelectCategory = (e) => {
