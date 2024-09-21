@@ -21,7 +21,7 @@ import {
   BundlesEducationLayout,
   CategoriesEducationLayout,
   SubjectEducationLayout,
-  QuestionsBankEducation,
+  QuestionsBankLayout,
   AddStudentpage,
   AdminRolesAD,
   AddCountryLayout,
@@ -141,6 +141,9 @@ import EditCategoryLayout from "./Layouts/Admin/EditCategoryLayout";
 import NavbarStudent from "./Components/NavbarStudent";
 import SignUpAffiliatePage from "./Pages/RegisterPage/SignUpAffilatePage";
 import EditAffiliateUserLayout from "./Layouts/Admin/EditAffiliateUserLayout";
+import AddQuestionLayout from "./Layouts/Admin/AddQuestionLayout";
+import EditQuestionLayout from "./Layouts/Admin/EditQuestionLayout";
+import QuestionLayout from "./Layouts/Admin/QuestionLayout";
 
 export const ContextNumper = createContext()
 const AppLayoutAuthentication = () => (
@@ -592,8 +595,20 @@ export const router = createBrowserRouter([
             element: <AppLayoutQuestionsBank />,
             children: [
               {
-                index: true, // Default route for "questionsbank"
-                element: <QuestionsBankEducation />,
+                path: '',
+                element: <QuestionsBankLayout />,
+              },
+              {
+                path: 'add',
+                element: <AddQuestionLayout />,
+              },
+              {
+                path: 'edit/:questionId',
+                element: <EditQuestionLayout />,
+              },
+              {
+                path: 'question/:questionId',
+                element: <QuestionLayout />,
               }
             ]
           }

@@ -32,7 +32,9 @@ export { default as EditLessonPage } from "./Admin/EducationPage/SubjectPage/Edi
 export { default as MaterialLessonPage } from "./Admin/EducationPage/SubjectPage/MaterialLessonPage";
 
 export { default as StudentsSubjectPage } from "./Admin/EducationPage/SubjectPage/StudentsSubjectPage";
-export { default as QuestionsBankPage } from "./Admin/EducationPage/QuestionsBankPage";
+
+export { default as QuestionsBankPage } from "./Admin/EducationPage/QuestionsBankPage/QuestionsBankPage";
+// export { default as QuestionsBankPage } from "./Admin/EducationPage/QuestionsBankPage";
 
 /* H.W Page */
 export { default as HomeWorkPage } from "./Admin/HomeWorkPage/HomeWorkPage";
@@ -104,7 +106,7 @@ export { default as OperationsPage } from "./Admin/SettingPage/Operations/Operat
 export { default as StudentHomePage } from "./Student/StudentHomePage/StudentHomePage";
 export { default as CurriculaPage } from "./Student/CurriculaPage/CurriculaPage";
 export { default as UnitsPage } from "./Student/CurriculaPage/UnitsPage";
-export { default as LessonsPage} from "./Student/CurriculaPage/LessonsPage";
+export { default as LessonsPage } from "./Student/CurriculaPage/LessonsPage";
 
 export { default as DutiesPage } from "./Student/DutiesPage/DutiesPage";
 export { default as LiveClassesPage } from "./Student/LiveClassesPage/LiveClassesPage";
