@@ -79,7 +79,7 @@ const AllPlansPage = () => {
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{bundle.name}</h3>
                   <p className="text-gray-700 mb-2">
-                    {bundle.price_discount} جنيه بلا من <span className="line-through">{bundle.price} جنيه</span>
+                    {bundle.price_discount} جنيه بدلا من <span className="line-through">{bundle.price} جنيه</span>
                   </p>
                 </div>
                 <button
@@ -107,7 +107,7 @@ const AllPlansPage = () => {
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{subject.name}</h3>
                   <p className="text-gray-700 mb-2">
-                    {subject.price} جنيه بلا من <span className="line-through">{subject.old_price} جنيه</span>
+                    {subject.price} جنيه بدلا من <span className="line-through">{subject.old_price} جنيه</span>
                   </p>
                 </div>
                 <button
@@ -135,7 +135,7 @@ const AllPlansPage = () => {
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{live.name}</h3>
                   <p className="text-gray-700 mb-2">
-                    {live.price_discount} جنيه بلا من <span className="line-through">{live.old_price} جنيه</span>
+                    {live.price_discount} جنيه بدلا من <span className="line-through">{live.old_price} جنيه</span>
                   </p>
                 </div>
                 <button
