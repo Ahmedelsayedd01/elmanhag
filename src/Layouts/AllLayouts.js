@@ -133,6 +133,8 @@ export { default as FinalReviews } from "./Student/FinalReviews";
 //Subscriptions Student
 export { default as SubscriptionsLayout} from "./Student/SubscriptionsLayout";
 export { default as SubscriptionsPaymentLayout } from "./Student/SubscriptionsPaymentLayout";
+export { default as AllPlansLayout } from "./Student/AllPlansLayout";
+export { default as PaymentMethodDetailsLayout } from "./Student/PaymentMethodDetailsLayout";
 
 // Units
 export { default as UnitsLayout } from "./Student/UnitsLayout";

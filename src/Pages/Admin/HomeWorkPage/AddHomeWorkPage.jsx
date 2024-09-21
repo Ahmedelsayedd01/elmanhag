@@ -25,7 +25,9 @@ const AddHomeWorkPage = () => {
   const [semesterData, setSemesterData] = useState([{ name: 'first' }, { name: 'second' }]);
   const [lessonData, setLessonData] = useState([]);
   const [chapterData, setChapterData] = useState([]);
+  const [allChapters, setAllChapters] = useState([]); // Store all subjects initially
   const [subjectData, setSubjectData] = useState([]);
+  const [allSubjects, setAllSubjects] = useState([]); // Store all subjects initially
   const [categoryData, setCategoryData] = useState([]);
   const [HWData, setHWData] = useState([{ name: 'H.W1' }, { name: 'H.W2' }, { name: 'H.W3' }]);
   const [homeWorkLevel, setHomeWorkLevel] = useState([{ name: 'A' }, { name: 'B' }, { name: 'C' }]);
@@ -35,9 +37,11 @@ const AddHomeWorkPage = () => {
     const StorageHWData = JSON.parse(localStorage.getItem('AllhomeWork'));
 
     setChapterData(StorageHWData?.chapters || []);
+    setAllChapters(StorageHWData?.chapters || []);
     setLessonData(StorageHWData?.lessons || []);
     setCategoryData(StorageHWData?.categories || []);
     setSubjectData(StorageHWData?.subjects || []);
+    setAllSubjects(StorageHWData?.subjects || [])
   }, []);
 
   const [selectSemester, setSelectSemester] = useState('Select By Semester');
@@ -79,6 +83,47 @@ const AddHomeWorkPage = () => {
   const dropdownCategoryRef = useRef(null);
   const dropdownHWRef = useRef(null);
   const dropdownHomeWorkLevelRef = useRef(null);
+
+  // Function to filter subjects by semester, category, or both
+  const filterSubjects = (semesterName, categoryId) => {
+    let filteredSubjects = allSubjects; // Start with all subjects
+
+    // If both semester and category are selected, filter by both
+    if (semesterName && categoryId) {
+      filteredSubjects = filteredSubjects.filter(subject => 
+        subject.semester.toLowerCase() === semesterName.toLowerCase() && 
+        subject.category_id === categoryId
+      ) ;
+    }
+    // If only the semester is selected, filter by semester
+    else if (semesterName) {
+      filteredSubjects = filteredSubjects.filter(subject => 
+        subject.semester.toLowerCase() === semesterName.toLowerCase()
+      );
+    }
+    // If only the category is selected, filter by category
+    else if (categoryId) {
+      filteredSubjects = filteredSubjects.filter(subject => 
+        subject.category_id === categoryId
+      );
+    }
+    setSubjectData(filteredSubjects);
+    console.log(filteredSubjects)
+  };
+
+  // Function to filter subjects by semester, category, or both
+  const filterChapters = (subjectId) => {
+    let filteredChapters = allChapters; // Start with all subjects
+
+    // If both semester and category are selected, filter by both
+    if (subjectId) {
+      filteredChapters = filteredChapters.filter(chapter => 
+        chapter.subject_id=== subjectId
+      ) ;
+    }
+    setChapterData(filteredChapters);
+    console.log(filteredChapters)
+  };
 
   const handleOpenSelectSemester = () => {
     setOpenSelectSemester(!openSelectSemester);
@@ -158,6 +203,23 @@ const AddHomeWorkPage = () => {
     setOpenSelectSemester(false);
     console.log('Selected Semester:', selectedOptionName);
     console.log('Semester ID:', selectedOptionValue);
+
+    // Filter subjects based on the new semester and existing category
+    filterSubjects(selectedOptionName, selectCategoryId);
+  };
+
+  const handleSelectCategory = (e) => {
+    const inputElement = e.currentTarget.querySelector('.inputVal');
+    const selectedOptionName = e.currentTarget.textContent.trim();
+    const selectedOptionValue = inputElement ? inputElement.value : '';
+    setSelectCategory(selectedOptionName);
+    setSelectCategoryId(parseInt(selectedOptionValue));
+    setOpenSelectCategory(false);
+    console.log('Selected Category:', selectedOptionName);
+    console.log('Category ID:', selectedOptionValue);
+
+    // Filter subjects based on the new semester and existing category
+    filterSubjects(selectSemester, parseInt(selectedOptionValue));
   };
 
   const handleSelectLesson = (e) => {
@@ -191,17 +253,8 @@ const AddHomeWorkPage = () => {
     setOpenSelectSubject(false);
     console.log('Selected Subject:', selectedOptionName);
     console.log('Subject ID:', selectedOptionValue);
-  };
 
-  const handleSelectCategory = (e) => {
-    const inputElement = e.currentTarget.querySelector('.inputVal');
-    const selectedOptionName = e.currentTarget.textContent.trim();
-    const selectedOptionValue = inputElement ? inputElement.value : '';
-    setSelectCategory(selectedOptionName);
-    setSelectCategoryId(parseInt(selectedOptionValue));
-    setOpenSelectCategory(false);
-    console.log('Selected Category:', selectedOptionName);
-    console.log('Category ID:', selectedOptionValue);
+    filterChapters(parseInt(selectedOptionValue))
   };
 
   const handleSelectHW = (e) => {
@@ -520,24 +573,6 @@ const AddHomeWorkPage = () => {
               </div>
               <div className="lg:w-[30%] sm:w-full">
                 <DropDownMenu
-                  ref={dropdownChapterRef}
-                  handleOpen={handleOpenSelectChapter}
-                  handleOpenOption={handleSelectChapter}
-                  stateoption={selectChapter}
-                  openMenu={openSelectChapter}
-                  options={chapterData}
-                />
-              </div>
-              <div className="lg:w-[30%] sm:w-full">
-                <InputCustom
-                  type="text"
-                  placeholder="Pass"
-                  value={pass}
-                  onChange={(e) => setPass(e.target.value)}
-                />
-              </div>
-              <div className="lg:w-[30%] sm:w-full">
-                <DropDownMenu
                   ref={dropdownCategoryRef}
                   handleOpen={handleOpenSelectCategory}
                   handleOpenOption={handleSelectCategory}
@@ -548,30 +583,32 @@ const AddHomeWorkPage = () => {
               </div>
               <div className="lg:w-[30%] sm:w-full">
                 <DropDownMenu
-                  ref={dropdownLessonRef}
-                  handleOpen={handleOpenSelectLesson}
-                  handleOpenOption={handleSelectLesson}
-                  stateoption={selectLesson}
-                  openMenu={openSelectLesson}
-                  options={lessonData}
-                />
-              </div>
-              <div className="lg:w-[30%] sm:w-full">
-                <InputCustom
-                  type="text"
-                  placeholder="Mark"
-                  value={mark}
-                  onChange={(e) => setMark(e.target.value)}
-                />
-              </div>
-              <div className="lg:w-[30%] sm:w-full">
-                <DropDownMenu
                   ref={dropdownSubjectRef}
                   handleOpen={handleOpenSelectSubject}
                   handleOpenOption={handleSelectSubject}
                   stateoption={selectSubject}
                   openMenu={openSelectSubject}
                   options={subjectData}
+                />
+              </div>
+              <div className="lg:w-[30%] sm:w-full">
+                <DropDownMenu
+                  ref={dropdownChapterRef}
+                  handleOpen={handleOpenSelectChapter}
+                  handleOpenOption={handleSelectChapter}
+                  stateoption={selectChapter}
+                  openMenu={openSelectChapter}
+                  options={chapterData}
+                />
+              </div>
+              <div className="lg:w-[30%] sm:w-full">
+                <DropDownMenu
+                  ref={dropdownLessonRef}
+                  handleOpen={handleOpenSelectLesson}
+                  handleOpenOption={handleSelectLesson}
+                  stateoption={selectLesson}
+                  openMenu={openSelectLesson}
+                  options={lessonData}
                 />
               </div>
               <div className="lg:w-[30%] sm:w-full">
@@ -592,6 +629,22 @@ const AddHomeWorkPage = () => {
                   stateoption={selectHW}
                   openMenu={openSelectHW}
                   options={HWData}
+                />
+              </div>
+              <div className="lg:w-[30%] sm:w-full">
+                <InputCustom
+                  type="text"
+                  placeholder="Pass"
+                  value={pass}
+                  onChange={(e) => setPass(e.target.value)}
+                />
+              </div>
+              <div className="lg:w-[30%] sm:w-full">
+                <InputCustom
+                  type="text"
+                  placeholder="Mark"
+                  value={mark}
+                  onChange={(e) => setMark(e.target.value)}
                 />
               </div>
               <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
