@@ -139,15 +139,7 @@ const AffiliatePaymentMethodPage = () => {
                                                                <td
                                                                       className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 p-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                                >
-                                                                      <img src={paymentMethod?.thumbnail || "-"} style={{
-                                                                             objectFit: ' cover',
-                                                                             objectPosition: ' center',
-                                                                             borderRadius: ' 10px',
-                                                                             maxWidth: ' 170px',
-                                                                             minWidth: ' 170px',
-                                                                             maxHeight: ' 70px',
-                                                                             minHeight: ' 60px',
-                                                                      }} alt="Payment Method Photo" />
+                                                                      <img src={paymentMethod?.thumbnail || "-"} className='imgTable' alt="Photo" />
                                                                </td>
                                                                <td
                                                                       className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
