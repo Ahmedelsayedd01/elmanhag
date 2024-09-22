@@ -1,8 +1,17 @@
 import React from 'react'
+import HeaderPageSection from '../../Components/HeaderPageSection'
+import { useNavigate } from 'react-router-dom';
 
 const EditQuestionLayout = () => {
+       const navigate = useNavigate();
+       const handleGoBack = () => {
+              navigate(-1, { replace: true });
+       };
        return (
-              <div>EditQuestionLayout</div>
+              <>
+                     <HeaderPageSection handleClick={handleGoBack} name="Edit Question" />
+                     <EditQuestionPage />
+              </>
        )
 }
 

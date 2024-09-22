@@ -34,7 +34,9 @@ export { default as MaterialLessonPage } from "./Admin/EducationPage/SubjectPage
 export { default as StudentsSubjectPage } from "./Admin/EducationPage/SubjectPage/StudentsSubjectPage";
 
 export { default as QuestionsBankPage } from "./Admin/EducationPage/QuestionsBankPage/QuestionsBankPage";
-// export { default as QuestionsBankPage } from "./Admin/EducationPage/QuestionsBankPage";
+export { default as AddQuestionPage } from "./Admin/EducationPage/QuestionsBankPage/AddQuestionPage";
+export { default as EditQuestionPage } from "./Admin/EducationPage/QuestionsBankPage/EditQuestionPage";
+export { default as QuestionPage } from "./Admin/EducationPage//QuestionsBankPage/QuestionPage";
 
 /* H.W Page */
 export { default as HomeWorkPage } from "./Admin/HomeWorkPage/HomeWorkPage";
@@ -76,6 +78,8 @@ export { default as EditAffiliatePaymentMethodPage } from "./Admin/AffiliatePage
 export { default as AffiliateCommissionsPage } from "./Admin/AffiliatePage/AffiliateCommissionsPage";
 // Bonus
 export { default as AffiliateBonusPage } from "./Admin/AffiliatePage/AffiliateBonusPage";
+export { default as AddAffiliateBonusPage } from "./Admin/AffiliatePage/AddAffiliateBonusPage";
+export { default as EditAffiliateBonusPage } from "./Admin/AffiliatePage/EditAffiliateBonusPage";
 // Payout
 export { default as AffiliatePayoutPage } from "./Admin/AffiliatePage/AffiliatePayoutPage";
 export { default as PayoutPendingPage } from "./Admin/AffiliatePage/PayoutPendingPage";
@@ -118,7 +122,7 @@ export { default as SolveExamsPage } from "./Student/SolveExamsPage/SolveExamsPa
 export { default as SubscriptionsPage } from "./Student/StudentSubscriptions/SubscriptionsPage";
 export { default as SubscriptionsPaymentPage } from "./Student/StudentSubscriptions/SubscriptionsPaymentPage";
 export { default as AllPlansPage } from "./Student/StudentSubscriptions/AllPlansPage";
-export { default as PaymentMethodDetailsPage} from "./Student/StudentSubscriptions/PaymentMethodDetailsPage";
+export { default as PaymentMethodDetailsPage } from "./Student/StudentSubscriptions/PaymentMethodDetailsPage";
 
 /* /////Student Dashboard Page */
 
