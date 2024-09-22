@@ -575,12 +575,12 @@ const SignUpPage = () => {
           (
             <div className="w-full flex flex-col gap-6 items-end">
               <div className="w-full flex xl:flex-row flex-col gap-4 items-start">
-                <InputCustom type={"text"} placeholder={"Student Name"} value={studentName} onChange={(e) => setStudentName(e.target.value)} />
-                <InputCustom type={"number"} paddinRight='pr-2' placeholder={"Student Phone"} value={studentPhone} onChange={(e) => setStudentPhone(e.target.value)} />
+                <InputCustom type={"text"} placeholder={"اسم الطالب"} value={studentName} onChange={(e) => setStudentName(e.target.value)} />
+                <InputCustom type={"number"} paddinRight='pr-2' placeholder={"رقم الطالب"} value={studentPhone} onChange={(e) => setStudentPhone(e.target.value)} />
               </div>
-              <InputCustom type={"email"} placeholder={"Student Email"} value={studentEmail} onChange={(e) => setStudentEmail(e.target.value)} />
-              <InputCustom type={"password"} placeholder={"Password"} value={studentPassword} onChange={(e) => setStudentPassword(e.target.value)} />
-              <InputCustom type={"password"} placeholder={"Confirm Password"} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+              <InputCustom type={"email"} placeholder={"ايميل الطالب"} value={studentEmail} onChange={(e) => setStudentEmail(e.target.value)} />
+              <InputCustom type={"password"} placeholder={"كلمة السر"} value={studentPassword} onChange={(e) => setStudentPassword(e.target.value)} />
+              <InputCustom type={"password"} placeholder={"تاكيد كلمة السر"} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
             </div>
           )
         }
