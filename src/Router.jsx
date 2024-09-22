@@ -81,7 +81,9 @@ import {
   AllPlansLayout,
   PaymentMethodDetailsLayout,
   LessonsLayout,
-  ProfileStudent
+  ProfileStudent,
+  AddAffiliateBonusLayout,
+  EditAffiliateBonusLayout
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -336,10 +338,10 @@ const AppLayoutUnit = () => (
   </>
 );
 
-const AppLayoutSubscriptions =()=>(
+const AppLayoutSubscriptions = () => (
   <>
     <Outlet />
-  </> 
+  </>
 )
 
 const AppLayoutAffilateDashboard = () => (
@@ -799,6 +801,14 @@ export const router = createBrowserRouter([
                 path: '',
                 element: <AffiliateBonusLayout />,
               },
+              {
+                path: 'add',
+                element: <AddAffiliateBonusLayout />,
+              },
+              {
+                path: 'edit/:bonusId',
+                element: <EditAffiliateBonusLayout />,
+              },
             ]
           },
           {
@@ -1009,25 +1019,25 @@ export const router = createBrowserRouter([
           },
           {
             path: "My_Subscriptions",
-            element: <AppLayoutSubscriptions/>,
-            children :[
+            element: <AppLayoutSubscriptions />,
+            children: [
               {
                 path: '',
-                element: <SubscriptionsLayout/>,
+                element: <SubscriptionsLayout />,
               },
               {
                 path: 'plans',
-                element: <AllPlansLayout/>,
+                element: <AllPlansLayout />,
               },
               {
                 path: "plansMethod",
-                element: <SubscriptionsPaymentLayout/>,
+                element: <SubscriptionsPaymentLayout />,
               },
               {
                 path: "method_details",
-                element: <PaymentMethodDetailsLayout/>,
+                element: <PaymentMethodDetailsLayout />,
               },
-              
+
             ]
           },
           {
