@@ -24,6 +24,7 @@ const AddHomeWorkPage = () => {
 
   const [semesterData, setSemesterData] = useState([{ name: 'first' }, { name: 'second' }]);
   const [lessonData, setLessonData] = useState([]);
+  const [allLessons, setAllLessons] = useState([]); // Store all subjects initially
   const [chapterData, setChapterData] = useState([]);
   const [allChapters, setAllChapters] = useState([]); // Store all subjects initially
   const [subjectData, setSubjectData] = useState([]);
@@ -39,6 +40,7 @@ const AddHomeWorkPage = () => {
     setChapterData(StorageHWData?.chapters || []);
     setAllChapters(StorageHWData?.chapters || []);
     setLessonData(StorageHWData?.lessons || []);
+    setAllLessons(StorageHWData?.lessons || []);
     setCategoryData(StorageHWData?.categories || []);
     setSubjectData(StorageHWData?.subjects || []);
     setAllSubjects(StorageHWData?.subjects || [])
@@ -111,7 +113,7 @@ const AddHomeWorkPage = () => {
     console.log(filteredSubjects)
   };
 
-  // Function to filter subjects by semester, category, or both
+  // Function to filter chapters by subject
   const filterChapters = (subjectId) => {
     let filteredChapters = allChapters; // Start with all subjects
 
@@ -124,6 +126,21 @@ const AddHomeWorkPage = () => {
     setChapterData(filteredChapters);
     console.log(filteredChapters)
   };
+
+    // Function to filter lessons by chapters 
+    const filterLessons = (chapterId) => {
+      let filteredLessons = allLessons; // Start with all subjects
+  
+      // If both semester and category are selected, filter by both
+      if (chapterId) {
+        filteredLessons= filteredLessons.filter(lesson => 
+          lesson.chapter_id === chapterId
+        ) ;
+      }
+      setLessonData(filteredLessons);
+      console.log(filteredLessons)
+    };
+  
 
   const handleOpenSelectSemester = () => {
     setOpenSelectSemester(!openSelectSemester);
@@ -242,6 +259,8 @@ const AddHomeWorkPage = () => {
     setOpenSelectChapter(false);
     console.log('Selected Chapter:', selectedOptionName);
     console.log('Chapter ID:', selectedOptionValue);
+
+    filterLessons(parseInt(selectedOptionValue))
   };
 
   const handleSelectSubject = (e) => {
