@@ -115,17 +115,44 @@ const StudentPage = () => {
               setOpenDialog(null);
        };
 
-       const handleDelete = async (studentId) => {
+       const handleStatus = async (studentId, studentName, status) => {
+              // setIsLoading(true)
+              setStudentsChanged(!studentsChanged)
+              try {
+                     const response = await axios.put(`https://bdev.elmanhag.shop/admin/student/status/${studentId}`, { status }, {
+                            headers: {
+                                   Authorization: `Bearer ${auth.user.token}`,
+                            },
+                     });
+
+                     if (response.status === 200) {
+                            auth.toastSuccess(`${studentName} ${response.data.success}  successfully`)
+                            console.log("responsesssd", response)
+                     } else {
+                            auth.toastError(`${studentName} Failed To ${response.data.success}`)
+                     }
+              } catch (error) {
+                     auth.toastError('Error', error)
+                     console.error('Error change Status student:', error);
+              } /* finally {
+
+                     setIsLoading(false)
+              } */
+       };
+
+       const handleDelete = async (studentId, studentName) => {
               setIsDeleting(true);
               const success = await deleteStudent(studentId, auth.user.token);
               setIsDeleting(false);
               handleCloseDialog();
 
               if (success) {
-                     auth.toastSuccess('Student deleted successfully!');
+                     auth.toastSuccess(`${studentName} deleted successfully!`);
                      setStudentsChanged(!studentsChanged)
+                     console.log('studentId', studentId)
               } else {
-                     auth.toastError('Failed to delete student.');
+                     console.log('studentId', studentId)
+                     auth.toastError(`Failed to delete ${studentName}.`);
               }
        };
 
@@ -228,6 +255,9 @@ const StudentPage = () => {
                                                         <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Name Phone</th>
                                                         <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Country City</th>
                                                         <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Category</th>
+                                                        <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Type</th>
+                                                        <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Job</th>
+                                                        <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Last Login</th>
                                                         <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Free / Paid</th>
                                                         <th className="min-w-[120px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Status</th>
                                                         <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
@@ -244,17 +274,32 @@ const StudentPage = () => {
                                                                <td
                                                                       className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                                >
-                                                                      {student?.name || "null"} <br /> {student?.phone || "null"}
+                                                                      {student?.name || "-"} <br /> {student?.phone || "-"}
                                                                </td>
                                                                <td
                                                                       className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                                >
-                                                                      {student.country?.name || "null"} <br /> {student.city?.name || "null"}
+                                                                      {student.country?.name || "-"} <br /> {student.city?.name || "-"}
                                                                </td>
                                                                <td
                                                                       className="min-w-[120px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                                >
-                                                                      {student.category?.name || "null"}
+                                                                      {student.category?.name || "-"}
+                                                               </td>
+                                                               <td
+                                                                      className="min-w-[120px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                               >
+                                                                      {student?.gender || "-"}
+                                                               </td>
+                                                               <td
+                                                                      className="min-w-[120px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                               >
+                                                                      {student.student_job?.job || "-"}
+                                                               </td>
+                                                               <td
+                                                                      className="min-w-[120px] sm:min-w-[80px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                               >
+                                                                      {student.logins?.updated_at || '-'}
                                                                </td>
                                                                <td
                                                                       className="min-w-[120px] sm:min-w-[80px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
@@ -264,7 +309,21 @@ const StudentPage = () => {
                                                                <td
                                                                       className="min-w-[120px] sm:min-w-[80px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                                >
-                                                                      {student.status === "1" ? "Active" : "Pending"}
+                                                                      {student.status === 1 && (
+                                                                             <>
+                                                                                    <button type="button" className='bg-green-500 text-center px-4 py-2 rounded-xl text-white' onClick={() => handleStatus(student.id, student.name, 0)}>
+                                                                                           {/* {isLoading ? <div className='w-9'><Loading /></div> : 'Approve'} */}
+                                                                                           Active
+                                                                                    </button>
+                                                                             </>
+                                                                      )}
+                                                                      {student.status === 0 && (
+                                                                             <>
+                                                                                    <button type="button" className='bg-mainColor text-center px-4 py-2 rounded-xl text-white' onClick={() => handleStatus(student.id, student.name, 1)}>
+                                                                                           Benned
+                                                                                    </button>
+                                                                             </>
+                                                                      )}
                                                                </td>
                                                                <td
                                                                       className="min-w-[100px] sm:min-w-[80px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
@@ -287,7 +346,7 @@ const StudentPage = () => {
                                                                                                                        <div className="flex items-center">
                                                                                                                               <div className="mt-2 text-center">
                                                                                                                                      <DialogTitle as="h3" className="text-xl font-semibold leading-10 text-gray-900">
-                                                                                                                                            You will delete {student?.name || "null"}
+                                                                                                                                            You will delete {student?.name || "-"}
                                                                                                                                      </DialogTitle>
                                                                                                                               </div>
                                                                                                                        </div>
@@ -295,7 +354,7 @@ const StudentPage = () => {
                                                                                                                 <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                                                                                                                        <button
                                                                                                                               type="button"
-                                                                                                                              onClick={() => handleDelete(student.id)}
+                                                                                                                              onClick={() => handleDelete(student.id, student.name)}
                                                                                                                               disabled={isDeleting}
                                                                                                                               className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
                                                                                                                        >
@@ -322,7 +381,7 @@ const StudentPage = () => {
                                           </tbody>
                                    </table>
                             </div>
-                     </div>
+                     </div >
               </>
        );
 };
