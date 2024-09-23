@@ -82,6 +82,7 @@ import {
   PaymentMethodDetailsLayout,
   LessonsLayout,
   ProfileStudent,
+  ComplaintLayout,
   AddAffiliateBonusLayout,
   EditAffiliateBonusLayout
 } from "./Layouts/AllLayouts";
