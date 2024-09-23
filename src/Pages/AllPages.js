@@ -124,6 +124,9 @@ export { default as SubscriptionsPaymentPage } from "./Student/StudentSubscripti
 export { default as AllPlansPage } from "./Student/StudentSubscriptions/AllPlansPage";
 export { default as PaymentMethodDetailsPage } from "./Student/StudentSubscriptions/PaymentMethodDetailsPage";
 
+/* StudentComplaint and suggestion */
+export { default as ComplaintPage } from "./Student/Complaint/ComplaintPage";
+
 /* /////Student Dashboard Page */
 
 /* Affilate Dashboard Page */

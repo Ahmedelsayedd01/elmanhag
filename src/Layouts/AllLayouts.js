@@ -138,6 +138,9 @@ export { default as SubscriptionsPaymentLayout } from "./Student/SubscriptionsPa
 export { default as AllPlansLayout } from "./Student/AllPlansLayout";
 export { default as PaymentMethodDetailsLayout } from "./Student/PaymentMethodDetailsLayout";
 
+/* StudentComplaint and suggestion */
+export { default as ComplaintLayout } from "./Student/ComplaintLayout";
+
 // Units
 export { default as UnitsLayout } from "./Student/UnitsLayout";
 

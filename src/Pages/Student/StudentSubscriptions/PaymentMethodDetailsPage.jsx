@@ -98,29 +98,35 @@ const PaymentMethodDetailsPage = () => {
         <img src={paymentMethod.thumbnail_link} alt={paymentMethod.title} className="w-15 h-10 mb-4" />
       </div>
 
-      <form onSubmit={handleSubmit} className="w-full flex flex-col items-center justify-center gap-y-3">
-        <div className="w-full flex flex-wrap items-center justify-start gap-3">
-          {paymentMethod.title === 'vodafon cach' && (
+      <form onSubmit={handleSubmit} className="w-full flex flex-col items-center justify-center gap-y-5">
+        <div className="w-full flex flex-col flex-wrap justify-start gap-5">
+          {paymentMethod.title === 'visa' && (
             <>
+            <div className="lg:w-[30%] sm:w-full">
               <InputCustom
                 type="text"
                 placeholder="رقم البطاقة"
                 value={cardNumber}
                 onChange={(e) => setCardNumber(e.target.value)}
                 />
+              </div>
+              <div className="lg:w-[30%] sm:w-full">
               <InputCustom
                 type="date"
                 placeholder="تاريخ الانتهاء"
                 value={expirationDate}
                 onChange={(e) => setExpirationDate(e.target.value)}
               />
+              </div>
+              <div className="lg:w-[30%] sm:w-full">
               <InputCustom
                 type="text"
                 placeholder="رمز الامان"
                 value={cvv}
                 onChange={(e) => setCvv(e.target.value)}
               />
-
+               </div>
+               <div className="lg:w-[30%] sm:w-full">
               <InputCustom
                 type="text"
                 upload={true}
@@ -135,23 +141,21 @@ const PaymentMethodDetailsPage = () => {
                 onChange={handleReceiptImageChange}
                 ref={uploadReceiptImageRef}
               />
+              </div>
             </>
           )}
 
-          {paymentMethod.title === 'fawry' && (
+          {paymentMethod.title === 'vodafon cach' && (
             <>
+              <div className="lg:w-[30%] sm:w-full">
               <InputCustom
                 type="text"
                 placeholder="رقم التليفون"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />
-              <InputCustom
-                type="email"
-                placeholder="البريد الإلكتروني"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+              </div>
+              <div className="lg:w-[30%] sm:w-full">
               <InputCustom
                 type="text"
                 upload={true}
@@ -166,6 +170,36 @@ const PaymentMethodDetailsPage = () => {
                 onChange={handleReceiptImageChange}
                 ref={uploadReceiptImageRef}
               />
+              </div>
+            </>
+          )}
+
+          {paymentMethod.title === 'fawry' && (
+            <>
+              <div className="lg:w-[30%] sm:w-full">
+              <InputCustom
+                type="text"
+                placeholder="رقم التليفون"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+              />
+              </div>
+              <div className="lg:w-[30%] sm:w-full">
+              <InputCustom
+                type="text"
+                upload={true}
+                placeholder="صوره الايصال"
+                value={receiptImage}
+                readonly={true}
+                onClick={handleReceiptImageClick}
+              />
+              <input
+                type="file"
+                className="hidden"
+                onChange={handleReceiptImageChange}
+                ref={uploadReceiptImageRef}
+              />
+              </div>
             </>
           )}
         </div>
