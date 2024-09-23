@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SoonIcon = () => (
-    <svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="450" height="450" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M500 382.4H0V382.65H500V382.4Z" fill="#EBEBEB"/>
     <path d="M449.9 398.49H416.78V398.74H449.9V398.49Z" fill="#EBEBEB"/>
     <path d="M301.44 398.62H292.75V398.87H301.44V398.62Z" fill="#EBEBEB"/>
