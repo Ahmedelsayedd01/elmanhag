@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom'
 const NavbarStudent = () => {
     const auth = useAuth();
     const [userName, setUserName] = useState('');
+    const [userImage, setUserImage] = useState('');
     const [studentEducation, setStudentEducation] = useState('');
     const [studentCategory, setStudentCategory] = useState('');
     const [studentJob, setStudentJob] = useState('');
@@ -44,6 +45,7 @@ const NavbarStudent = () => {
     useEffect(() => {
         if (auth.user) {
             setUserName(auth.user.name || '');
+            setUserImage(auth.user.image_link || '')
             setStudentEducation(auth.user.education_id || '');
             setStudentCategory(auth.user.category_id || '');
             setStudentJob(auth.user.sudent_jobs_id || '');
@@ -89,17 +91,20 @@ const NavbarStudent = () => {
     return (
         <main className="bg-white p-4 flex flex-col items-center">
             <div className="flex items-center justify-between w-full max-w-6xl">
-                <div className="flex w-full justify-between mr-8">
-                    <div>
-                    <h3 className="text-red-500 bg-white p-2 rounded-md mb-2 text-2xl font-bold">
-                        مرحباً بك {jobName} {userName}
-                    </h3>
-                    <p className="text-lg text-gray-500">{categoryName}</p>
-                    {/* <p className="text-lg text-gray-500">{educationName}</p> */}
+                <div className="flex w-full justify-between">
+                    <div className="flex gap-2">
+                        <img src={userImage} alt="userImage" className="w-[72px] h-[72px] bg-[#E8E8E8] rounded-full" />
+                            <div>
+                            <h3 className="text-red-500 bg-white p-2 rounded-md text-2xl font-bold">
+                            مرحباً بك {jobName} {userName}
+                            </h3>
+                            <p className="text-lg text-gray-600 mr-3">{categoryName}</p>
+                            </div>
                     </div>
+                    {/* <p className="text-lg text-gray-500">{educationName}</p> */}
                     <div className="flex gap-5">
                         <Link to="My_Subscriptions">
-                            <button type='button' className="px-4 py-3 mx-auto text-2xl  text-secoundColor bg-mainColor rounded-2xl">My Subscriptions</button>
+                            <button type='button' className="px-6 py-3 mx-auto text-3xl text-secoundColor bg-mainColor rounded-2xl">اشتراكاتي</button>
                         </Link>
                          {/* <button type='button' className="px-4 py-3 mx-auto text-2xl  text-secoundColor bg-mainColor rounded-2xl" onClick={handleLogout}>Log Out</button> */}
                     </div>

@@ -16,7 +16,6 @@ const LessonsPage = ({ subjectId, lessonId }) => {
   const [subjectData, setSubjectData] = useState([]);
   const [chapterID, setChapterID] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [showErrorPopup, setShowErrorPopup] = useState(false);
 
   const navigate = useNavigate();
 
@@ -43,24 +42,21 @@ const LessonsPage = ({ subjectId, lessonId }) => {
         );
 
         if (response.status === 200) {
-          console.log(response.data)
+          console.log(response.data);
           if (response.data.lesson) {
             setLessons(response.data.lesson);
             setChapterID(response.data.lesson?.chapter_id || '');
           } else {
             setErrorMessage('Lesson data not found.');
-            setShowErrorPopup(true);
           }
         }
       } catch (error) {
-        console.error('Error fetching Lessons data:', error);
+        console.error('Error fetching Lessons data:', error.response.data.faield);
 
-        if (error.response && error.response.status === 500) {
-          setErrorMessage('An error occurred while fetching lessons.');
-          setShowErrorPopup(true);
+        if (error) {
+          setErrorMessage(error.response.data.faield || 'An unexpected error occurred.');
         } else {
           setErrorMessage('An unexpected error occurred.');
-          setShowErrorPopup(true);
         }
       } finally {
         setIsLoading(false);
@@ -74,7 +70,6 @@ const LessonsPage = ({ subjectId, lessonId }) => {
     if (lessons.resources && lessons.resources.length > 0) {
       setMainResource(lessons.resources[0]);
     }
-    
   }, [lessons]);
 
   const handleGoBack = () => {
@@ -100,7 +95,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
     );
   }
 
-  if (!lessons) {
+  if (!lessons && !errorMessage) {
     return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No lessons data available</div>;
   }
 
@@ -108,127 +103,121 @@ const LessonsPage = ({ subjectId, lessonId }) => {
 
   return (
     <div className="p-6 mb-20">
-      <div className="flex w-full gap-5 mb-5">
-        {/* Tab buttons */}
-        <Button
-          Text="فيديوهات"
-          Width="full"
-          BgColor={activeTab === "videos" ? "bg-mainColor" : "bg-white"}
-          Color={activeTab === "videos" ? "text-white" : "text-mainColor"}
-          handleClick={() => setActiveTab("videos")}
-        />
+      {/* Display error message in red text at the center if there's an error */}
+      {errorMessage && (
+        <div className="flex mt-10 justify-center h-screen">
+          <p className="text-red-600 text-xl font-bold">{errorMessage}</p>
+        </div>
+      )}
 
-        <Button
-          Text="مذكرات"
-          Width="full"
-          BgColor={activeTab === "pdf" ? "bg-red-600" : "bg-white"}
-          Color={activeTab === "pdf" ? "text-white" : "text-red-600"}
-          handleClick={() => setActiveTab("pdf")}
-        />
+      {!errorMessage && (
+        <>
+          <div className="flex w-full gap-5 mb-5">
+            {/* Tab buttons */}
+            <Button
+              Text="فيديوهات"
+              Width="full"
+              BgColor={activeTab === "videos" ? "bg-mainColor" : "bg-white"}
+              Color={activeTab === "videos" ? "text-white" : "text-mainColor"}
+              handleClick={() => setActiveTab("videos")}
+            />
 
-        <Button
-          Text="واجبات"
-          Width="full"
-          BgColor={activeTab === "homework" ? "bg-red-600" : "bg-white"}
-          Color={activeTab === "homework" ? "text-white" : "text-red-600"}
-          handleClick={() => setActiveTab("homework")}
-        />
+            <Button
+              Text="مذكرات"
+              Width="full"
+              BgColor={activeTab === "pdf" ? "bg-red-600" : "bg-white"}
+              Color={activeTab === "pdf" ? "text-white" : "text-red-600"}
+              handleClick={() => setActiveTab("pdf")}
+            />
 
-        <button type='button' onClick={handleGoBack}>
-          <IoIosArrowDown className="rotate-90 text-mainColor text-5xl" />
-        </button>
-      </div>
+            <Button
+              Text="واجبات"
+              Width="full"
+              BgColor={activeTab === "homework" ? "bg-red-600" : "bg-white"}
+              Color={activeTab === "homework" ? "text-white" : "text-red-600"}
+              handleClick={() => setActiveTab("homework")}
+            />
 
-      {activeTab === "videos" && mainResource &&(
-        <div>
-          {/* Main content from the first resource */}
-          <div className="w-full h-screen mb-5">
-            {mainResource.type === "video" && (
-              <div className="w-full h-screen">
-                <video className="w-full h-full object-cover" controls controlsList='nodownload'>
-                  <source src={`${mainResource.file_link}`} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            )}
-            {mainResource.type === "voice" && (
-              <div>
-                <audio className="w-full" controls>
-                  <source src={`${mainResource.file_link}`} type="audio/mp3" />
-                  Your browser does not support the audio element.
-                </audio>
-              </div>
-            )}
-            {mainResource.type === "pdf" && (
-              <div>
-                <iframe
-                  className="w-full h-96"
-                  src={`${mainResource.file_link}`}
-                  title="PDF"
-                />
-              </div>
-            )}
-
-            <div className="mt-4">
-              <h4 className="text-2xl text-mainColor font-semibold">{chapterName}</h4>
-              <p className="text-gray-900 text-lg">{lessons.description}</p>
-            </div>
+            <button type='button' onClick={handleGoBack}>
+              <IoIosArrowDown className="rotate-90 text-mainColor text-5xl" />
+            </button>
           </div>
-        </div>
-      )}
 
-      {activeTab === "pdf" && mainResource && (
-        <div className="mt-5">
-          {pdfResources.length === 0 ? (
-            <p>No PDF resources available.</p>
-          ) : (
-            <ul className="list-disc ml-5 space-y-4">
-              {pdfResources.map((pdf, index) => (
-                <li key={index} className="flex items-center">
-                  <Button
-                    Text={pdf.file_name || `PDF File ${index + 1}`}
-                    Icon={<FaDownload />}
-                    Width="auto"
-                    BgColor="bg-mainColor"
-                    Color="text-white"
-                    handleClick={() => handleDownload(pdf.file_link, pdf.file_name || `PDF_File_${index + 1}`)}
-                  />
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      )}
+          {activeTab === "videos" && mainResource && (
+            <div>
+              {/* Main content from the first resource */}
+              <div className="w-full h-screen mb-5">
+                {mainResource.type === "video" && (
+                  <div className="w-full h-screen">
+                    <video className="w-full h-full object-cover" controls controlsList='nodownload'>
+                      <source src={`${mainResource.file_link}`} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                )}
+                {mainResource.type === "voice" && (
+                  <div>
+                    <audio className="w-full" controls>
+                      <source src={`${mainResource.file_link}`} type="audio/mp3" />
+                      Your browser does not support the audio element.
+                    </audio>
+                  </div>
+                )}
+                {mainResource.type === "pdf" && (
+                  <div>
+                    <iframe
+                      className="w-full h-96"
+                      src={`${mainResource.file_link}`}
+                      title="PDF"
+                    />
+                  </div>
+                )}
 
-      {activeTab === "homework" && mainResource && (
-        <div className="mt-5">
-          {lessons.homework && lessons.homework.length === 0 ? (
-            <p>No homework assigned for this lesson.</p>
-          ) : (
-            <ul className="list-disc ml-5">
-              {lessons.homework && lessons.homework.map((hw, index) => (
-                <li key={index} className="text-gray-700">{hw}</li>
-              ))}
-            </ul>
-          )}
-        </div>
-      )}
-
-      {showErrorPopup && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm mx-auto">
-            <h2 className="text-xl font-bold text-red-600 mb-4">Error</h2>
-            <p className="text-gray-700 mb-4">{errorMessage}</p>
-            <div className="flex justify-end">
-              <button 
-                onClick={() => { setShowErrorPopup(false); handleGoBack(); }}
-                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
-              >
-                Back
-              </button>
+                <div className="mt-4">
+                  <h4 className="text-2xl text-mainColor font-semibold">{chapterName}</h4>
+                  <p className="text-gray-900 text-lg">{lessons.description}</p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          )}
+
+          {activeTab === "pdf" && mainResource && (
+            <div className="mt-5">
+              {pdfResources.length === 0 ? (
+                <p>No PDF resources available.</p>
+              ) : (
+                <ul className="list-disc ml-5 space-y-4">
+                  {pdfResources.map((pdf, index) => (
+                    <li key={index} className="flex items-center">
+                      <Button
+                        Text={pdf.file_name || `PDF File ${index + 1}`}
+                        Icon={<FaDownload />}
+                        Width="auto"
+                        BgColor="bg-mainColor"
+                        Color="text-white"
+                        handleClick={() => handleDownload(pdf.file_link, pdf.file_name || `PDF_File_${index + 1}`)}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
+
+          {activeTab === "homework" && mainResource && (
+            <div className="mt-5">
+              {lessons.homework && lessons.homework.length === 0 ? (
+                <p>No homework assigned for this lesson.</p>
+              ) : (
+                <ul className="list-disc ml-5">
+                  {lessons.homework && lessons.homework.map((hw, index) => (
+                    <li key={index} className="text-gray-700">{hw}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
+        </>
       )}
     </div>
   );
