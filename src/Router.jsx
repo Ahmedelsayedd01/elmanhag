@@ -402,6 +402,7 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: 'signup',
+                index: true,
                 element: <SignUpPage />,
               },
               {
