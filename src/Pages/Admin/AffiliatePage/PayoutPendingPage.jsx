@@ -87,7 +87,8 @@ const PayoutPendingPage = () => {
        };
 
        const handleApprove = async (pendingId) => {
-              setIsLoading(true)
+              // setIsLoading(true)
+              setStateChanged(!stateChanged)
               try {
                      const response = await axios.post(`https://bdev.elmanhag.shop/admin/affilate/payout/approve/${pendingId}`, {}, {
                             headers: {
@@ -96,7 +97,6 @@ const PayoutPendingPage = () => {
                      });
 
                      if (response.status === 200) {
-                            setStateChanged(!stateChanged)
                             auth.toastSuccess('Payout Approve successfully')
                      } else {
                             auth.toastError('Payout Failed to Approve')
