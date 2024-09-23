@@ -99,7 +99,7 @@ const EditLivePage = () => {
         setPrice(liveEdit.price || 0);
         setLiveIncluded(liveEdit.inculded||0) 
 
-        if (educationData !== null) {
+        if (educationData) {
           const filteredEducationLive= educationData.find(
                 (education) => education.id === liveEdit.education_id
           );
@@ -115,15 +115,15 @@ const EditLivePage = () => {
 
         if (categoryData !== null) {
           const filteredCategoryLive= categoryData.find(
-                (category) => category.id === liveEdit.subject_id
+                (category) => category.id === liveEdit.category_id
           );
           if (filteredCategoryLive) {
-            setSelectSubject(filteredCategoryLive.name);
-            setSelectSubjectId(filteredCategoryLive.id);
+            setSelectCategory(filteredCategoryLive.name);
+            setSelectCategoryId(filteredCategoryLive.id);
           }
           else {
-            setSelectSubject('Select Subject');
-            setSelectSubjectId(null);
+            setSelectCategory('Select Category');
+            setSelectCategoryId(null);
           }
         }
         
