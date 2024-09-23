@@ -369,7 +369,7 @@ const SignUpPage = () => {
       auth.login(data); // Call auth.login with the updated data
 
       setIsLoading(false);
-      navigate("/download", { replace: true });
+      navigate("/dashboard", { replace: true });
     }
   }, [data]);
 
@@ -520,7 +520,7 @@ const SignUpPage = () => {
       if (response.status === 200) {
         const userData = {
           ...response.data.user,
-          roles: ['studentSignup'] // Assuming type represents the user's role
+          roles: ['student'] // Assuming type represents the user's role
         };
         setData(userData);
         setType(response.data.user.role);
@@ -550,38 +550,81 @@ const SignUpPage = () => {
   return (
     <>
       <form onSubmit={handleSubmit} className="w-full flex flex-col items-start justify-center gap-4">
-        <span className='text-thirdColor text-2xl font-medium'>Come on, Sign up</span>
         <div className="w-full flex items-center justify-between">
-          <div className="relative w-1/3 flex items-center justify-start ">
-            <span className={`${stateData === 1 || stateData === 2 || stateData === 3 ? 'text-white bg-mainColor' : 'text-mainColor bg-white'} text-3xl font-semibold border-2 border-mainColor px-4 py-1  rounded-full`}>
-              1
+          <div className="relative w-1/3 flex items-center justify-start">
+            <span className={`${stateData === 3 ? "text-white bg-mainColor before:content-[''] before:absolute before:top-2/4 before:right-[-30%] before:h-1 before:w-[100%] before:bg-mainColor before:transition-all duration-500 ease-in-out" : "text-mainColor bg-white before:w-[0%] before:bg-transparent before:transition-all duration-500 ease-out"} before:rounded-xl text-3xl font-semibold border-2 border-mainColor px-4 py-1 rounded-full`}>
+              3
             </span>
           </div>
           <div className="relative w-1/3 flex items-center justify-center ">
-            <span className={`${stateData === 2 || stateData === 3 ? "text-white bg-mainColor  before:content-[''] before:absolute before:top-2/4 before:left-[-70%] before:h-1 before:w-[100%] before:bg-mainColor before:transition-all duration-500 ease-out" : "text-mainColor bg-white before:content-[''] before:absolute before:top-2/4 before:left-[-70%] before:h-1 before:w-[10%] before:bg-mainColor before:transition-all duration-500 ease-in-out"} before:rounded-xl text-3xl font-semibold border-2 border-mainColor px-4 py-1  rounded-full`}>
+            <span className={`${stateData === 2 || stateData === 3 ? "text-white bg-mainColor  before:content-[''] before:absolute before:top-2/4 before:right-[-70%] before:h-1 before:w-[100%] before:bg-mainColor before:transition-all duration-500 ease-out" : "text-mainColor bg-white before:content-[''] before:absolute before:top-2/4 before:right-[-70%] before:h-1 before:w-[10%] before:bg-mainColor before:transition-all duration-500 ease-in-out"} before:rounded-xl text-3xl font-semibold border-2 border-mainColor px-4 py-1  rounded-full`}>
               2
             </span>
           </div>
-          <div className="relative w-1/3 flex items-center justify-end">
-            <span className={`${stateData === 3 ? "text-white bg-mainColor before:content-[''] before:absolute before:top-2/4 before:left-[-30%] before:h-1 before:w-[100%] before:bg-mainColor before:transition-all duration-500 ease-in-out" : "text-mainColor bg-white before:w-[0%] before:bg-transparent before:transition-all duration-500 ease-out"} before:rounded-xl text-3xl font-semibold border-2 border-mainColor px-4 py-1 rounded-full`}>
-              3
+          <div className="relative w-1/3 flex items-center justify-end ">
+            <span className={`${stateData === 1 || stateData === 2 || stateData === 3 ? 'text-white bg-mainColor' : 'text-mainColor bg-white'} text-3xl font-semibold border-2 border-mainColor px-4 py-1  rounded-full`}>
+              1
             </span>
           </div>
 
 
         </div>
+        <span className='w-full text-right text-thirdColor text-2xl'>بيانات الطالب</span>
         {/* State 1 */}
         {stateData === 1 &&
           (
-            <div className="w-full flex flex-col gap-6 items-end">
-              <div className="w-full flex xl:flex-row flex-col gap-4 items-start">
-                <InputCustom type={"text"} placeholder={"اسم الطالب"} value={studentName} onChange={(e) => setStudentName(e.target.value)} />
-                <InputCustom type={"number"} paddinRight='pr-2' placeholder={"رقم الطالب"} value={studentPhone} onChange={(e) => setStudentPhone(e.target.value)} />
+            <div className="w-full flex flex-col gap-6 items-start">
+              <div className="w-full flex xl:flex-row-reverse flex-col gap-4 items-start">
+                <InputCustom
+                  type={"text"}
+                  textDirection={'text-right'}
+                  paddinRight="pr-4"
+                  paddinLeft="pl-0"
+                  placeholder={"اسم الطالب"}
+                  value={studentName}
+                  onChange={(e) => setStudentName(e.target.value)}
+                />
+                <InputCustom
+                  type={"number"}
+                  textDirection={'text-right'}
+                  paddinRight="pr-4"
+                  paddinLeft="pl-0"
+                  placeholder={"رقم الطالب"}
+                  value={studentPhone}
+                  onChange={(e) => {
+                    setStudentPhone(e.target.value);
+                    setStudentEmail(e.target.value + '@elmanhag.com');
+                  }}
+
+                />
               </div>
-              <InputCustom type={"email"} placeholder={"ايميل الطالب"} value={studentEmail} onChange={(e) => setStudentEmail(e.target.value)} />
-              <InputCustom type={"password"} placeholder={"كلمة السر"} value={studentPassword} onChange={(e) => setStudentPassword(e.target.value)} />
-              <InputCustom type={"password"} placeholder={"تاكيد كلمة السر"} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+              <InputCustom
+                type={"email"}
+                textDirection={'text-right'}
+                paddinRight="pr-4"
+                paddinLeft="pl-0"
+                placeholder={"ايميل الطالب"}
+                value={studentEmail}
+                onChange={(e) => setStudentEmail(e.target.value)}
+              />
+              <InputCustom
+                type={"password"}
+                iconDirection='left-2'
+                textDirection={'text-right'}
+                placeholder={"كلمة السر"}
+                value={studentPassword}
+                onChange={(e) => setStudentPassword(e.target.value)}
+              />
+              <InputCustom
+                type={"password"}
+                iconDirection='left-2'
+                textDirection={'text-right'}
+                placeholder={"تأكيد كلمة السر"}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
             </div>
+
           )
         }
         {/* State 2 */}
@@ -692,8 +735,8 @@ const SignUpPage = () => {
           {stateData === 1 &&
             (
               <>
-                <div className="w-full text-end">
-                  <Button Text="Next" handleClick={handleClickNext} />
+                <div className="w-full text-start">
+                  <Button Text="التالى" handleClick={handleClickNext} />
                 </div>
 
               </>
@@ -702,15 +745,15 @@ const SignUpPage = () => {
           {stateData === 2 &&
             (
               <>
-                <Button Text="Prev" handleClick={handleClickPrev} />
-                <Button Text="Next" handleClick={handleClickNext} />
+                <Button Text="التالى" handleClick={handleClickNext} />
+                <Button Text="السابق" handleClick={handleClickPrev} />
               </>
             )
           }
           {stateData === 3 &&
             (
               <>
-                <Button Text="Prev" handleClick={handleClickPrev} />
+                <Button Text="السابق" handleClick={handleClickPrev} />
               </>
             )
           }
@@ -726,9 +769,9 @@ const SignUpPage = () => {
           )} */}
 
 
-        </div >
+        </div>
         <button type="submit" className="w-full text-center text-2xl font-medium text-secoundColor px-6 py-3 bg-mainColor rounded-2xl">sign up</button>
-      </form >
+      </form>
     </>
   )
 }
