@@ -15,6 +15,8 @@ const AddPage = () => {
        const dropdownCountryStudentRef = useRef();
        const dropdownCityStudentRef = useRef();
        const dropdownCategoryStudentRef = useRef();
+       const StudentTypeRef = useRef(null);
+       const StudentJobRef = useRef(null);
        const dropdownLanguageStudentRef = useRef();
        const dropdownRelationStudentRef = useRef();
 
@@ -28,6 +30,9 @@ const AddPage = () => {
        const [studentAcademicYear, setStudentAcademicYear] = useState('')
        const [studentEmail, setStudentEmail] = useState('')
        const [studentPassword, setStudentPassword] = useState('')
+
+       const [studentType, setStudentType] = useState('');
+       const [studentJob, setStudentJob] = useState('');
        /* Parent State */
        const [parentName, setParentName] = useState('')
        const [parentNumber, setParentNumber] = useState('')
@@ -40,14 +45,25 @@ const AddPage = () => {
        const [studentCityState, setStudentCityState] = useState('City')
        const [cityId, setCityId] = useState('')
        const [cities, setCities] = useState([])
+       const [educations, setEducations] = useState([])
        const [categoryState, setCategoryState] = useState('Academic Year')
+       const [studentTypeState, setStudentTypeState] = useState('Type');
+       const [studentJobState, setStudentJobState] = useState('What do you want?');
+
        const [categoryId, setCategoryId] = useState('')
        const [category, setCategory] = useState([])
+
+       const [studentTypes, setStudentTypes] = useState([{ name: 'male' }, { name: 'female' }]);
+       const [studentJobs, setStudentJobs] = useState([]);
+
+       const [studentTypeName, setStudentTypeName] = useState('')
+       const [studentJobId, setStudentJobId] = useState('')
 
        const [languageStudent, setLanguageStudent] = useState('Type of Learning')
        const [languageId, setLanguageId] = useState('')
 
        const [relationStudent, setRelationStudent] = useState('Choose Relation')
+       const [relations, setRelations] = useState([])
        const [relationId, setRelationId] = useState('')
 
 
@@ -55,24 +71,53 @@ const AddPage = () => {
        const [openCity, setOpenCity] = useState(false);
        const [openLanguage, setOpenLanguage] = useState(false);
        const [openCategory, setOpenCategory] = useState(false);
+       const [openStudentType, setOpenStudentType] = useState(false);
+       const [openStudentJob, setOpenStudentJob] = useState(false);
        const [openRelation, setOpenRelation] = useState(false);
 
        const [isLoading, setIsLoading] = useState(false);
 
 
        const auth = useAuth();
-       useEffect(() => {
-              const adminData = JSON.parse(localStorage.getItem('students'));
-              setAdminData(adminData)
-              setCountries(adminData.countries)
-              setCategory(adminData.categories)
-       }, []); // Remove dependencies if you don't need to update on every change
 
+       // useEffect(() => {
+       //        const adminData = JSON.parse(localStorage.getItem('students'));
+       //        setAdminData(adminData)
+       //        setCountries(adminData.countries)
+       //        setCategory(adminData.categories)
+       // }, []); // Remove dependencies if you don't need to update on every change
+
+       useEffect(() => {
+
+              const fetchSupData = async () => {
+                     try {
+                            const response = await axios.get('https://bdev.elmanhag.shop/student/setting/view', {});
+                            if (response.status === 200) {
+                                   setCountries(response.data.country)
+                                   setCities(response.data.city)
+                                   setCategory(response.data.category)
+                                   setEducations(response.data.education)
+                                   setRelations(response.data.parentRelation)
+                                   setStudentJobs(response.data.studentJobs)
+                                   console.log('response fetchSupData:', response.data);
+                            }
+                     } catch (error) {
+                            console.error('Error fetching fetchSupData data:', error);
+                     }
+              };
+
+              fetchSupData();
+
+
+       }, [])
 
        const handleOpenCountryStudent = () => {
               setOpenCountry(!openCountry);
               setOpenCity(false);
               setOpenLanguage(false);
+              setOpenCategory(false);
+              setOpenStudentJob(false);
+              setOpenStudentType(false);
               setOpenRelation(false);
        }
        const handleOpenCityStudent = () => {
@@ -80,12 +125,17 @@ const AddPage = () => {
               setOpenCity(!openCity);
               setOpenLanguage(false);
               setOpenCategory(false);
+              setOpenStudentJob(false);
+              setOpenStudentType(false);
               setOpenRelation(false);
        }
        const handleOpenLanguageStudent = () => {
               setOpenCountry(false);
               setOpenCity(false);
               setOpenLanguage(!openLanguage);
+              setOpenCategory(false);
+              setOpenStudentJob(false);
+              setOpenStudentType(false);
               setOpenRelation(false);
 
        }
@@ -94,19 +144,65 @@ const AddPage = () => {
               setOpenCity(false);
               setOpenLanguage(false);
               setOpenCategory(!openCategory);
+              setOpenStudentJob(false);
+              setOpenStudentType(false);
               setOpenRelation(false);
 
        }
+       const handleOpenStudentType = () => {
+              setOpenCountry(false);
+              setOpenCity(false);
+              setOpenLanguage(false);
+              setOpenCategory(false);
+              setOpenStudentType(!openStudentType);
+              setOpenStudentJob(false);
+              setOpenRelation(false);
+       }
+       const handleOpenStudentJob = () => {
+              setOpenCountry(false);
+              setOpenCity(false);
+              setOpenLanguage(false);
+              setOpenCategory(false);
+              setOpenStudentType(false);
+              setOpenStudentJob(!openStudentJob);
+              setOpenRelation(false);
+       }
+
+       // const handleCountryStudent = (e) => {
+       //        const inputElement = e.currentTarget.querySelector('.inputVal');
+       //        const selectedOptionName = e.currentTarget.textContent.trim();
+       //        const selectedOptionValue = inputElement ? parseInt(inputElement.value) : '';
+       //        const cities = adminData.cities.filter((city) => city.country_id === selectedOptionValue)
+       //        setStudentCountry(selectedOptionName);
+       //        setCountryId(selectedOptionValue)
+       //        setOpenCountry(false);
+       //        setStudentCityState(cities.length > 0 ? 'City' : "No cities available")
+       //        setCities(cities)
+
+       //        console.log('Selected NameL:', selectedOptionName);
+       //        console.log('Selected ValueL:', selectedOptionValue);
+       // }
+       // const handleCityStudent = (e) => {
+       //        const inputElement = e.currentTarget.querySelector('.inputVal');
+       //        const selectedOptionName = e.currentTarget.textContent.trim();
+       //        const selectedOptionValue = inputElement ? inputElement.value : '';
+       //        setStudentCityState(selectedOptionName);
+       //        setCityId(parseInt(selectedOptionValue))
+       //        setOpenCity(false);
+       //        console.log('Selected NameL:', selectedOptionName);
+       //        console.log('Selected ValueL:', selectedOptionValue);
+       // }
        const handleCountryStudent = (e) => {
               const inputElement = e.currentTarget.querySelector('.inputVal');
               const selectedOptionName = e.currentTarget.textContent.trim();
               const selectedOptionValue = inputElement ? parseInt(inputElement.value) : '';
-              const cities = adminData.cities.filter((city) => city.country_id === selectedOptionValue)
+              const allCities = cities.filter((city) => city.country_id === selectedOptionValue)
+              // setStudentCountry(selectedOptionName[0].toUpperCase() + selectedOptionName.slice(1));
               setStudentCountry(selectedOptionName);
               setCountryId(selectedOptionValue)
               setOpenCountry(false);
-              setStudentCityState(cities.length > 0 ? 'City' : "No cities available")
-              setCities(cities)
+              setCitiesState(cities.length > 0 ? 'Choose City' : "No cities available")
+              setCities(allCities)
 
               console.log('Selected NameL:', selectedOptionName);
               console.log('Selected ValueL:', selectedOptionValue);
@@ -115,6 +211,7 @@ const AddPage = () => {
               const inputElement = e.currentTarget.querySelector('.inputVal');
               const selectedOptionName = e.currentTarget.textContent.trim();
               const selectedOptionValue = inputElement ? inputElement.value : '';
+              // setCitiesState(selectedOptionName[0].toUpperCase() + selectedOptionName.slice(1));
               setStudentCityState(selectedOptionName);
               setCityId(parseInt(selectedOptionValue))
               setOpenCity(false);
@@ -141,6 +238,24 @@ const AddPage = () => {
               console.log('Selected NameL:', selectedOptionName);
               console.log('Selected ValueL:', selectedOptionValue);
        }
+       const handleStudentType = (e) => {
+              const inputElement = e.currentTarget.querySelector('.inputVal');
+              const selectedOptionName = e.currentTarget.textContent.trim();
+              const selectedOptionValue = inputElement ? inputElement.value : '';
+              setStudentTypeState(selectedOptionName[0].toUpperCase() + selectedOptionName.slice(1));
+              setStudentType(selectedOptionName.toLowerCase());
+              setStudentTypeName(selectedOptionValue);
+              setOpenStudentType(false);
+       };
+       const handleStudentJob = (e) => {
+              const inputElement = e.currentTarget.querySelector('.inputVal');
+              const selectedOptionName = e.currentTarget.textContent.trim();
+              const selectedOptionValue = inputElement ? inputElement.value : '';
+              setStudentJobState(selectedOptionName[0].toUpperCase() + selectedOptionName.slice(1));
+              setStudentJob(selectedOptionName);
+              setStudentJobId(parseInt(selectedOptionValue));
+              setOpenStudentJob(false);
+       };
 
        const handleOpenRelationStudent = () => {
               setOpenLanguage(false);
@@ -188,6 +303,14 @@ const AddPage = () => {
                      auth.toastError('Please Choose Category.');
                      return;
               }
+              if (!studentType) {
+                     auth.toastError('Please Choose your type.');
+                     return;
+              }
+              if (!studentJobId) {
+                     auth.toastError('Please Choose What do you want?.');
+                     return;
+              }
               if (!relationId) {
                      auth.toastError('Please Choose Relation.');
                      return;
@@ -202,6 +325,8 @@ const AddPage = () => {
                             country_id: countryId,
                             city_id: cityId,
                             category_id: categoryId,
+                            gender: studentTypeName,
+                            sudent_jobs_id: studentJobId,
                             email: studentEmail,
                             password: studentPassword,
                             parent_name: parentName,
@@ -351,7 +476,7 @@ const AddPage = () => {
                                                  handleOpenOption={handleLanguageStudent}
                                                  stateoption={languageStudent}
                                                  openMenu={openLanguage}
-                                                 options={adminData.education}
+                                                 options={educations}
                                           />
                                    </div>
                                    <div className="lg:w-[30%] sm:w-full">
@@ -376,6 +501,27 @@ const AddPage = () => {
                                                  stateoption={categoryState}
                                                  openMenu={openCategory}
                                                  options={category}
+                                          />
+                                   </div>
+                                   <div className="lg:w-[30%] sm:w-full">
+                                          <DropDownMenu
+                                                 ref={StudentTypeRef}
+                                                 handleOpen={handleOpenStudentType}
+                                                 handleOpenOption={handleStudentType}
+                                                 stateoption={studentTypeState}
+                                                 openMenu={openStudentType}
+                                                 options={studentTypes}
+                                          />
+                                   </div>
+
+                                   <div className="lg:w-[30%] sm:w-full">
+                                          <DropDownMenu
+                                                 ref={StudentJobRef}
+                                                 handleOpen={handleOpenStudentJob}
+                                                 handleOpenOption={handleStudentJob}
+                                                 stateoption={studentJobState}
+                                                 openMenu={openStudentJob}
+                                                 options={studentJobs}
                                           />
                                    </div>
                                    <div className="lg:w-[30%] sm:w-full">
@@ -404,7 +550,7 @@ const AddPage = () => {
                                                  handleOpenOption={handleRelationStudent}
                                                  stateoption={relationStudent}
                                                  openMenu={openRelation}
-                                                 options={adminData.relations}
+                                                 options={relations}
                                           />
                                    </div>
                                    <div className="lg:w-[30%] sm:w-full">

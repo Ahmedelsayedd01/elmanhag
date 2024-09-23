@@ -6,6 +6,8 @@ import { IoNotifications } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
 import SearchBar from './SearchBar';
 import DropDownMenu from './DropDownMenu';
+import { Link } from 'react-router-dom';
+import { Button } from './Button';
 
 
 
@@ -37,6 +39,10 @@ const Navbar = () => {
                      document.removeEventListener('mousedown', handleClickOutside);
               };
        }, []);
+
+       const handleLogout = () => {
+              auth.logout()
+       }
 
 
 
@@ -75,6 +81,7 @@ const Navbar = () => {
                                           <IoNotifications className='text-mainColor text-2xl' />
                                    </button>
                             </div>
+                            <Button type='button' Text={'Logout'} handleClick={handleLogout} />
                      </div>
               </>
        )
