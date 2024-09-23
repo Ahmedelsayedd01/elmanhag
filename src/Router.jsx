@@ -81,7 +81,8 @@ import {
   AllPlansLayout,
   PaymentMethodDetailsLayout,
   LessonsLayout,
-  ProfileStudent
+  ProfileStudent,
+  ComplaintLayout
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -144,6 +145,7 @@ import EditAffiliateUserLayout from "./Layouts/Admin/EditAffiliateUserLayout";
 import AddQuestionLayout from "./Layouts/Admin/AddQuestionLayout";
 import EditQuestionLayout from "./Layouts/Admin/EditQuestionLayout";
 import QuestionLayout from "./Layouts/Admin/QuestionLayout";
+import Complaint from "./Pages/Student/Complaint/ComplaintPage";
 
 export const ContextNumper = createContext()
 const AppLayoutAuthentication = () => (
@@ -1033,6 +1035,10 @@ export const router = createBrowserRouter([
           {
             path: "profile",
             element: <ProfileStudent />,
+          },
+          {
+            path: "complaint_suggestion",
+            element: <ComplaintLayout />,
           },
         ],
       },

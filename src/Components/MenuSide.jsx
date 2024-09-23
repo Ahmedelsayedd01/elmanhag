@@ -11,10 +11,14 @@ import {
        SolveExamsIcon,
 } from "./Icons/All_Icons";
 import { NavLink } from "react-router-dom";
+import { CiLogout } from "react-icons/ci";
 
+import { useAuth } from "../Context/Auth";
+import { Link, useNavigate } from 'react-router-dom'
+import { LuClipboardList } from "react-icons/lu";
 
 const MenuSide = () => {
-       const [isActiveHome, setIsActiveHome] = useState(true);
+       const [isActiveHome, setIsActiveHome] = useState(false);
        const [isActiveCurricula, setIsActiveCurricula] = useState(false);
        const [isActiveDuties, setIsActiveDuties] = useState(false);
        const [isActiveLiveClasses, setIsActiveLiveClasses] = useState(false);
@@ -22,6 +26,14 @@ const MenuSide = () => {
        const [isActiveFinalReviews, setIsActiveFinalReviews] = useState(false);
        const [isActiveSolveExams, setIsActiveSolveExams] = useState(false);
        const [isActiveProfileStudent, setIsActiveProfileStudent] = useState(false);
+       const [isActiveLogout, setIsActiveLogout] = useState(false);
+
+       const auth = useAuth();
+       const navigate = useNavigate();
+       const handleLogout = () => {
+              auth.logout();
+              navigate("/authentication/login", { replace: true });
+       }
 
        const handleClickHome = () => {
               setIsActiveHome(true);
@@ -32,6 +44,7 @@ const MenuSide = () => {
               setIsActiveFinalReviews(false);
               setIsActiveSolveExams(false);
               setIsActiveProfileStudent(false);
+              setIsActiveLogout(false)
        };
        const handleClickCurricula = () => {
               setIsActiveHome(false);
@@ -42,6 +55,7 @@ const MenuSide = () => {
               setIsActiveFinalReviews(false);
               setIsActiveSolveExams(false);
               setIsActiveProfileStudent(false);
+              setIsActiveLogout(false)
        };
        const handleClickDuties = () => {
               setIsActiveDuties(true);
@@ -52,6 +66,7 @@ const MenuSide = () => {
               setIsActiveFinalReviews(false);
               setIsActiveSolveExams(false);
               setIsActiveProfileStudent(false);
+              setIsActiveLogout(false)
        };
        const handleClickLiveClasses = () => {
               setIsActiveLiveClasses(true);
@@ -62,6 +77,7 @@ const MenuSide = () => {
               setIsActiveFinalReviews(false);
               setIsActiveSolveExams(false);
               setIsActiveProfileStudent(false);
+              setIsActiveLogout(false)
        };
        const handleClickMonthsReviews = () => {
               setIsActiveMonthsReviews(true);
@@ -72,6 +88,7 @@ const MenuSide = () => {
               setIsActiveFinalReviews(false);
               setIsActiveSolveExams(false);
               setIsActiveProfileStudent(false);
+              setIsActiveLogout(false)
        };
        const handleClickFinalReviews = () => {
               setIsActiveFinalReviews(true);
@@ -82,6 +99,7 @@ const MenuSide = () => {
               setIsActiveMonthsReviews(false);
               setIsActiveSolveExams(false);
               setIsActiveProfileStudent(false);
+              setIsActiveLogout(false)
        };
        const handleClickSolveExams = () => {
               setIsActiveSolveExams(true);
@@ -92,6 +110,7 @@ const MenuSide = () => {
               setIsActiveMonthsReviews(false);
               setIsActiveFinalReviews(false);
               setIsActiveProfileStudent(false);
+              setIsActiveLogout(false)
        };
        const handleClickProfileStudent = () => {
               setIsActiveProfileStudent(true);
@@ -102,11 +121,25 @@ const MenuSide = () => {
               setIsActiveLiveClasses(false);
               setIsActiveMonthsReviews(false);
               setIsActiveFinalReviews(false);
+              setIsActiveLogout(false)
        };
+
+       // const handleClickLogout = () => {
+       //        setIsActiveProfileStudent(false);
+       //        setIsActiveSolveExams(false);
+       //        setIsActiveHome(false);
+       //        setIsActiveCurricula(false);
+       //        setIsActiveDuties(false);
+       //        setIsActiveLiveClasses(false);
+       //        setIsActiveMonthsReviews(false);
+       //        setIsActiveFinalReviews(false);
+       //        setIsActiveLogout(true)
+       // };
+
        return (
               <>
                      <div className="w-full h-full mb-8 flex justify-end">
-                            <div className="MenuSide w-5/6 flex flex-col items-start gap-y-4">
+                            <div className="MenuSide w-5/6 flex flex-col items-start gap-y-2">
                                    <NavLink to="/dashboard" onClick={handleClickHome} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium ">
                                           <HomeIcon isActive={isActiveHome} />
                                           <span>الرئيسيه</span>
@@ -135,9 +168,17 @@ const MenuSide = () => {
                                           <SolveExamsIcon isActive={isActiveSolveExams} />
                                           <span>حل امتحانات</span>
                                    </NavLink>
+                                   <NavLink to="complaint_suggestion" onClick={handleClickProfileStudent} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
+                                          <LuClipboardList size={23} style={{ strokeWidth: 2 }} isActive={isActiveProfileStudent} />
+                                          <span>الاقتراحات و الشكاوي</span>
+                                   </NavLink>
                                    <NavLink to="profile" onClick={handleClickProfileStudent} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
                                           <ProfileStudentIcon isActive={isActiveProfileStudent} />
                                           <span>حسابى</span>
+                                   </NavLink>
+                                   <NavLink onClick={handleLogout } className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
+                                          <CiLogout size={23} style={{ strokeWidth: 2 }} />
+                                          <span>تسجيل الخروج</span>
                                    </NavLink>
                             </div>
                      </div>

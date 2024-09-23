@@ -9,7 +9,7 @@ const SubscriptionsPage = () => {
             <div className="container mx-auto px-4 mt-5">
                 <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 justify-center">
                     {/* Subscription Box 1 */}
-                    <div className="flex flex-col bg-gray-200 rounded-lg w-full lg:w-1/3">
+                    <div className="flex flex-col bg-gray-200 rounded-lg w-full lg:w-1/2">
                         <div className="flex justify-center p-4">
                             <svg width="285" height="187" viewBox="0 0 285 187" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M60.8972 50.864L27.6055 50.8116C27.6055 50.8116 29.2623 48.6948 31.0901 48.433C31.0901 48.433 34.6545 38.0395 40.5901 37.961C46.1114 37.9011 48.3154 44.3676 48.3154 44.3676C48.3154 44.3676 50.8804 41.4728 53.3238 42.8043C55.7672 44.1357 57.1466 47.9318 57.1466 47.9318C57.1466 47.9318 59.9016 49.3904 60.8972 50.864Z" fill="#EBEBEB" />
@@ -186,7 +186,7 @@ const SubscriptionsPage = () => {
                         </div>
                         <div className="mt-auto">
                             <Link to="plans">
-                                <button className="bg-mainColor text-white w-full p-4 font-bold rounded hover:bg-red-600 hover:text-white border-mainColor border">
+                                <button className="bg-mainColor text-white w-full p-4 text-2xl font-semibold rounded hover:bg-red-600 hover:text-white border-mainColor border">
                                     اشترك الان
                                 </button>
                             </Link>
@@ -194,7 +194,7 @@ const SubscriptionsPage = () => {
                     </div>
 
                     {/* Subscription Box 2 */}
-                    <div className="flex flex-col bg-gray-200 rounded-lg w-full lg:w-1/3">
+                    {/* <div className="flex flex-col bg-gray-200 rounded-lg w-full lg:w-1/3">
                         <div className="flex justify-center p-4">
                             <svg width="229" height="229" viewBox="0 0 229 229" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M173.662 119.327H104.184V19.3643H173.662V119.327ZM106.016 117.495H171.83V21.1963H106.016V117.495Z" fill="#EBEBEB"/>
@@ -523,7 +523,7 @@ const SubscriptionsPage = () => {
                                 </button>
                             </Link>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>
