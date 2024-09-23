@@ -1,8 +1,13 @@
 import React from 'react'
+import SoonIcon from '../../../Components/SoonIcon'
 
 const FinalReviewsPage = () => {
        return (
-              <div>FinalReviewsPage</div>
+              <>
+              <div className='flex justify-center'>
+                     <SoonIcon/>
+              </div>
+              </>
        )
 }
 
