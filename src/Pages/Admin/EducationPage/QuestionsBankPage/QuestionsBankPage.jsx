@@ -261,7 +261,7 @@ const QuestionsBankPage = () => {
                                                                                                   <DialogPanel className="bg-white rounded-lg shadow-xl sm:w-full sm:max-w-lg">
                                                                                                          <div className="px-4 py-5 sm:p-6">
                                                                                                                 <Wroning Width="28" Height="28" aria-hidden="true" />
-                                                                                                                <h3 className="text-lg font-semibold text-gray-900">You will delete this question</h3>
+                                                                                                                <h3 className="text-lg text-center font-semibold text-gray-900">You will delete this question</h3>
                                                                                                          </div>
                                                                                                          <div className="px-4 py-3 sm:flex sm:flex-row-reverse">
                                                                                                                 <button

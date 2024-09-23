@@ -86,6 +86,8 @@ export { default as EditAffiliatePaymentMethodLayout } from "./Admin/EditAffilia
 export { default as AffiliateCommissionsLayout } from "./Admin/AffiliateCommissionsLayout";
 // Bonus
 export { default as AffiliateBonusLayout } from "./Admin/AffiliateBonusLayout";
+export { default as AddAffiliateBonusLayout } from "./Admin/AddAffiliateBonusLayout";
+export { default as EditAffiliateBonusLayout } from "./Admin/EditAffiliateBonusLayout";
 // Payout
 export { default as AffiliatePayoutLayout } from "./Admin/AffiliatePayoutLayout";
 
@@ -131,7 +133,7 @@ export { default as SolveExams } from "./Student/SolveExams";
 export { default as FinalReviews } from "./Student/FinalReviews";
 
 //Subscriptions Student
-export { default as SubscriptionsLayout} from "./Student/SubscriptionsLayout";
+export { default as SubscriptionsLayout } from "./Student/SubscriptionsLayout";
 export { default as SubscriptionsPaymentLayout } from "./Student/SubscriptionsPaymentLayout";
 export { default as AllPlansLayout } from "./Student/AllPlansLayout";
 export { default as PaymentMethodDetailsLayout } from "./Student/PaymentMethodDetailsLayout";

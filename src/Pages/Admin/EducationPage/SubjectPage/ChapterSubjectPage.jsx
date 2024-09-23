@@ -29,7 +29,6 @@ const ChapterSubjectPage = () => {
   const subjectID = location.state || {};
 
   const fetchChapter = async () => {
-    setIsLoading(true);
     try {
       const response = await axios.get(`https://bdev.elmanhag.shop/admin/chapter/${subjectID}`, {
         headers: {
