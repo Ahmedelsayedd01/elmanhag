@@ -4,7 +4,7 @@ import { IoIosArrowDown } from 'react-icons/io';
 // const DropDownMenu = forwardRef(({ iconMenu, handleOpen, stateoption, openMenu, handleOpenOption, options }, ref)) => {
 const DropDownMenu = forwardRef(({
        iconMenu,
-       iconDirection = false,
+       iconDirection=false,
        handleOpen,
        stateoption,
        openMenu,
