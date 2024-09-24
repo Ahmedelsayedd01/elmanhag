@@ -26,6 +26,7 @@ const MenuSide = () => {
        const [isActiveFinalReviews, setIsActiveFinalReviews] = useState(false);
        const [isActiveSolveExams, setIsActiveSolveExams] = useState(false);
        const [isActiveProfileStudent, setIsActiveProfileStudent] = useState(false);
+       const [isActiveSubscription, setIsActiveSubscription] = useState(false);
        const [isActiveLogout, setIsActiveLogout] = useState(false);
 
        const auth = useAuth();
@@ -125,16 +126,29 @@ const MenuSide = () => {
        };
 
        // const handleClickLogout = () => {
-       //        setIsActiveProfileStudent(false);
-       //        setIsActiveSolveExams(false);
-       //        setIsActiveHome(false);
-       //        setIsActiveCurricula(false);
-       //        setIsActiveDuties(false);
-       //        setIsActiveLiveClasses(false);
-       //        setIsActiveMonthsReviews(false);
-       //        setIsActiveFinalReviews(false);
-       //        setIsActiveLogout(true)
+              // setIsActiveProfileStudent(false);
+              // setIsActiveSolveExams(false);
+              // setIsActiveHome(false);
+              // setIsActiveCurricula(false);
+              // setIsActiveDuties(false);
+              // setIsActiveLiveClasses(false);
+              // setIsActiveMonthsReviews(false);
+              // setIsActiveFinalReviews(false);
+              // setIsActiveLogout(true)
        // };
+
+       const handleClickSubscriptions =() =>{
+              setIsActiveProfileStudent(false);
+              setIsActiveSolveExams(false);
+              setIsActiveHome(false);
+              setIsActiveCurricula(false);
+              setIsActiveDuties(false);
+              setIsActiveLiveClasses(false);
+              setIsActiveMonthsReviews(false);
+              setIsActiveFinalReviews(false);
+              setIsActiveSubscription(true)
+              setIsActiveLogout(false)
+       }
 
        return (
               <>
@@ -167,6 +181,10 @@ const MenuSide = () => {
                                    <NavLink to="solve_exams" onClick={handleClickSolveExams} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
                                           <SolveExamsIcon isActive={isActiveSolveExams} />
                                           <span>حل امتحانات</span>
+                                   </NavLink>
+                                   <NavLink to="My_Subscriptions"  onClick={handleClickSubscriptions} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
+                                          <SolveExamsIcon />
+                                          <span>اشتراكاتي</span>
                                    </NavLink>
                                    <NavLink to="complaint_suggestion" onClick={handleClickProfileStudent} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
                                           <LuClipboardList size={23} style={{ strokeWidth: 2 }} isActive={isActiveProfileStudent} />

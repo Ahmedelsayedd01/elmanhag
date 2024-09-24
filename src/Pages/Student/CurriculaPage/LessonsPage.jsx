@@ -160,6 +160,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
         <>
           <div className="flex w-full gap-5 mb-5">
             {/* Tab buttons */}
+            <div className='sm:w-1/4'> 
             <Button
               Text="فيديوهات"
               Width="full"
@@ -167,7 +168,15 @@ const LessonsPage = ({ subjectId, lessonId }) => {
               Color={activeTab === "videos" ? "text-white" : "text-mainColor"}
               handleClick={() => setActiveTab("videos")}
             />
-
+            </div>
+            {/* <Button
+              Text="فيديوهات"
+              Width="full"
+              BgColor={activeTab === "videos" ? "bg-mainColor" : "bg-white"}
+              Color={activeTab === "videos" ? "text-white" : "text-mainColor"}
+              handleClick={() => setActiveTab("videos")}
+            /> */}
+            <div className='sm:w-1/4'> 
             <Button
               Text="مذكرات"
               Width="full"
@@ -175,7 +184,9 @@ const LessonsPage = ({ subjectId, lessonId }) => {
               Color={activeTab === "pdf" ? "text-white" : "text-red-600"}
               handleClick={() => setActiveTab("pdf")}
             />
+            </div>
 
+            <div className='sm:w-1/4'> 
             <Button
               Text="واجبات"
               Width="full"
@@ -183,7 +194,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
               Color={activeTab === "homework" ? "text-white" : "text-red-600"}
               handleClick={() => setActiveTab("homework")}
             />
-
+            </div>
             <button type='button' onClick={handleGoBack}>
               <IoIosArrowDown className="rotate-90 text-mainColor text-5xl" />
             </button>
@@ -192,10 +203,10 @@ const LessonsPage = ({ subjectId, lessonId }) => {
           {activeTab === "videos" && mainResource && (
             <div>
               {/* Main content from the first resource */}
-              <div className="w-full h-screen mb-5">
+              <div className="w-full mb-5">
                 {mainResource.type === "video" && (
-                  <div className="w-full lg:h-screen">
-                    <video className="w-full lg:h-full  object-cover" controls controlsList='nodownload'>
+                  <div className="w-full">
+                    <video className="w-full object-cover" controls controlsList='nodownload'>
                       <source src={`${mainResource.file_link}`} type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
