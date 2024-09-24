@@ -142,7 +142,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
             {errorMessage === `عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين  .اشترك الآن
                                    واستمتع بجميع الدروس بدون قيود !` ? (
               <>
-              <Link to="/dashboard/My_Subscriptions/plans">
+              <Link to="/dashboard/My_Subscriptions/plans" state={{ subject_Id: subjectId }}>
                   <Button Text="اشترك الان" Width="auto" BgColor="bg-mainColor" Color="text-white"/>
               </Link>
                 <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
@@ -194,8 +194,8 @@ const LessonsPage = ({ subjectId, lessonId }) => {
               {/* Main content from the first resource */}
               <div className="w-full h-screen mb-5">
                 {mainResource.type === "video" && (
-                  <div className="w-full h-screen">
-                    <video className="w-full h-full object-cover" controls controlsList='nodownload'>
+                  <div className="w-full lg:h-screen">
+                    <video className="w-full lg:h-full  object-cover" controls controlsList='nodownload'>
                       <source src={`${mainResource.file_link}`} type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
@@ -228,17 +228,17 @@ const LessonsPage = ({ subjectId, lessonId }) => {
           )}
 
           {activeTab === "pdf" && mainResource && (
-            <div className="mt-5">
+            <div className="mt-5 w-full">
               {pdfResources.length === 0 ? (
                 <p>No PDF resources available.</p>
               ) : (
-                <ul className="list-disc ml-5 space-y-4">
+                <ul className="list-disc ml-5 space-y-4 w-full">
                   {pdfResources.map((pdf, index) => (
-                    <li key={index} className="flex items-center">
+                    <li key={index} className="flex items-center w-1/2">
                       <Button
                         Text={pdf.file_name || `PDF File ${index + 1}`}
                         Icon={<FaDownload />}
-                        Width="auto"
+                        Width="w-1/2"
                         BgColor="bg-mainColor"
                         Color="text-white"
                         handleClick={() => handleDownload(pdf.file_link, pdf.file_name || `PDF_File_${index + 1}.pdf`)}
