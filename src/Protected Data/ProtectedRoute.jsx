@@ -46,11 +46,23 @@ const ProtectedRoute = ({ allowedRoles }) => {
        const hasPermission = allowedRoles
               .map(role => role.toLowerCase())
               .some(role => userRoles.includes(role));
+       console.log("auth.user", auth.user.role)
        console.log("userRoles", userRoles)
        console.log("hasPermission", hasPermission)
 
        if (!hasPermission) {
-              return window.location.href = "https://elmanhag.com/";
+              // return window.location.href = "https://elmanhag.com/";
+
+              if (auth.user.role === "supAdmin") {
+                     return <Navigate to={'/dashboard_admin'} />;
+                     // return window.location.href = "https://login.elmanhag.shop/dashboard_admin";
+              } else if (auth.user.role === "student") {
+                     return <Navigate to={'/dashboard'} />;
+                     // return window.location.href = "https://login.elmanhag.shop/dashboard";
+              } else {
+                     return window.location.href = "https://elmanhag.com/";
+
+              }
        }
        // if (location.pathname == 'login.elmanhag.shop') {
        //        return window.location.href = "https://elmanhag.com/";
