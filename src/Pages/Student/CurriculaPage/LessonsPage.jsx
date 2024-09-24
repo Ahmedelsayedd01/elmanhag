@@ -4,7 +4,7 @@ import Loading from '../../../Components/Loading';
 import axios from 'axios';
 import { Button } from '../../../Components/Button';
 import { IoIosArrowDown } from 'react-icons/io';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link } from 'react-router-dom';
 import { FaDownload } from 'react-icons/fa'; // Import download icon
 
 const LessonsPage = ({ subjectId, lessonId }) => {
@@ -16,6 +16,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
   const [subjectData, setSubjectData] = useState([]);
   const [chapterID, setChapterID] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [showErrorModal, setShowErrorModal] = useState(false); // Modal state
 
   const navigate = useNavigate();
 
@@ -42,22 +43,39 @@ const LessonsPage = ({ subjectId, lessonId }) => {
         );
 
         if (response.status === 200) {
-          console.log(response.data);
           if (response.data.lesson) {
             setLessons(response.data.lesson);
             setChapterID(response.data.lesson?.chapter_id || '');
           } else {
             setErrorMessage('Lesson data not found.');
+            setShowErrorModal(true); // Show modal when error occurs
           }
         }
       } catch (error) {
         console.error('Error fetching Lessons data:', error.response.data.faield);
 
-        if (error) {
-          setErrorMessage(error.response.data.faield || 'An unexpected error occurred.');
-        } else {
-          setErrorMessage('An unexpected error occurred.');
+        // Customize error messages based on specific text
+        const serverErrorMessage = error.response.data.faield;
+        let translatedErrorMessage = 'An unexpected error occurred.';
+
+        switch (serverErrorMessage) {
+          case 'This Lesson Unpaid':
+            translatedErrorMessage = `عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين  .اشترك الآن
+                                   واستمتع بجميع الدروس بدون قيود !`;
+            break;
+          case 'This Material for This Lesson is Closed':
+            translatedErrorMessage = 'عفوا هذا الدرس غير متاح حاليا. سوف يتوفر لاحقا';
+            break;
+          case 'The previous lesson was not solved.':
+            translatedErrorMessage = 'يجب عليك حل الدرس السابق قبل المتابعة.';
+            break;
+          default:
+            translatedErrorMessage = serverErrorMessage || translatedErrorMessage;
         }
+        
+
+        setErrorMessage(translatedErrorMessage);
+        setShowErrorModal(true); // Show modal when error occurs
       } finally {
         setIsLoading(false);
       }
@@ -87,6 +105,17 @@ const LessonsPage = ({ subjectId, lessonId }) => {
     document.body.removeChild(link);
   };
 
+  // Close modal function
+  const handleCloseModal = () => {
+    setShowErrorModal(false);
+    setErrorMessage(''); // Clear error message after closing modal
+  };
+
+  // Navigate to subscription
+  const handleSubscribe = () => {
+    navigate('/subscribe'); // Assuming you have a /subscribe route
+  };
+
   if (isLoading) {
     return (
       <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
@@ -103,14 +132,31 @@ const LessonsPage = ({ subjectId, lessonId }) => {
 
   return (
     <div className="p-6 mb-20">
-      {/* Display error message in red text at the center if there's an error */}
-      {errorMessage && (
-        <div className="flex mt-10 justify-center h-screen">
-          <p className="text-red-600 text-xl font-bold">{errorMessage}</p>
+      {/* Error Modal */}
+      {showErrorModal && (
+      <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 mr-10">
+        <div className="bg-white p-12 rounded-lg w-1/2">
+          <h2 className="text-[#6B6B6B] text-2xl font-bold mb-4">{errorMessage}</h2>
+          <div className="flex justify-end gap-4">
+            {/* Show both 'اشترك' and 'حسنا' buttons for 'This Lesson Unpaid' error */}
+            {errorMessage === `عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين  .اشترك الآن
+                                   واستمتع بجميع الدروس بدون قيود !` ? (
+              <>
+              <Link to="/dashboard/My_Subscriptions/plans">
+                  <Button Text="اشترك الان" Width="auto" BgColor="bg-mainColor" Color="text-white"/>
+              </Link>
+                <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
+              </>
+            ) : (
+              <Button Text="حسناً" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
+            )}
+          </div>
         </div>
-      )}
+      </div>
+    )}
 
-      {!errorMessage && (
+
+      {!showErrorModal && (
         <>
           <div className="flex w-full gap-5 mb-5">
             {/* Tab buttons */}
@@ -195,7 +241,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
                         Width="auto"
                         BgColor="bg-mainColor"
                         Color="text-white"
-                        handleClick={() => handleDownload(pdf.file_link, pdf.file_name || `PDF_File_${index + 1}`)}
+                        handleClick={() => handleDownload(pdf.file_link, pdf.file_name || `PDF_File_${index + 1}.pdf`)}
                       />
                     </li>
                   ))}
@@ -204,14 +250,17 @@ const LessonsPage = ({ subjectId, lessonId }) => {
             </div>
           )}
 
-          {activeTab === "homework" && mainResource && (
-            <div className="mt-5">
-              {lessons.homework && lessons.homework.length === 0 ? (
-                <p>No homework assigned for this lesson.</p>
+          {activeTab === "homework" && (
+            <div>
+              <h4 className="text-2xl text-mainColor font-semibold">Homeworks</h4>
+              {lessons.homework.length === 0 ? (
+                <p>No homeworks available.</p>
               ) : (
-                <ul className="list-disc ml-5">
-                  {lessons.homework && lessons.homework.map((hw, index) => (
-                    <li key={index} className="text-gray-700">{hw}</li>
+                <ul className="list-disc ml-5 space-y-4">
+                  {lessons.homework.map((task, index) => (
+                    <li key={index}>
+                      <p>{task.description}</p>
+                    </li>
                   ))}
                 </ul>
               )}
@@ -224,3 +273,4 @@ const LessonsPage = ({ subjectId, lessonId }) => {
 };
 
 export default LessonsPage;
+
