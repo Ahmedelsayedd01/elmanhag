@@ -33,6 +33,7 @@ const EditPromoCodePage = () => {
   const [usageTypeData, setUsageTypeData] = useState([{ name: 'unlimited' }, { name: 'fixed' }]);
   const [userNumber,setUserNumber]=useState('')
   const [activePromoCode,setActivePromoCode]=useState(0)
+  const [includeLive,setIncludeLive]=useState(0)
 
   const [selectUsageType, setSelectUsageType] = useState('Select UsageType');
   const [selectUsageTypeName, setSelectUsageTypeName] = useState(null);
@@ -97,6 +98,15 @@ const EditPromoCodePage = () => {
         setSelectSubjectId([null]);
       }
 
+       // Determine value type
+       if (promoCodeEdit.precentage !== 0) {
+        setSelectValueType("percentage");
+        setPercentage(promoCodeEdit.precentage || '');
+      } else {
+          setSelectValueType("value");
+          setValue(promoCodeEdit.value || '');
+      }
+
         setTitle(promoCodeEdit.title || '');
         setCode(promoCodeEdit.code || '');
         setSelectUsageType(promoCodeEdit.usage_type || '');
@@ -105,6 +115,7 @@ const EditPromoCodePage = () => {
         setValue(promoCodeEdit.value || '');
         setPercentage(promoCodeEdit.precentage || '');
         setActivePromoCode(promoCodeEdit.status||0) 
+        setIncludeLive(promoCodeEdit.live||0) 
 }
 }, [promoCodeEdit]);
 
@@ -318,6 +329,11 @@ const EditPromoCodePage = () => {
     setSelectBundle(selectBundle.filter(bundle => bundle !== bundleName));
   };
 
+  const handleActiveLive = (e) => {
+    const isChecked = e.target.checked;
+    setIncludeLive(isChecked ? 1 : 0);
+  };
+
   const handleClick = (e) => {
     const isChecked = e.target.checked;
     setActivePromoCode(isChecked ? 1 : 0);
@@ -374,10 +390,10 @@ const EditPromoCodePage = () => {
       auth.toastError('Please Select Usage Type.');
       return;
     }
-    if (!userNumber) {
-      auth.toastError('Please Enter User Number.');
-      return;
-    }
+    // ;if (!userNumber) {
+    //   auth.toastError('Please Enter User Number.');
+    //   return
+    // }
 
     if (valueType === 'value') {
       if (!value) {
@@ -411,9 +427,20 @@ const EditPromoCodePage = () => {
       params.append('code', code);
       params.append('usage_type', selectUsageType);
       params.append('usage', usage || 0);
-      params.append('number_users', userNumber);
+      // params.append('number_users', userNumber);
       params.append('value', value || 0);
       params.append('precentage', percentage || 0);
+
+      // Conditional appending of percentage or value
+      if (selectValueType === 'percentage') {
+        params.append('precentage', percentage || 0); // Append percentage
+        params.append('value', 0); // Set value to 0
+      } else if (selectValueType === 'value') {
+        params.append('value', value || 0); // Append value
+        params.append('precentage', 0); // Set percentage to 0
+      }
+
+      params.append('live', includeLive);
       params.append('status', activePromoCode);
 
        // To print params in a readable format
@@ -535,14 +562,14 @@ const EditPromoCodePage = () => {
           />
         </div>
       )}
-      <div className="lg:w-[30%] sm:w-full">
+      {/* <div className="lg:w-[30%] sm:w-full">
         <InputCustom
           type="text"
           placeholder="Number Of Users"
           value={userNumber}
           onChange={(e) => setUserNumber(e.target.value)}
         />
-      </div>
+      </div> */}
       {/* <div className="lg:w-[30%] sm:w-full">
         <InputCustom
           type="text"
@@ -580,6 +607,13 @@ const EditPromoCodePage = () => {
           />
         </div>
       )}
+
+      <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+            <span className="text-2xl text-thirdColor font-medium">Include Live:</span>
+            <div>
+              <CheckBox checked={includeLive} handleClick={handleActiveLive} />
+            </div>
+      </div>
       
       <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
             <span className="text-2xl text-thirdColor font-medium">Active Promo Code:</span>
