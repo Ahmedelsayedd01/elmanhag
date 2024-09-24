@@ -121,8 +121,9 @@ const SubscriptionsPaymentPage = () => {
       </div>
       <div>
         <h2 className="text-xl sm:text-2xl font-semibold text-mainColor">{plan.name}</h2>
-        <p className="text-md sm:text-lg text-mainColor mt-2">{plan.price_discount} جنيه</p>
-      </div>
+        <p className="text-gray-700 mb-2">
+                  {plan.price_discount} جنيه بدلا من <span className="line-through">{plan.price || 0} جنيه</span>
+        </p>      </div>
     </div>
 
     {/* Payment Methods Section */}
