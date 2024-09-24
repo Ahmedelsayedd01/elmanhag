@@ -424,7 +424,7 @@ export const router = createBrowserRouter([
 
   },
   {
-    path: '/forgetPassword',
+    path: '/forget_password',
     element: <ProtectedLogin />,
     children: [
       {
