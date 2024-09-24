@@ -23,11 +23,15 @@ const StudentPage = () => {
        const [selectedOptionType, setSelectedOptionType] = useState('Filter By Free/Paid');
        const [openCountry, setOpenCountry] = useState(false);
        const [openCity, setOpenCity] = useState(false);
+       const [openCategory, setOpenCategory] = useState(false);
+       const [openEducation, setOpenEducation] = useState(false);
        const [openType, setOpenType] = useState(false);
        const [studentsChanged, setStudentsChanged] = useState(false); // Change tracker
 
        const dropdownCountryRef = useRef(null);
        const dropdownCityRef = useRef(null);
+       const dropdownCategoryRef = useRef(null);
+       const dropdownEducationRef = useRef(null);
        const dropdownTypeRef = useRef(null);
 
        const [isDeleting, setIsDeleting] = useState(false);
@@ -205,10 +209,10 @@ const StudentPage = () => {
                      </div>
                      <div className="w-full">
                             <div className="w-full flex flex-wrap items-center justify-between gap-4">
-                                   <div className="sm:w-full xl:w-1/5 mx-auto">
+                                   <div className="sm:w-full xl:w-[30%]">
                                           <SearchBar handleChange={handleChange} value={search} bg={"white"} />
                                    </div>
-                                   <div className="sm:w-full xl:w-1/5">
+                                   <div className="sm:w-full xl:w-[30%]">
                                           <DropDownMenu
                                                  ref={dropdownCountryRef}
                                                  iconMenu={<SettingFilter />}
@@ -219,7 +223,7 @@ const StudentPage = () => {
                                                  options={student.countries || []}
                                           />
                                    </div>
-                                   <div className="sm:w-full xl:w-1/5">
+                                   <div className="sm:w-full xl:w-[30%]">
                                           <DropDownMenu
                                                  ref={dropdownCityRef}
                                                  iconMenu={<SettingFilter />}
@@ -230,7 +234,29 @@ const StudentPage = () => {
                                                  options={student.cities || []}
                                           />
                                    </div>
-                                   <div className="sm:w-full xl:w-1/5">
+                                   <div className="sm:w-full xl:w-[30%]">
+                                          <DropDownMenu
+                                                 ref={dropdownCategoryRef}
+                                                 iconMenu={<SettingFilter />}
+                                                 handleOpen={handleOpenCategory}
+                                                 handleOpenOption={handleOptionCategory}
+                                                 stateoption={selectedOptionCategory}
+                                                 openMenu={openCategory}
+                                                 options={student.categories}
+                                          />
+                                   </div>
+                                   <div className="sm:w-full xl:w-[30%]">
+                                          <DropDownMenu
+                                                 ref={dropdownEducationRef}
+                                                 iconMenu={<SettingFilter />}
+                                                 handleOpen={handleOpenEducation}
+                                                 handleOpenOption={handleOptionEducation}
+                                                 stateoption={selectedOptionEducation}
+                                                 openMenu={openEducation}
+                                                 options={student.education}
+                                          />
+                                   </div>
+                                   <div className="sm:w-full xl:w-[30%]">
                                           <DropDownMenu
                                                  ref={dropdownTypeRef}
                                                  iconMenu={<SettingFilter />}
@@ -241,9 +267,9 @@ const StudentPage = () => {
                                                  options={[{ id: 1, name: 'Free' }, { id: 2, name: 'Paid' }]}
                                           />
                                    </div>
-                                   <div className="sm:w-full xl:w-1/12 mx-auto">
+                                   <div className="sm:w-full xl:w-[10%] text-start">
                                           <Link to="add">
-                                                 <ButtonAdd Text={"Add"} BgColor={"white"} Color={"thirdColor"} Size={"xl"} />
+                                                 <ButtonAdd Text={"Add"} isWidth={true} BgColor={"white"} Color={"thirdColor"} Size={"xl"} />
                                           </Link>
                                    </div>
                             </div>
@@ -254,6 +280,7 @@ const StudentPage = () => {
                                                         <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
                                                         <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Name Phone</th>
                                                         <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Country City</th>
+                                                        <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Education</th>
                                                         <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Category</th>
                                                         <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Type</th>
                                                         <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Job</th>
@@ -280,6 +307,11 @@ const StudentPage = () => {
                                                                       className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                                >
                                                                       {student.country?.name || "-"} <br /> {student.city?.name || "-"}
+                                                               </td>
+                                                               <td
+                                                                      className="min-w-[120px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                               >
+                                                                      {student.education?.name || "-"}
                                                                </td>
                                                                <td
                                                                       className="min-w-[120px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
