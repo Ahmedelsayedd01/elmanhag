@@ -30,6 +30,7 @@ const AddPromoCodePage = () => {
   const [usageTypeData, setUsageTypeData] = useState([{ name: 'unlimited' }, { name: 'fixed' }]);
   const [userNumber,setUserNumber]=useState('')
   const [activePromoCode,setActivePromoCode]=useState(0)
+  const [includeLive,setIncludeLive]=useState(0)
 
   const [selectUsageType, setSelectUsageType] = useState('Select UsageType');
   const [selectUsageTypeName, setSelectUsageTypeName] = useState(null);
@@ -285,6 +286,11 @@ const AddPromoCodePage = () => {
     setSelectBundle(selectBundle.filter(bundle => bundle !== bundleName));
   };
 
+  const handleActiveLive = (e) => {
+    const isChecked = e.target.checked;
+    setIncludeLive(isChecked ? 1 : 0);
+  };
+
   const handleClick = (e) => {
     const isChecked = e.target.checked;
     setActivePromoCode(isChecked ? 1 : 0);
@@ -341,10 +347,10 @@ const AddPromoCodePage = () => {
       auth.toastError('Please Select Usage Type.');
       return;
     }
-    if (!userNumber) {
-      auth.toastError('Please Enter User Number.');
-      return;
-    }
+    // if (!userNumber) {
+    //   auth.toastError('Please Enter User Number.');
+    //   return;
+    // }
     // if (!value) {
     //   auth.toastError('Please Select Value.');
     //   return;
@@ -385,9 +391,10 @@ const AddPromoCodePage = () => {
     formData.append('code', code);
     formData.append('usage_type', selectUsageTypeName);
     formData.append('usage', usage || 0);
-    formData.append('number_users', userNumber);
+    // formData.append('number_users', userNumber);
     formData.append('value', value || 0);
     formData.append('precentage', percentage || 0);
+    formData.append('live', includeLive);
     formData.append('status', activePromoCode);
 
     for (let pair of formData.entries()) {
@@ -504,14 +511,14 @@ const AddPromoCodePage = () => {
           />
         </div>
       )}
-      <div className="lg:w-[30%] sm:w-full">
+      {/* <div className="lg:w-[30%] sm:w-full">
         <InputCustom
           type="text"
           placeholder="Number Of Users"
           value={userNumber}
           onChange={(e) => setUserNumber(e.target.value)}
         />
-      </div>
+      </div> */}
       {/* <div className="lg:w-[30%] sm:w-full">
         <InputCustom
           type="text"
@@ -549,6 +556,13 @@ const AddPromoCodePage = () => {
           />
         </div>
       )}
+      
+      <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+            <span className="text-2xl text-thirdColor font-medium">Include Live:</span>
+            <div>
+              <CheckBox checked={includeLive} handleClick={handleActiveLive} />
+            </div>
+      </div>
       
       <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
             <span className="text-2xl text-thirdColor font-medium">Active Promo Code:</span>
