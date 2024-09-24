@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'; 
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link ,useLocation } from 'react-router-dom';
 import Loading from '../../../Components/Loading';
 import { useAuth } from '../../../Context/Auth';
 import axios from 'axios';
@@ -12,6 +12,8 @@ const AllPlansPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const auth = useAuth();
+  const location = useLocation();
+  const {subject_Id} = location.state || {}; // Retrieve state passed via navigation
 
   const fetchPlans = async () => {
     setIsLoading(true);
@@ -27,7 +29,20 @@ const AllPlansPage = () => {
       if (response.status === 200) {
         console.log(response.data);
         setPlans(response.data);
-        setSubjectPlans(response.data.subjects || []);
+
+        const allSubjects = response.data.subjects || [];
+        console.log(allSubjects)
+        
+        // Check if subject_Id exists and filter accordingly
+        if (subject_Id !== undefined) {
+          const filteredSubjects = allSubjects.filter(subject => subject.id == subject_Id);
+          setSubjectPlans(filteredSubjects);
+          console.log(filteredSubjects)
+        } else {
+          setSubjectPlans(allSubjects); // If no subject_Id, show all subjects
+        }
+
+        // setSubjectPlans(response.data.subjects || []);
         setBundlePlans(response.data.bundles || []);
         setLivePlans(response.data.live || []);
       }
@@ -45,6 +60,8 @@ const AllPlansPage = () => {
 
   useEffect(() => {
     fetchPlans();
+    console.log(subject_Id)
+    console.log(subjectPlans)
   }, [auth.user.token]);
 
   const handleBuyClick = (plan, planType) => {
@@ -154,6 +171,5 @@ const AllPlansPage = () => {
 };
 
 export default AllPlansPage;
-
 
 

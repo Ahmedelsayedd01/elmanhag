@@ -16,8 +16,8 @@ const StudentHomePage = () => {
     return (
         <>
             {/* Main cards section */}
-            <div className="flex flex-nowrap md:flex-wrap gap-3 p-3 justify-center">
-                <div className="w-full sm:w-56 min-h-36 overflow-hidden p-3 flex flex-col items-center justify-center bg-mainColor rounded-xl transition-transform hover:scale-105">
+            <div className="flex flex-wrap lg:gap-7 gap-3 p-3 justify-center">
+                <div className="w-full sm:w-2/5 min-h-36 overflow-hidden p-3 flex flex-col items-center justify-center bg-mainColor rounded-xl transition-transform hover:scale-105">
                     <NavLink to="curricula">
                         <span className="w-full flex justify-center text-xl text-secoundColor font-medium">
                             <CurriculaIcon isActive={isActiveCurricula} Width="56" Height="56" />
@@ -28,7 +28,7 @@ const StudentHomePage = () => {
                     </NavLink>
                 </div>
 
-                <div className="w-full sm:w-56 min-h-36 overflow-hidden p-3 flex flex-col items-center justify-center bg-mainColor rounded-xl transition-transform hover:scale-105">
+                <div className="w-full sm:w-2/5 min-h-36 overflow-hidden p-3 flex flex-col items-center justify-center bg-mainColor rounded-xl transition-transform hover:scale-105">
                     <NavLink to="duties">
                         <span className="w-full flex justify-center text-xl text-secoundColor font-medium">
                             <DutiesIcon isActive={isActiveDuties} Width="56" Height="56" />
@@ -39,7 +39,7 @@ const StudentHomePage = () => {
                     </NavLink>
                 </div>
 
-                <div className="w-full sm:w-56 min-h-36 overflow-hidden p-3 flex flex-col items-center justify-center bg-mainColor rounded-xl transition-transform hover:scale-105">
+                <div className="w-full sm:w-2/5 min-h-36 overflow-hidden p-3 flex flex-col items-center justify-center bg-mainColor rounded-xl transition-transform hover:scale-105">
                     <NavLink to="live_classes">
                         <span className="w-full flex justify-center text-xl text-secoundColor font-medium">
                             <LiveClassesIcon isActive={isActiveSolveExams} Width="56" Height="56" />
@@ -50,7 +50,7 @@ const StudentHomePage = () => {
                     </NavLink>
                 </div>
 
-                <div className="w-full sm:w-56 min-h-36 overflow-hidden p-3 flex flex-col items-center justify-center bg-mainColor rounded-xl transition-transform hover:scale-105">
+                <div className="w-full sm:w-2/5 min-h-36 overflow-hidden p-3 flex flex-col items-center justify-center bg-mainColor rounded-xl transition-transform hover:scale-105">
                     <NavLink to="months_reviews">
                         <span className="w-full flex justify-center text-xl text-secoundColor font-medium">
                             <MonthsReviewsIcon isActive={isActiveMonthsReviews} Width="56" Height="56" />
@@ -61,7 +61,7 @@ const StudentHomePage = () => {
                     </NavLink>
                 </div>
 
-                <div className="w-full sm:w-56 min-h-36 overflow-hidden p-3 flex flex-col items-center justify-center bg-mainColor rounded-xl transition-transform hover:scale-105">
+                <div className="w-full sm:w-2/5  min-h-36 overflow-hidden p-3 flex flex-col items-center justify-center bg-mainColor rounded-xl transition-transform hover:scale-105">
                     <NavLink to="solve_exams">
                         <span className="w-full flex justify-center text-xl text-secoundColor font-medium">
                             <SolveExamsIcon isActive={isActiveSolveExams} Width="56" Height="56" />
