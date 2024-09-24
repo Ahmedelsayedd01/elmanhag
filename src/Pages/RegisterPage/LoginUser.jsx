@@ -27,8 +27,8 @@ const LoginPage = () => {
                      setIsLoading(false);
                      if (type === "student") {
 
-                            // navigate("/dashboard", { replace: true });
-                            navigate("/dashboard");
+                            navigate("/dashboard", { replace: true });
+                            // navigate("/dashboard");
                      }
                      else if (type === "affilate") {
 
