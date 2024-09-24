@@ -45,14 +45,14 @@ const ProtectedLogin = () => {
               const { role } = auth.user;
 
               console.log('roleProo', role)
+
               if (role === "supAdmin" || role === "admin") {
                      window.location.href = "https://login.elmanhag.shop/dashboard_admin";
               } else if (role === "student") {
                      window.location.href = "https://login.elmanhag.shop/dashboard";
-              } else {
-                     // Redirect to a default site if role doesn't match
-                     window.location.href = "https://elmanhag.com/";
               }
+       } else {
+              window.location.href = "https://elmanhag.com";
        }
 
 
