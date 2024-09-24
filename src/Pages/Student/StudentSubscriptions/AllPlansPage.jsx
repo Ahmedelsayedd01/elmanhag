@@ -124,7 +124,7 @@ const AllPlansPage = () => {
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{subject.name}</h3>
                   <p className="text-gray-700 mb-2">
-                  {subject.price} جنيه بدلا من <span className="line-through">{subject.discount?.[0]?.amount || 0} جنيه</span>
+                  {subject.price_discount} جنيه بدلا من <span className="line-through">{subject.price || 0} جنيه</span>
                   </p>
                 </div>
                 <button
