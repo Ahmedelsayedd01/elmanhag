@@ -53,7 +53,7 @@ const ProtectedRoute = ({ allowedRoles }) => {
        if (!hasPermission) {
               // return window.location.href = "https://elmanhag.com/";
 
-              if (auth.user.role === "supAdmin") {
+              if (auth.user.role === "supAdmin") { 
                      return <Navigate to={'/dashboard_admin'} />;
                      // return window.location.href = "https://login.elmanhag.shop/dashboard_admin";
               } else if (auth.user.role === "student") {
