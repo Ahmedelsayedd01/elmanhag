@@ -7,7 +7,7 @@ import { FaLink } from "react-icons/fa6";
 
 
 
-const InputCustom = ({ type, required = true, borderColor = "none", placeholder, value, readonly = false, onChange, iconDirection = 'right-2', textDirection = "text-left", onClick, paddinLeft = 'pl-11', paddinRight = 'pr-11', upload = false, source }) => {
+const InputCustom = ({ type, required = true, borderColor = "none", placeholder, placeholderSize = false, value, readonly = false, onChange, iconDirection = false, textDirection = false, onClick, paddinLeft = 'pl-2', paddinRight = 'pr-2', upload = false, source }) => {
        const [show, setShow] = useState(false)
        const [currentDay, setCurrentDay] = useState(new Date());
 
@@ -16,16 +16,16 @@ const InputCustom = ({ type, required = true, borderColor = "none", placeholder,
        if (type === "password") {
               return (<>
                      <div className="relative w-full">
-                            <input type={show ? "text" : "password"} placeholder={placeholder} className={`w-full border-2 rounded-2xl outline-none ${textDirection} px-2 py-3 text-2xl font-normal text-thirdColor border-${borderColor}`} value={value}
+                            <input type={show ? "text" : "password"} placeholder={placeholder} className={`w-full border-2 rounded-2xl outline-none ${textDirection ? "text-right" : "text-left"} px-2 py-3 text-2xl font-normal text-thirdColor border-${borderColor}`} value={value}
                                    onChange={onChange} required={required} />
                             {show ? (
                                    <IoMdEye
-                                          className={`absolute top-4 ${iconDirection} text-2xl text-mainColor cursor-pointer`}
+                                          className={`absolute top-4 ${iconDirection ? 'left-2' : 'right-2'} text-2xl text-mainColor cursor-pointer`}
                                           onClick={() => setShow(!show)}
                                    />
                             ) : (
                                    <IoMdEyeOff
-                                          className={`absolute top-4 ${iconDirection} text-2xl text-mainColor cursor-pointer`}
+                                          className={`absolute top-4 ${iconDirection ? 'left-2' : 'right-2'} text-2xl text-mainColor cursor-pointer`}
                                           onClick={() => setShow(!show)}
                                    />
                             )}
@@ -70,8 +70,8 @@ const InputCustom = ({ type, required = true, borderColor = "none", placeholder,
 
                             <input type={type}
                                    placeholder={placeholder}
-                                   className={`w-full border-2 ${textDirection} rounded-2xl border-${borderColor} 
-                       outline-none px-2 py-3 ${paddinLeft} ${paddinRight} text-2xl font-normal eleValueInput ${upload ? "text-mainColor cursor-pointer pr-10" : "text-thirdColor"}`}
+                                   className={`w-full border-2 ${textDirection ? "text-right" : "text-left"} rounded-2xl border-${borderColor} 
+                       outline-none px-2 py-3 ${paddinLeft} ${paddinRight} text-2xl  ${placeholderSize ? 'text-lg' : 'text-2xl'} font-normal eleValueInput ${upload ? "text-mainColor cursor-pointer pr-10" : "text-thirdColor"}`}
                                    value={value}
                                    onChange={onChange}
                                    onClick={onClick}

@@ -4,6 +4,7 @@ import { IoIosArrowDown } from 'react-icons/io';
 // const DropDownMenu = forwardRef(({ iconMenu, handleOpen, stateoption, openMenu, handleOpenOption, options }, ref)) => {
 const DropDownMenu = forwardRef(({
        iconMenu,
+       iconDirection = false,
        handleOpen,
        stateoption,
        openMenu,
@@ -17,7 +18,7 @@ const DropDownMenu = forwardRef(({
               <>
                      <div className="w-full mx-auto relative" ref={ref}>
                             <button type='button'
-                                   className="flex items-center justify-between w-full h-full px-5 py-3  border-2 rounded-2xl outline-none font-medium text-thirdColor text-center bg-secoundColor"
+                                   className={`flex ${iconDirection ? 'flex-row-reverse' : 'flex-row'} items-center justify-between w-full h-full px-5 py-3  border-2 rounded-2xl outline-none font-medium text-thirdColor text-center bg-secoundColor`}
                                    onClick={handleOpen}
                             >
                                    <div className="text-mainColor text-2xl">{iconMenu}</div>

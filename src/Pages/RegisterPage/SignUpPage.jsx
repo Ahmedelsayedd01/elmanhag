@@ -52,13 +52,13 @@ const SignUpPage = () => {
   const [studentJob, setStudentJob] = useState('');
   const [parentRelation, setParentRelation] = useState('');
 
-  const [countriesState, setCountriesState] = useState('Choose Country');
-  const [citiesState, setCitiesState] = useState('Choose City');
-  const [categoryState, setCategoryState] = useState('Category');
-  const [educationState, setEducationState] = useState('Education');
-  const [studentTypeState, setStudentTypeState] = useState('Type');
-  const [studentJobState, setStudentJobState] = useState('What do you want?');
-  const [parentRelationState, setParentRelationState] = useState('Parent Relation');
+  const [countriesState, setCountriesState] = useState('البلد');
+  const [citiesState, setCitiesState] = useState('المدينة');
+  const [categoryState, setCategoryState] = useState('السنة الدراسية');
+  const [educationState, setEducationState] = useState('التعليم');
+  const [studentTypeState, setStudentTypeState] = useState('النوع');
+  const [studentJobState, setStudentJobState] = useState('نفسك تطلع ايه');
+  const [parentRelationState, setParentRelationState] = useState('قرابة ولى الأمر');
 
   const [countryId, setCountryId] = useState('')
   const [cityId, setCityId] = useState('')
@@ -185,7 +185,7 @@ const SignUpPage = () => {
     setCountry(selectedOptionName);
     setCountryId(selectedOptionValue)
     setOpenCountry(false);
-    setCitiesState(cities.length > 0 ? 'Choose City' : "No cities available")
+    setCitiesState(cities.length > 0 ? 'المدينة' : "لا يوجد مدينة")
     setCities(allCities)
 
     console.log('Selected NameL:', selectedOptionName);
@@ -256,15 +256,15 @@ const SignUpPage = () => {
     if (stateData === 1) {
 
       if (!studentName) {
-        auth.toastError("Please write the Name")
+        auth.toastError("ادخل اسمك")
         return;
       }
       if (!studentPhone) {
-        auth.toastError("Please write the Phone")
+        auth.toastError("ادخل رقمك")
         return;
       }
       if (studentPhone.length < 11) {
-        auth.toastError("Please write the phone more than 11 numbers")
+        auth.toastError("ادخل رقم الهاتف صحيح")
         return;
       }
       if (!studentEmail) {
@@ -277,17 +277,17 @@ const SignUpPage = () => {
       //   return;
       // }
       if (!studentPassword) {
-        auth.toastError("Please write the Password")
+        auth.toastError("ادخل كلمة السر")
         return;
       }
       if (!confirmPassword) {
-        auth.toastError("Please write the Confirm Password")
+        auth.toastError("ادخل تأكيد كلمة السر")
         return;
       }
 
       if (confirmPassword !== studentPassword) {
         setConfirmPassword('')
-        auth.toastError("Please rewrite the confirm password")
+        auth.toastError("خطأ فى تأكيد كلمة السر")
         return;
       }
       setStateData(stateData + 1)
@@ -296,31 +296,27 @@ const SignUpPage = () => {
     if (stateData === 2) {
 
       if (!country) {
-        auth.toastError("Please Choose the Country")
+        auth.toastError("اختر البلد")
         return;
       }
       if (!city) {
-        auth.toastError("Please Choose the City")
+        auth.toastError("اختر المدينة")
         return;
       }
       if (!category) {
-        auth.toastError("Please Choose the Category")
+        auth.toastError("اختر السنة الدراسية")
         return;
       }
       if (!education) {
-        auth.toastError("Please Choose the Education")
+        auth.toastError("اختر التعليم")
         return;
       }
       if (!studentType) {
-        auth.toastError("Please Choose the Type")
-        return;
-      }
-      if (!studentType) {
-        auth.toastError("Please Choose the Type")
+        auth.toastError("اختر النوع")
         return;
       }
       if (!studentJob) {
-        auth.toastError("Please Choose what do you want?")
+        auth.toastError("اختر نفسك تطلع ايه")
         return;
       }
 
@@ -378,15 +374,15 @@ const SignUpPage = () => {
 
     /* Student */
     if (!studentName) {
-      auth.toastError("Please write the Name")
+      auth.toastError("ادخل اسمك")
       return;
     }
     if (!studentPhone) {
-      auth.toastError("Please write the Phone")
+      auth.toastError("ادخل رقمك")
       return;
     }
     if (studentPhone.length < 11) {
-      auth.toastError("Please write the phone more than 11 numbers")
+      auth.toastError("ادخل رقم الهاتف صحيح")
       return;
     }
     if (!studentEmail) {
@@ -399,58 +395,64 @@ const SignUpPage = () => {
     //   return;
     // }
     if (!studentPassword) {
-      auth.toastError("Please write the Password")
+      auth.toastError("ادخل كلمة السر")
       return;
     }
     if (!confirmPassword) {
-      auth.toastError("Please write the Confirm Password")
+      auth.toastError("ادخل تأكيد كلمة السر")
       return;
     }
 
     if (confirmPassword !== studentPassword) {
       setConfirmPassword('')
-      auth.toastError("Please rewrite the confirm password")
+      auth.toastError("خطأ فى تأكيد كلمة السر")
       return;
     }
     if (!country) {
-      auth.toastError("Please Choose the Country")
+      auth.toastError("اختر البلد")
       return;
     }
     if (!city) {
-      auth.toastError("Please Choose the City")
+      auth.toastError("اختر المدينة")
       return;
     }
     if (!category) {
-      auth.toastError("Please Choose the Category")
+      auth.toastError("اختر السنة الدراسية")
       return;
     }
     if (!education) {
-      auth.toastError("Please Choose the Education")
+      auth.toastError("اختر التعليم")
       return;
     }
     if (!studentType) {
-      auth.toastError("Please Choose the Type")
-      return;
-    }
-    if (!studentType) {
-      auth.toastError("Please Choose the Type")
+      auth.toastError("اختر نوعك")
       return;
     }
     if (!studentJob) {
-      auth.toastError("Please Choose what do you want?")
+      auth.toastError("اختر نفسك تطلع ايه")
       return;
     }
     /* Parent */
     if (!parentName) {
-      auth.toastError("Please write the Parent Name")
+      auth.toastError("ادخل اسم ولى الأمر")
       return;
     }
     if (!parentPhone) {
-      auth.toastError("Please write the Parent Phone")
+      auth.toastError("ادخل رقم ولى الأمر")
       return;
     }
     if (parentPhone.length < 11) {
-      auth.toastError("Please write the Parent phone more than 11 numbers")
+      auth.toastError("ادخل رقم ولى الأمر صحيح")
+      return;
+    }
+    if (parentPhone == studentPhone) {
+      setParentPhone('')
+      auth.toastError("ادخل رقم ولى الأمر مختلف عن رقمك")
+      return;
+    }
+    if (parentEmail == studentEmail) {
+      setParentEmail('')
+      auth.toastError("ادخل ايميل ولى الأمر مختلف عن ايميلك")
       return;
     }
     // if (!parentEmail) {
@@ -463,21 +465,21 @@ const SignUpPage = () => {
     //   return;
     // }
     if (!parentRelation) {
-      auth.toastError("Please choose the Parent Relation")
+      auth.toastError("اختر قرابة ولى الأمر")
       return;
     }
     if (!parentPassword) {
-      auth.toastError("Please write the Parent Password")
+      auth.toastError("ادخل كلمة السر ولى الأمر")
       return;
     }
     if (!confirmParentPassword) {
-      auth.toastError("Please write the Confirm Parent Password")
+      auth.toastError("ادخل تاكيد كلمة السر ولى الأمر")
       return;
     }
 
     if (confirmParentPassword !== parentPassword) {
       setConfirmParentPassword('')
-      auth.toastError("Please rewrite the confirm Parent password")
+      auth.toastError("خطأ فى تاكيد كلمة السر ولى الأمر ")
       return;
     }
     // if (!affiliateCode) {
@@ -569,15 +571,15 @@ const SignUpPage = () => {
 
 
         </div>
-        <span className='w-full text-right text-thirdColor text-2xl'>بيانات الطالب</span>
         {/* State 1 */}
         {stateData === 1 &&
           (
             <div className="w-full flex flex-col gap-6 items-start">
+              <span className='w-full text-right text-thirdColor text-2xl'>بيانات الطالب</span>
               <div className="w-full flex xl:flex-row-reverse flex-col gap-4 items-start">
                 <InputCustom
                   type={"text"}
-                  textDirection={'text-right'}
+                  textDirection={true}
                   paddinRight="pr-4"
                   paddinLeft="pl-0"
                   placeholder={"اسم الطالب"}
@@ -586,8 +588,8 @@ const SignUpPage = () => {
                 />
                 <InputCustom
                   type={"number"}
-                  textDirection={'text-right'}
-                  paddinRight="pr-4"
+                  textDirection={true}
+                  paddinRight="pr-2"
                   paddinLeft="pl-0"
                   placeholder={"رقم الطالب"}
                   value={studentPhone}
@@ -600,7 +602,7 @@ const SignUpPage = () => {
               </div>
               <InputCustom
                 type={"email"}
-                textDirection={'text-right'}
+                textDirection={true}
                 paddinRight="pr-4"
                 paddinLeft="pl-0"
                 placeholder={"ايميل الطالب"}
@@ -609,16 +611,16 @@ const SignUpPage = () => {
               />
               <InputCustom
                 type={"password"}
-                iconDirection='left-2'
-                textDirection={'text-right'}
+                iconDirection={true}
+                textDirection={true}
                 placeholder={"كلمة السر"}
                 value={studentPassword}
                 onChange={(e) => setStudentPassword(e.target.value)}
               />
               <InputCustom
                 type={"password"}
-                iconDirection='left-2'
-                textDirection={'text-right'}
+                iconDirection={true}
+                textDirection={true}
                 placeholder={"تأكيد كلمة السر"}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -631,11 +633,13 @@ const SignUpPage = () => {
         {stateData === 2 &&
           (
             <div className="w-full flex flex-col gap-6 items-end">
-              <div className="w-full flex  flex-col xl:flex-row justify-between gap-4">
+              <span className='w-full text-right text-thirdColor text-2xl'>أهلا بك معنا</span>
+              <div className="w-full flex  flex-col xl:flex-row-reverse justify-between gap-4">
 
                 <div className="w-full">
                   <DropDownMenu
                     ref={CountriesRef}
+                    iconDirection={true}
                     handleOpen={handleOpenCountry}
                     handleOpenOption={handleCountry}
                     stateoption={countriesState}
@@ -647,6 +651,7 @@ const SignUpPage = () => {
                 <div className="w-full">
                   <DropDownMenu
                     ref={CitiesRef}
+                    iconDirection={true}
                     handleOpen={handleOpenCity}
                     handleOpenOption={handleCity}
                     stateoption={citiesState}
@@ -659,6 +664,7 @@ const SignUpPage = () => {
               <div className="w-full">
                 <DropDownMenu
                   ref={CategoryRef}
+                  iconDirection={true}
                   handleOpen={handleOpenCategory}
                   handleOpenOption={handleCategory}
                   stateoption={categoryState}
@@ -670,6 +676,7 @@ const SignUpPage = () => {
               <div className="w-full">
                 <DropDownMenu
                   ref={EducationRef}
+                  iconDirection={true}
                   handleOpen={handleOpenEducation}
                   handleOpenOption={handleEducation}
                   stateoption={educationState}
@@ -681,6 +688,7 @@ const SignUpPage = () => {
               <div className="w-full">
                 <DropDownMenu
                   ref={StudentTypeRef}
+                  iconDirection={true}
                   handleOpen={handleOpenStudentType}
                   handleOpenOption={handleStudentType}
                   stateoption={studentTypeState}
@@ -692,6 +700,7 @@ const SignUpPage = () => {
               <div className="w-full">
                 <DropDownMenu
                   ref={StudentJobRef}
+                  iconDirection={true}
                   handleOpen={handleOpenStudentJob}
                   handleOpenOption={handleStudentJob}
                   stateoption={studentJobState}
@@ -706,14 +715,45 @@ const SignUpPage = () => {
         {stateData === 3 &&
           (
             <div className="w-full flex flex-col gap-4 items-end">
-              <div className="w-full flex xl:flex-row flex-col gap-4 items-start">
-                <InputCustom type={"text"} required={false} placeholder={"Parent Name"} value={parentName} onChange={(e) => setParentName(e.target.value)} />
-                <InputCustom type={"number"} required={false} paddinRight='pr-2' placeholder={"Parent Phone"} value={parentPhone} onChange={(e) => setParentPhone(e.target.value)} />
+              <span className='w-full text-right text-thirdColor text-2xl'>بيانات ولى الأمر</span>
+              <div className="w-full flex xl:flex-row-reverse flex-col gap-4 items-start">
+                <InputCustom
+                  textDirection={true}
+                  paddinRight={"pr-4"}
+                  paddinLeft={"pl-0"}
+                  type={"text"}
+                  required={false}
+                  placeholder={"أسم ولى الأمر"}
+                  value={parentName}
+                  onChange={(e) => setParentName(e.target.value)}
+                />
+                <InputCustom type={"number"}
+                  textDirection={true}
+                  paddinRight={"pr-2"}
+                  paddinLeft={"pl-0"}
+                  required={false}
+                  placeholder={"ادخل رقم ولى الأمر مختلف عن رقمك"}
+                  placeholderSize={true}
+                  value={parentPhone}
+                  onChange={(e) => {
+                    setParentPhone(e.target.value)
+                    setParentEmail(e.target.value + '@elmanhag.com')
+                  }}
+                />
               </div>
-              <InputCustom type={"email"} required={false} placeholder={"Parent Email"} value={parentEmail} onChange={(e) => setParentEmail(e.target.value)} />
+              <InputCustom type={"email"}
+                textDirection={true}
+                paddinRight={"pr-4"}
+                paddinLeft={"pl-0"}
+                required={false}
+                placeholder={"ادخل ايميل ولى الأمر مختلف عن ايميلك"}
+                value={parentEmail}
+                onChange={(e) => setParentEmail(e.target.value)}
+              />
               <div className="w-full">
                 <DropDownMenu
                   ref={ParentRelationRef}
+                  iconDirection={true}
                   handleOpen={handleOpenParentRelation}
                   handleOpenOption={handleParentRelation}
                   stateoption={parentRelationState}
@@ -721,14 +761,37 @@ const SignUpPage = () => {
                   options={parentRelations}
                 />
               </div>
-              <InputCustom type={"password"} required={false} placeholder={"Password"} value={parentPassword} onChange={(e) => setParentPassword(e.target.value)} />
-              <InputCustom type={"password"} required={false} placeholder={"Confirm Password"} value={confirmParentPassword} onChange={(e) => setConfirmParentPassword(e.target.value)} />
-              <InputCustom type={"text"} required={false} placeholder={"Affiliate Code"} value={affiliateCode} onChange={(e) => setAffiliateCode(e.target.value)} />
+              <InputCustom type={"password"}
+                iconDirection={true}
+                textDirection={true}
+                required={false}
+                placeholder={"كلمة السر"}
+                value={parentPassword}
+                onChange={(e) => setParentPassword(e.target.value)}
+              />
+              <InputCustom
+                type={"password"}
+                iconDirection={true}
+                textDirection={true}
+                required={false}
+                placeholder={"تاكيد كلمة السر"}
+                value={confirmParentPassword}
+                onChange={(e) => setConfirmParentPassword(e.target.value)}
+              />
+              <InputCustom type={"text"}
+                textDirection={true}
+                paddinRight='pr-2'
+                required={false}
+                placeholder={"كود السويق التابع له"}
+                value={affiliateCode}
+                onChange={(e) => setAffiliateCode(e.target.value)}
+              />
+
             </div>
           )
         }
 
-        {error && <div className="w-full text-mainColor text-center text-2xl mb-4 font-bold">{error}</div>}
+        {/* {error && <div className="w-full text-mainColor text-center text-2xl mb-4 font-bold">{error}</div>} */}
 
 
         <div className="w-full flex justify-between">
@@ -753,7 +816,10 @@ const SignUpPage = () => {
           {stateData === 3 &&
             (
               <>
-                <Button Text="السابق" handleClick={handleClickPrev} />
+                <div className="w-full text-end">
+
+                  <Button Text="السابق" handleClick={handleClickPrev} />
+                </div>
               </>
             )
           }
@@ -770,7 +836,7 @@ const SignUpPage = () => {
 
 
         </div>
-        <button type="submit" className="w-full text-center text-2xl font-medium text-secoundColor px-6 py-3 bg-mainColor rounded-2xl">sign up</button>
+        <button type="submit" className="w-full text-center text-2xl font-medium text-secoundColor px-6 py-3 bg-mainColor rounded-2xl">تسجيل</button>
       </form>
     </>
   )

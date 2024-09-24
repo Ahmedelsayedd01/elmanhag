@@ -15,7 +15,6 @@ const LoginPage = () => {
        const [password, setPassword] = useState('');
        const [data, setData] = useState(null);
        const [type, setType] = useState('');
-       const [error, setError] = useState('');
        const [isloading, setIsLoading] = useState(false);
 
        const navigate = useNavigate();
@@ -38,20 +37,26 @@ const LoginPage = () => {
        }, [data]);
 
        const handleSubmit = async (event) => {
-              console.log(email)
-              console.log(password)
               event.preventDefault();
 
-              // Ensure email and password are defined
-              if (!email || !password) {
-                     console.error("Email or Password is missing");
+              console.log(email);
+              console.log(password);
+
+              // Ensure email and password are provided
+              if (!email) {
+                     auth.toastError("ادخل البريد الالكترونى");
+                     return;
+              }
+              if (!email.includes('@')) {
+                     auth.toastError("ادخل علامة '@' بعد اسم البريد الالكترونى")
+                     return;
+              }
+              if (!password) {
+                     auth.toastError("ادخل كلمة المرور");
                      return;
               }
 
-              console.log('Email:', email);
-              console.log('Password:', password);
-
-              setIsLoading(true)
+              setIsLoading(true);
               try {
                      const response = await axios.post('https://bdev.elmanhag.shop/student/auth/login', {
                             email,
@@ -61,22 +66,28 @@ const LoginPage = () => {
                      if (response.status === 200) {
                             const userData = {
                                    ...response.data.user,
-                                   roles: [response.data.role] // Assuming type represents the user's role
+                                   roles: [response.data.role], // Assuming type represents the user's role
                             };
+
                             console.log('Login response:', response); // Debugging line
+                            auth.toastSuccess('Login successfully!');
                             setData(userData);
                             setType(response.data.role);
-                            console.log("response", response);
-
-                     } else {
-                            setError('Failed to post data');
-                            console.log("error", error);
                      }
               } catch (error) {
-                     setError('There was an error posting the data!');
-                     console.error(error);
+                     // Handle known error status codes or generic errors
+                     if (error.response && error.response.status === 400) {
+                            auth.toastError('Please Check Your Email Or Password');
+                            console.log('Login failed:', error.response.data);
+                     } else {
+                            auth.toastError('You are not signed up. Please sign up to continue');
+                            console.error('An error occurred:', error);
+                     }
+              } finally {
+                     setIsLoading(false);
               }
        };
+
        if (isloading) {
               return (
                      <div className="w-1/4 h-screen flex items-center justify-center m-auto">
@@ -95,18 +106,39 @@ const LoginPage = () => {
        }
        return (
               <>
-                     <form onSubmit={handleSubmit} className="w-full flex flex-col items-start justify-center gap-4">
-                            <span className='text-thirdColor text-2xl font-medium'>Come on, log in</span>
+                     <form onSubmit={handleSubmit} className="w-full flex flex-col items-center justify-center gap-2 xl:mt-20">
                             <div className="w-full flex flex-col gap-6 items-end">
-                                   <InputCustom type={"email"} placeholder={"Email"} value={email} onChange={(e) => setEmail(e.target.value)} />
-                                   <InputCustom type={"password"} placeholder={"Password"} value={password} onChange={(e) => setPassword(e.target.value)} />
-
-                                   <Link to={'/forgetPassword'} className="border-b-2 pb-1 border-mainColor text-2xl font-medium text-mainColor mb-6">Forget password?</Link>
-
-                                   {error && <div className="w-full text-mainColor text-center text-2xl mb-4 font-bold">{error}</div>}
-
+                                   <InputCustom
+                                          type={"email"}
+                                          textDirection={true}
+                                          paddinRight='pr-2'
+                                          placeholder={"البريد الالكترونى"}
+                                          value={email}
+                                          onChange={(e) => setEmail(e.target.value)}
+                                          required={false}
+                                   />
+                                   <InputCustom
+                                          type={"password"}
+                                          iconDirection={true}
+                                          textDirection={true}
+                                          placeholder={"كلمة المرور"}
+                                          value={password}
+                                          onChange={(e) => setPassword(e.target.value)}
+                                          required={false}
+                                   />
+                                   <Link to={'/forget_password'} className="border-b-2 pb-1 border-mainColor text-2xl font-medium text-mainColor mb-6">هل نسيت كلمة المرور؟</Link>
                             </div>
-                            <button type="submit" className="w-full text-center text-2xl font-medium text-secoundColor px-6 py-3 bg-mainColor rounded-2xl">Log in</button>
+                            <div className="w-full flex flex-col gap-y-4">
+                                   <button type="submit" className="w-full text-center text-2xl font-medium text-secoundColor hover:text-mainColor px-6 py-3 bg-mainColor hover:bg-secoundColor ease-in-out duration-300 rounded-2xl">تسجيل دخول</button>
+                                   <div className="w-full flex items-baseline justify-between">
+                                          <span className='w-6/12 h-[2px] rounded-2xl bg-thirdColor'></span>
+                                          <span className='px-2 text-center text-xl text-thirdColor font-semibold'>أو</span>
+                                          <span className='w-6/12 h-[2px] rounded-2xl bg-thirdColor'></span>
+                                   </div>
+                                   <Link to={'/authentication/signup'} className='w-full text-center text-2xl font-medium text-mainColor hover:text-secoundColor px-6 py-3 bg-secoundColor hover:bg-mainColor ease-in-out duration-300 border-2 border-mainColor rounded-2xl'>
+                                          انشاء حساب
+                                   </Link>
+                            </div>
                      </form>
               </>
        );
