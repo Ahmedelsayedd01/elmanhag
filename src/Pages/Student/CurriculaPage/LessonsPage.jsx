@@ -52,30 +52,31 @@ const LessonsPage = ({ subjectId, lessonId }) => {
           }
         }
       } catch (error) {
-        console.error('Error fetching Lessons data:', error.response.data.faield);
-
-        // Customize error messages based on specific text
-        const serverErrorMessage = error.response.data.faield;
-        let translatedErrorMessage = 'An unexpected error occurred.';
-
-        switch (serverErrorMessage) {
-          case 'This Lesson Unpaid':
-            translatedErrorMessage = `عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين  .اشترك الآن
-                                   واستمتع بجميع الدروس بدون قيود !`;
-            break;
-          case 'This Material for This Lesson is Closed':
-            translatedErrorMessage = 'عفوا هذا الدرس غير متاح حاليا. سوف يتوفر لاحقا';
-            break;
-          case 'The previous lesson was not solved.':
-            translatedErrorMessage = 'يجب عليك حل الدرس السابق قبل المتابعة.';
-            break;
-          default:
-            translatedErrorMessage = serverErrorMessage || translatedErrorMessage;
-        }
-        
+        console.error('Error fetching Lessons data:', error.response.data.lesson_not_solved);
+        const serverErrorMessage = error.response.data.lesson_not_solved;
 
         setErrorMessage(translatedErrorMessage);
         setShowErrorModal(true); // Show modal when error occurs
+
+        // Customize error messages based on specific text
+        // const serverErrorMessage = error.response.data.faild;
+        let translatedErrorMessage = 'An unexpected error occurred.';
+
+        // switch (serverErrorMessage) {
+        //   case 'This Lesson Unpaid':
+        //     translatedErrorMessage = `عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين  .اشترك الآن
+        //                            واستمتع بجميع الدروس بدون قيود !`;
+        //     break;
+        //   case 'This Material for This Lesson is Closed':
+        //     translatedErrorMessage = 'عفوا هذا الدرس غير متاح حاليا. سوف يتوفر لاحقا';
+        //     break;
+        //   case 'Lesson_not_solved':
+        //     translatedErrorMessage = 'يجب عليك حل الدرس السابق قبل المتابعة.';
+        //     break;
+        //   default:
+        //     translatedErrorMessage = serverErrorMessage || translatedErrorMessage;
+        // }
+        
       } finally {
         setIsLoading(false);
       }
@@ -134,26 +135,45 @@ const LessonsPage = ({ subjectId, lessonId }) => {
     <div className="p-6 mb-20">
       {/* Error Modal */}
       {showErrorModal && (
-      <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 mr-10">
-        <div className="bg-white p-12 rounded-lg w-1/2">
-          <h2 className="text-[#6B6B6B] text-2xl font-bold mb-4">{errorMessage}</h2>
-          <div className="flex justify-end gap-4">
-            {/* Show both 'اشترك' and 'حسنا' buttons for 'This Lesson Unpaid' error */}
-            {errorMessage === `عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين  .اشترك الآن
-                                   واستمتع بجميع الدروس بدون قيود !` ? (
-              <>
-              <Link to="/dashboard/My_Subscriptions/plans" state={{ subject_Id: subjectId }}>
-                  <Button Text="اشترك الان" Width="auto" BgColor="bg-mainColor" Color="text-white"/>
-              </Link>
-                <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
-              </>
-            ) : (
-              <Button Text="حسناً" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
-            )}
+      // <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 mr-10">
+      //   <div className="bg-white p-12 rounded-lg w-1/2">
+      //     <h2 className="text-[#6B6B6B] text-2xl font-bold mb-4">{errorMessage}</h2>
+      //     <div className="flex justify-end gap-4">
+      //       {/* Show both 'اشترك' and 'حسنا' buttons for 'This Lesson Unpaid' error */}
+            // {errorMessage === `عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين  .اشترك الآن
+            //                        واستمتع بجميع الدروس بدون قيود !` ? (
+      //         <>
+      //         <Link to="/dashboard/My_Subscriptions/plans" state={{ subject_Id: subjectId }}>
+      //             <Button Text="اشترك الان" Width="auto" BgColor="bg-mainColor" Color="text-white"/>
+      //         </Link>
+      //           <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
+      //         </>
+      //       ) : (
+      //         <Button Text="حسناً" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
+      //       )}
+      //     </div>
+      //   </div>
+      // </div>
+
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 mr-10">
+          <div className="bg-white p-6 md:p-12 rounded-lg w-11/12 md:w-1/2 lg:w-1/3">
+            <h2 className="text-[#6B6B6B] text-xl md:text-2xl font-bold mb-4">{errorMessage}</h2>
+            <div className="flex justify-end gap-4 sm:gap-2 text-s">
+              {/* Show both 'اشترك' and 'حسنا' buttons for 'This Lesson Unpaid' error */}
+              {errorMessage === `عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين  .اشترك الآن
+                                   واستمتع بجميع الدروس بدون قيود !` ? (                <>
+                  <Link to="/dashboard/My_Subscriptions/plans" state={{ subject_Id: subjectId }}>
+                    <Button Text="اشترك الان" Width="auto" BgColor="bg-mainColor" Color="text-white" />
+                  </Link>
+                  <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
+                </>
+              ) : (
+                <Button Text="حسناً" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
+              )}
+            </div>
           </div>
         </div>
-      </div>
-    )}
+        )}
 
 
       {!showErrorModal && (

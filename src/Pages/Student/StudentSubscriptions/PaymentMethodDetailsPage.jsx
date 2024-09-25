@@ -11,7 +11,7 @@ const PaymentMethodDetailsPage = () => {
   const navigate = useNavigate();
   const auth = useAuth();
   const [isLoading, setIsLoading] = useState(false);
-  const { plan, paymentMethod, planType } = location.state || {}; // Retrieve state passed via navigation
+  const { plan, paymentMethod, planType ,price} = location.state || {}; // Retrieve state passed via navigation
   const uploadReceiptImageRef = useRef();
   const [cardNumber, setCardNumber] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
@@ -41,6 +41,7 @@ const PaymentMethodDetailsPage = () => {
 
   useEffect(() => {
     console.log("The plan is ", plan);
+    console.log("The plan price is ",price);
     console.log("The plan Type is ", planType);
     console.log("The payment method is ", paymentMethod);
   }, []);
@@ -51,7 +52,7 @@ const PaymentMethodDetailsPage = () => {
     setIsLoading(true);
     try {
       const formData = new FormData();
-      formData.append('amount', plan.price);
+      formData.append('amount', price);
       formData.append('service', planType);
       formData.append('payment_method_id', paymentMethod.id);
       formData.append('receipt', receiptImageFile);
@@ -145,11 +146,13 @@ const PaymentMethodDetailsPage = () => {
             </>
           )}
 
-          {paymentMethod.title === 'vodafon cach' && (
+          {paymentMethod.title === 'Vodafone cash' && (
             <>
               <div className="lg:w-[30%] sm:w-full">
               <InputCustom
                 type="text"
+                borderColor="mainColor"
+                textDirection="true"
                 placeholder="رقم التليفون"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
@@ -158,6 +161,9 @@ const PaymentMethodDetailsPage = () => {
               <div className="lg:w-[30%] sm:w-full">
               <InputCustom
                 type="text"
+                borderColor="mainColor"
+                textDirection="true"
+                iconDirection="false"
                 upload={true}
                 placeholder="صوره الايصال"
                 value={receiptImage}
@@ -179,6 +185,7 @@ const PaymentMethodDetailsPage = () => {
               <div className="lg:w-[30%] sm:w-full">
               <InputCustom
                 type="text"
+                textDirection="true"
                 placeholder="رقم التليفون"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}

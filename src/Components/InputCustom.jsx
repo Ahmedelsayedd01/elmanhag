@@ -77,10 +77,10 @@ const InputCustom = ({ type, required = true, borderColor = "none", placeholder,
                                    onClick={onClick}
                                    readOnly={readonly}
                                    required={required} />
-                            {upload ? <LuUpload className='absolute right-4 top-1/3 text-mainColor text-2xl cursor-pointer' /> : ''}
+                            {upload ? <LuUpload  className={`absolute  top-1/3 text-mainColor text-2xl cursor-pointer ${iconDirection ? 'left-4' : 'right-2'} `}/> : ''}
                             {source == 'external' ? <FaExternalLinkAlt className='absolute right-4 top-1/3 text-mainColor text-2xl cursor-pointer' /> :
-                                   source == 'embedded' ? <FaLink className='absolute right-4 top-1/3 text-mainColor text-2xl cursor-pointer' /> :
-                                          source == 'upload' ? <LuUpload className='absolute right-4 top-1/3 text-mainColor text-2xl cursor-pointer' />
+                                   source == 'embedded' ? <FaLink className='absolute top-1/3 text-mainColor text-2xl cursor-pointer' /> :
+                                          source == 'upload' ? <LuUpload className={`absolute right-4 top-1/3 text-mainColor text-2xl cursor-pointer ${iconDirection ? 'left-4' : 'right-2'} `}/> 
                                                  : ''}
                             {/* external, embedded, upload */}
                      </div>

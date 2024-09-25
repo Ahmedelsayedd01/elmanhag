@@ -211,10 +211,10 @@ const NavbarStudent = () => {
         <main className="bg-white p-4 flex flex-col items-center">
             <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-6xl">
                 <div className="flex w-full justify-between items-center">
-                    <div className="flex gap-2 items-center mr-10">
+                    <div className="flex gap-2 items-center lg:mr-0 sm:mr-10">
                         <img src={userImage} alt="userImage" className="w-[72px] h-[72px] bg-[#E8E8E8] rounded-full" />
                         <div className="text-center lg:text-left">
-                            <h3 className="text-red-500 bg-white p-2 rounded-md text-xl lg:text-2xl font-bold">
+                            <h3 className="text-red-500 bg-white p-2 rounded-md text-l lg:text-2xl font-bold">
                                 مرحباً بك {jobName} {userName}
                             </h3>
                             <p className="text-lg text-gray-600 text-right">{categoryName}</p>
