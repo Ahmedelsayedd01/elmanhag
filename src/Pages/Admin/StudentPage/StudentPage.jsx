@@ -16,7 +16,7 @@ import { Wroning } from '../../../Components/Icons/All_Icons';
 const StudentPage = () => {
        const auth = useAuth();
        const [isLoading, setIsLoading] = useState(false);
-       const [student, setStudent] = useState(null);
+       const [data, setData] = useState(null);
        const [students, setStudents] = useState([]);
        const [search, setSearch] = useState('');
        const [selectedOptionCountry, setSelectedOptionCountry] = useState('Filter By Country');
@@ -40,10 +40,32 @@ const StudentPage = () => {
        const [isDeleting, setIsDeleting] = useState(false);
        const [openDialog, setOpenDialog] = useState(null);
 
+       // const handleOptionCountry = (e) => {
+       //        const ele = e.target.innerText;
+       //        setSelectedOptionCountry(e.target.innerText);
+       //        console.log('e.target.innerText', e.target.innerText)
+       //        const selCountries = students.map((c) => (c.country.name == ele));
+       //        console.log('selCountries', selCountries)
+       //        setStudents(selCountries)
+       //        setOpenCountry(false);
+       // };
        const handleOptionCountry = (e) => {
-              setSelectedOptionCountry(e.target.innerText);
+              const selectedCountry = e.target.innerText;
+              setSelectedOptionCountry(selectedCountry);
+
+              // Filter students based on the selected country
+              const selCountries = data.students.filter((student) => student.country.name === selectedCountry);
+
+              console.log('Selected Country:', selectedCountry);
+              console.log('Filtered Students:', selCountries);
+
+              // Update the students list to only include filtered countries or append to an array
+              setStudents(selCountries); // or append if necessary
+
+              // Close the dropdown
               setOpenCountry(false);
        };
+
 
        const handleOptionCity = (e) => {
               setSelectedOptionCity(e.target.innerText);
@@ -133,7 +155,7 @@ const StudentPage = () => {
                             },
                      });
                      if (response.status === 200) {
-                            setStudent(response.data);
+                            setData(response.data);
                             setStudents(response.data.students);
                      }
               } catch (error) {
@@ -225,7 +247,7 @@ const StudentPage = () => {
               );
        }
 
-       if (!student) {
+       if (!data) {
               return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No student data available</div>;
        }
 
@@ -238,10 +260,10 @@ const StudentPage = () => {
        return (
               <>
                      <div className="w-full flex flex-wrap gap-y-4 items-center justify-between">
-                            <CartStudent name={"Total students"} count={student.total_students} />
-                            <CartStudent name={"Free students"} count={student.free_students} />
-                            <CartStudent name={"Paid students"} count={student.paid_students} />
-                            <CartStudent name={"Banned students"} count={student.banned_students} />
+                            <CartStudent name={"Total students"} count={data.total_students} />
+                            <CartStudent name={"Free students"} count={data.free_students} />
+                            <CartStudent name={"Paid students"} count={data.paid_students} />
+                            <CartStudent name={"Banned students"} count={data.banned_students} />
                      </div>
                      <div className="w-full">
                             <div className="w-full flex flex-wrap items-center justify-between gap-4">
@@ -256,7 +278,7 @@ const StudentPage = () => {
                                                  handleOpenOption={handleOptionCountry}
                                                  stateoption={selectedOptionCountry}
                                                  openMenu={openCountry}
-                                                 options={student.countries || []}
+                                                 options={data.countries || []}
                                           />
                                    </div>
                                    <div className="sm:w-full xl:w-[30%]">
@@ -267,7 +289,7 @@ const StudentPage = () => {
                                                  handleOpenOption={handleOptionCity}
                                                  stateoption={selectedOptionCity}
                                                  openMenu={openCity}
-                                                 options={student.cities || []}
+                                                 options={data.cities || []}
                                           />
                                    </div>
                                    <div className="sm:w-full xl:w-[30%]">
@@ -278,7 +300,7 @@ const StudentPage = () => {
                                                  handleOpenOption={handleOptionCategory}
                                                  stateoption={selectedOptionCategory}
                                                  openMenu={openCategory}
-                                                 options={student.categories}
+                                                 options={data.categories}
                                           />
                                    </div>
                                    <div className="sm:w-full xl:w-[30%]">
@@ -289,7 +311,7 @@ const StudentPage = () => {
                                                  handleOpenOption={handleOptionEducation}
                                                  stateoption={selectedOptionEducation}
                                                  openMenu={openEducation}
-                                                 options={student.education}
+                                                 options={data.education}
                                           />
                                    </div>
                                    <div className="sm:w-full xl:w-[30%]">
