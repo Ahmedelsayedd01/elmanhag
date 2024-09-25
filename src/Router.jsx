@@ -347,14 +347,16 @@ const AppLayoutSubscriptions = () => (
 )
 
 const AppLayoutAffilateDashboard = () => (
-  <div className="relative flex gap-x-4 directionAR">
-    <SidebarStudent />
-    <div className="contentSection w-4/5 min-h-screen ">
-      {/* <AffilatePage /> */}
+  <div className="w-full flex gap-x-4 directionAR">
+    {/* <SidebarStudent /> */}
+    <div className=" w-full h-screen ">
       <NavbarStudent />
       <AffilatePage />
-      {/* <Outlet /> */}
     </div>
+    {/* <AffilatePage /> */}
+    {/* <NavbarStudent />
+      <AffilatePage /> */}
+    {/* <Outlet /> */}
   </div>
 );
 
