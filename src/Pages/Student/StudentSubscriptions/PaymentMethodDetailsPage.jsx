@@ -56,9 +56,9 @@ const PaymentMethodDetailsPage = () => {
       formData.append('service', planType);
       formData.append('payment_method_id', paymentMethod.id);
 
-      if (receiptImageFile) {  // This checks if receiptImageFile is not null, undefined, or an empty string
+      // if (receiptImageFile) {  // This checks if receiptImageFile is not null, undefined, or an empty string
         formData.append('receipt', receiptImageFile);
-      }
+      // }
     
       // formData.append('bundle_id', plan.id);
 
@@ -78,7 +78,7 @@ const PaymentMethodDetailsPage = () => {
 
       if (response.status === 200) {
         console.log('formData', formData)
-        auth.toastSuccess('تم الاشتراك بنجاح ');
+        auth.toastSuccess("شكرا على اشتاركك في منصة المنهج يتم مراجعة المدفوعات من قبل القسم المختص");
         handleGoBack();
       } else {
         auth.toastError('Failed to add Subject.');
@@ -150,12 +150,11 @@ const PaymentMethodDetailsPage = () => {
             </>
           )}
 
-          {paymentMethod.title === 'Vodafone cash' && (
+{paymentMethod.title === 'fawry' && (
             <>
               <div className="lg:w-[30%] sm:w-full">
               <InputCustom
                 type="text"
-                borderColor="mainColor"
                 textDirection="true"
                 placeholder="رقم التليفون"
                 value={phoneNumber}
@@ -165,9 +164,6 @@ const PaymentMethodDetailsPage = () => {
               <div className="lg:w-[30%] sm:w-full">
               <InputCustom
                 type="text"
-                borderColor="mainColor"
-                textDirection="true"
-                iconDirection="false"
                 upload={true}
                 placeholder="صوره الايصال"
                 value={receiptImage}
@@ -184,37 +180,41 @@ const PaymentMethodDetailsPage = () => {
             </>
           )}
 
-          {paymentMethod.title === 'fawry' && (
+
+          {/* Default for any other payment method */}
+          {!['visa', 'fawry'].includes(paymentMethod.title) && (
             <>
-              <div className="lg:w-[30%] sm:w-full">
-              <InputCustom
-                type="text"
-                textDirection="true"
-                placeholder="رقم التليفون"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-              />
+       
+            <div className="p-6 rounded-lg shadow-lg w-full lg:w-[60%] space-y-6">
+              <p className="text-md text-gray-700 directionEN">Please check the payment details below:</p>
+
+              <h1 className="text-xl font-semibold text-gray-900 mb-4 border-b-2 border-gray-200 pb-2 directionEN">{paymentMethod.description}</h1>
+
+              <div className="lg:w-[50%] sm:w-full">
+                <InputCustom
+                  type="text"
+                  iconDirection="true"
+                  textDirection="true"
+                  upload={true}
+                  placeholder="صوره الايصال"
+                  value={receiptImage}
+                  readonly={true}
+                  onClick={handleReceiptImageClick}
+                  className="cursor-pointer focus:ring-2 focus:ring-mainColor"
+                />
+                <input
+                  type="file"
+                  className="hidden"
+                  onChange={handleReceiptImageChange}
+                  ref={uploadReceiptImageRef}
+                />
               </div>
-              <div className="lg:w-[30%] sm:w-full">
-              <InputCustom
-                type="text"
-                upload={true}
-                placeholder="صوره الايصال"
-                value={receiptImage}
-                readonly={true}
-                onClick={handleReceiptImageClick}
-              />
-              <input
-                type="file"
-                className="hidden"
-                onChange={handleReceiptImageChange}
-                ref={uploadReceiptImageRef}
-              />
-              </div>
+
+            </div>
             </>
           )}
+        
         </div>
-
          {/* Buttons */}
          <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
           <div className="flex items-center justify-center w-72">
