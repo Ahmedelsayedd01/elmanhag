@@ -111,6 +111,14 @@ const SignUpAffilatePage = () => {
       auth.toastError("ادخل رقم الهاتف صحيح")
       return;
     }
+    if (!email) {
+      auth.toastError("ادخل الايميل")
+      return;
+    }
+    if (!email.includes('@')) {
+      auth.toastError("الرجاء تضمين '@' في عنوان البريد الإلكتروني.")
+      return;
+    }
     if (!countryId) {
       auth.toastError("اختر البلد")
       console.log('country_id', countryId)
@@ -119,14 +127,6 @@ const SignUpAffilatePage = () => {
     if (!cityId) {
       console.log('city_id', cityId)
       auth.toastError("اختر المدينة")
-      return;
-    }
-    if (!email) {
-      auth.toastError("ادخل الايميل")
-      return;
-    }
-    if (!email.includes('@')) {
-      auth.toastError("الرجاء تضمين '@' في عنوان البريد الإلكتروني.")
       return;
     }
     if (!password) {
@@ -181,6 +181,8 @@ const SignUpAffilatePage = () => {
     } catch (error) {
       setError('There was an error posting the data!');
       console.error(error);
+    } finally {
+      setIsLoading(false)
     }
   };
   if (isloading) {
@@ -193,8 +195,8 @@ const SignUpAffilatePage = () => {
   return (
     <>
       <form onSubmit={handleSubmit} className="w-full flex flex-col items-start justify-center gap-4">
-        {/* <span className='text-thirdColor text-2xl font-medium'>Come on, Sign up</span> */}
-        <div className="w-full flex flex-col gap-6 items-end">
+        <span className='w-full text-right text-thirdColor text-2xl font-medium'>أهلا بك شريكا فى منصة المنهج</span>
+        <div className="w-full flex flex-col gap-6 items-end mt-4">
           <div className="w-full flex sm:flex-col xl:flex-row-reverse  gap-4">
             <InputCustom
               type={"name"}
@@ -215,6 +217,15 @@ const SignUpAffilatePage = () => {
               onChange={(e) => setPhone(e.target.value)}
             />
           </div>
+          <InputCustom
+            type={"email"}
+            required={false}
+            iconDirection={true}
+            textDirection={true}
+            placeholder={"الايميل"}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
           {/* <InputCustom type={"country"} placeholder={"Country"} value={country_id} onChange={(e) => setCountry(e.target.value)} /> */}
           {/* <InputCustom type={"city"} placeholder={"City"} value={city_id} onChange={(e) => setCity(e.target.value)} /> */}
           <div className="w-full flex sm:flex-col xl:flex-row-reverse gap-4">
@@ -240,15 +251,6 @@ const SignUpAffilatePage = () => {
               options={cities}
             />
           </div>
-          <InputCustom
-            type={"email"}
-            required={false}
-            iconDirection={true}
-            textDirection={true}
-            placeholder={"الايميل"}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
           <InputCustom
             type={"password"}
             required={false}

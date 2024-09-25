@@ -21,7 +21,7 @@
 // }
 
 // export default LayoutStudent
-import React from 'react';
+import React, { useEffect } from 'react';
 import SidebarStudent from '../../Components/SidebarStudent';
 import NavbarStudent from '../../Components/NavbarStudent';
 import { Outlet } from 'react-router-dom';
@@ -35,6 +35,17 @@ const LayoutStudent = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
+    useEffect(() => {
+        const disableRightClick = (e) => e.preventDefault();
+
+        // Disable right-click
+        document.addEventListener('contextmenu', disableRightClick);
+
+        return () => {
+            document.removeEventListener('contextmenu', disableRightClick);
+        };
+    }, []);
+
     return (
         <>
             <div className="relative flex gap-x-4 directionAR">
@@ -47,7 +58,7 @@ const LayoutStudent = () => {
                         {isSidebarOpen ? (
                             <RiCloseFill className="w-8 h-8 mr-auto " color='black' />
                         ) : (
-                            <RiMenu2Fill className="w-8 h-8" color='black'/>
+                            <RiMenu2Fill className="w-8 h-8" color='black' />
                         )}
                     </button>
                 </div>

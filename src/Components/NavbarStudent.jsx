@@ -111,16 +111,16 @@
 //                 </div>
 //                 <div className="flex items-center">
 //                     <div className="ml-4">
-                        // {auth.user ? (
-                        //     // Buttons can be conditionally rendered here if needed
-                        //     <>
-                        //     </>
-                        // ) : (
-                        //     <>
-                        //         <Button color="primary" Text='إنشاء حساب' className="mr-2" />
-                        //         <Button color="primary" Text='تسجيل دخول' />
-                        //     </>
-                        // )}
+// {auth.user ? (
+//     // Buttons can be conditionally rendered here if needed
+//     <>
+//     </>
+// ) : (
+//     <>
+//         <Button color="primary" Text='إنشاء حساب' className="mr-2" />
+//         <Button color="primary" Text='تسجيل دخول' />
+//     </>
+// )}
 //                     </div>
 //                 </div>
 //             </div>
@@ -220,15 +220,26 @@ const NavbarStudent = () => {
                             <p className="text-lg text-gray-600 text-right">{categoryName}</p>
                         </div>
                     </div>
-                    <div className="hidden lg:flex">
-                        <Link to="My_Subscriptions">
-                            <button type='button' className="px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-6 lg:py-3">اشتراكاتي</button>
-                        </Link>
+                    <div className="w-4/12 flex items-center justify-center gap-4">
+                        {auth.user.role == 'student' && (
+                            <Link to="My_Subscriptions">
+                                <button type='button' className="w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-6 lg:py-3 hover:bg-hoverColor">
+                                    اشتراكاتي
+                                </button>
+                            </Link>
+                        )}
+
+                        {auth.user.role == 'affilate' && (
+                            <button type='button' onClick={handleLogout} className="w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-6 lg:py-3 hover:bg-hoverColor">
+                                تسجيل خروج
+                            </button>
+                        )}
                     </div>
+
                 </div>
                 <div className="flex items-center mt-4 lg:mt-0">
                     <div className="ml-4">
-                    {auth.user ? (
+                        {auth.user ? (
                             // Buttons can be conditionally rendered here if needed
                             <>
                             </>

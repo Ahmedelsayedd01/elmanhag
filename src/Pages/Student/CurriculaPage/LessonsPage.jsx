@@ -4,7 +4,7 @@ import Loading from '../../../Components/Loading';
 import axios from 'axios';
 import { Button } from '../../../Components/Button';
 import { IoIosArrowDown } from 'react-icons/io';
-import { useNavigate ,Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { FaDownload } from 'react-icons/fa'; // Import download icon
 
 const LessonsPage = ({ subjectId, lessonId }) => {
@@ -43,6 +43,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
         );
 
         if (response.status === 200) {
+          console.log('response lesson', response)
           if (response.data.lesson) {
             setLessons(response.data.lesson);
             setChapterID(response.data.lesson?.chapter_id || '');
@@ -241,7 +242,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
 
                 <div className="mt-4">
                   <h4 className="text-2xl text-mainColor font-semibold">{chapterName}</h4>
-                  <p className="text-gray-900 text-lg">{lessons.description}</p>
+                  <p className="text-gray-900 text-lg">{lessons.name}</p>
                 </div>
               </div>
             </div>
