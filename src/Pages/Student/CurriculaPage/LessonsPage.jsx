@@ -4,7 +4,7 @@ import Loading from '../../../Components/Loading';
 import axios from 'axios';
 import { Button } from '../../../Components/Button';
 import { IoIosArrowDown } from 'react-icons/io';
-import { useNavigate ,Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { FaDownload } from 'react-icons/fa'; // Import download icon
 
 const LessonsPage = ({ subjectId, lessonId }) => {
@@ -43,6 +43,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
         );
 
         if (response.status === 200) {
+          console.log('response lesson', response)
           if (response.data.lesson) {
             setLessons(response.data.lesson);
             setChapterID(response.data.lesson?.chapter_id || '');
@@ -76,7 +77,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
         //   default:
         //     translatedErrorMessage = serverErrorMessage || translatedErrorMessage;
         // }
-        
+
       } finally {
         setIsLoading(false);
       }
@@ -135,25 +136,25 @@ const LessonsPage = ({ subjectId, lessonId }) => {
     <div className="p-6 mb-20">
       {/* Error Modal */}
       {showErrorModal && (
-      // <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 mr-10">
-      //   <div className="bg-white p-12 rounded-lg w-1/2">
-      //     <h2 className="text-[#6B6B6B] text-2xl font-bold mb-4">{errorMessage}</h2>
-      //     <div className="flex justify-end gap-4">
-      //       {/* Show both 'اشترك' and 'حسنا' buttons for 'This Lesson Unpaid' error */}
-            // {errorMessage === `عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين  .اشترك الآن
-            //                        واستمتع بجميع الدروس بدون قيود !` ? (
-      //         <>
-      //         <Link to="/dashboard/My_Subscriptions/plans" state={{ subject_Id: subjectId }}>
-      //             <Button Text="اشترك الان" Width="auto" BgColor="bg-mainColor" Color="text-white"/>
-      //         </Link>
-      //           <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
-      //         </>
-      //       ) : (
-      //         <Button Text="حسناً" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
-      //       )}
-      //     </div>
-      //   </div>
-      // </div>
+        // <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 mr-10">
+        //   <div className="bg-white p-12 rounded-lg w-1/2">
+        //     <h2 className="text-[#6B6B6B] text-2xl font-bold mb-4">{errorMessage}</h2>
+        //     <div className="flex justify-end gap-4">
+        //       {/* Show both 'اشترك' and 'حسنا' buttons for 'This Lesson Unpaid' error */}
+        // {errorMessage === `عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين  .اشترك الآن
+        //                        واستمتع بجميع الدروس بدون قيود !` ? (
+        //         <>
+        //         <Link to="/dashboard/My_Subscriptions/plans" state={{ subject_Id: subjectId }}>
+        //             <Button Text="اشترك الان" Width="auto" BgColor="bg-mainColor" Color="text-white"/>
+        //         </Link>
+        //           <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
+        //         </>
+        //       ) : (
+        //         <Button Text="حسناً" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
+        //       )}
+        //     </div>
+        //   </div>
+        // </div>
 
         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 mr-10">
           <div className="bg-white p-6 md:p-12 rounded-lg w-11/12 md:w-1/2 lg:w-1/3">
@@ -161,33 +162,33 @@ const LessonsPage = ({ subjectId, lessonId }) => {
             <div className="flex justify-end gap-4 sm:gap-2 text-s">
               {/* Show both 'اشترك' and 'حسنا' buttons for 'This Lesson Unpaid' error */}
               {errorMessage === `عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين  .اشترك الآن
-                                   واستمتع بجميع الدروس بدون قيود !` ? (                <>
-                  <Link to="/dashboard/My_Subscriptions/plans" state={{ subject_Id: subjectId }}>
-                    <Button Text="اشترك الان" Width="auto" BgColor="bg-mainColor" Color="text-white" />
-                  </Link>
-                  <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
-                </>
+                                   واستمتع بجميع الدروس بدون قيود !` ? (<>
+                <Link to="/dashboard/My_Subscriptions/plans" state={{ subject_Id: subjectId }}>
+                  <Button Text="اشترك الان" Width="auto" BgColor="bg-mainColor" Color="text-white" />
+                </Link>
+                <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
+              </>
               ) : (
                 <Button Text="حسناً" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
               )}
             </div>
           </div>
         </div>
-        )}
+      )}
 
 
       {!showErrorModal && (
         <>
           <div className="flex w-full gap-5 mb-5">
             {/* Tab buttons */}
-            <div className='sm:w-1/4'> 
-            <Button
-              Text="فيديوهات"
-              Width="full"
-              BgColor={activeTab === "videos" ? "bg-mainColor" : "bg-white"}
-              Color={activeTab === "videos" ? "text-white" : "text-mainColor"}
-              handleClick={() => setActiveTab("videos")}
-            />
+            <div className='sm:w-1/4'>
+              <Button
+                Text="فيديوهات"
+                Width="full"
+                BgColor={activeTab === "videos" ? "bg-mainColor" : "bg-white"}
+                Color={activeTab === "videos" ? "text-white" : "text-mainColor"}
+                handleClick={() => setActiveTab("videos")}
+              />
             </div>
             {/* <Button
               Text="فيديوهات"
@@ -196,24 +197,24 @@ const LessonsPage = ({ subjectId, lessonId }) => {
               Color={activeTab === "videos" ? "text-white" : "text-mainColor"}
               handleClick={() => setActiveTab("videos")}
             /> */}
-            <div className='sm:w-1/4'> 
-            <Button
-              Text="مذكرات"
-              Width="full"
-              BgColor={activeTab === "pdf" ? "bg-red-600" : "bg-white"}
-              Color={activeTab === "pdf" ? "text-white" : "text-red-600"}
-              handleClick={() => setActiveTab("pdf")}
-            />
+            <div className='sm:w-1/4'>
+              <Button
+                Text="مذكرات"
+                Width="full"
+                BgColor={activeTab === "pdf" ? "bg-red-600" : "bg-white"}
+                Color={activeTab === "pdf" ? "text-white" : "text-red-600"}
+                handleClick={() => setActiveTab("pdf")}
+              />
             </div>
 
-            <div className='sm:w-1/4'> 
-            <Button
-              Text="واجبات"
-              Width="full"
-              BgColor={activeTab === "homework" ? "bg-red-600" : "bg-white"}
-              Color={activeTab === "homework" ? "text-white" : "text-red-600"}
-              handleClick={() => setActiveTab("homework")}
-            />
+            <div className='sm:w-1/4'>
+              <Button
+                Text="واجبات"
+                Width="full"
+                BgColor={activeTab === "homework" ? "bg-red-600" : "bg-white"}
+                Color={activeTab === "homework" ? "text-white" : "text-red-600"}
+                handleClick={() => setActiveTab("homework")}
+              />
             </div>
             <button type='button' onClick={handleGoBack}>
               <IoIosArrowDown className="rotate-90 text-mainColor text-5xl" />
@@ -252,7 +253,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
 
                 <div className="mt-4">
                   <h4 className="text-2xl text-mainColor font-semibold">{chapterName}</h4>
-                  <p className="text-gray-900 text-lg">{lessons.description}</p>
+                  <p className="text-gray-900 text-lg">{lessons.name}</p>
                 </div>
               </div>
             </div>
