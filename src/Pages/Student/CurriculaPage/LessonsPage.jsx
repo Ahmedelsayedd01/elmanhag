@@ -46,13 +46,21 @@ const LessonsPage = ({ subjectId, lessonId }) => {
           console.log('response lesson', response)
           if (response.data.lesson) {
             setLessons(response.data.lesson);
-            setChapterID(response.data.lesson?.chapter_id || '');
+             // Check if the lesson exists but resources are empty
+          if (response.data.lesson.resources && response.data.lesson.resources.length === 0) {
+            setErrorMessage('عفوا هذا الدرس غير متاح حاليا. سوف يتوفر لاحقا');
+            setShowErrorModal(true); // Show modal when error occurs
+          } else {
+            setChapterID(response.data.lesson.chapter_id || '');
+          }
+            // setChapterID(response.data.lesson?.chapter_id || '');
           } else {
             setErrorMessage('Lesson data not found.');
             setShowErrorModal(true); // Show modal when error occurs
           }
         }
       } catch (error) {
+        console.log(error)
         console.error('Error fetching Lessons data:', error.response?.data || error);
 
         // Customize error messages based on specific text
