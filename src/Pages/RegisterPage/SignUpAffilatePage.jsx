@@ -181,6 +181,8 @@ const SignUpAffilatePage = () => {
     } catch (error) {
       setError('There was an error posting the data!');
       console.error(error);
+    } finally {
+      setIsLoading(false)
     }
   };
   if (isloading) {
