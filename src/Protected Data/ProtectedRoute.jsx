@@ -52,16 +52,20 @@ const ProtectedRoute = ({ allowedRoles }) => {
 
        if (!hasPermission) {
               // return window.location.href = "https://elmanhag.com";
-              
+
               if (auth.user.role === "supAdmin") {
+                     console.log('1')
                      return <Navigate to={'/dashboard_admin'} />;
                      // return window.location.href = "https://login.elmanhag.shop/dashboard_admin";
               } else if (auth.user.role === "student") {
+                     console.log('2')
                      return <Navigate to={'/dashboard'} />;
                      // return window.location.href = "https://login.elmanhag.shop/dashboard";
               } else if (auth.user.role === "affilate") {
+                     console.log('3')
                      return <Navigate to={'/dashboard_affilate'} />;
               } else {
+                     console.log('4')
                      return window.location.href = "https://elmanhag.com";
 
               }

@@ -380,15 +380,6 @@ export const router = createBrowserRouter([
         element: <ConectUsPage />,
       },
     ],
-  }, {
-    path: "/loginWego",
-    element: <ProtectedLogin />,
-    children: [
-      {
-        path: '',
-        element: <LoginAdmin />,
-      }
-    ]
   },
   // {
   //   path: '/authentication',
@@ -416,6 +407,49 @@ export const router = createBrowserRouter([
   //   ],
   // },
 
+  // {
+  //   path: '/authentication',
+  //   element: <ProtectedLogin />,
+  //   children: [
+  //     {
+  //       path: '',
+  //       element: <AppLayoutAuthentication />,
+  //       children: [
+  //         {
+  //           path: '',
+  //           element: <Authentication />,
+  //           children: [
+  //             {
+  //               path: 'signup',
+  //               index: true,
+  //               element: <SignUpPage />,
+  //             },
+  //             {
+  //               path: 'login',
+  //               element: <LoginUser />,
+  //             },
+  //             {
+  //               path: 'signup_affilate',
+  //               element: <SignUpAffiliatePage />,
+  //             },
+  //           ]
+  //         },
+  //       ],
+  //     },
+
+  //   ]
+
+  // },
+  {
+    path: "/loginWego",
+    element: <ProtectedLogin />,
+    children: [
+      {
+        path: '',
+        element: <LoginAdmin />,
+      }
+    ]
+  },
   {
     path: '/authentication',
     element: <ProtectedLogin />,
@@ -442,12 +476,10 @@ export const router = createBrowserRouter([
                 element: <SignUpAffiliatePage />,
               },
             ]
-          },
-        ],
-      },
-
+          }
+        ]
+      }
     ]
-
   },
   {
     path: '/forget_password',

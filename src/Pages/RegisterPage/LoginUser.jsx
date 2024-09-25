@@ -8,6 +8,7 @@ import InputCustom from '../../Components/InputCustom';
 
 const LoginPage = () => {
        const auth = useAuth();
+       console.log('auth.user', auth.user)
 
        const [show, setShow] = useState(false)
 
