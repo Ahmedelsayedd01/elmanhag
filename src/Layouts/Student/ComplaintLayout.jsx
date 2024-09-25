@@ -13,7 +13,7 @@ const ComplaintLayout = () => {
        return (
         <>
         <div className='directionEN'>
-            <HeaderPageSection handleClick={handleGoBack} name="الاقتراحات والشكاوي" />
+            <HeaderPageSection handleClick={handleGoBack} name="الاقتراحات والشكاوي" size={"4xl"}/>
         </div>
         <ComplaintPage/>
         </>

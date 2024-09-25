@@ -52,37 +52,47 @@ const LessonsPage = ({ subjectId, lessonId }) => {
           }
         }
       } catch (error) {
-        console.error('Error fetching Lessons data:', error.response.data.lesson_not_solved);
-        const serverErrorMessage = error.response.data.lesson_not_solved;
-
-        setErrorMessage(translatedErrorMessage);
-        setShowErrorModal(true); // Show modal when error occurs
+        console.error('Error fetching Lessons data:', error.response?.data || error);
 
         // Customize error messages based on specific text
-        // const serverErrorMessage = error.response.data.faild;
-        let translatedErrorMessage = 'An unexpected error occurred.';
-
-        // switch (serverErrorMessage) {
-        //   case 'This Lesson Unpaid':
-        //     translatedErrorMessage = `عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين  .اشترك الآن
-        //                            واستمتع بجميع الدروس بدون قيود !`;
-        //     break;
-        //   case 'This Material for This Lesson is Closed':
-        //     translatedErrorMessage = 'عفوا هذا الدرس غير متاح حاليا. سوف يتوفر لاحقا';
-        //     break;
-        //   case 'Lesson_not_solved':
-        //     translatedErrorMessage = 'يجب عليك حل الدرس السابق قبل المتابعة.';
-        //     break;
-        //   default:
-        //     translatedErrorMessage = serverErrorMessage || translatedErrorMessage;
-        // }
-        
+        const statusCode = error.response?.status;
+        console.log(statusCode)
+        // Handle different status codes
+        switch (statusCode) {
+          case 204:
+            setErrorMessage('This Lesson Is Closed');
+            break;
+          case 400:
+            if (error.response.data.faield === 'This Material for This Lesson is Closed') {
+              setErrorMessage('عفوا هذا الدرس غير متاح حاليا. سوف يتوفر لاحقا');
+            } else if (error.response.data.faield === 'This Lesson Unpaid') {
+              setErrorMessage('عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين. اشترك الآن واستمتع بجميع الدروس بدون قيود !');
+            } else if (error.response.data.not_found === "This Bundle Don't Have Subject") {
+              setErrorMessage("This Bundle Don't Have Subject");
+            } else if (error.response.data.error) {
+              setErrorMessage('Error: ' + error.response.data.error);
+            }
+            break;
+          case 404:
+            setErrorMessage('This Lesson Not Found');
+            break;
+          case 403:
+            setErrorMessage("You Can't Take This Lesson cause You Didn't Finish Homework Before Lesson");
+            break;
+          case 500:
+            setErrorMessage('The previous lesson was not solved.');
+            break;
+          default:
+            setErrorMessage('An unknown error occurred.');
+            break;
+        }
+        setShowErrorModal(true); // Show modal for any error
       } finally {
         setIsLoading(false);
       }
     };
-
     fetchLessons();
+    // console.log("err",errorMessage)
   }, [subjectId, lessonId, auth.user.token]);
 
   useEffect(() => {
@@ -132,49 +142,29 @@ const LessonsPage = ({ subjectId, lessonId }) => {
   const pdfResources = lessons.resources?.filter(resource => resource.type === "pdf") || [];
 
   return (
-    <div className="p-6 mb-20">
+    <div className="p-6 mb-20 sm:p-2">
       {/* Error Modal */}
       {showErrorModal && (
-      // <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 mr-10">
-      //   <div className="bg-white p-12 rounded-lg w-1/2">
-      //     <h2 className="text-[#6B6B6B] text-2xl font-bold mb-4">{errorMessage}</h2>
-      //     <div className="flex justify-end gap-4">
-      //       {/* Show both 'اشترك' and 'حسنا' buttons for 'This Lesson Unpaid' error */}
-            // {errorMessage === `عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين  .اشترك الآن
-            //                        واستمتع بجميع الدروس بدون قيود !` ? (
-      //         <>
-      //         <Link to="/dashboard/My_Subscriptions/plans" state={{ subject_Id: subjectId }}>
-      //             <Button Text="اشترك الان" Width="auto" BgColor="bg-mainColor" Color="text-white"/>
-      //         </Link>
-      //           <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
-      //         </>
-      //       ) : (
-      //         <Button Text="حسناً" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
-      //       )}
-      //     </div>
-      //   </div>
-      // </div>
 
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 mr-10">
-          <div className="bg-white p-6 md:p-12 rounded-lg w-11/12 md:w-1/2 lg:w-1/3">
-            <h2 className="text-[#6B6B6B] text-xl md:text-2xl font-bold mb-4">{errorMessage}</h2>
-            <div className="flex justify-end gap-4 sm:gap-2 text-s">
-              {/* Show both 'اشترك' and 'حسنا' buttons for 'This Lesson Unpaid' error */}
-              {errorMessage === `عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين  .اشترك الآن
-                                   واستمتع بجميع الدروس بدون قيود !` ? (                <>
-                  <Link to="/dashboard/My_Subscriptions/plans" state={{ subject_Id: subjectId }}>
-                    <Button Text="اشترك الان" Width="auto" BgColor="bg-mainColor" Color="text-white" />
-                  </Link>
-                  <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
-                </>
-              ) : (
-                <Button Text="حسناً" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
-              )}
+          <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 lg:mr-10">
+            <div className="bg-white p-6 md:p-12 rounded-lg w-11/12 md:w-1/2 lg:w-1/3">
+              <h2 className="text-[#6B6B6B] text-xl md:text-2xl font-bold mb-4">{errorMessage}</h2>
+              <div className="flex justify-end gap-4 sm:gap-2">
+                {/* Conditional rendering based on the error message */}
+                {errorMessage === `عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين. اشترك الآن واستمتع بجميع الدروس بدون قيود !` ? (
+                  <>
+                    <Link to="/dashboard/My_Subscriptions/plans" state={{ subject_Id: subjectId }}>
+                      <Button Text="اشترك الان" Width="auto" BgColor="bg-mainColor" Color="text-white" />
+                    </Link>
+                    <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
+                  </>
+                ) : (
+                  <Button Text="حسناً" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
+                )}
+              </div>
             </div>
           </div>
-        </div>
         )}
-
 
       {!showErrorModal && (
         <>
@@ -184,22 +174,19 @@ const LessonsPage = ({ subjectId, lessonId }) => {
             <Button
               Text="فيديوهات"
               Width="full"
+              px="px-1"
+              Size='text-xl'
               BgColor={activeTab === "videos" ? "bg-mainColor" : "bg-white"}
               Color={activeTab === "videos" ? "text-white" : "text-mainColor"}
               handleClick={() => setActiveTab("videos")}
             />
             </div>
-            {/* <Button
-              Text="فيديوهات"
-              Width="full"
-              BgColor={activeTab === "videos" ? "bg-mainColor" : "bg-white"}
-              Color={activeTab === "videos" ? "text-white" : "text-mainColor"}
-              handleClick={() => setActiveTab("videos")}
-            /> */}
             <div className='sm:w-1/4'> 
             <Button
               Text="مذكرات"
               Width="full"
+              px="px-1"
+              Size='text-xl'
               BgColor={activeTab === "pdf" ? "bg-red-600" : "bg-white"}
               Color={activeTab === "pdf" ? "text-white" : "text-red-600"}
               handleClick={() => setActiveTab("pdf")}
@@ -210,6 +197,8 @@ const LessonsPage = ({ subjectId, lessonId }) => {
             <Button
               Text="واجبات"
               Width="full"
+              px="px-1"
+              Size='text-xl'
               BgColor={activeTab === "homework" ? "bg-red-600" : "bg-white"}
               Color={activeTab === "homework" ? "text-white" : "text-red-600"}
               handleClick={() => setActiveTab("homework")}

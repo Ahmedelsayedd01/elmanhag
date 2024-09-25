@@ -2,7 +2,7 @@ import React from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
 import TitleHeader from './TitleHeader'
 
-const HeaderPageSection = ({ handleClick, name }) => {
+const HeaderPageSection = ({ handleClick, name, size }) => {
        return (
               <>
                      <div className="w-full flex items-center justify-start">
@@ -10,7 +10,7 @@ const HeaderPageSection = ({ handleClick, name }) => {
                                    <IoIosArrowDown className="rotate-90 text-mainColor text-5xl" />
                             </button>
                             <div className="w-full text-center">
-                                   <TitleHeader text={name} />
+                                   <TitleHeader text={name} size={size}/>
                             </div>
                      </div>
               </>

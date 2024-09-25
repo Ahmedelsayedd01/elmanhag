@@ -5,6 +5,8 @@ import DutiesIcon from '../../../Components/Icons/StudentIcons/DutiesIcon';
 import MonthsReviewsIcon from '../../../Components/Icons/StudentIcons/MonthsReviewsIcon';
 import SolveExamsIcon from '../../../Components/Icons/StudentIcons/SolveExamsIcon';
 import LiveClassesIcon from '../../../Components/Icons/StudentIcons/LiveClassesIcon'
+import FinalReviewsIcon from '../../../Components/Icons/StudentIcons/FinalReviewsIcon'
+
 import { DiAndroid, DiApple } from "react-icons/di";
 
 const StudentHomePage = () => {
@@ -12,6 +14,7 @@ const StudentHomePage = () => {
     const [isActiveDuties, setIsActiveDuties] = useState(false);
     const [isActiveMonthsReviews, setIsActiveMonthsReviews] = useState(false);
     const [isActiveSolveExams, setIsActiveSolveExams] = useState(false);
+    const [isActiveFinalReviews, setIsActiveFinalReviews] = useState(false);
 
     return (
         <>
@@ -68,6 +71,17 @@ const StudentHomePage = () => {
                         </span>
                         <span className="w-full mt-3 text-center text-secoundColor text-xl md:text-3xl font-medium">
                             الامتحانات
+                        </span>
+                    </NavLink>
+                </div>
+
+                <div className="w-full sm:w-2/5  min-h-36 overflow-hidden p-3 flex flex-col items-center justify-center bg-mainColor rounded-xl transition-transform hover:scale-105">
+                    <NavLink to="final_reviews">
+                        <span className="w-full flex justify-center text-xl text-secoundColor font-medium">
+                            <FinalReviewsIcon isActive={isActiveFinalReviews} Width="56" Height="56" />
+                        </span>
+                        <span className="w-full mt-3 text-center text-secoundColor text-xl md:text-3xl font-medium">
+                          مراجعه نهائيه
                         </span>
                     </NavLink>
                 </div>

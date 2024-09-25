@@ -55,7 +55,11 @@ const PaymentMethodDetailsPage = () => {
       formData.append('amount', price);
       formData.append('service', planType);
       formData.append('payment_method_id', paymentMethod.id);
-      formData.append('receipt', receiptImageFile);
+
+      if (receiptImageFile) {  // This checks if receiptImageFile is not null, undefined, or an empty string
+        formData.append('receipt', receiptImageFile);
+      }
+    
       // formData.append('bundle_id', plan.id);
 
       // Conditionally append either bundle_id or subject_id based on planType
