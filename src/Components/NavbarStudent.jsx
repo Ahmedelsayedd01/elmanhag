@@ -220,16 +220,20 @@ const NavbarStudent = () => {
                             <p className="text-lg text-gray-600 text-right">{categoryName}</p>
                         </div>
                     </div>
-                    <div className="w-4/12 flex flex-col sm:flex-col xl:flex-row items-center sm:justify-center xl:justify-between gap-4">
-                        <Link to="My_Subscriptions">
-                            <button type='button' className="w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-6 lg:py-3 hover:bg-hoverColor">
-                                اشتراكاتي
-                            </button>
-                        </Link>
+                    <div className="w-4/12 flex items-center justify-center gap-4">
+                        {auth.user.role == 'student' && (
+                            <Link to="My_Subscriptions">
+                                <button type='button' className="w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-6 lg:py-3 hover:bg-hoverColor">
+                                    اشتراكاتي
+                                </button>
+                            </Link>
+                        )}
 
-                        <button type='button' onClick={handleLogout} className="w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-6 lg:py-3 hover:bg-hoverColor">
-                            تسجيل خروج
-                        </button>
+                        {auth.user.role == 'affilate' && (
+                            <button type='button' onClick={handleLogout} className="w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-6 lg:py-3 hover:bg-hoverColor">
+                                تسجيل خروج
+                            </button>
+                        )}
                     </div>
 
                 </div>
