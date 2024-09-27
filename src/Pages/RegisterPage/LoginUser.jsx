@@ -46,13 +46,17 @@ const LoginPage = () => {
 
               // Ensure email and password are provided
               if (!email) {
-                     auth.toastError("ادخل البريد الالكترونى");
+                     auth.toastError("ادخل البريد الالكترونى او رقم الهاتف");
                      return;
               }
-              if (!email.includes('@')) {
-                     auth.toastError("ادخل علامة '@' بعد اسم البريد الالكترونى")
+              if (email.length < 11) {
+                     auth.toastError("ادخل البريد الالكترونى أو رقم الهاتف بشكل صحيح")
                      return;
               }
+              // if (!email.includes('@')) {
+              //        auth.toastError("ادخل علامة '@' بعد اسم البريد الالكترونى")
+              //        return;
+              // }
               if (!password) {
                      auth.toastError("ادخل كلمة المرور");
                      return;
@@ -72,17 +76,17 @@ const LoginPage = () => {
                             };
 
                             console.log('Login response:', response); // Debugging line
-                            auth.toastSuccess('Login successfully!');
+                            auth.toastSuccess(`${response.data.user.name} مرحبا`);
                             setData(userData);
                             setType(response.data.role);
                      }
               } catch (error) {
                      // Handle known error status codes or generic errors
                      if (error.response && error.response.status === 400) {
-                            auth.toastError('Please Check Your Email Or Password');
+                            auth.toastError('يرجى التحقق من البريد الإلكتروني أو كلمة المرور');
                             console.log('Login failed:', error.response.data);
                      } else {
-                            auth.toastError('You are not signed up. Please sign up to continue');
+                            auth.toastError('أنت غير مسجل. يرجى التسجيل للمتابعة');
                             console.error('An error occurred:', error);
                      }
               } finally {
@@ -111,10 +115,10 @@ const LoginPage = () => {
                      <form onSubmit={handleSubmit} className="w-full flex flex-col items-center justify-center gap-2 xl:mt-20">
                             <div className="w-full flex flex-col gap-6 items-end">
                                    <InputCustom
-                                          type={"email"}
+                                          type={"text"}
                                           textDirection={true}
                                           paddinRight='pr-2'
-                                          placeholder={"البريد الالكترونى"}
+                                          placeholder={"البريد الالكترونى أو رقم الهاتف"}
                                           value={email}
                                           onChange={(e) => setEmail(e.target.value)}
                                           required={false}
