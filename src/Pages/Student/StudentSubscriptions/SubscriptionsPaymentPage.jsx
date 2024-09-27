@@ -135,15 +135,6 @@ const SubscriptionsPaymentPage = () => {
             <div>
               <h2 className="text-xl sm:text-2xl font-semibold text-mainColor mt-2">{plan.name}</h2>
               <p className="text-gray-700 mb-4 mt-2">
-              {/* {plan.price_discount > 0 ? (
-                      <>
-                        <span className='text-3xl text-mainColor font-semibold'>{plan.price_discount} جنيه</span>  بدلا من 
-                        <span className="line-through text-xl text-gray-600">{plan.price} جنيه</span>
-                      </>
-                    ) : (
-                        <span className='text-3xl text-mainColor font-semibold'>{plan.price} جنيه</span>
-                    )}             */}
-
                   {newPrice ? (
                   // Only display the new price after applying the promo code
                   <span className="text-3xl text-mainColor font-semibold">{newPrice} جنيه</span>

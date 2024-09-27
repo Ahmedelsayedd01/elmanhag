@@ -178,10 +178,10 @@ const SubscriptionsPage = () => {
                         </div>
                         <div className="p-4">
                             <h1 className="text-center m-4 text-mainColor text-2xl font-semibold">باقه المواد</h1>
-                            <p className="text-[#7E7D7D]">
+                            <p className="text-[#7E7D7D] text-2xl">
                                 انت الان على الباقه المجانيه انتقل الى الباقه المدفوعه  
-                                للحصول على الميزات المتقدمه بسعر <span className="text-mainColor">1500 جنيه</span> لكل
-                                المواد بدلاً من <span className="text-red-600 line-through">2000 جنيه</span>
+                                للحصول على الميزات المتقدمه لكل
+                                المواد
                             </p>
                         </div>
                         <div className="mt-auto">

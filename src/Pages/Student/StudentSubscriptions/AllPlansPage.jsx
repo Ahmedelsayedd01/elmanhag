@@ -329,9 +329,14 @@ const AllPlansPage = () => {
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{live.name}</h3>
                   <p className="text-gray-700 mb-2">
-                    {live.price_discount > 0
-                      ? `${live.price_discount} جنيه بدلا من ${live.old_price} جنيه`
-                      : `${live.old_price} جنيه`}
+                       {live.price_discount > 0 ? (
+                      <>
+                        {`${live.price_discount} جنيه بدلا من `}
+                        <span className="line-through">{live.price} جنيه</span>
+                      </>
+                    ) : (
+                      `${live.price} جنيه`
+                    )}
                   </p>
                 </div>
                 <button
