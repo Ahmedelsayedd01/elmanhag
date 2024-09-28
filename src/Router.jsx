@@ -77,6 +77,7 @@ import {
   AffiliateBonusLayout,
   AffiliatePayoutLayout,
   SubscriptionsLayout,
+  My_SubscriptionsLayout,
   SubscriptionsPaymentLayout,
   AllPlansLayout,
   PaymentMethodDetailsLayout,
@@ -1081,7 +1082,7 @@ export const router = createBrowserRouter([
             element: <SolveExams />,
           },
           {
-            path: "My_Subscriptions",
+            path: "subscriptions",
             element: <AppLayoutSubscriptions />,
             children: [
               {
@@ -1091,6 +1092,10 @@ export const router = createBrowserRouter([
               {
                 path: 'plans',
                 element: <AllPlansLayout />,
+              },
+              {
+                path: 'my_plans',
+                element: < My_SubscriptionsLayout/>,
               },
               {
                 path: "plansMethod",

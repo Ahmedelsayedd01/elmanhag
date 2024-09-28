@@ -9,6 +9,7 @@ import {
        MonthsReviewsIcon,
        ProfileStudentIcon,
        SolveExamsIcon,
+       SubscriptionsIcon
 } from "./Icons/All_Icons";
 import { NavLink } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
@@ -18,7 +19,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { LuClipboardList } from "react-icons/lu";
 
 const MenuSide = () => {
-       const [isActiveHome, setIsActiveHome] = useState(false);
+       const [isActiveHome, setIsActiveHome] = useState(true);
        const [isActiveCurricula, setIsActiveCurricula] = useState(false);
        const [isActiveDuties, setIsActiveDuties] = useState(false);
        const [isActiveLiveClasses, setIsActiveLiveClasses] = useState(false);
@@ -45,6 +46,7 @@ const MenuSide = () => {
               setIsActiveFinalReviews(false);
               setIsActiveSolveExams(false);
               setIsActiveProfileStudent(false);
+              setIsActiveSubscription(false)
               setIsActiveLogout(false)
        };
        const handleClickCurricula = () => {
@@ -56,6 +58,7 @@ const MenuSide = () => {
               setIsActiveFinalReviews(false);
               setIsActiveSolveExams(false);
               setIsActiveProfileStudent(false);
+              setIsActiveSubscription(false)
               setIsActiveLogout(false)
        };
        const handleClickDuties = () => {
@@ -67,6 +70,7 @@ const MenuSide = () => {
               setIsActiveFinalReviews(false);
               setIsActiveSolveExams(false);
               setIsActiveProfileStudent(false);
+              setIsActiveSubscription(false)
               setIsActiveLogout(false)
        };
        const handleClickLiveClasses = () => {
@@ -78,6 +82,7 @@ const MenuSide = () => {
               setIsActiveFinalReviews(false);
               setIsActiveSolveExams(false);
               setIsActiveProfileStudent(false);
+              setIsActiveSubscription(false)
               setIsActiveLogout(false)
        };
        const handleClickMonthsReviews = () => {
@@ -89,6 +94,7 @@ const MenuSide = () => {
               setIsActiveFinalReviews(false);
               setIsActiveSolveExams(false);
               setIsActiveProfileStudent(false);
+              setIsActiveSubscription(false)
               setIsActiveLogout(false)
        };
        const handleClickFinalReviews = () => {
@@ -100,6 +106,7 @@ const MenuSide = () => {
               setIsActiveMonthsReviews(false);
               setIsActiveSolveExams(false);
               setIsActiveProfileStudent(false);
+              setIsActiveSubscription(false)
               setIsActiveLogout(false)
        };
        const handleClickSolveExams = () => {
@@ -111,6 +118,7 @@ const MenuSide = () => {
               setIsActiveMonthsReviews(false);
               setIsActiveFinalReviews(false);
               setIsActiveProfileStudent(false);
+              setIsActiveSubscription(false)
               setIsActiveLogout(false)
        };
        const handleClickProfileStudent = () => {
@@ -122,6 +130,7 @@ const MenuSide = () => {
               setIsActiveLiveClasses(false);
               setIsActiveMonthsReviews(false);
               setIsActiveFinalReviews(false);
+              setIsActiveSubscription(false)
               setIsActiveLogout(false)
        };
 
@@ -182,8 +191,8 @@ const MenuSide = () => {
                                           <SolveExamsIcon isActive={isActiveSolveExams} />
                                           <span>حل امتحانات</span>
                                    </NavLink>
-                                   <NavLink to="My_Subscriptions"  onClick={handleClickSubscriptions} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
-                                          <SolveExamsIcon />
+                                   <NavLink to="subscriptions"  onClick={handleClickSubscriptions} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
+                                          <SubscriptionsIcon isActive={isActiveSubscription}/>
                                           <span>اشتراكاتي</span>
                                    </NavLink>
                                    <NavLink to="complaint_suggestion" onClick={handleClickProfileStudent} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">

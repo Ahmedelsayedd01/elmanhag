@@ -120,6 +120,7 @@ export { default as SolveExamsPage } from "./Student/SolveExamsPage/SolveExamsPa
 
 /* StudentSubscriptuons */
 export { default as SubscriptionsPage } from "./Student/StudentSubscriptions/SubscriptionsPage";
+export { default as My_SubscriptionsPage } from "./Student/StudentSubscriptions/My_SubscriptionsPage";
 export { default as SubscriptionsPaymentPage } from "./Student/StudentSubscriptions/SubscriptionsPaymentPage";
 export { default as AllPlansPage } from "./Student/StudentSubscriptions/AllPlansPage";
 export { default as PaymentMethodDetailsPage } from "./Student/StudentSubscriptions/PaymentMethodDetailsPage";

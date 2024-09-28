@@ -36,27 +36,27 @@ const LayoutStudent = () => {
     };
 
 
-    useEffect(() => {
-        // Function to disable right-click
-        const disableRightClick = (e) => e.preventDefault();
+    // useEffect(() => {
+    //     // Function to disable right-click
+    //     const disableRightClick = (e) => e.preventDefault();
 
-        // Function to disable F12 key
-        const disableF12 = (e) => {
-            if (e.key === 'F12') {
-                e.preventDefault();
-            }
-        };
+    //     // Function to disable F12 key
+    //     const disableF12 = (e) => {
+    //         if (e.key === 'F12') {
+    //             e.preventDefault();
+    //         }
+    //     };
 
-        // Add event listeners to disable right-click and F12
-        document.addEventListener('contextmenu', disableRightClick); // Disable right-click
-        document.addEventListener('keydown', disableF12); // Disable F12 key
+    //     // Add event listeners to disable right-click and F12
+    //     document.addEventListener('contextmenu', disableRightClick); // Disable right-click
+    //     document.addEventListener('keydown', disableF12); // Disable F12 key
 
-        // Cleanup event listeners when component unmounts
-        return () => {
-            document.removeEventListener('contextmenu', disableRightClick);
-            document.removeEventListener('keydown', disableF12);
-        };
-    }, []);
+    //     // Cleanup event listeners when component unmounts
+    //     return () => {
+    //         document.removeEventListener('contextmenu', disableRightClick);
+    //         document.removeEventListener('keydown', disableF12);
+    //     };
+    // }, []);
 
 
 
