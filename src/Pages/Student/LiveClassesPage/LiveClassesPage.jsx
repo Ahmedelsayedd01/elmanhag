@@ -207,7 +207,7 @@
 
 
 import React, { useEffect, useState } from 'react'; 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link} from 'react-router-dom';
 import Loading from '../../../Components/Loading';
 import { useAuth } from '../../../Context/Auth';
 import axios from 'axios';
@@ -223,6 +223,7 @@ import {
   getDate,
   differenceInDays,
   isSameDay,
+  isAfter,
 } from 'date-fns';
 import { arSA } from 'date-fns/locale'; // Arabic Saudi locale for formatting month names
 
@@ -321,7 +322,7 @@ const LiveClassesPage = () => {
   }
 
   return (
-    <div className="w-full p-7 mt-8">
+    <div className="w-full p-7 mt-8 s:p-3">
       {/* Month Navigation */}
       <div className="flex justify-between items-center">
         <FaRegArrowAltCircleRight onClick={prevDays} className="text-red-500 text-2xl cursor-pointer" />
@@ -356,7 +357,7 @@ const LiveClassesPage = () => {
         {filteredData.length > 0 ? (
           filteredData.map((live) => (
             <div key={live.id} className="rounded-lg shadow-md bg-mainColor lg:w-4/5 s:w-full">
-              <div className="flex gap-5 justify-around bg-[#EBEBEB] p-6 rounded-l-lg h-full mr-5">
+              <div className="flex gap-5 justify-around bg-[#EBEBEB] p-6 rounded-l-lg h-full mr-10">
                 <div>
                   <img src={live.teacher?.image_link} alt={live.teacher?.name} />
                 </div>
@@ -367,6 +368,7 @@ const LiveClassesPage = () => {
                 <div>
                   <img src={live.subject?.cover_photo_url} alt={live.subject?.name} />
                 </div>
+                
               </div>
             </div>
           ))
@@ -379,3 +381,165 @@ const LiveClassesPage = () => {
 };
 
 export default LiveClassesPage;
+
+
+// import React, { useEffect, useState } from 'react'; 
+// import { useNavigate } from 'react-router-dom';
+// import Loading from '../../../Components/Loading';
+// import { useAuth } from '../../../Context/Auth';
+// import axios from 'axios';
+// import { FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from 'react-icons/fa';
+// import {
+//   format,
+//   addMonths,
+//   getDaysInMonth,
+//   eachDayOfInterval,
+//   startOfMonth,
+//   getYear,
+//   getMonth,
+//   getDate,
+//   isSameDay,
+  // isAfter,
+// } from 'date-fns';
+// import { arSA } from 'date-fns/locale'; // Arabic Saudi locale for formatting month names
+
+// const formatMonthYear = (date) => format(date, 'MMMM yyyy', { locale: arSA });
+
+// const LiveClassesPage = () => {
+//   const [isLoading, setIsLoading] = useState(false);
+//   const [liveData, setLiveData] = useState([]); // Store live data from API
+//   const [currentDate, setCurrentDate] = useState(new Date());
+//   const [filteredData, setFilteredData] = useState([]); // Initialize with filtered data
+//   const auth = useAuth();
+
+//   const weekDays = ['السبت', 'الاحد', 'الاثنين', 'الثلاثاء', 'الاربعاء', 'الخميس', 'الجمعه'];
+
+//   const nextDays = () => {
+//     const nextMonth = addMonths(currentDate, 1);
+//     setCurrentDate(nextMonth);
+//   };
+
+//   const prevDays = () => {
+//     const today = new Date();
+//     // Prevent from showing days before current date
+//     if (getYear(currentDate) > getYear(today) || (getYear(currentDate) === getYear(today) && getMonth(currentDate) > getMonth(today))) {
+//       const prevMonth = addMonths(currentDate, -1);
+//       setCurrentDate(prevMonth);
+//     }
+//   };
+
+  // // Filter visible days, starting from the row containing the current date
+  // const visibleDays = eachDayOfInterval({
+  //   start: startOfMonth(currentDate), // Start from the first of the current month
+  //   end: new Date(currentDate.getFullYear(), currentDate.getMonth(), getDaysInMonth(currentDate)),
+  // }).filter(day => isAfter(day, new Date()) || isSameDay(day, new Date())); // Skip past days, only include current or future
+
+//   const handleDayClick = (day) => {
+//     const filtered = liveData.filter((item) => isSameDay(new Date(item.date), day));
+//     setFilteredData(filtered);
+//   };
+
+//   useEffect(() => {
+//     const today = new Date();
+//     setCurrentDate(today);
+//   }, []);
+
+//   const fetchLive = async () => {
+//     setIsLoading(true);
+//     try {
+//       const response = await axios.get('https://bdev.elmanhag.shop/student/subscription', {
+//         headers: {
+//           Authorization: `Bearer ${auth.user.token}`,
+//           'Content-Type': 'application/json',
+//           Accept: 'application/json',
+//         },
+//       });
+
+//       if (response.status === 200) {
+//         console.log(response.data);
+//         setLiveData(response.data.live); // Store live data
+//         setFilteredData(response.data.live); // Initially show all data
+//       }
+//     } catch (error) {
+//       const errorMessages = error?.response?.data?.errors;
+//       let errorMessageString = 'Error occurred';
+//       if (errorMessages) {
+//         errorMessageString = Object.values(errorMessages).flat().join(' ');
+//       }
+//       auth.toastError('Error', errorMessageString);
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchLive();
+//   }, [auth.user.token]);
+
+//   if (isLoading) {
+//     return (
+//       <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
+//         <Loading />
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className="w-full p-7 mt-8 s:p-3">
+//       {/* Month Navigation */}
+//       <div className="flex justify-between items-center">
+//         <FaRegArrowAltCircleRight onClick={prevDays} className="text-red-500 text-2xl cursor-pointer" />
+//         <span className="text-lg font-bold text-red-500">
+//           {formatMonthYear(currentDate)}
+//         </span>
+//         <FaRegArrowAltCircleLeft onClick={nextDays} className="text-red-500 text-2xl cursor-pointer" />
+//       </div>
+
+//       {/* Days of the Week */}
+//       <div className="grid grid-cols-7 gap-2 mt-4 text-center">
+//         {weekDays.map((day, index) => (
+//           <div key={index} className="font-bold text-red-500">{day}</div>
+//         ))}
+//       </div>
+
+//       {/* Days of the Month */}
+//       <div className="grid grid-cols-7 gap-2 mt-2 text-center">
+//         {visibleDays.map((day, index) => (
+//           <div
+//             key={index}
+//             onClick={() => handleDayClick(day)}
+//             className={`p-2 text-sm rounded-lg cursor-pointer ${isSameDay(day, new Date()) ? 'bg-red-200' : 'bg-gray-100'}`}
+//           >
+//             {getDate(day)}
+//           </div>
+//         ))}
+//       </div>
+
+//       {/* Filtered Data Display */}
+//       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-y-5">
+//         {filteredData.length > 0 ? (
+//           filteredData.map((live) => (
+//             <div key={live.id} className="rounded-lg shadow-md bg-mainColor lg:w-4/5 s:w-full">
+//               <div className="flex gap-5 justify-around bg-[#EBEBEB] p-6 rounded-l-lg h-full mr-10">
+//                 <div>
+//                   <img src={live.teacher?.image_link} alt={live.teacher?.name} />
+//                 </div>
+//                 <div>
+//                   <p className="text-xl"><strong>المعلم:</strong> {live.teacher?.name}</p>
+//                   <p className="text-xl"><strong>المادة:</strong> {live.subject?.name}</p>
+//                 </div>
+//                 <div>
+//                   <img src={live.subject?.cover_photo_url} alt={live.subject?.name} />
+//                 </div>
+//               </div>
+//             </div>
+//           ))
+//         ) : (
+//           <p className="text-gray-500 text-center">لا توجد بيانات لهذا اليوم</p>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default LiveClassesPage;
