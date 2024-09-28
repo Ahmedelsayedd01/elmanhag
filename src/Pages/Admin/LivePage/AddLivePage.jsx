@@ -1,4 +1,4 @@
-import React, { useRef, useState ,useEffect} from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import InputCustom from '../../../Components/InputCustom';
 import { Button } from '../../../Components/Button';
 import { useAuth } from '../../../Context/Auth';
@@ -6,12 +6,14 @@ import DropDownMenu from '../../../Components/DropDownMenu';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CheckBox from '../../../Components/CheckBox';
+import Loading from '../../../Components/Loading';
 
 const AddLivePage = () => {
   const auth = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
+  const [data, setData] = useState(null);
   const [educationData, setEducationData] = useState([]);
   const [semesterData, setSemesterData] = useState([{ name: 'First' }, { name: 'Second' }]);
   const [categoryData, setCategoryData] = useState([]);
@@ -65,92 +67,128 @@ const AddLivePage = () => {
 
   const [liveIncluded, setLiveIncluded] = useState(0);
 
-  const dropdownEducationRef=useRef();
+  const dropdownEducationRef = useRef();
   const dropdownSemesterRef = useRef();
   const dropdownCategoryRef = useRef();
   const dropdownSubjectRef = useRef();
   const dropdownTeacherRef = useRef();
   const dropdownDayRef = useRef();
-  const dropdownStatusRef=useRef();
+  const dropdownStatusRef = useRef();
+
+  const fetchLives = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        "https://bdev.elmanhag.shop/admin/live",
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        console.log('response3', response.data);
+        setData(response.data.live);
+        setEducationData([
+          ...response.data.education,
+          { id: 'null', name: 'Together' } // Or use some unique key generator
+        ]);
+
+        setCategoryData(response.data.category);
+        setSubjectData(response.data.subjects);
+        setTeacherData(response.data.teachers);
+      }
+    } catch (error) {
+      console.error("Error fetching Lives data:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const StorageLiveData = JSON.parse(localStorage.getItem('LivesData'));
-    setEducationData([...StorageLiveData.education, { id: 'null', name: 'Together' }]);
-    setCategoryData(StorageLiveData.category);
-    setSubjectData(StorageLiveData.subjects);
-    setAllSubjects(StorageLiveData.subjects)
-    setTeacherData(StorageLiveData.teachers);
+    fetchLives(); // Fetch lives initially and whenever livesChanged changes
   }, []);
 
+  // useEffect(() => {
+  //   const StorageLiveData = JSON.parse(localStorage.getItem('LivesData'));
+  //   setEducationData([...StorageLiveData.education, { id: 'null', name: 'Together' }]);
+  //   setCategoryData(StorageLiveData.category);
+  //   setSubjectData(StorageLiveData.subjects);
+  //   setAllSubjects(StorageLiveData.subjects)
+  //   setTeacherData(StorageLiveData.teachers);
 
-  const filterSubjects = (semesterName, categoryId, educationId) => {
-    let filteredSubjects = allSubjects; // Start with all subjects
-  
-    // Filter by semester
-    if (semesterName) {
-      filteredSubjects = filteredSubjects.filter(subject => 
-        subject.semester.toLowerCase() === semesterName.toLowerCase()
-      );
-    }
-    // Filter by category
-    if (categoryId) {
-      filteredSubjects = filteredSubjects.filter(subject => 
-        subject.category_id === categoryId
-      );
-    }
-    // Filter by educationId
-    if (educationId === null) {
-      filteredSubjects = filteredSubjects.filter(subject => subject.education_id === null);
-    } else if (educationId) {
-      filteredSubjects = filteredSubjects.filter(subject => subject.education_id === parseInt(educationId));
-    }
-   
-  // Handle the combination of categoryId and educationId (including null educationId)
-  if (categoryId) {
-    if (educationId === null) {
-      filteredSubjects = filteredSubjects.filter(subject => 
-        subject.education_id === null && subject.category_id === categoryId
-      );
-    } else if (educationId) {
-      filteredSubjects = filteredSubjects.filter(subject => 
-        subject.education_id === parseInt(educationId) && subject.category_id === categoryId
-      );
-    }}
+  // }, []);
 
-     // Handle the combination of semesterName and educationId (including null educationId)
-  if (semesterName) {
-    if (educationId === null) {
-      filteredSubjects = filteredSubjects.filter(subject => 
-        subject.semester.toLowerCase() === semesterName.toLowerCase() && subject.education_id === null
-      );
-    } else if (educationId) {
-      filteredSubjects = filteredSubjects.filter(subject => 
-        subject.semester.toLowerCase() === semesterName.toLowerCase() && subject.education_id === parseInt(educationId)
-      );
-    }
-  }
 
-  // Handle the combination of categoryId and semesterName
-  if (categoryId && semesterName) {
-    filteredSubjects = filteredSubjects.filter(subject => 
-      subject.category_id === categoryId && subject.semester.toLowerCase() === semesterName.toLowerCase()
-    );
-  }
+  // const filterSubjects = (semesterName, categoryId, educationId) => {
+  //   let filteredSubjects = allSubjects; // Start with all subjects
 
-   // All three filters (categoryId, educationId, semesterName)
-   if (categoryId && semesterName && educationId !== undefined) {
-    filteredSubjects = filteredSubjects.filter(subject => 
-      subject.category_id === categoryId &&
-      subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-      (educationId === null ? subject.education_id === null : subject.education_id === parseInt(educationId))
-    );
-  }
-  
-    // Set the filtered data
-    setSubjectData(filteredSubjects);
-    console.log(filteredSubjects);
-  };
-  
+  //   // Filter by semester
+  //   if (semesterName) {
+  //     filteredSubjects = filteredSubjects.filter(subject =>
+  //       subject.semester === semesterName.toLowerCase()
+  //     );
+  //   }
+  //   // Filter by category
+  //   // if (categoryId) {
+  //   //   filteredSubjects = filteredSubjects.filter(subject =>
+  //   //     subject.category_id === categoryId
+  //   //   );
+  //   // }
+  //   // Filter by educationId
+  //   // if (educationId === null) {
+  //   //   filteredSubjects = filteredSubjects.filter(subject => subject.education_id === null);
+  //   // } else if (educationId) {
+  //   //   filteredSubjects = filteredSubjects.filter(subject => subject.education_id === parseInt(educationId));
+  //   // }
+
+  //   // Handle the combination of categoryId and educationId (including null educationId)
+  //   // if (categoryId) {
+  //   //   if (educationId === null) {
+  //   //     filteredSubjects = filteredSubjects.filter(subject =>
+  //   //       subject.education_id === null && subject.category_id === categoryId
+  //   //     );
+  //   //   } else if (educationId) {
+  //   //     filteredSubjects = filteredSubjects.filter(subject =>
+  //   //       subject.education_id === parseInt(educationId) && subject.category_id === categoryId
+  //   //     );
+  //   //   }
+  //   // }
+
+  //   // Handle the combination of semesterName and educationId (including null educationId)
+  //   // if (semesterName) {
+  //   //   if (educationId === null) {
+  //   //     filteredSubjects = filteredSubjects.filter(subject =>
+  //   //       subject.semester.toLowerCase() === semesterName.toLowerCase() && subject.education_id === null
+  //   //     );
+  //   //   } else if (educationId) {
+  //   //     filteredSubjects = filteredSubjects.filter(subject =>
+  //   //       subject.semester.toLowerCase() === semesterName.toLowerCase() && subject.education_id === parseInt(educationId)
+  //   //     );
+  //   //   }
+  //   // }
+
+  //   // Handle the combination of categoryId and semesterName
+  //   // if (categoryId && semesterName) {
+  //   //   filteredSubjects = filteredSubjects.filter(subject =>
+  //   //     subject.category_id === categoryId && subject.semester.toLowerCase() === semesterName.toLowerCase()
+  //   //   );
+  //   // }
+
+  //   // All three filters (categoryId, educationId, semesterName)
+  //   // if (categoryId && semesterName && educationId !== undefined) {
+  //   //   filteredSubjects = filteredSubjects.filter(subject =>
+  //   //     subject.category_id === categoryId &&
+  //   //     subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+  //   //     (educationId === null ? subject.education_id === null : subject.education_id === parseInt(educationId))
+  //   //   );
+  //   // }
+
+  //   // Set the filtered data
+  //   setSubjectData(filteredSubjects);
+  //   console.log(filteredSubjects);
+  // };
+
   const handleOpenSelectEducation = () => {
     setOpenSelectEducation(!openSelectEducation)
     setOpenSelectCategory(false)
@@ -221,58 +259,173 @@ const AddLivePage = () => {
     setOpenSelectStatus(!openSelectStatus);
   };
 
+  // const handleSelectEducation = (e) => {
+  //   const inputElement = e.currentTarget.querySelector('.inputVal');
+  //   const selectedOptionName = e.currentTarget.textContent.trim();
+  //   const selectedOptionValue = inputElement ? inputElement.value : '';
+
+  //   // Set the selected option name (for UI display)
+  //   setSelectEducation(selectedOptionName);
+  //   console.log('Selected Education:', selectedOptionName);
+  //   let educationId = null;
+  //   // Check if the selected value is 'null' or a valid number
+  //   if (selectedOptionValue === 'null') {
+  //     educationId = null;  // Set to null when the option is 'null'
+  //     console.log('Education ID:', educationId);
+  //   } else {
+  //     educationId = parseInt(selectedOptionValue);  // Parse the selected value to an integer
+  //     console.log('Education ID:', educationId);
+  //   }
+  //   // Update the state for selected education ID
+  //   setSelectEducationId(educationId);
+  //   // Close the select dropdown
+  //   setOpenSelectEducation(false);
+  //   // Ensure the correct `selectEducationId` is passed to filterSubjects
+  //   filterSubjects(selectSemesterName, selectCategoryId, educationId);
+  // };
+
+  // const filterSubjects = (semesterName, categoryId) => {
+  //   let filteredSubjects = allSubjects; // Start with all subjects
+
+  //   // If both semester and category are selected, filter by both
+  //   if (semesterName && categoryId) {
+  //     filteredSubjects = filteredSubjects.filter(subject =>
+  //       subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+  //       subject.category_id === categoryId
+  //     );
+  //   }
+  //   // If only the semester is selected, filter by semester
+  //   else if (semesterName) {
+  //     filteredSubjects = filteredSubjects.filter(subject =>
+  //       subject.semester.toLowerCase() === semesterName.toLowerCase()
+  //     );
+  //   }
+  //   // If only the category is selected, filter by category
+  //   else if (categoryId) {
+  //     filteredSubjects = filteredSubjects.filter(subject =>
+  //       subject.category_id === categoryId
+  //     );
+  //   }
+
+  //   setSubjectData(filteredSubjects);
+  //   console.log('filteredSubjects', filteredSubjects)
+  // };
+
+  const filterSubjects = (educationId, semesterName, categoryId) => {
+    // const filterr = subjectData.filter((s) => s.education_id == educationId)
+
+    let filteredSubjects = subjectData; // Start with all subjects
+
+    // If educationId is selected, filter by educationId
+    if (educationId) {
+      filteredSubjects = filteredSubjects.filter(subject => subject.education_id === educationId);
+    }
+
+    // If both semester and category are selected, filter by both
+    if (semesterName && categoryId) {
+      filteredSubjects = filteredSubjects.filter(subject =>
+        subject.semester === semesterName.toLowerCase() &&
+        subject.category_id === categoryId
+      );
+    }
+    // If only the semester is selected, filter by semester
+    else if (semesterName) {
+      filteredSubjects = filteredSubjects.filter(subject =>
+        subject.semester === semesterName.toLowerCase()
+      );
+    }
+    // If only the category is selected, filter by category
+    else if (categoryId) {
+      filteredSubjects = filteredSubjects.filter(subject =>
+        subject.category_id === categoryId
+      );
+    }
+
+    // Set the filtered subjects (or update the state here)
+    // setAllSubjects(filterr);
+    setSubjectData(filteredSubjects);
+    console.log('allSubjectsData', subjectData)
+    console.log('semesterName', semesterName)
+    console.log('categoryId', categoryId)
+    console.log('educationId', educationId)
+    console.log('filteredSubjects', filteredSubjects)
+  };
+
+
+
   const handleSelectEducation = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
     const selectedOptionName = e.currentTarget.textContent.trim();
     const selectedOptionValue = inputElement ? inputElement.value : '';
-  
-    // Set the selected option name (for UI display)
-    setSelectEducation(selectedOptionName);
-    console.log('Selected Education:', selectedOptionName);
-    let educationId = null;
-    // Check if the selected value is 'null' or a valid number
+
     if (selectedOptionValue === 'null') {
-      educationId = null;  // Set to null when the option is 'null'
-      console.log('Education ID:', educationId);
+      setSelectEducationId(null);
     } else {
-      educationId = parseInt(selectedOptionValue);  // Parse the selected value to an integer
-      console.log('Education ID:', educationId);
+      setSelectEducationId(parseInt(selectedOptionValue));
     }
-    // Update the state for selected education ID
-    setSelectEducationId(educationId);
-    // Close the select dropdown
+    setSelectEducation(selectedOptionName);
     setOpenSelectEducation(false);
-    // Ensure the correct `selectEducationId` is passed to filterSubjects
-    filterSubjects(selectSemesterName, selectCategoryId, educationId); 
-  }; 
+
+    // Filter subjects based on the selected education, semester, and category
+    // filterSubjects(selectedOptionValue);
+    // const filterr = allSubjects.filter((s) => s.education_id === selectedOptionValue)
+    // console.log('filterr', filterr)
+    filterSubjects(parseInt(selectedOptionValue), selectSemesterName, selectCategoryId);
+  };
+
+  // const handleSelectEducation = (e) => {
+  //   const inputElement = e.currentTarget.querySelector('.inputVal');
+  //   const selectedOptionName = e.currentTarget.textContent.trim();
+  //   const selectedOptionValue = inputElement ? inputElement.value : '';
+
+  //   // Parse selectedOptionValue as integer or handle null/empty case
+  //   let educationId = selectedOptionValue === 'null' || selectedOptionValue === '' ? null : parseInt(selectedOptionValue);
+
+  //   setSelectEducationId(educationId);
+  //   setSelectEducation(selectedOptionName);
+  //   setOpenSelectEducation(false);
+
+  //   // Check if educationId is valid before filtering
+  //   const filteredSubjectss = subjectData.filter((subject) => subject.education_id === educationId);
+  //   console.log('SubjectData', subjectData);
+  //   console.log('Filtered Subjectss:', filteredSubjectss);
+
+  //   setSubjectData(filteredSubjectss)
+
+  //   // if (educationId !== null) {
+  //   // } else {
+  //   //   console.log('No valid educationId selected.');
+  //   // }
+  // };
+
 
   const handleSelectSemester = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
     const selectedOptionName = e.currentTarget.textContent.trim();
     const selectedOptionValue = inputElement ? inputElement.value.toLowerCase() : '';
+
     setSelectSemester(selectedOptionName);
     setSelectSemesterName(selectedOptionValue);
     setOpenSelectSemester(false);
-    console.log('Selected Semester:', selectedOptionName);
-    // console.log('Semester ID:', selectedOptionValue);
 
-    // Filter subjects based on the new semester and existing category
-    filterSubjects(selectedOptionName, selectCategoryId ,selectEducationId);
+    // Filter subjects based on the selected education, semester, and category
+    filterSubjects(selectEducationId, selectedOptionValue, selectCategoryId);
   };
+
 
   const handleSelectCategory = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
     const selectedOptionName = e.currentTarget.textContent.trim();
     const selectedOptionValue = inputElement ? inputElement.value : null;
+
     setSelectCategory(selectedOptionName);
     setSelectCategoryId(parseInt(selectedOptionValue));
     setOpenSelectCategory(false);
-    console.log('Selected Category:', selectedOptionName);
-    console.log('Category ID:', selectedOptionValue);
 
-    // Filter subjects based on the new semester and existing category
-    filterSubjects(selectSemesterName, parseInt(selectedOptionValue) ,selectEducationId);
+    // Filter subjects based on the selected education, semester, and category
+    filterSubjects(selectEducationId, selectSemesterName, parseInt(selectedOptionValue));
   };
+
 
   const handleSelectSubject = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
@@ -323,35 +476,35 @@ const AddLivePage = () => {
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
   const handleClickOutside = (event) => {
-    
-      if (dropdownCategoryRef.current && !dropdownCategoryRef.current.contains(event.target) &&
-          dropdownSemesterRef.current && !dropdownSemesterRef.current.contains(event.target)&&
-          dropdownEducationRef.current &&  !dropdownEducationRef.current.contains(event.target)&&
-          dropdownSubjectRef.current && !dropdownSubjectRef.current.contains(event.target) &&
-          dropdownTeacherRef.current && !dropdownTeacherRef.current.contains(event.target)&&
-          dropdownDayRef.current &&  !dropdownDayRef.current.contains(event.target)&&
-          dropdownStatusRef.current &&  !dropdownStatusRef.current.contains(event.target)
-      ) {
-          setOpenSelectEducation(false);
-          setOpenSelectSemester(false);
-          setOpenSelectCategory(false);
-          setOpenSelectSubject(false);
-          setOpenSelectTeacher(false);
-          setOpenSelectDay(false);
-          setOpenSelectStatus(false);
-      }
+
+    if (dropdownCategoryRef.current && !dropdownCategoryRef.current.contains(event.target) &&
+      dropdownSemesterRef.current && !dropdownSemesterRef.current.contains(event.target) &&
+      dropdownEducationRef.current && !dropdownEducationRef.current.contains(event.target) &&
+      dropdownSubjectRef.current && !dropdownSubjectRef.current.contains(event.target) &&
+      dropdownTeacherRef.current && !dropdownTeacherRef.current.contains(event.target) &&
+      dropdownDayRef.current && !dropdownDayRef.current.contains(event.target) &&
+      dropdownStatusRef.current && !dropdownStatusRef.current.contains(event.target)
+    ) {
+      setOpenSelectEducation(false);
+      setOpenSelectSemester(false);
+      setOpenSelectCategory(false);
+      setOpenSelectSubject(false);
+      setOpenSelectTeacher(false);
+      setOpenSelectDay(false);
+      setOpenSelectStatus(false);
+    }
   };
 
   const handleGoBack = () => {
     navigate(-1, { replace: true });
   };
 
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -400,40 +553,40 @@ const AddLivePage = () => {
       return;
     }
 
-     // Convert time to H:i:s format
-     const formattedStartTime = startTime ? `${startTime}:00` : '';
-     const formattedEndTime = endTime ? `${endTime}:00` : '';
-      
+    // Convert time to H:i:s format
+    const formattedStartTime = startTime ? `${startTime}:00` : '';
+    const formattedEndTime = endTime ? `${endTime}:00` : '';
+
     setIsLoading(true);
     try {
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('link', url);
-    formData.append('from', formattedStartTime);
-    formData.append('to', formattedEndTime);
-    formData.append('date', date);
-    formData.append('day', selectDay);
-    formData.append('teacher_id', selectTeacherId);
-    formData.append('subject_id', selectSubjectId);
-    formData.append('paid', selectStatus ==="Paid"? 1:0);
-    formData.append('price', price || 0);
-    formData.append('inculded', liveIncluded);
-    formData.append('category_id', selectCategoryId);
-    // formData.append('education_id', selectEducationId);
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('link', url);
+      formData.append('from', formattedStartTime);
+      formData.append('to', formattedEndTime);
+      formData.append('date', date);
+      formData.append('day', selectDay);
+      formData.append('teacher_id', selectTeacherId);
+      formData.append('subject_id', selectSubjectId);
+      formData.append('paid', selectStatus === "Paid" ? 1 : 0);
+      formData.append('price', price || 0);
+      formData.append('inculded', liveIncluded);
+      formData.append('category_id', selectCategoryId);
+      // formData.append('education_id', selectEducationId);
 
-    // Handle education_id appropriately
-    if (selectEducationId === null) {
-      formData.append('education_id', null); // Send as string 'null'
-    } else {
-      formData.append('education_id', selectEducationId);
-    }
+      // Handle education_id appropriately
+      if (selectEducationId === null) {
+        formData.append('education_id', null); // Send as string 'null'
+      } else {
+        formData.append('education_id', selectEducationId);
+      }
 
-    for (let pair of formData.entries()) {
-      console.log(pair[0]+ ', '+ pair[1]); 
-    }
-    
-    // try {
-        const response = await axios.post(' https://bdev.elmanhag.shop/admin/live/add', formData, {
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+      }
+
+      // try {
+      const response = await axios.post(' https://bdev.elmanhag.shop/admin/live/add', formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },
@@ -442,42 +595,50 @@ const AddLivePage = () => {
         auth.toastSuccess('Live added successfully!');
         handleGoBack();
       } else {
-              auth.toastError('Failed to add Live.');
+        auth.toastError('Failed to add Live.');
       }
-      } catch (error) {
-        console.log(error.response); // Log the full response for debugging
-        console.log(error.response.data.errors);
-        const errorMessages = error?.response?.data?.errors;
-        let errorMessageString = 'Error occurred';
+    } catch (error) {
+      console.log(error.response); // Log the full response for debugging
+      console.log(error.response.data.errors);
+      const errorMessages = error?.response?.data?.errors;
+      let errorMessageString = 'Error occurred';
       if (errorMessages) {
-              errorMessageString = Object.values(errorMessages).flat().join(' ');
+        errorMessageString = Object.values(errorMessages).flat().join(' ');
       }
       auth.toastError('Error', errorMessageString);
-      } finally {
+    } finally {
       setIsLoading(false);
-      }
+    }
   };
+
+  if (isLoading) {
+    return (
+      <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <form className="w-full flex flex-col items-center justify-center gap-y-3" onSubmit={handleSubmit}>
-    <div className="w-full flex flex-wrap items-center justify-start gap-3">
-      <div className="lg:w-[30%] sm:w-full">
-        <InputCustom
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <InputCustom
-          type="text"
-          placeholder="Live Link"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-        />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
+      <div className="w-full flex flex-wrap items-center justify-start gap-3">
+        <div className="lg:w-[30%] sm:w-full">
+          <InputCustom
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <InputCustom
+            type="text"
+            placeholder="Live Link"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
           <DropDownMenu
             ref={dropdownEducationRef}
             handleOpen={handleOpenSelectEducation}
@@ -507,105 +668,105 @@ const AddLivePage = () => {
             options={categoryData}
           />
         </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <DropDownMenu
-          ref={dropdownSubjectRef}
-          handleOpen={handleOpenSelectSubject}
-          handleOpenOption={handleSelectSubject}
-          stateoption={selectSubject}
-          openMenu={openSelectSubject}
-          options={subjectData}
-        />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <DropDownMenu
-          ref={dropdownTeacherRef}
-          handleOpen={handleOpenSelectTeacher}
-          handleOpenOption={handleSelectTeacher}
-          stateoption={selectTeacher}
-          openMenu={openSelectTeacher}
-          options={teacherData}
-        />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <DropDownMenu
-          ref={dropdownDayRef}
-          handleOpen={handleOpenSelectDay}
-          handleOpenOption={handleSelectDay}
-          stateoption={selectDay}
-          openMenu={openSelectDay}
-          options={daysData}
-        />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <InputCustom
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownSubjectRef}
+            handleOpen={handleOpenSelectSubject}
+            handleOpenOption={handleSelectSubject}
+            stateoption={selectSubject}
+            openMenu={openSelectSubject}
+            options={subjectData}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownTeacherRef}
+            handleOpen={handleOpenSelectTeacher}
+            handleOpenOption={handleSelectTeacher}
+            stateoption={selectTeacher}
+            openMenu={openSelectTeacher}
+            options={teacherData}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownDayRef}
+            handleOpen={handleOpenSelectDay}
+            handleOpenOption={handleSelectDay}
+            stateoption={selectDay}
+            openMenu={openSelectDay}
+            options={daysData}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <InputCustom
             type="date"
             placeholder="Date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <h1>Time From</h1>
-        <InputCustom
-          type="time"
-          placeholder="Time From"
-          value={startTime}
-          onChange={(e) => setStartTime(e.target.value)}
-        />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
-      <h1>Time To</h1>
-        <InputCustom
-          type="time"
-          placeholder="Time To"
-          value={endTime}
-          onChange={(e) => setEndTime(e.target.value)}
-        />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <DropDownMenu
-          ref={dropdownStatusRef}
-          handleOpen={handleOpenSelectStatus}
-          handleOpenOption={handleSelectStatus}
-          stateoption={selectStatus}
-          openMenu={openSelectStatus}
-          options={paidData}
-        />
-      </div>
-         {/* Conditionally Render Price Input */}
-         {selectStatus === 'Paid' && (   
-          <div className="lg:w-[30%] sm:w-full">
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <h1>Time From</h1>
           <InputCustom
+            type="time"
+            placeholder="Time From"
+            value={startTime}
+            onChange={(e) => setStartTime(e.target.value)}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <h1>Time To</h1>
+          <InputCustom
+            type="time"
+            placeholder="Time To"
+            value={endTime}
+            onChange={(e) => setEndTime(e.target.value)}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownStatusRef}
+            handleOpen={handleOpenSelectStatus}
+            handleOpenOption={handleSelectStatus}
+            stateoption={selectStatus}
+            openMenu={openSelectStatus}
+            options={paidData}
+          />
+        </div>
+        {/* Conditionally Render Price Input */}
+        {selectStatus === 'Paid' && (
+          <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
               type="text"
               placeholder="Price"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
+          </div>
+        )}
+        <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+          <span className="text-2xl text-thirdColor font-medium">Included:</span>
+          <div>
+            <CheckBox checked={liveIncluded} handleClick={handleClick} />
+          </div>
         </div>
-      )}
-      <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
-            <span className="text-2xl text-thirdColor font-medium">Included:</span>
-            <div>
-              <CheckBox checked={liveIncluded} handleClick={handleClick} />
-            </div>
-        </div>
-      
-    </div>
-    {/* Buttons */}
-    <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
+
+      </div>
+      {/* Buttons */}
+      <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
         <div className="flex items-center justify-center w-72">
-              <Button
-                      type="submit"
-                      Text="Done"
-                      BgColor="bg-mainColor"
-                      Color="text-white"
-                      Width="full"
-                      Size="text-2xl"
-                      px="px-28"
-                      rounded="rounded-2xl"
-                      // stateLoding={isLoading}
-              />
+          <Button
+            type="submit"
+            Text="Done"
+            BgColor="bg-mainColor"
+            Color="text-white"
+            Width="full"
+            Size="text-2xl"
+            px="px-28"
+            rounded="rounded-2xl"
+          // stateLoding={isLoading}
+          />
         </div>
         <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
       </div>

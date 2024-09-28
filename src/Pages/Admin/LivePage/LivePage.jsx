@@ -23,10 +23,7 @@ const LivePage = () => {
 
   const auth = useAuth();
   const [isLoading, setIsLoading] = useState(false);
-  const [allLivesData, setAllLivesData] = useState(null);
   const [lives, setLives] = useState(null);
-  const [liveTeacher, setLiveTeacher] = useState(null);
-  const [liveSubject, setLiveSubject] = useState(null);
   const [livesChanged, setLivesChanged] = useState(false); // Change tracker
 
   const [isDeleting, setIsDeleting] = useState(false);
@@ -81,11 +78,8 @@ const LivePage = () => {
         }
       );
       if (response.status === 200) {
-        console.log(response.data);
-        setAllLivesData(response.data);
+        console.log('response3', response.data);
         setLives(response.data.live);
-        setLiveTeacher(response.data.teachers);
-        setLiveSubject(response.data.subjects);
       }
     } catch (error) {
       console.error("Error fetching Lives data:", error);
@@ -164,8 +158,6 @@ const LivePage = () => {
     );
   }
 
-  localStorage.setItem("LivesData", JSON.stringify(allLivesData));
-  localStorage.setItem("Lives", JSON.stringify(lives));
 
   return (
     <>
