@@ -162,7 +162,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
                 {/* Conditional rendering based on the error message */}
                 {errorMessage === `عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين. اشترك الآن واستمتع بجميع الدروس بدون قيود !` ? (
                   <>
-                    <Link to="/dashboard/My_Subscriptions/plans" state={{ subject_Id: subjectId }}>
+                    <Link to="/dashboard/subscriptions/plans" state={{ subject_Id: subjectId }}>
                       <Button Text="اشترك الان" Width="auto" BgColor="bg-mainColor" Color="text-white" />
                     </Link>
                     <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />

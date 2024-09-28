@@ -103,7 +103,7 @@
 //                     </div>
 //                     {/* <p className="text-lg text-gray-500">{educationName}</p> */}
 //                     <div className="flex gap-5">
-//                         <Link to="My_Subscriptions">
+//                         <Link to="subscriptions">
 //                             <button type='button' className="px-6 py-3 mx-auto text-3xl text-secoundColor bg-mainColor rounded-2xl">اشتراكاتي</button>
 //                         </Link>
 //                          {/* <button type='button' className="px-4 py-3 mx-auto text-2xl  text-secoundColor bg-mainColor rounded-2xl" onClick={handleLogout}>Log Out</button> */}
@@ -222,7 +222,7 @@ const NavbarStudent = () => {
                     </div>
                     <div className="w-4/12 sm:hidden xl:flex items-center justify-center gap-4">
                         {auth.user.role == 'student' && (
-                            <Link to="My_Subscriptions">
+                            <Link to="subscriptions">
                                 <button type='button' className=" w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-6 lg:py-3 hover:bg-hoverColor">
                                     اشتراكاتي
                                 </button>

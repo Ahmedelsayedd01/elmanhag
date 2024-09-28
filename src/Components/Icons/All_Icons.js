@@ -24,6 +24,7 @@ export { default as LiveClassesIcon } from "./StudentIcons/LiveClassesIcon.jsx";
 export { default as MonthsReviewsIcon } from "./StudentIcons/MonthsReviewsIcon.jsx";
 export { default as SolveExamsIcon } from "./StudentIcons/SolveExamsIcon.jsx";
 export { default as ProfileStudentIcon } from "./StudentIcons/ProfileStudentIcon.jsx";
+export { default as SubscriptionsIcon } from "./StudentIcons/SubscriptionsIcon.jsx";
 
 // export { default as SubscriptionsFree } from "./StudentIcons/SubscriptionsIcons/SubscriptionsIcon.jsx";
 // export { default as SubscriptionsLive } from "./StudentIcons/SubscriptionsIcons/SubscriptionsIcon.jsx";

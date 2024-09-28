@@ -87,9 +87,16 @@ const SubscriptionsPaymentPage = () => {
       try {
         const formData = new FormData();
         formData.append('price', plan.price_discount > 0 ? plan.price_discount : plan.price);
-        formData.append('type', planType);
+        // formData.append('type', planType);
         formData.append('code', code);
         formData.append('id', plan.id);
+
+        // Check if planType is 'live', and append the appropriate value
+        if (planType === 'live') {
+          formData.append('type', 'Live session');
+        } else {
+          formData.append('type', planType);
+        }
 
         for (let pair of formData.entries()) {
           console.log(pair[0]+ ', '+ pair[1]); 
@@ -182,7 +189,7 @@ const SubscriptionsPaymentPage = () => {
               <path d="M7.71875 12.5C7.71856 12.6542 7.76418 12.8049 7.84982 12.933C7.93546 13.0611 8.05725 13.1609 8.19973 13.2197C8.3422 13.2785 8.49894 13.2936 8.65002 13.2631C8.8011 13.2327 8.93971 13.158 9.04825 13.0485L12.0285 10.0305C12.1676 9.88905 12.2456 9.69857 12.2456 9.50016C12.2456 9.30174 12.1676 9.11127 12.0285 8.96978C11.8853 8.83451 11.6957 8.75916 11.4988 8.75916C11.3018 8.75916 11.1122 8.83451 10.969 8.96978L7.94975 11.95C7.87676 12.0219 7.81875 12.1075 7.7791 12.2019C7.73944 12.2963 7.71893 12.3976 7.71875 12.5ZM8.301 12.305L11.3218 9.32303C11.3446 9.29805 11.3723 9.27797 11.4032 9.26401C11.434 9.25005 11.4674 9.24251 11.5012 9.24184C11.5351 9.24116 11.5687 9.24737 11.6001 9.26009C11.6315 9.27281 11.66 9.29177 11.6838 9.31583C11.7076 9.33988 11.7263 9.36852 11.7388 9.40002C11.7512 9.43152 11.7571 9.46522 11.7561 9.49906C11.7551 9.53291 11.7473 9.56621 11.733 9.59693C11.7188 9.62765 11.6984 9.65516 11.6733 9.67778L8.69325 12.697C8.66751 12.7228 8.63695 12.7432 8.60332 12.7572C8.56968 12.7711 8.53363 12.7783 8.49721 12.7783C8.4608 12.7783 8.42474 12.7712 8.3911 12.7572C8.35745 12.7433 8.32688 12.7229 8.30113 12.6972C8.27537 12.6714 8.25494 12.6409 8.24099 12.6072C8.22705 12.5736 8.21986 12.5375 8.21985 12.5011C8.21984 12.4647 8.227 12.4287 8.24092 12.395C8.25485 12.3614 8.27526 12.3308 8.301 12.305Z" fill="#929292"/>
             </svg>
 
-          <input type="text" placeholder="كود الخصم" class="flex-1 outline-none lg:p-4 text-xl sm:text-lg sm:p-0"  value={code}
+          <input type="text" placeholder="كود الخصم" className="flex-1 outline-none lg:p-4 text-xl sm:text-lg sm:p-0"  value={code}
             onChange={(e) => setCode(e.target.value)} />
         
           <button type='submit' className="bg-[#FDF4F5] rounded-l-2xl sm:text-lg lg:p-4 sm:p-2 hover:bg-mainColor hover:text-white text-mainColor lg:text-2xl px-6 py-4 h-full w-1/4 rounded">

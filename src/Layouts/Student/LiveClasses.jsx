@@ -12,7 +12,7 @@ const LiveClasses = () => {
        return (
               <>
                      <div className='directionEN'>
-                            <HeaderPageSection handleClick={handleGoBack} name="قريباً" />
+                            <HeaderPageSection handleClick={handleGoBack} name="حصص لايف" />
                      </div>
                      <LiveClassesPage/>
               </>
