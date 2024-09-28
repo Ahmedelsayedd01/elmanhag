@@ -1,6 +1,7 @@
 import React from 'react'
 import HeaderPageSection from '../../Components/HeaderPageSection'
 import { useNavigate } from 'react-router-dom';
+import { EditQuestionPage } from '../../Pages/AllPages';
 
 const EditQuestionLayout = () => {
        const navigate = useNavigate();

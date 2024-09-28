@@ -1,4 +1,4 @@
-import React, { useRef, useState ,useEffect} from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import InputCustom from '../../../../Components/InputCustom';
 import { Button } from '../../../../Components/Button';
 import { useAuth } from '../../../../Context/Auth';
@@ -7,6 +7,7 @@ import MultipleChoiceMenu from '../../../../Components/MultipleChoiceMenu';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CheckBox from '../../../../Components/CheckBox';
+import Loading from '../../../../Components/Loading';
 
 const AddBundlesPage = () => {
   const auth = useAuth();
@@ -47,7 +48,7 @@ const AddBundlesPage = () => {
 
   const [demoVideo, setDemoVideo] = useState('');
   const [demoVideoFile, setDemoVideoFile] = useState(null);
-  
+
   const [description, setDescription] = useState('');
   const [expiredDate, setExpiredDate] = useState('');
   const [bundleTags, setBundleTags] = useState('');
@@ -61,23 +62,49 @@ const AddBundlesPage = () => {
   const dropdownCategoryRef = useRef();
   const dropdownSemesterRef = useRef();
   const dropdownSubjectRef = useRef();
-  const dropdownEducationRef=useRef();
+  const dropdownEducationRef = useRef();
 
   const uploadThumbnailRef = useRef();
   const uploadCoverPhotoRef = useRef();
   const uploadDemoVideoRef = useRef();
 
+
+  const fetchLives = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        "https://bdev.elmanhag.shop/admin/live",
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        console.log('response3', response.data);
+        // setData(response.data.live);
+        setEducationData([
+          ...response.data.education,
+          { id: 'null', name: 'Together' } // Or use some unique key generator
+        ]);
+
+        setCategoryData(response.data.category);
+        setSubjectData(response.data.subjects)
+        setAllSubjects(response.data.subjects)
+
+      }
+    } catch (error) {
+      console.error("Error fetching Lives data:", error);
+    } finally {
+      setIsLoading(false);
+    }
+
+  };
+
+
+
   useEffect(() => {
-    const StorageCategoryData = JSON.parse(localStorage.getItem('BundlesCategoryData'));
-    // const educationData = JSON.parse(localStorage.getItem('Education'));
-    const StorageBundlesData = JSON.parse(localStorage.getItem('BundlesData'));
-
-
-    setCategoryData(StorageCategoryData);
-    setEducationData(StorageBundlesData.education);
-    setSubjectData(StorageBundlesData.subjects)
-    setAllSubjects(StorageBundlesData.subjects)
-
+    fetchLives();
   }, []);
 
   // Function to filter subjects by semester, category, or both
@@ -86,20 +113,20 @@ const AddBundlesPage = () => {
 
     // If both semester and category are selected, filter by both
     if (semesterName && categoryId) {
-      filteredSubjects = filteredSubjects.filter(subject => 
-        subject.semester.toLowerCase() === semesterName.toLowerCase() && 
+      filteredSubjects = filteredSubjects.filter(subject =>
+        subject.semester.toLowerCase() === semesterName.toLowerCase() &&
         subject.category_id === categoryId
-      ) ;
+      );
     }
     // If only the semester is selected, filter by semester
     else if (semesterName) {
-      filteredSubjects = filteredSubjects.filter(subject => 
+      filteredSubjects = filteredSubjects.filter(subject =>
         subject.semester.toLowerCase() === semesterName.toLowerCase()
       );
     }
     // If only the category is selected, filter by category
     else if (categoryId) {
-      filteredSubjects = filteredSubjects.filter(subject => 
+      filteredSubjects = filteredSubjects.filter(subject =>
         subject.category_id === categoryId
       );
     }
@@ -162,19 +189,32 @@ const AddBundlesPage = () => {
     filterSubjects(selectedOptionName, selectCategoryId);
   };
 
+  // const handleSelectEducation = (e) => {
+  //   const inputElement = e.currentTarget.querySelector('.inputVal');
+  //   const selectedOptionName = e.currentTarget.textContent.trim();
+  //   const selectedOptionValue = inputElement ? inputElement.value : '';
+  //   setSelectEducation(selectedOptionName);
+  //   setSelectEducationId(parseInt(selectedOptionValue));
+  //   setOpenSelectEducation(false);
+  //   console.log('Selected Education:', selectedOptionName);
+  //   console.log('Education ID:', selectedOptionValue);
+  // };
   const handleSelectEducation = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
     const selectedOptionName = e.currentTarget.textContent.trim();
-    const selectedOptionValue = inputElement ?inputElement.value : '';
+    const selectedOptionValue = inputElement ? inputElement.value : '';
+
+    if (selectedOptionValue === 'null') {
+      setSelectEducationId(null);
+    } else {
+      setSelectEducationId(parseInt(selectedOptionValue));
+    }
     setSelectEducation(selectedOptionName);
-    setSelectEducationId(parseInt(selectedOptionValue));
     setOpenSelectEducation(false);
-    console.log('Selected Education:', selectedOptionName);
-    console.log('Education ID:', selectedOptionValue);
   };
 
-   // Handle selection of a subject
-   const handleSelectSubject = (e) => {
+  // Handle selection of a subject
+  const handleSelectSubject = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
     const selectedOptionName = e.currentTarget.textContent.trim();
     const selectedOptionValue = inputElement ? parseInt(inputElement.value) : '';
@@ -216,21 +256,21 @@ const AddBundlesPage = () => {
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
   const handleClickOutside = (event) => {
-      if (dropdownCategoryRef.current && !dropdownCategoryRef.current.contains(event.target) &&
-          dropdownSemesterRef.current && !dropdownSemesterRef.current.contains(event.target)&&
-          dropdownSubjectRef.current &&  !dropdownSubjectRef.current.contains(event.target)&&
-          dropdownEducationRef.current &&  !dropdownEducationRef.current.contains(event.target)
-      ) {
-          setOpenSelectCategory(false);
-          setOpenSelectSemester(false);
-          setOpenSelectSubject(false);
-          setOpenSelectEducation(false);
-      }
+    if (dropdownCategoryRef.current && !dropdownCategoryRef.current.contains(event.target) &&
+      dropdownSemesterRef.current && !dropdownSemesterRef.current.contains(event.target) &&
+      dropdownSubjectRef.current && !dropdownSubjectRef.current.contains(event.target) &&
+      dropdownEducationRef.current && !dropdownEducationRef.current.contains(event.target)
+    ) {
+      setOpenSelectCategory(false);
+      setOpenSelectSemester(false);
+      setOpenSelectSubject(false);
+      setOpenSelectEducation(false);
+    }
   };
 
   const handleInputClick = (ref) => {
@@ -295,14 +335,16 @@ const AddBundlesPage = () => {
       auth.toastError('Please Select Semester.');
       return;
     }
-    if (!selectEducationId) {
-      auth.toastError('Please Select Education.');
-      return;
-    }
-    if (!selectSubjectId) {
+    // if (!selectEducationId) {
+    //   auth.toastError('Please Select Education.');
+    //   return;
+    // }
+    console.log('selectSubjectId', selectSubjectId)
+    if (!selectSubjectId || selectSubjectId.length === 0) {
       auth.toastError('Please Select Subject.');
       return;
     }
+
     if (!thumbnail) {
       auth.toastError('Please Enter Thumbnail Photo.');
       return;
@@ -339,10 +381,10 @@ const AddBundlesPage = () => {
     formData.append('ar_name', nameAr);
     formData.append('price', price);
     formData.append('category_id', selectCategoryId);
-    formData.append('education_id', selectEducationId);
+    // formData.append('education_id', selectEducationId);
     formData.append('semester', selectSemesterName);
     // formData.append('subjects', JSON.stringify(selectSubjectId));
-     // Append the subjects array
+    // Append the subjects array
     selectSubjectId.forEach((subjectId, index) => {
       formData.append(`subjects[${index}]`, subjectId);
     });
@@ -355,14 +397,20 @@ const AddBundlesPage = () => {
     formData.append('tags', bundleTags);
     formData.append('status', bundleActive);
 
-    for (let pair of formData.entries()) {
-      console.log(pair[0]+ ', '+ pair[1]); 
+    if (selectEducationId === null) {
+      formData.append('education_id', ' '); // Send as string 'null'
+    } else {
+      formData.append('education_id', selectEducationId);
     }
-    
+
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
+
 
 
     try {
-        const response = await axios.post('https://bdev.elmanhag.shop/admin/bundle/add', formData, {
+      const response = await axios.post('https://bdev.elmanhag.shop/admin/bundle/add', formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'multipart/form-data',
@@ -372,21 +420,29 @@ const AddBundlesPage = () => {
         auth.toastSuccess('Bundles added successfully!');
         handleGoBack();
       } else {
-              auth.toastError('Failed to add Bundle.');
+        auth.toastError('Failed to add Bundle.');
       }
-      } catch (error) {
+    } catch (error) {
       const errorMessages = error?.response?.data.errors;
       let errorMessageString = 'Error occurred';
 
       if (errorMessages) {
-              errorMessageString = Object.values(errorMessages).flat().join(' ');
+        errorMessageString = Object.values(errorMessages).flat().join(' ');
       }
 
       auth.toastError('Error', errorMessageString);
-      } finally {
+    } finally {
       setIsLoading(false);
-      }
+    }
   };
+
+  if (isLoading) {
+    return (
+      <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <form className="w-full flex flex-col items-center justify-center gap-y-3" onSubmit={handleSubmit}>
@@ -524,10 +580,10 @@ const AddBundlesPage = () => {
         </div>
         <div className="lg:w-[30%] sm:w-full">
           <InputCustom
-                  type="text"
-                  placeholder="Tags"
-                  value={bundleTags}
-                  onChange={(e) => setBundleTags(e.target.value)}
+            type="text"
+            placeholder="Tags"
+            value={bundleTags}
+            onChange={(e) => setBundleTags(e.target.value)}
           />
         </div>
         <div className="lg:w-[30%] sm:w-full">
@@ -539,29 +595,29 @@ const AddBundlesPage = () => {
           />
         </div>
         <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
-            <span className="text-2xl text-thirdColor font-medium">Active:</span>
-            <div>
-              <CheckBox checked={bundleActive} handleClick={handleClick} />
-            </div>
+          <span className="text-2xl text-thirdColor font-medium">Active:</span>
+          <div>
+            <CheckBox checked={bundleActive} handleClick={handleClick} />
+          </div>
         </div>
       </div>
       {/* Buttons */}
       <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
-          <div className="flex items-center justify-center w-72">
-                <Button
-                        type="submit"
-                        Text="Done"
-                        BgColor="bg-mainColor"
-                        Color="text-white"
-                        Width="full"
-                        Size="text-2xl"
-                        px="px-28"
-                        rounded="rounded-2xl"
-                        stateLoding={isLoading}
-                />
-          </div>
-          <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
+        <div className="flex items-center justify-center w-72">
+          <Button
+            type="submit"
+            Text="Done"
+            BgColor="bg-mainColor"
+            Color="text-white"
+            Width="full"
+            Size="text-2xl"
+            px="px-28"
+            rounded="rounded-2xl"
+          // stateLoding={isLoading}
+          />
         </div>
+        <button type='button' onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
+      </div>
     </form>
   );
 };

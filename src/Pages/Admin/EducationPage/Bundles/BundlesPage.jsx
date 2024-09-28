@@ -19,9 +19,9 @@ const BundlesPage = () => {
        const auth = useAuth();
        const [isLoading, setIsLoading] = useState(false);
        const [bundlesData, setBundlesData] = useState(null);
-       const [bundlesCategory ,setBundlesCategory]=useState([])
+       const [bundlesCategory, setBundlesCategory] = useState([])
        const [bundles, setBundles] = useState(null);
-       const [education , SetEducation]=useState(null)
+       const [education, SetEducation] = useState(null)
        const [selectedOptionCategory, setSelectedOptionCategory] = useState('Filter By Category');
        const [selectedOptionStatus, setSelectedOptionStatus] = useState('Filter By Status');
        const [selectedOptionSemester, setSelectedOptionSemester] = useState('Filter By Semester');
@@ -40,7 +40,6 @@ const BundlesPage = () => {
 
        const [isDeleting, setIsDeleting] = useState(false);
        const [openDialog, setOpenDialog] = useState(null);
-
        const handleOptionCategory = (e) => {
               setSelectedOptionCategory(e.target.innerText);
               setOpenCategory(false);
@@ -136,6 +135,7 @@ const BundlesPage = () => {
               handleCloseDialog();
 
               if (success) {
+                     setBundlesChanged(!bundlesChanged)
                      auth.toastSuccess('Bundle deleted successfully!');
                      setBundles((prevBundle) =>
                             prevBundle.filter((bundle) => bundle.id !== bundleId)
@@ -296,7 +296,7 @@ const BundlesPage = () => {
                                                                       className="min-w-[100px] sm:min-w-[80px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                                >
                                                                       <div className="flex items-center justify-center gap-x-3">
-                                                                             <Link to={`edit/${bundle.id}`} type="button">
+                                                                             <Link to={`edit/${bundle.id}`} state={bundle.id} type="button">
                                                                                     <EditIcon />
                                                                              </Link>
                                                                              <button type="button" onClick={() => handleOpenDialog(bundle.id)}>
