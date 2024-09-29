@@ -194,7 +194,7 @@ const EditProfileStudentPage = () => {
        }
    
        try {
-         const response = await axios.post(`https://bdev.elmanhag.shop/student/profile/modify/${studentId}`, formData, {
+         const response = await axios.post(`https://bdev.elmanhag.shop/student/profile/modify`, formData, {
            headers: {
              Authorization: `Bearer ${auth.user.token}`,
              'Content-Type': 'multipart/form-data',
@@ -229,7 +229,7 @@ const EditProfileStudentPage = () => {
                             <div className="image-upload-container">
                             <div className="image-wrapper" onClick={handleClick}>
                                    {preview ? (
-                                   <img src={preview} alt="Profile" className="rounded-image w-8 h-8" />
+                                   <img src={preview} alt="Profile" className="rounded-image w-28 h-28" />
                                    ) : (
                                    <span className="placeholder">Upload Image</span>
                                    )}

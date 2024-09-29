@@ -90,9 +90,16 @@ const AllPlansPage = () => {
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{bundle.name}</h3>
                   <p className="text-gray-700 mb-2">
-                    {bundle.price_discount > 0
-                      ? `${bundle.price_discount} جنيه بدلا من ${bundle.price} جنيه`
-                      : `${bundle.price} جنيه`}
+                    {bundle.price_discount > 0 ?(
+                      <>
+                      {/* // ? `${bundle.price_discount} جنيه بدلا من ${bundle.price} جنيه`
+                      // : `${bundle.price} جنيه` */}
+                      {`${bundle.price_discount} جنيه بدلا من `}
+                      <span className="line-through">{bundle.price} جنيه</span>
+                      </>
+                  ) : (
+                    `${bundle.price} جنيه`
+                      )}
                   </p>
                 </div>
                 <button

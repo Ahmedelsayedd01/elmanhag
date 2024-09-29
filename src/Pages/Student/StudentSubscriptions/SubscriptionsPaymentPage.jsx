@@ -137,7 +137,12 @@ const SubscriptionsPaymentPage = () => {
           {/* Plan Info Section */}
           <div className="flex flex-col justify-center bg-white p-4 rounded-lg shadow-lg text-center w-full sm:w-2/3 md:w-1/2 lg:w-1/3 mx-auto transform transition-transform hover:scale-105">
             <div className="flex justify-center">
-              <img src={plan.cover_photo_url} alt={plan.name} className="max-w-full h-auto rounded-lg" />
+            <img 
+              src={planType === "Bundle" ? plan.cover_photo_link : plan.cover_photo_url} 
+              alt={plan.name} 
+              className="max-w-full h-auto rounded-lg" 
+            />
+              {/* <img src={plan.cover_photo_url} alt={plan.name} className="max-w-full h-auto rounded-lg" /> */}
             </div>
             <div>
               <h2 className="text-xl sm:text-2xl font-semibold text-mainColor mt-2">{plan.name}</h2>

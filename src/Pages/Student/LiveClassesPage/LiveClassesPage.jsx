@@ -190,7 +190,7 @@ const LiveClassesPage = () => {
             </div>
           ))
         ) : (
-          <p className="text-gray-500 text-center">لا توجد بيانات لهذا اليوم</p>
+          <h1 className="text-mainColor text-xl font-semibold text-center">لا توجد بيانات لهذا اليوم</h1>
         )}
       </div>
     </div>
