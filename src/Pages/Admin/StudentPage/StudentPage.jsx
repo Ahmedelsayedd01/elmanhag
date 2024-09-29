@@ -17,6 +17,7 @@ const StudentPage = () => {
        const auth = useAuth();
        const [isLoading, setIsLoading] = useState(false);
        const [data, setData] = useState(null);
+       const [allStudents, setAllStudents] = useState([]);
        const [students, setStudents] = useState([]);
        const [search, setSearch] = useState('');
        const [selectedOptionCountry, setSelectedOptionCountry] = useState('Filter By Country');
@@ -54,7 +55,7 @@ const StudentPage = () => {
               setSelectedOptionCountry(selectedCountry);
 
               // Filter students based on the selected country
-              const selCountries = data.students.filter((student) => student.country.name === selectedCountry);
+              const selCountries = allStudents.filter((student) => student.country.name === selectedCountry);
 
               console.log('Selected Country:', selectedCountry);
               console.log('Filtered Students:', selCountries);
@@ -156,6 +157,7 @@ const StudentPage = () => {
                      });
                      if (response.status === 200) {
                             setData(response.data);
+                            setAllStudents(response.data.students);
                             setStudents(response.data.students);
                      }
               } catch (error) {
