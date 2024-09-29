@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import Loading from '../../../Components/Loading';
 import { useAuth } from '../../../Context/Auth';
 import axios from 'axios';
+import { Button } from '../../../Components/Button';
 import { FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from 'react-icons/fa';
 import {
   format,
@@ -187,6 +188,9 @@ const LiveClassesPage = () => {
                   <img src={live.subject?.cover_photo_url} alt={live.subject?.name} className='w-16 h-14'/>
                 </div>
               </div>
+              {/* <Button
+              text="حضور"
+              /> */}
             </div>
           ))
         ) : (

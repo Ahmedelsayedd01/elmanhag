@@ -12,6 +12,7 @@ import DropDownMenu from '../../../Components/DropDownMenu'
 const EditProfileStudentPage = () => {
        const[allCountry , setAllCountry]=useState('')
        const[allCity , setAllCity]=useState('')
+       const[allJob , setAllJob]=useState('')
 
        const [selectCountry, setSelectCountry] = useState('Select Country');
        const [selectCountryId, setSelectCountryId] = useState(null);
@@ -21,6 +22,10 @@ const EditProfileStudentPage = () => {
        const [selectCityId, setSelectCityId] = useState(null);
        const [openSelectCity, setOpenSelectCity] = useState(false);
 
+       const [selectJob, setSelectJob] = useState('Select Job');
+       const [selectJobId, setSelectJobId] = useState(null);
+       const [openSelectJob, setOpenSelectJob] = useState(false);
+
        const auth = useAuth();
        const navigate = useNavigate();
        const [isLoading, setIsLoading] = useState(false);
@@ -28,13 +33,12 @@ const EditProfileStudentPage = () => {
        const [studentId ,setStudentId] =useState('')
        const [password,setPassword] =useState('')
        const [confirmPassword,setConfirmPassword] =useState('')
-       // const [country ,setCountry] =useState('')
-       // const [city ,setCity] =useState('')
        const [phone ,setPhone] =useState('')
        const [job ,setJob] =useState('')
 
        const CountryRef = useRef(null); 
-       const CityRef = useRef(null); // Create a ref for the file input
+       const CityRef = useRef(null);
+       const JobRef = useRef(null);
 
 
        const [image, setImage] = useState(null);
@@ -48,6 +52,7 @@ const EditProfileStudentPage = () => {
               console.log(response.data)
               setAllCountry(response.data.country);
               setAllCity(response.data.city)
+              setAllJob(response.data.studentJobs)
               } catch (error) {
               console.error('Error fetching countries and cities:', error);
               }
@@ -73,6 +78,7 @@ const EditProfileStudentPage = () => {
                   setSelectCityId(response.data.user.city_id)
                   setPhone(response.data.user.phone); 
                   setPreview(response.data.user.image_link); 
+                  // setJob(response.data.user.)
                 }
               } catch (error) {
                 const errorMessages = error?.response?.data?.errors;
@@ -118,11 +124,19 @@ const EditProfileStudentPage = () => {
             const handleOpenSelectCountry = () => {
               setOpenSelectCountry(!openSelectCountry);
               setOpenSelectCity(false);
+              setOpenSelectJob(false);
             };
 
             const handleOpenSelectCity = () => {
               setOpenSelectCity(!openSelectCity);
               setOpenSelectCountry(false);
+              setOpenSelectJob(false);
+            };
+
+            const handleOpenSelectJob = () => {
+              setOpenSelectJob(!openSelectJob);
+              setOpenSelectCountry(false);
+              setOpenSelectCity(false);
             };
 
             const handleSelectCountry = (e) => {
@@ -145,6 +159,18 @@ const EditProfileStudentPage = () => {
               setOpenSelectCity(false);
               console.log('Selected City:', selectedOptionName);
               console.log('City ID:', selectedOptionValue);
+            };
+
+            
+            const handleSelectJob = (e) => {
+              const inputElement = e.currentTarget.querySelector('.inputVal');
+              const selectedOptionName = e.currentTarget.textContent.trim();
+              const selectedOptionValue = inputElement ? inputElement.value : '';
+              setSelectJob(selectedOptionName);
+              setSelectJobId(parseInt(selectedOptionValue));
+              setOpenSelectJob(false);
+              console.log('Selected Job:', selectedOptionName);
+              console.log('Job ID:', selectedOptionValue);
             };
        
        const handleGoBack = () => {
@@ -245,71 +271,80 @@ const EditProfileStudentPage = () => {
                             </div>
 
                             <div className="lg:w-[30%] sm:w-full">
-                            <DropDownMenu
-                            ref={CountryRef}
-                            handleOpen={handleOpenSelectCountry}
-                            handleOpenOption={handleSelectCountry}
-                            stateoption={selectCountry}
-                            openMenu={openSelectCountry}
-                            options={allCountry}
-                            />
+                              <DropDownMenu
+                                ref={CountryRef}
+                                handleOpen={handleOpenSelectCountry}
+                                handleOpenOption={handleSelectCountry}
+                                stateoption={selectCountry}
+                                openMenu={openSelectCountry}
+                                options={allCountry}
+                              />
                             </div>
-
                             <div className="lg:w-[30%] sm:w-full">
-                            <DropDownMenu
-                            ref={CityRef}
-                            handleOpen={handleOpenSelectCity}
-                            handleOpenOption={handleSelectCity}
-                            stateoption={selectCity}
-                            openMenu={openSelectCity}
-                            options={allCity}
-                            />
+                                <DropDownMenu
+                                  ref={CityRef}
+                                  handleOpen={handleOpenSelectCity}
+                                  handleOpenOption={handleSelectCity}
+                                  stateoption={selectCity}
+                                  openMenu={openSelectCity}
+                                  options={allCity}
+                                />
                             </div>
-                                          <div className="lg:w-[30%] sm:w-full">
-                                          <InputCustom
-                                                 type="text"
-                                                 placeholder="رقم التليفون"
-                                                 value={phone}
-                                                 textDirection="true"
-                                                 onChange={(e) => setPhone(e.target.value)}
-                                          />
-                                          </div>
-                                          
-                                          <div className="lg:w-[30%] sm:w-full">
-                                          <InputCustom
-                                                 type="text"
-                                                 placeholder="الرقم السري"
-                                                 value={password}
-                                                 textDirection="true"
-                                                 onChange={(e) => setPassword(e.target.value)}
-                                          />
-                                          </div> 
-                                          <div className="lg:w-[30%] sm:w-full">
-                                          <InputCustom
-                                                 type="text"
-                                                 placeholder="تاكيد الرقم السري"
-                                                 value={confirmPassword}
-                                                 textDirection="true"
-                                                 onChange={(e) => setConfirmPassword(e.target.value)}
-                                          />
-                                          </div> 
-                                   </div>
+                            <div className="lg:w-[30%] sm:w-full">
+                                <DropDownMenu
+                                  ref={JobRef}
+                                  handleOpen={handleOpenSelectJob}
+                                  handleOpenOption={handleSelectJob}
+                                  stateoption={selectJob}
+                                  openMenu={openSelectJob}
+                                  options={allJob}
+                                />
+                            </div>
+                              <div className="lg:w-[30%] sm:w-full">
+                                <InputCustom
+                                      type="text"
+                                      placeholder="رقم التليفون"
+                                      value={phone}
+                                      textDirection="true"
+                                      onChange={(e) => setPhone(e.target.value)}
+                                />
+                              </div>
+                              
+                              <div className="lg:w-[30%] sm:w-full">
+                                <InputCustom
+                                      type="text"
+                                      placeholder="الرقم السري"
+                                      value={password}
+                                      textDirection="true"
+                                      onChange={(e) => setPassword(e.target.value)}
+                                />
+                              </div> 
+                              <div className="lg:w-[30%] sm:w-full">
+                                <InputCustom
+                                      type="text"
+                                      placeholder="تاكيد الرقم السري"
+                                      value={confirmPassword}
+                                      textDirection="true"
+                                      onChange={(e) => setConfirmPassword(e.target.value)}
+                               />
+                              </div> 
+                        </div>
 
-                                   <div className="w-full flex justify-center mt-10">
-                                          <div className="flex items-center justify-center w-72">
-                                          <Button
-                                                type='submit'
-                                                 Text="حفظ التعديلات"
-                                                 BgColor="bg-mainColor"
-                                                 Color="text-white"
-                                                 Width="full"
-                                                 Size="text-2xl"
-                                                 px="px-3"
-                                                 rounded="rounded-2xl"
-                                          // stateLoding={isLoading}
-                                          />
-                                          </div>
-                                   </div>
+                        <div className="w-full flex justify-center mt-10">
+                              <div className="flex items-center justify-center w-72">
+                              <Button
+                                    type='submit'
+                                      Text="حفظ التعديلات"
+                                      BgColor="bg-mainColor"
+                                      Color="text-white"
+                                      Width="full"
+                                      Size="text-2xl"
+                                      px="px-3"
+                                      rounded="rounded-2xl"
+                              // stateLoding={isLoading}
+                              />
+                              </div>
+                        </div>
                      </form>
               </>
        )
