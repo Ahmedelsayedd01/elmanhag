@@ -61,7 +61,7 @@ const StudentHomePage = () => {
                             <MonthsReviewsIcon isActive={isActiveMonthsReviews} Width="56" Height="56" />
                         </span>
                         <span className="w-full mt-3 text-center text-secoundColor text-xl md:text-3xl font-medium">
-                            مراجعات شهور88
+                            مراجعات شهور
                         </span>
                     </NavLink>
                 </div>

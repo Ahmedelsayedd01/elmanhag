@@ -89,7 +89,10 @@ const LessonsPage = ({ subjectId, lessonId }) => {
             setErrorMessage("You Can't Take This Lesson cause You Didn't Finish Homework Before Lesson");
             break;
           case 500:
-            setErrorMessage('The previous lesson was not solved.');
+            if (error.response.data.lesson_not_solved === "The previous lesson was not solved.") {
+              setErrorMessage('يجب عليك حل الدرس السابق قبل المتابعة.');
+            }
+            // setErrorMessage('The previous lesson was not solved.');
             break;
           default:
             setErrorMessage('An unknown error occurred.');
@@ -168,7 +171,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
                     <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
                   </>
                 ) : (
-                  <Button Text="حسناً" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
+                  <Button Text="حسناً" Width="auto" BgColor="bg-mainColor" Color="text-white" handleClick={handleGoBack} />
                 )}
               </div>
             </div>
