@@ -312,44 +312,53 @@ const AddLivePage = () => {
   // };
 
   const filterSubjects = (educationId, semesterName, categoryId) => {
-    // const filterr = subjectData.filter((s) => s.education_id == educationId)
+    setSelectSubject('Select Subject');
+    setSelectSubjectId('');
+    setSubjectData([]);
 
     let filteredSubjects = subjectData; // Start with all subjects
 
-    // If educationId is selected, filter by educationId
+    // Filter by educationId if provided
     if (educationId) {
       filteredSubjects = filteredSubjects.filter(subject => subject.education_id === educationId);
     }
 
-    // If both semester and category are selected, filter by both
+    // Filter by semester and category if both are provided
     if (semesterName && categoryId) {
       filteredSubjects = filteredSubjects.filter(subject =>
-        subject.semester === semesterName.toLowerCase() &&
+        subject.semester.toLowerCase() === semesterName.toLowerCase() &&
         subject.category_id === categoryId
       );
     }
-    // If only the semester is selected, filter by semester
+    // Filter by semester if only semesterName is provided
     else if (semesterName) {
       filteredSubjects = filteredSubjects.filter(subject =>
-        subject.semester === semesterName.toLowerCase()
+        subject.semester.toLowerCase() === semesterName.toLowerCase()
       );
     }
-    // If only the category is selected, filter by category
+    // Filter by category if only categoryId is provided
     else if (categoryId) {
       filteredSubjects = filteredSubjects.filter(subject =>
         subject.category_id === categoryId
       );
     }
 
-    // Set the filtered subjects (or update the state here)
-    // setAllSubjects(filterr);
-    setSubjectData(filteredSubjects);
-    console.log('allSubjectsData', subjectData)
-    console.log('semesterName', semesterName)
-    console.log('categoryId', categoryId)
-    console.log('educationId', educationId)
-    console.log('filteredSubjects', filteredSubjects)
+    // Check if no subjects match the filters
+    if (filteredSubjects.length === 0) {
+      setSubjectData([{ id: 'Not Found', name: 'Not Found' }]);
+    } else {
+      setSelectSubject(filteredSubjects.length > 1 ? 'Select Subject' : filteredSubjects[0].name);
+
+      setSubjectData(filteredSubjects);
+    }
+
+    // Debugging logs
+    console.log('semesterName:', semesterName);
+    console.log('categoryId:', categoryId);
+    console.log('educationId:', educationId);
+    console.log('filteredSubjects:', filteredSubjects);
   };
+
 
 
 

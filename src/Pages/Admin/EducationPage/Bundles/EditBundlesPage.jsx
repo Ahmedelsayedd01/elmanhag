@@ -120,15 +120,19 @@ const EditBundlesPage = ({ number }) => {
         setNameEn(bundleData.name || '');
         setNameAr(bundleData.ar_name || '');
         setPrice(bundleData.price || '');
-        setThumbnail(bundleData.thumbnail || '');
-        setCoverPhoto(bundleData.cover_photo || '');
-        setDemoVideo(bundleData.demo_video || '');
+        setThumbnail(bundleData.thumbnail_link || '');
+        setThumbnailFile(bundleData.thumbnail_link || '');
+        setCoverPhoto(bundleData.cover_photo_link || '');
+        setCoverPhotoFile(bundleData.cover_photo_link || '');
+        setDemoVideo(bundleData.demo_video_link || '');
+        setDemoVideoFile(bundleData.demo_video_link || '');
         setDescription(bundleData.description || '');
         setUrl(bundleData.url || '');
         setBundleTags(bundleData.tags || '')
         setBundleActive(bundleData.status || false)
         setExpiredDate(bundleData.expired_date || '')
-        setSelectSemesterName(bundleData.semester || 'Select Semester');
+        setSelectSemester(bundleData.semester || 'Select Semester');
+        setSelectSemesterName(bundleData.semester);
 
         if (bundleData.education) {
           setSelectEducation(bundleData.education.name);
@@ -332,15 +336,16 @@ const EditBundlesPage = ({ number }) => {
     const file = e.target.files[0];
     if (file) {
       setThumbnailFile(file);
-      setThumbnail(file.name);
+      setThumbnail(URL.createObjectURL(file));
     }
+    console.log('file', file)
   };
 
   const handleCoverPhotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setCoverPhotoFile(file);
-      setCoverPhoto(file.name);
+      setCoverPhoto(URL.createObjectURL(file));
     }
   };
 
@@ -348,7 +353,7 @@ const EditBundlesPage = ({ number }) => {
     const file = e.target.files[0];
     if (file) {
       setDemoVideoFile(file);
-      setDemoVideo(file.name);
+      setDemoVideo(URL.createObjectURL(file));
     }
   };
   const handleClick = (e) => {
@@ -592,55 +597,6 @@ const EditBundlesPage = ({ number }) => {
         <div className="lg:w-[30%] sm:w-full">
           <InputCustom
             type="text"
-            upload={true}
-            placeholder="Thumbnail Photo"
-            value={thumbnail}
-            readOnly
-            onClick={() => handleInputClick(uploadThumbnailRef)}
-          />
-          <input
-            type="file"
-            className="hidden"
-            onChange={handleThumbnailFileChange}
-            ref={uploadThumbnailRef}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            type="text"
-            upload={true}
-            placeholder="Cover Photo"
-            value={coverPhoto}
-            readOnly
-            onClick={() => handleInputClick(uploadCoverPhotoRef)}
-          />
-          <input
-            type="file"
-            className="hidden"
-            onChange={handleCoverPhotoChange}
-            ref={uploadCoverPhotoRef}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            type="text"
-            upload={true}
-            placeholder="Demo Video"
-            value={demoVideo}
-            readOnly
-            onClick={() => handleInputClick(uploadDemoVideoRef)}
-          />
-          <input
-            type="file"
-            // accept="video/mp4,video/x-m4v,video/*"
-            className="hidden"
-            onChange={handleDemoVideoChange}
-            ref={uploadDemoVideoRef}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            type="text"
             placeholder="URL"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
@@ -654,6 +610,68 @@ const EditBundlesPage = ({ number }) => {
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
+        <div className="lg:w-[30%] sm:w-full flex flex-col gap-y-2">
+          <img src={thumbnail} className='w-full h-[200px] rounded-xl object-contain object-center' alt="photo" loading='lazy' />
+          <div className="">
+
+            <InputCustom
+              type="text"
+              upload={true}
+              placeholder="Thumbnail Photo"
+              value={thumbnail}
+              readonly={true}
+              onClick={() => handleInputClick(uploadThumbnailRef)}
+            />
+            <input
+              type="file"
+              className="hidden"
+              onChange={handleThumbnailFileChange}
+              ref={uploadThumbnailRef}
+            />
+          </div>
+        </div>
+        <div className="lg:w-[30%] sm:w-full flex flex-col gap-y-2">
+          <img src={coverPhoto} className='w-full h-[200px] rounded-xl object-contain object-center' alt="photo" loading='lazy' />
+          <div className="">
+            <InputCustom
+              type="text"
+              upload={true}
+              placeholder="Cover Photo"
+              value={coverPhoto}
+              readonly={true}
+              onClick={() => handleInputClick(uploadCoverPhotoRef)}
+            />
+            <input
+              type="file"
+              className="hidden"
+              onChange={handleCoverPhotoChange}
+              ref={uploadCoverPhotoRef}
+            />
+          </div>
+        </div>
+        <div className="lg:w-[30%] sm:w-full overflow-hidden flex flex-col gap-y-2">
+          <video width="600" className='w-full h-[200px] rounded-xl object-contain object-center' controls>
+            <source src={demoVideo} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <div className="">
+            <InputCustom
+              type="text"
+              upload={true}
+              placeholder="Demo Video"
+              value={demoVideo}
+              readonly={true}
+              onClick={() => handleInputClick(uploadDemoVideoRef)}
+            />
+            <input
+              type="file"
+              // accept="video/mp4,video/x-m4v,video/*"
+              className="hidden"
+              onChange={handleDemoVideoChange}
+              ref={uploadDemoVideoRef}
+            />
+          </div>
+        </div>
         <div className="lg:w-[30%] sm:w-full">
           <InputCustom
             type="text"
@@ -665,6 +683,7 @@ const EditBundlesPage = ({ number }) => {
         <div className="lg:w-[30%] sm:w-full">
           <InputCustom
             type="date"
+            minDate={false}
             placeholder="Expired Date"
             value={expiredDate}
             onChange={(e) => setExpiredDate(e.target.value)}

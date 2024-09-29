@@ -214,7 +214,13 @@ const SignUpAffilatePage = () => {
               iconDirection={true}
               placeholder={"رقم الهاتف"}
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                // Only allow numbers
+                if (!isNaN(value)) {
+                  setPhone(value);
+                }
+              }}
             />
           </div>
           <InputCustom

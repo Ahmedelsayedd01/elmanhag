@@ -7,7 +7,7 @@ import { FaLink } from "react-icons/fa6";
 
 
 
-const InputCustom = ({ type, required = true, borderColor = "none", placeholder, placeholderSize = false, value, readonly = false, onChange, iconDirection = false, textDirection = false, onClick, paddinLeft = 'pl-2', paddinRight = 'pr-2', upload = false, source }) => {
+const InputCustom = ({ type, required = true, minDate = true, borderColor = "none", placeholder, placeholderSize = false, value, readonly = false, onChange, iconDirection = false, textDirection = false, onClick, paddinLeft = 'pl-2', paddinRight = 'pr-2', upload = false, source }) => {
        const [show, setShow] = useState(false)
        const [currentDay, setCurrentDay] = useState(new Date());
 
@@ -43,7 +43,7 @@ const InputCustom = ({ type, required = true, borderColor = "none", placeholder,
           outline-none px-2 py-3 text-2xl font-normal text-thirdColor`}
                                    value={value}
                                    onChange={onChange}
-                                   min={formattedDate}  // Use the correctly formatted date
+                                   min={minDate ? formattedDate : ''}  // Use the correctly formatted date
                                    required={required}
                             />
                      </>
@@ -77,10 +77,10 @@ const InputCustom = ({ type, required = true, borderColor = "none", placeholder,
                                    onClick={onClick}
                                    readOnly={readonly}
                                    required={required} />
-                            {upload ? <LuUpload  className={`absolute  top-1/3 text-mainColor text-2xl cursor-pointer ${iconDirection ? 'left-4' : 'right-2'} `}/> : ''}
+                            {upload ? <LuUpload className={`absolute  top-1/3 text-mainColor text-2xl cursor-pointer ${iconDirection ? 'left-4' : 'right-2'} `} /> : ''}
                             {source == 'external' ? <FaExternalLinkAlt className='absolute right-4 top-1/3 text-mainColor text-2xl cursor-pointer' /> :
                                    source == 'embedded' ? <FaLink className='absolute top-1/3 text-mainColor text-2xl cursor-pointer' /> :
-                                          source == 'upload' ? <LuUpload className={`absolute right-4 top-1/3 text-mainColor text-2xl cursor-pointer ${iconDirection ? 'left-4' : 'right-2'} `}/> 
+                                          source == 'upload' ? <LuUpload className={`absolute right-4 top-1/3 text-mainColor text-2xl cursor-pointer ${iconDirection ? 'left-4' : 'right-2'} `} />
                                                  : ''}
                             {/* external, embedded, upload */}
                      </div>

@@ -34,14 +34,15 @@ const SignUpPage = () => {
   const [confirmParentPassword, setConfirmParentPassword] = useState('');
   const [affiliateCode, setAffiliateCode] = useState('');
 
-  const [stateData, setStateData] = useState(1);
+  const [stateData, setStateData] = useState(2);
 
   const [countries, setCountries] = useState([]);
+  const [allCities, setAllCities] = useState([]);
   const [cities, setCities] = useState([]);
   const [categories, setCategories] = useState([]);
   const [educations, setEducations] = useState([]);
   const [parentRelations, setParentRelations] = useState([]);
-  const [studentTypes, setStudentTypes] = useState([{ name: 'Male' }, { name: 'Female' }]);
+  const [studentTypes, setStudentTypes] = useState([{ name: 'ولد' }, { name: 'بنت' }]);
   const [studentJobs, setStudentJobs] = useState([]);
 
   const [country, setCountry] = useState('');
@@ -90,7 +91,7 @@ const SignUpPage = () => {
         const response = await axios.get('https://bdev.elmanhag.shop/student/setting/view', {});
         if (response.status === 200) {
           setCountries(response.data.country)
-          setCities(response.data.city)
+          setAllCities(response.data.city)
           setCategories(response.data.category)
           setEducations(response.data.education)
           setParentRelations(response.data.parentRelation)
@@ -177,20 +178,43 @@ const SignUpPage = () => {
   }
 
   const handleCountry = (e) => {
+    // Get the input element inside the clicked option
     const inputElement = e.currentTarget.querySelector('.inputVal');
-    const selectedOptionName = e.currentTarget.textContent.trim();
-    const selectedOptionValue = inputElement ? parseInt(inputElement.value) : '';
-    const allCities = cities.filter((city) => city.country_id === selectedOptionValue)
-    setCountriesState(selectedOptionName[0].toUpperCase() + selectedOptionName.slice(1));
-    setCountry(selectedOptionName);
-    setCountryId(selectedOptionValue)
-    setOpenCountry(false);
-    setCitiesState(cities.length > 0 ? 'المدينة' : "لا يوجد مدينة")
-    setCities(allCities)
 
-    console.log('Selected NameL:', selectedOptionName);
-    console.log('Selected ValueL:', selectedOptionValue);
-  }
+    // Get the selected option name and value
+    const selectedOptionName = e.currentTarget.textContent.trim();
+    const selectedOptionValue = inputElement ? parseInt(inputElement.value) || '' : '';
+
+    // Safely filter cities by country ID if cities exist
+    const allCitiesArr = allCities ? allCities.filter((city) => city.country_id === selectedOptionValue) : [];
+
+    // Update state for country name, capitalizing the first letter safely
+    if (selectedOptionName) {
+      setCountriesState(selectedOptionName[0].toUpperCase() + selectedOptionName.slice(1));
+    }
+
+    // Set the selected country and country ID
+    setCountry(selectedOptionName);
+    setCountryId(selectedOptionValue);
+
+    // Close the dropdown for countries
+    setOpenCountry(false);
+
+    // Update the cities state and the state message
+    setCitiesState(allCitiesArr.length > 0 ? 'المدينة' : "لا يوجد مدينة");
+
+    // Ensure that an array is passed, even when no cities are found
+    setCities(allCitiesArr.length > 0 ? allCitiesArr : [{ id: "لا يوجد مدن", name: "لا يوجد مدن" }]);
+
+    setCityId(null)
+
+    // Debugging logs
+    console.log('allCitiesArr:', allCitiesArr);
+    console.log('allCities:', allCities);
+    console.log('Selected Name:', selectedOptionName);
+    console.log('Selected Value:', selectedOptionValue);
+  };
+
   const handleCity = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
     const selectedOptionName = e.currentTarget.textContent.trim();
@@ -382,7 +406,7 @@ const SignUpPage = () => {
       return;
     }
     if (studentPhone.length < 11) {
-      auth.toastError("ادخل رقم الهاتف صحيح")
+      auth.toastError("ادخل رقم هاتفك صحيح")
       return;
     }
     if (!studentEmail) {
@@ -508,8 +532,8 @@ const SignUpPage = () => {
         'country_id': countryId,
         'city_id': cityId,
         'education_id': educationId,
-        'sudent_job_id': studentJobId,
-        'gender': studentTypeName,
+        'sudent_jobs_id': studentJobId,
+        'gender': studentTypeName == 'ولد' ? "male" : 'female',
         'parent_relation_id': parentRelationId,
         // 'image': ' ',
         'parent_name': parentName,
@@ -587,18 +611,22 @@ const SignUpPage = () => {
                   onChange={(e) => setStudentName(e.target.value)}
                 />
                 <InputCustom
-                  type={"number"}
+                  type={"text"}
                   textDirection={true}
                   paddinRight="pr-2"
                   paddinLeft="pl-0"
-                  placeholder={"رقم الطالب"}
+                  placeholder={"رقم هاتفك"}
                   value={studentPhone}
                   onChange={(e) => {
-                    setStudentPhone(e.target.value);
-                    setStudentEmail(e.target.value + '@elmanhag.com');
+                    const value = e.target.value;
+                    // Only allow numbers
+                    if (!isNaN(value)) {
+                      setStudentPhone(value);
+                      setStudentEmail(value + '@elmanhag.com');
+                    }
                   }}
-
                 />
+
               </div>
               <InputCustom
                 type={"email"}
@@ -656,7 +684,7 @@ const SignUpPage = () => {
                     handleOpenOption={handleCity}
                     stateoption={citiesState}
                     openMenu={openCity}
-                    options={cities}
+                    options={cities.length > 0 ? cities : [{ id: "لا يوجد مدن", name: "لا يوجد مدن" }]}
                   />
                 </div>
               </div>

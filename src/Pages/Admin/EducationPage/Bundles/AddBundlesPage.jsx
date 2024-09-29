@@ -589,6 +589,7 @@ const AddBundlesPage = () => {
         <div className="lg:w-[30%] sm:w-full">
           <InputCustom
             type="date"
+            minDate={true}
             placeholder="Expired Date"
             value={expiredDate}
             onChange={(e) => setExpiredDate(e.target.value)}
