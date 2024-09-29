@@ -75,120 +75,41 @@ const AddLivePage = () => {
   const dropdownDayRef = useRef();
   const dropdownStatusRef = useRef();
 
-  const fetchLives = async () => {
-    setIsLoading(true);
-    try {
-      const response = await axios.get(
-        "https://bdev.elmanhag.shop/admin/live",
-        {
-          headers: {
-            Authorization: `Bearer ${auth.user.token}`,
-          },
-        }
-      );
-      if (response.status === 200) {
-        console.log('response3', response.data);
-        setData(response.data.live);
-        setEducationData([
-          ...response.data.education,
-          { id: 'null', name: 'Together' } // Or use some unique key generator
-        ]);
-
-        setCategoryData(response.data.category);
-        setAllSubjects(response.data.subjects);
-        setSubjectData(response.data.subjects);
-        setTeacherData(response.data.teachers);
-      }
-    } catch (error) {
-      console.error("Error fetching Lives data:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   useEffect(() => {
+    const fetchLives = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(
+          "https://bdev.elmanhag.shop/admin/live",
+          {
+            headers: {
+              Authorization: `Bearer ${auth.user.token}`,
+            },
+          }
+        );
+        if (response.status === 200) {
+          console.log('response3', response.data);
+          setData(response.data.live);
+          setEducationData([
+            ...response.data.education,
+            { id: 'null', name: 'Together' } // Or use some unique key generator
+          ]);
+
+          setCategoryData(response.data.category);
+          setAllSubjects(response.data.subjects);
+          setSubjectData(response.data.subjects);
+          setTeacherData(response.data.teachers);
+        }
+      } catch (error) {
+        console.error("Error fetching Lives data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
     fetchLives(); // Fetch lives initially and whenever livesChanged changes
-  }, []);
+  }, []); // Add livesChanged or any other necessary dependency
 
-  // useEffect(() => {
-  //   const StorageLiveData = JSON.parse(localStorage.getItem('LivesData'));
-  //   setEducationData([...StorageLiveData.education, { id: 'null', name: 'Together' }]);
-  //   setCategoryData(StorageLiveData.category);
-  //   setSubjectData(StorageLiveData.subjects);
-  //   setAllSubjects(StorageLiveData.subjects)
-  //   setTeacherData(StorageLiveData.teachers);
-
-  // }, []);
-
-
-  // const filterSubjects = (semesterName, categoryId, educationId) => {
-  //   let filteredSubjects = allSubjects; // Start with all subjects
-
-  //   // Filter by semester
-  //   if (semesterName) {
-  //     filteredSubjects = filteredSubjects.filter(subject =>
-  //       subject.semester === semesterName.toLowerCase()
-  //     );
-  //   }
-  //   // Filter by category
-  //   // if (categoryId) {
-  //   //   filteredSubjects = filteredSubjects.filter(subject =>
-  //   //     subject.category_id === categoryId
-  //   //   );
-  //   // }
-  //   // Filter by educationId
-  //   // if (educationId === null) {
-  //   //   filteredSubjects = filteredSubjects.filter(subject => subject.education_id === null);
-  //   // } else if (educationId) {
-  //   //   filteredSubjects = filteredSubjects.filter(subject => subject.education_id === parseInt(educationId));
-  //   // }
-
-  //   // Handle the combination of categoryId and educationId (including null educationId)
-  //   // if (categoryId) {
-  //   //   if (educationId === null) {
-  //   //     filteredSubjects = filteredSubjects.filter(subject =>
-  //   //       subject.education_id === null && subject.category_id === categoryId
-  //   //     );
-  //   //   } else if (educationId) {
-  //   //     filteredSubjects = filteredSubjects.filter(subject =>
-  //   //       subject.education_id === parseInt(educationId) && subject.category_id === categoryId
-  //   //     );
-  //   //   }
-  //   // }
-
-  //   // Handle the combination of semesterName and educationId (including null educationId)
-  //   // if (semesterName) {
-  //   //   if (educationId === null) {
-  //   //     filteredSubjects = filteredSubjects.filter(subject =>
-  //   //       subject.semester.toLowerCase() === semesterName.toLowerCase() && subject.education_id === null
-  //   //     );
-  //   //   } else if (educationId) {
-  //   //     filteredSubjects = filteredSubjects.filter(subject =>
-  //   //       subject.semester.toLowerCase() === semesterName.toLowerCase() && subject.education_id === parseInt(educationId)
-  //   //     );
-  //   //   }
-  //   // }
-
-  //   // Handle the combination of categoryId and semesterName
-  //   // if (categoryId && semesterName) {
-  //   //   filteredSubjects = filteredSubjects.filter(subject =>
-  //   //     subject.category_id === categoryId && subject.semester.toLowerCase() === semesterName.toLowerCase()
-  //   //   );
-  //   // }
-
-  //   // All three filters (categoryId, educationId, semesterName)
-  //   // if (categoryId && semesterName && educationId !== undefined) {
-  //   //   filteredSubjects = filteredSubjects.filter(subject =>
-  //   //     subject.category_id === categoryId &&
-  //   //     subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-  //   //     (educationId === null ? subject.education_id === null : subject.education_id === parseInt(educationId))
-  //   //   );
-  //   // }
-
-  //   // Set the filtered data
-  //   setSubjectData(filteredSubjects);
-  //   console.log(filteredSubjects);
-  // };
 
   const handleOpenSelectEducation = () => {
     setOpenSelectEducation(!openSelectEducation)
@@ -259,58 +180,6 @@ const AddLivePage = () => {
     setOpenSelectDay(false);
     setOpenSelectStatus(!openSelectStatus);
   };
-
-  // const handleSelectEducation = (e) => {
-  //   const inputElement = e.currentTarget.querySelector('.inputVal');
-  //   const selectedOptionName = e.currentTarget.textContent.trim();
-  //   const selectedOptionValue = inputElement ? inputElement.value : '';
-
-  //   // Set the selected option name (for UI display)
-  //   setSelectEducation(selectedOptionName);
-  //   console.log('Selected Education:', selectedOptionName);
-  //   let educationId = null;
-  //   // Check if the selected value is 'null' or a valid number
-  //   if (selectedOptionValue === 'null') {
-  //     educationId = null;  // Set to null when the option is 'null'
-  //     console.log('Education ID:', educationId);
-  //   } else {
-  //     educationId = parseInt(selectedOptionValue);  // Parse the selected value to an integer
-  //     console.log('Education ID:', educationId);
-  //   }
-  //   // Update the state for selected education ID
-  //   setSelectEducationId(educationId);
-  //   // Close the select dropdown
-  //   setOpenSelectEducation(false);
-  //   // Ensure the correct `selectEducationId` is passed to filterSubjects
-  //   filterSubjects(selectSemesterName, selectCategoryId, educationId);
-  // };
-
-  // const filterSubjects = (semesterName, categoryId) => {
-  //   let filteredSubjects = allSubjects; // Start with all subjects
-
-  //   // If both semester and category are selected, filter by both
-  //   if (semesterName && categoryId) {
-  //     filteredSubjects = filteredSubjects.filter(subject =>
-  //       subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-  //       subject.category_id === categoryId
-  //     );
-  //   }
-  //   // If only the semester is selected, filter by semester
-  //   else if (semesterName) {
-  //     filteredSubjects = filteredSubjects.filter(subject =>
-  //       subject.semester.toLowerCase() === semesterName.toLowerCase()
-  //     );
-  //   }
-  //   // If only the category is selected, filter by category
-  //   else if (categoryId) {
-  //     filteredSubjects = filteredSubjects.filter(subject =>
-  //       subject.category_id === categoryId
-  //     );
-  //   }
-
-  //   setSubjectData(filteredSubjects);
-  //   console.log('filteredSubjects', filteredSubjects)
-  // };
 
   const filterSubjects = (educationId, semesterName, categoryId) => {
     setSelectSubject('Select Subject');
