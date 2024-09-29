@@ -95,6 +95,7 @@ const AddLivePage = () => {
         ]);
 
         setCategoryData(response.data.category);
+        setAllSubjects(response.data.subjects);
         setSubjectData(response.data.subjects);
         setTeacherData(response.data.teachers);
       }
@@ -316,7 +317,7 @@ const AddLivePage = () => {
     setSelectSubjectId('');
     setSubjectData([]);
 
-    let filteredSubjects = subjectData; // Start with all subjects
+    let filteredSubjects = [...allSubjects]; // Start with all subjects
 
     // Filter by educationId if provided
     if (educationId) {
@@ -348,6 +349,7 @@ const AddLivePage = () => {
       setSubjectData([{ id: 'Not Found', name: 'Not Found' }]);
     } else {
       setSelectSubject(filteredSubjects.length > 1 ? 'Select Subject' : filteredSubjects[0].name);
+      setSelectSubjectId(filteredSubjects.length > 1 ? [] : filteredSubjects[0].id);
 
       setSubjectData(filteredSubjects);
     }
@@ -683,8 +685,9 @@ const AddLivePage = () => {
             handleOpen={handleOpenSelectSubject}
             handleOpenOption={handleSelectSubject}
             stateoption={selectSubject}
+            // stateoption={subjectData.length > 1 ? selectSubject : 'Not Found'}
             openMenu={openSelectSubject}
-            options={subjectData}
+            options={subjectData.length === 0 ? [{ id: 'Not Found', name: 'Not Found' }] : subjectData}
           />
         </div>
         <div className="lg:w-[30%] sm:w-full">
