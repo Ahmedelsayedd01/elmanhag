@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import Loading from '../../../Components/Loading';
 import { useAuth } from '../../../Context/Auth';
 import axios from 'axios';
+import { Button } from '../../../Components/Button';
 import { FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from 'react-icons/fa';
 import {
   format,
@@ -175,7 +176,7 @@ const LiveClassesPage = () => {
             <div key={live.id} className="rounded-lg shadow-md bg-mainColor lg:w-4/5 s:w-full">
               <div className="flex gap-5 justify-around bg-[#EBEBEB] p-6 rounded-l-lg h-full mr-10">
                 <div>
-                  <img src={live.teacher?.image_link} alt={live.teacher?.name} />
+                  <img src={live.teacher?.image_link} alt={live.teacher?.name}/>
                 </div>
                 <div>
                 <p className='text-xl text-mainColor font-semibold'><strong className='text-black text-xl font-medium'>الوقت:</strong> {formatTimeToArabic(live.from)} : {formatTimeToArabic(live.to)}</p>
@@ -184,9 +185,12 @@ const LiveClassesPage = () => {
                   <p className='text-xl'><strong>المادة:</strong> {live.subject?.name}</p>
                 </div>
                 <div>
-                  <img src={live.subject?.cover_photo_url} alt={live.subject?.name} />
+                  <img src={live.subject?.cover_photo_url} alt={live.subject?.name} className='w-16 h-14'/>
                 </div>
               </div>
+              {/* <Button
+              text="حضور"
+              /> */}
             </div>
           ))
         ) : (

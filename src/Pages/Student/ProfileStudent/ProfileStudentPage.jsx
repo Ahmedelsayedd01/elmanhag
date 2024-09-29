@@ -107,6 +107,14 @@ const ProfileStudentPage = () => {
                         <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
                             type="text"
+                            value={student.student_jobs?.job}
+                            textDirection="true"
+                            readonly = {true}
+                        />
+                        </div>
+                        <div className="lg:w-[30%] sm:w-full">
+                        <InputCustom
+                            type="text"
                             value={student.edu}
                             textDirection="true"
                             readonly = {true}
