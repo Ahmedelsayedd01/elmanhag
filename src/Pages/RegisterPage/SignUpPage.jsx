@@ -34,7 +34,7 @@ const SignUpPage = () => {
   const [confirmParentPassword, setConfirmParentPassword] = useState('');
   const [affiliateCode, setAffiliateCode] = useState('');
 
-  const [stateData, setStateData] = useState(2);
+  const [stateData, setStateData] = useState(1);
 
   const [countries, setCountries] = useState([]);
   const [allCities, setAllCities] = useState([]);
