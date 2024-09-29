@@ -27,6 +27,7 @@ const AllPlansPage = () => {
       });
 
       if (response.status === 200) {
+        console.log(response.data)
         setPlans(response.data);
         const allSubjects = response.data.subjects || [];
 
@@ -85,13 +86,20 @@ const AllPlansPage = () => {
               <div key={bundle.id} className="bg-white p-6 rounded-lg shadow-md text-center flex flex-col justify-between">
                 <div>
                   <div className='flex justify-center'>
-                    <img src={bundle.cover_photo_url} alt={bundle.name} className="" />
+                    <img src={bundle.cover_photo_link} alt={bundle.name} className="" />
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{bundle.name}</h3>
                   <p className="text-gray-700 mb-2">
-                    {bundle.price_discount > 0
-                      ? `${bundle.price_discount} جنيه بدلا من ${bundle.price} جنيه`
-                      : `${bundle.price} جنيه`}
+                    {bundle.price_discount > 0 ?(
+                      <>
+                      {/* // ? `${bundle.price_discount} جنيه بدلا من ${bundle.price} جنيه`
+                      // : `${bundle.price} جنيه` */}
+                      {`${bundle.price_discount} جنيه بدلا من `}
+                      <span className="line-through">{bundle.price} جنيه</span>
+                      </>
+                  ) : (
+                    `${bundle.price} جنيه`
+                      )}
                   </p>
                 </div>
                 <button

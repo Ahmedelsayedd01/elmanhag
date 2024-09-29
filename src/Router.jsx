@@ -149,6 +149,7 @@ import AddQuestionLayout from "./Layouts/Admin/AddQuestionLayout";
 import EditQuestionLayout from "./Layouts/Admin/EditQuestionLayout";
 import QuestionLayout from "./Layouts/Admin/QuestionLayout";
 import Complaint from "./Pages/Student/Complaint/ComplaintPage";
+import EditProfileStudentLayout from "./Layouts/Student/EditProfileStudentLayout";
 
 export const ContextNumper = createContext()
 const AppLayoutAuthentication = () => (
@@ -1111,6 +1112,10 @@ export const router = createBrowserRouter([
           {
             path: "profile",
             element: <ProfileStudent />,
+          },
+          {
+            path: "edit_profile",
+            element: <EditProfileStudentLayout />,
           },
           {
             path: "complaint_suggestion",
