@@ -130,6 +130,10 @@ export { default as ComplaintPage } from "./Student/Complaint/ComplaintPage";
 
 /* /////Student Dashboard Page */
 
+/* /////Student profile Page */
+export { default as ProfileStudentPage } from "./Student/ProfileStudent/ProfileStudentPage";
+export { default as EditProfileStudentPage } from "./Student/ProfileStudent/EditProfileStudentPage";
+
 /* Affilate Dashboard Page */
 export { default as AffilatePage } from "./Affilate/AffilatePage";
 /* /////Affilate Dashboard Page */

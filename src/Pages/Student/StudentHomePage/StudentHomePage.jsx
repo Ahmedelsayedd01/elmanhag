@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink ,Link} from "react-router-dom";
 import CurriculaIcon from '../../../Components/Icons/StudentIcons/CurriculaIcon';
 import DutiesIcon from '../../../Components/Icons/StudentIcons/DutiesIcon';
 import MonthsReviewsIcon from '../../../Components/Icons/StudentIcons/MonthsReviewsIcon';
@@ -92,13 +92,15 @@ const StudentHomePage = () => {
 
                 </div> */}
                 <div className="flex gap-5">
+                <Link to="https://play.google.com/store/apps/details?id=com.elmanhag.aff">
                 <div className="flex gap-5 bg-[#F6F6F6] px-7 py-4 justify-center items-center cursor-pointer">
                     <h1 className="text-mainColor font-semibold">Google Store</h1>
                     <div>
-                        <AndroidIcon/>
+                           <AndroidIcon/>
                     </div>
                 </div>
-
+                </Link>
+                
                 <div className="flex gap-5 bg-[#F6F6F6] px-7 py-4 justify-center items-center cursor-pointer">
                     <h1 className="text-mainColor font-semibold">App Store</h1>
                     <div>
@@ -107,22 +109,6 @@ const StudentHomePage = () => {
                 </div>
             </div>
             </div>
-
-            {/* <div className="flex gap-5">
-                <div className="flex gap-5 bg-[#F6F6F6] p-6 justify-center">
-                    <h1 className="text-mainColor font-semibold">Google Store</h1>
-                    <div>
-                        <AndroidIcon/>
-                    </div>
-                </div>
-
-                <div className="flex gap-5 bg-[#F6F6F6] p-6 justify-center">
-                    <h1 className="text-mainColor font-semibold">App Store</h1>
-                    <div>
-                        <AppleIcon/>
-                    </div>
-                </div>
-            </div> */}
         </>
     );
 };
