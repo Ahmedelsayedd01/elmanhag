@@ -44,6 +44,7 @@ const AddPage = () => {
        const [countries, setCountries] = useState([])
        const [studentCityState, setStudentCityState] = useState('City')
        const [cityId, setCityId] = useState('')
+       const [allCities, setAllCities] = useState([])
        const [cities, setCities] = useState([])
        const [educations, setEducations] = useState([])
        const [categoryState, setCategoryState] = useState('Academic Year')
@@ -94,7 +95,7 @@ const AddPage = () => {
                             const response = await axios.get('https://bdev.elmanhag.shop/student/setting/view', {});
                             if (response.status === 200) {
                                    setCountries(response.data.country)
-                                   setCities(response.data.city)
+                                   setAllCities(response.data.city)
                                    setCategory(response.data.category)
                                    setEducations(response.data.education)
                                    setRelations(response.data.parentRelation)
@@ -192,21 +193,60 @@ const AddPage = () => {
        //        console.log('Selected NameL:', selectedOptionName);
        //        console.log('Selected ValueL:', selectedOptionValue);
        // }
-       const handleCountryStudent = (e) => {
-              const inputElement = e.currentTarget.querySelector('.inputVal');
-              const selectedOptionName = e.currentTarget.textContent.trim();
-              const selectedOptionValue = inputElement ? parseInt(inputElement.value) : '';
-              const allCities = cities.filter((city) => city.country_id === selectedOptionValue)
-              // setStudentCountry(selectedOptionName[0].toUpperCase() + selectedOptionName.slice(1));
-              setStudentCountry(selectedOptionName);
-              setCountryId(selectedOptionValue)
-              setOpenCountry(false);
-              setCitiesState(cities.length > 0 ? 'Choose City' : "No cities available")
-              setCities(allCities)
 
-              console.log('Selected NameL:', selectedOptionName);
-              console.log('Selected ValueL:', selectedOptionValue);
-       }
+       // const handleCountryStudent = (e) => {
+       //        const inputElement = e.currentTarget.querySelector('.inputVal');
+       //        const selectedOptionName = e.currentTarget.textContent.trim();
+       //        const selectedOptionValue = inputElement ? parseInt(inputElement.value) : '';
+       //        const allCities = cities.filter((city) => city.country_id === selectedOptionValue)
+       //        // setStudentCountry(selectedOptionName[0].toUpperCase() + selectedOptionName.slice(1));
+       //        setStudentCountry(selectedOptionName);
+       //        setCountryId(selectedOptionValue)
+       //        setOpenCountry(false);
+       //        setCitiesState(cities.length > 0 ? 'Choose City' : "No cities available")
+       //        setCities(allCities)
+
+       //        console.log('Selected NameL:', selectedOptionName);
+       //        console.log('Selected ValueL:', selectedOptionValue);
+       // }
+       const handleCountryStudent = (e) => {
+              // Get the input element inside the clicked option
+              const inputElement = e.currentTarget.querySelector('.inputVal');
+
+              // Get the selected option name and value
+              const selectedOptionName = e.currentTarget.textContent.trim();
+              const selectedOptionValue = inputElement ? parseInt(inputElement.value) || '' : '';
+
+              // Safely filter cities by country ID if cities exist
+              const allCitiesArr = allCities ? allCities.filter((city) => city.country_id === selectedOptionValue) : [];
+
+              // Update state for country name, capitalizing the first letter safely
+              if (selectedOptionName) {
+                     setStudentCountry(selectedOptionName[0].toUpperCase() + selectedOptionName.slice(1));
+              }
+
+              // Set the selected country and country ID
+
+              // setCountry(selectedOptionName);
+              setCountryId(selectedOptionValue);
+
+              // Close the dropdown for countries
+              setOpenCountry(false);
+
+              // Update the cities state and the state message
+              setStudentCityState(allCitiesArr.length > 0 ? 'City' : "Not Found Cities");
+
+              // Ensure that an array is passed, even when no cities are found
+              setCities(allCitiesArr.length > 0 ? allCitiesArr : [{ id: 'Not Found Cities', name: 'Not Found Cities' }]);
+
+              setCityId(null)
+
+              // Debugging logs
+              console.log('allCitiesArr:', allCitiesArr);
+              console.log('allCities:', cities);
+              console.log('Selected Name:', selectedOptionName);
+              console.log('Selected Value:', selectedOptionValue);
+       };
        const handleCityStudent = (e) => {
               const inputElement = e.currentTarget.querySelector('.inputVal');
               const selectedOptionName = e.currentTarget.textContent.trim();
@@ -487,9 +527,10 @@ const AddPage = () => {
                                                  ref={dropdownCityStudentRef}
                                                  handleOpen={handleOpenCityStudent}
                                                  handleOpenOption={handleCityStudent}
-                                                 stateoption={studentCityState}
+                                                 stateoption={cities.length > 0 ? studentCityState : 'Not Found Cities'}
                                                  openMenu={openCity}
-                                                 options={cities}
+                                                 // options={cities}
+                                                 options={cities.length > 0 ? cities : [{ id: 'Not Found Cities', name: 'Not Found Cities' }]}
                                           />
                                    </div>
                                    <div className="lg:w-[30%] sm:w-full">

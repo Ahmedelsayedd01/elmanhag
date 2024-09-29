@@ -1,20 +1,20 @@
-import React, { useRef, useState ,useEffect ,useContext} from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import InputCustom from '../../../Components/InputCustom';
 import { Button } from '../../../Components/Button';
 import { useAuth } from '../../../Context/Auth';
 import DropDownMenu from '../../../Components/DropDownMenu';
 import MultipleChoiceMenu from '../../../Components/MultipleChoiceMenu';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import CheckBox from '../../../Components/CheckBox';
-import { LiveEditContext } from '../../../Layouts/Admin/EditLiveLayout';
+import Loading from '../../../Components/Loading';
 
 const EditLivePage = () => {
 
   const auth = useAuth();
+  const { liveId } = useParams();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const liveEdit = useContext(LiveEditContext);
 
   const [educationData, setEducationData] = useState([]);
   const [semesterData, setSemesterData] = useState([{ name: 'First' }, { name: 'Second' }]);
@@ -66,288 +66,267 @@ const EditLivePage = () => {
   const [selectStatus, setSelectStatus] = useState('Free');
   const [openSelectStatus, setOpenSelectStatus] = useState(false);
 
-  const [liveIncluded, setLiveIncluded] = useState(0);
+  const [liveIncluded, setLiveIncluded] = useState(null);
 
-  const dropdownEducationRef=useRef();
+  const dropdownEducationRef = useRef();
   const dropdownSemesterRef = useRef();
   const dropdownCategoryRef = useRef();
   const dropdownSubjectRef = useRef();
   const dropdownTeacherRef = useRef();
   const dropdownDayRef = useRef();
-  const dropdownStatusRef=useRef();
+  const dropdownStatusRef = useRef();
 
   useEffect(() => {
-    const StorageLiveData = JSON.parse(localStorage.getItem('LivesData'));
+    const fetchAnotherData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(
+          "https://bdev.elmanhag.shop/admin/live",
+          {
+            headers: {
+              Authorization: `Bearer ${auth.user.token}`,
+            },
+          }
+        );
+        if (response.status === 200) {
+          console.log('fetchAnotherData', response.data);
 
-    setEducationData([...StorageLiveData.education, { id: 'null', name: 'Together' }]);
-    setCategoryData(StorageLiveData.category);
-    setSubjectData(StorageLiveData.subjects);
-    setAllSubjects(StorageLiveData.subjects)
-    setTeacherData(StorageLiveData.teachers);
-  }, []);
-// Keys
-        // name, from, to, date, day, teacher_id, subject_id, paid, price
+          setEducationData([
+            ...response.data.education,
+            { id: 'null', name: 'Together' } // Add a unique key if needed
+          ]);
+
+          setCategoryData(response.data.category);
+          setSubjectData(response.data.subjects);
+          setAllSubjects(response.data.subjects);
+          setTeacherData(response.data.teachers);
+          // filterSubjects(selectEducationId, selectSemesterName, selectCategoryId);
+        }
+      } catch (error) {
+        console.error("Error fetching Lives data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchAnotherData();
+  }, []); // Added dependency array to rerun when token changes
+
   useEffect(() => {
-    if (liveEdit) {
-        setName(liveEdit.name || '');
-        setUrl(liveEdit.link || '');
-        setStartTime(liveEdit.from || '');
-        setEndTime(liveEdit.to || '');
-        setDate(liveEdit.date|| '')
-        setSelectDay(liveEdit.day|| '')
-        setSelectStatus(liveEdit.paid ===1 ?"Paid" : "Free"|| '');
-        setPrice(liveEdit.price || 0);
-        setLiveIncluded(liveEdit.inculded||0) 
+    const fetchEdit = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(`https://bdev.elmanhag.shop/admin/live/${liveId}`, {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`,
+          },
+        });
 
-        if (educationData) {
-          const filteredEducationLive= educationData.find(
-                (education) => education.id === liveEdit.education_id
-          );
-          if (filteredEducationLive) {
-            setSelectEducation(filteredEducationLive.name);
-            setSelectEducationId(filteredEducationLive.id);
-          }
-          else {
-            setSelectEducation('Select Education');
-            setSelectEducationId(null);
-          }
+        if (response.status === 200) {
+          console.log('response live', response);
+
+          const data = response.data.live;
+
+          setName(data.name || '');
+          setUrl(data.link || '');
+          setStartTime(data.from || '');
+          setEndTime(data.to || '');
+          setDate(data.date || '');
+          setSelectDay(data.day || '');
+          setSelectStatus(data.paid === 1 ? "Paid" : "Free"); // Updated this logic
+          setPrice(data.price || 0);
+          setLiveIncluded(data.inculded || null); // Fixed typo
+
+          const nameSemester = data.subject.semester;
+          setSelectSemester(nameSemester[0].toUpperCase() + nameSemester.slice(1));
+          setSelectSemesterName(nameSemester);
+
+          setSelectEducation(data.education.name);
+          setSelectEducationId(data.education.id);
+
+          setSelectCategory(data.category.name);
+          setSelectCategoryId(data.category.id);
+
+          setSelectSubject(data.subject.name);
+          setSelectSubjectId(data.subject.id);
+
+          const nameTeacher = data.teacher.name;
+          setSelectTeacher(nameTeacher[0].toUpperCase() + nameTeacher.slice(1));
+          setSelectTeacherId(data.teacher.id);
+
+        } else {
+          console.log('response live error');
         }
+      } catch (error) {
+        console.log('error', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-        if (categoryData !== null) {
-          const filteredCategoryLive= categoryData.find(
-                (category) => category.id === liveEdit.category_id
-          );
-          if (filteredCategoryLive) {
-            setSelectCategory(filteredCategoryLive.name);
-            setSelectCategoryId(filteredCategoryLive.id);
-          }
-          else {
-            setSelectCategory('Select Category');
-            setSelectCategoryId(null);
-          }
-        }
-        
-        if (subjectData !== null) {
-          const filteredSubjectLive= subjectData.find(
-                (subject) => subject.id === liveEdit.subject_id
-          );
-          if (filteredSubjectLive) {
-            setSelectSubject(filteredSubjectLive.name);
-            setSelectSubjectId(filteredSubjectLive.id);
-          }
-          else {
-            setSelectSubject('Select Subject');
-            setSelectSubjectId(null);
-          }
-        }
+    filterSubjects(selectEducationId, selectSemesterName, selectCategoryId);
+    fetchEdit();
+  }, []); // Added dependencies
 
-        if (teacherData !== null) {
-          const filteredTeacherLive= teacherData.find(
-                (teacher) => teacher.id === parseInt(liveEdit.teacher_id)
-          );
-          if (filteredTeacherLive) {
-            setSelectTeacher(filteredTeacherLive.name);
-            setSelectTeacherId(filteredTeacherLive.id);
-          }
-          else {
-            setSelectTeacher('Select Teacher');
-            setSelectTeacherId(null);
-          }
-        }
-}
-}, [liveEdit]);
+  const filterSubjects = (educationId, semesterName, categoryId) => {
+    setSelectSubject('Select Subject');
+    setSelectSubjectId('');
+    setSubjectData([]);
 
- // Function to filter subjects by semester, category, education, or combinations
- const filterSubjects = (semesterName, categoryId, educationId) => {
-  let filteredSubjects = allSubjects; // Start with all subjects
+    let filteredSubjects = [...allSubjects]; // Use the original subject data list
 
-  // Filter by semester
-  if (semesterName) {
-    filteredSubjects = filteredSubjects.filter(subject => 
-      subject.semester.toLowerCase() === semesterName.toLowerCase()
-    );
-  }
-  // Filter by category
-  if (categoryId) {
-    filteredSubjects = filteredSubjects.filter(subject => 
-      subject.category_id === categoryId
-    );
-  }
-  // Filter by educationId
-  if (educationId === null) {
-    filteredSubjects = filteredSubjects.filter(subject => subject.education_id === null);
-  } else if (educationId) {
-    filteredSubjects = filteredSubjects.filter(subject => subject.education_id === parseInt(educationId));
-  }
- 
-// Handle the combination of categoryId and educationId (including null educationId)
-if (categoryId) {
-  if (educationId === null) {
-    filteredSubjects = filteredSubjects.filter(subject => 
-      subject.education_id === null && subject.category_id === categoryId
-    );
-  } else if (educationId) {
-    filteredSubjects = filteredSubjects.filter(subject => 
-      subject.education_id === parseInt(educationId) && subject.category_id === categoryId
-    );
-  }}
+    if (educationId) {
+      filteredSubjects = filteredSubjects.filter(subject => subject.education_id === educationId);
+    }
 
-   // Handle the combination of semesterName and educationId (including null educationId)
-if (semesterName) {
-  if (educationId === null) {
-    filteredSubjects = filteredSubjects.filter(subject => 
-      subject.semester.toLowerCase() === semesterName.toLowerCase() && subject.education_id === null
-    );
-  } else if (educationId) {
-    filteredSubjects = filteredSubjects.filter(subject => 
-      subject.semester.toLowerCase() === semesterName.toLowerCase() && subject.education_id === parseInt(educationId)
-    );
-  }
-}
+    if (semesterName && categoryId) {
+      filteredSubjects = filteredSubjects.filter(subject =>
+        subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+        subject.category_id === categoryId
+      );
+    } else if (semesterName) {
+      filteredSubjects = filteredSubjects.filter(subject =>
+        subject.semester.toLowerCase() === semesterName.toLowerCase()
+      );
+    } else if (categoryId) {
+      filteredSubjects = filteredSubjects.filter(subject =>
+        subject.category_id === categoryId
+      );
+    }
 
-// Handle the combination of categoryId and semesterName
-if (categoryId && semesterName) {
-  filteredSubjects = filteredSubjects.filter(subject => 
-    subject.category_id === categoryId && subject.semester.toLowerCase() === semesterName.toLowerCase()
-  );
-}
+    if (filteredSubjects.length === 0) {
+      setSubjectData([{ id: 'Not Found', name: 'Not Found' }]);
+    } else {
+      setSelectSubject(filteredSubjects.length > 1 ? 'Select Subject' : filteredSubjects[0].name);
+      setSelectSubjectId(filteredSubjects.length > 1 ? [] : filteredSubjects[0].id);
 
- // All three filters (categoryId, educationId, semesterName)
- if (categoryId && semesterName && educationId !== undefined) {
-  filteredSubjects = filteredSubjects.filter(subject => 
-    subject.category_id === categoryId &&
-    subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-    (educationId === null ? subject.education_id === null : subject.education_id === parseInt(educationId))
-  );
-}
+      setSubjectData(filteredSubjects);
+    }
 
-  // Set the filtered data
-  setSubjectData(filteredSubjects);
-  console.log(filteredSubjects);
-};
+    // Debugging logs
+    console.log('semesterName:', semesterName);
+    console.log('categoryId:', categoryId);
+    console.log('educationId:', educationId);
+    console.log('filteredSubjects:', filteredSubjects);
+  };
 
 
-const handleOpenSelectEducation = () => {
-  setOpenSelectEducation(!openSelectEducation)
-  setOpenSelectCategory(false)
-  setOpenSelectSemester(false)
-  setOpenSelectSubject(false);
-  setOpenSelectTeacher(false);
-  setOpenSelectDay(false);
-  setOpenSelectStatus(false);
-};
 
-const handleOpenSelectSemester = () => {
-  setOpenSelectSemester(!openSelectSemester);
-  setOpenSelectCategory(false)
-  setOpenSelectEducation(false)
-  setOpenSelectSubject(false);
-  setOpenSelectTeacher(false);
-  setOpenSelectDay(false);
-  setOpenSelectStatus(false);
-};
+  const handleOpenSelectEducation = () => {
+    setOpenSelectEducation(!openSelectEducation)
+    setOpenSelectCategory(false)
+    setOpenSelectSemester(false)
+    setOpenSelectSubject(false);
+    setOpenSelectTeacher(false);
+    setOpenSelectDay(false);
+    setOpenSelectStatus(false);
+  };
 
-const handleOpenSelectCategory = () => {
-  setOpenSelectCategory(!openSelectCategory)
-  setOpenSelectEducation(false)
-  setOpenSelectSemester(false)
-  setOpenSelectSubject(false);
-  setOpenSelectTeacher(false);
-  setOpenSelectDay(false);
-  setOpenSelectStatus(false);
-};
+  const handleOpenSelectSemester = () => {
+    setOpenSelectSemester(!openSelectSemester);
+    setOpenSelectCategory(false)
+    setOpenSelectEducation(false)
+    setOpenSelectSubject(false);
+    setOpenSelectTeacher(false);
+    setOpenSelectDay(false);
+    setOpenSelectStatus(false);
+  };
 
-const handleOpenSelectSubject = () => {
-  setOpenSelectEducation(false)
-  setOpenSelectSemester(false)
-  setOpenSelectCategory(false);
-  setOpenSelectSubject(!openSelectSubject);
-  setOpenSelectTeacher(false);
-  setOpenSelectDay(false);
-  setOpenSelectStatus(false);
-};
+  const handleOpenSelectCategory = () => {
+    setOpenSelectCategory(!openSelectCategory)
+    setOpenSelectEducation(false)
+    setOpenSelectSemester(false)
+    setOpenSelectSubject(false);
+    setOpenSelectTeacher(false);
+    setOpenSelectDay(false);
+    setOpenSelectStatus(false);
+  };
 
-const handleOpenSelectTeacher = () => {
-  setOpenSelectEducation(false)
-  setOpenSelectSemester(false)
-  setOpenSelectCategory(false);
-  setOpenSelectSubject(false);
-  setOpenSelectTeacher(!openSelectTeacher);
-  setOpenSelectDay(false);
-  setOpenSelectStatus(false);
-};
+  const handleOpenSelectSubject = () => {
+    setOpenSelectEducation(false)
+    setOpenSelectSemester(false)
+    setOpenSelectCategory(false);
+    setOpenSelectSubject(!openSelectSubject);
+    setOpenSelectTeacher(false);
+    setOpenSelectDay(false);
+    setOpenSelectStatus(false);
+  };
 
-const handleOpenSelectDay = () => {
-  setOpenSelectEducation(false)
-  setOpenSelectSemester(false)
-  setOpenSelectCategory(false);
-  setOpenSelectSubject(false);
-  setOpenSelectTeacher(false);
-  setOpenSelectDay(!openSelectDay);
-  setOpenSelectStatus(false);
-};
+  const handleOpenSelectTeacher = () => {
+    setOpenSelectEducation(false)
+    setOpenSelectSemester(false)
+    setOpenSelectCategory(false);
+    setOpenSelectSubject(false);
+    setOpenSelectTeacher(!openSelectTeacher);
+    setOpenSelectDay(false);
+    setOpenSelectStatus(false);
+  };
 
-const handleOpenSelectStatus = () => {
-  setOpenSelectEducation(false)
-  setOpenSelectSemester(false)
-  setOpenSelectCategory(false);
-  setOpenSelectSubject(false);
-  setOpenSelectTeacher(false);
-  setOpenSelectDay(false);
-  setOpenSelectStatus(!openSelectStatus);
-};
-  
+  const handleOpenSelectDay = () => {
+    setOpenSelectEducation(false)
+    setOpenSelectSemester(false)
+    setOpenSelectCategory(false);
+    setOpenSelectSubject(false);
+    setOpenSelectTeacher(false);
+    setOpenSelectDay(!openSelectDay);
+    setOpenSelectStatus(false);
+  };
+
+  const handleOpenSelectStatus = () => {
+    setOpenSelectEducation(false)
+    setOpenSelectSemester(false)
+    setOpenSelectCategory(false);
+    setOpenSelectSubject(false);
+    setOpenSelectTeacher(false);
+    setOpenSelectDay(false);
+    setOpenSelectStatus(!openSelectStatus);
+  };
+
   const handleSelectEducation = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
     const selectedOptionName = e.currentTarget.textContent.trim();
     const selectedOptionValue = inputElement ? inputElement.value : '';
 
-    // Set the selected option name (for UI display)
-    setSelectEducation(selectedOptionName);
-    console.log('Selected Education:', selectedOptionName);
-    let educationId = null;
-    // Check if the selected value is 'null' or a valid number
     if (selectedOptionValue === 'null') {
-      educationId = null;  // Set to null when the option is 'null'
-      console.log('Education ID:', educationId);
+      setSelectEducationId(null);
     } else {
-      educationId = parseInt(selectedOptionValue);  // Parse the selected value to an integer
-      console.log('Education ID:', educationId);
+      setSelectEducationId(parseInt(selectedOptionValue));
     }
-    // Update the state for selected education ID
-    setSelectEducationId(educationId);
-    // Close the select dropdown
+    setSelectEducation(selectedOptionName);
     setOpenSelectEducation(false);
-    // Ensure the correct `selectEducationId` is passed to filterSubjects
-    filterSubjects(selectSemesterName, selectCategoryId, educationId); 
-  }; 
+
+    // Filter subjects based on the selected education, semester, and category
+    // filterSubjects(selectedOptionValue);
+    // const filterr = allSubjects.filter((s) => s.education_id === selectedOptionValue)
+    // console.log('filterr', filterr)
+    filterSubjects(parseInt(selectedOptionValue), selectSemesterName, selectCategoryId);
+  };
+
 
   const handleSelectSemester = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
     const selectedOptionName = e.currentTarget.textContent.trim();
     const selectedOptionValue = inputElement ? inputElement.value.toLowerCase() : '';
+
     setSelectSemester(selectedOptionName);
     setSelectSemesterName(selectedOptionValue);
     setOpenSelectSemester(false);
-    console.log('Selected Semester:', selectedOptionName);
-    // console.log('Semester ID:', selectedOptionValue);
 
-    // Filter subjects based on the new semester and existing category
-    filterSubjects(selectedOptionName, selectCategoryId ,selectEducationId);
+    // Filter subjects based on the selected education, semester, and category
+    filterSubjects(selectEducationId, selectedOptionValue, selectCategoryId);
   };
 
   const handleSelectCategory = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
     const selectedOptionName = e.currentTarget.textContent.trim();
     const selectedOptionValue = inputElement ? inputElement.value : null;
+
     setSelectCategory(selectedOptionName);
     setSelectCategoryId(parseInt(selectedOptionValue));
     setOpenSelectCategory(false);
-    console.log('Selected Category:', selectedOptionName);
-    console.log('Category ID:', selectedOptionValue);
 
-    // Filter subjects based on the new semester and existing category
-    filterSubjects(selectSemesterName, parseInt(selectedOptionValue) ,selectEducationId);
+    // Filter subjects based on the selected education, semester, and category
+    filterSubjects(selectEducationId, selectSemesterName, parseInt(selectedOptionValue));
   };
 
   const handleSelectSubject = (e) => {
@@ -361,10 +340,11 @@ const handleOpenSelectStatus = () => {
     console.log('Subject ID:', selectedOptionValue);
   };
 
+
   const handleSelectTeacher = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
     const selectedOptionName = e.currentTarget.textContent.trim();
-    const selectedOptionValue = inputElement ? inputElement.value: null;
+    const selectedOptionValue = inputElement ? inputElement.value : null;
     setSelectTeacher(selectedOptionName);
     setSelectTeacherId(parseInt(selectedOptionValue));
     setOpenSelectTeacher(false);
@@ -399,149 +379,145 @@ const handleOpenSelectStatus = () => {
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
   const handleClickOutside = (event) => {
-      if (dropdownCategoryRef.current && !dropdownCategoryRef.current.contains(event.target) &&
-          dropdownSemesterRef.current && !dropdownSemesterRef.current.contains(event.target)&&
-          dropdownEducationRef.current &&  !dropdownEducationRef.current.contains(event.target)&&
-          dropdownSubjectRef.current && !dropdownSubjectRef.current.contains(event.target) &&
-          dropdownTeacherRef.current && !dropdownTeacherRef.current.contains(event.target)&&
-          dropdownDayRef.current &&  !dropdownDayRef.current.contains(event.target)&&
-          dropdownStatusRef.current &&  !dropdownStatusRef.current.contains(event.target)
-      ) {
-          setOpenSelectEducation(false);
-          setOpenSelectSemester(false);
-          setOpenSelectCategory(false);
-          setOpenSelectSubject(false);
-          setOpenSelectTeacher(false);
-          setOpenSelectDay(false);
-          setOpenSelectStatus(false);
-      }
+    if (dropdownCategoryRef.current && !dropdownCategoryRef.current.contains(event.target) &&
+      dropdownSemesterRef.current && !dropdownSemesterRef.current.contains(event.target) &&
+      dropdownEducationRef.current && !dropdownEducationRef.current.contains(event.target) &&
+      dropdownSubjectRef.current && !dropdownSubjectRef.current.contains(event.target) &&
+      dropdownTeacherRef.current && !dropdownTeacherRef.current.contains(event.target) &&
+      dropdownDayRef.current && !dropdownDayRef.current.contains(event.target) &&
+      dropdownStatusRef.current && !dropdownStatusRef.current.contains(event.target)
+    ) {
+      setOpenSelectEducation(false);
+      setOpenSelectSemester(false);
+      setOpenSelectCategory(false);
+      setOpenSelectSubject(false);
+      setOpenSelectTeacher(false);
+      setOpenSelectDay(false);
+      setOpenSelectStatus(false);
+    }
   };
 
   const handleGoBack = () => {
     navigate(-1, { replace: true });
   };
 
-  const handleSubmitEdit = async (liveID, event) => {
+  const handleSubmitEdit = async (event) => {
     event.preventDefault();
-
-    if (!name) {
-      auth.toastError('Please Enter Name.');
-      return;
-    }
-    if (!url) {
-      auth.toastError('Please Enter Live Link.');
-      return;
-    }
-    if (!startTime) {
-      auth.toastError('Please Enter StartTime.');
-      return;
-    }
-    if (!endTime) {
-      auth.toastError('Please Enter EndTime.');
-      return;
-    }
-    if (!selectCategoryId) {
-      auth.toastError('Please Select Category.');
-      return;
-    }
-    if (!selectEducationId) {
-      auth.toastError('Please Select Education.');
-      return;
-    }
-    if (!selectSubjectId) {
-      auth.toastError('Please Select Subject.');
-      return;
-    }
-    if (!selectTeacherId) {
-      auth.toastError('Please Select Teacher.');
-      return;
-    }
-    if (!date) {
-      auth.toastError('Please Enter Date.');
-      return;
-    }
-    if (!selectDay) {
-      auth.toastError('Please Enter Day.');
-      return;
-    }
-    if (!selectStatus) {
-      auth.toastError('Please Enter Status.');
-      return;
-    }
-
-    try {
-    // Convert time to H:i:s format
-    const formattedStartTime = startTime ? `${startTime}:00` : '';
-    const formattedEndTime = endTime ? `${endTime}:00` : '';
-      // Prepare query parameters
-      const params = new URLSearchParams({
-        name: name,
-        link:url,
-        from: startTime,
-        to: endTime,
-        date: date,
-        day: selectDay,
-        category_id:selectCategoryId,
-        education_id: selectEducationId !== null ? selectEducationId : null, // Send 'null' as string if needed
-        teacher_id: selectTeacherId,
-        subject_id: selectSubjectId,
-        paid: selectStatus === "Paid" ? 1 : 0,
-        price: price || 0,
-        inculded: liveIncluded,
-    }).toString();
-
+  
+    // Validation checks
+    if (!name) return auth.toastError('Please Enter Name.');
+    if (!url) return auth.toastError('Please Enter Live Link.');
+    if (!startTime) return auth.toastError('Please Enter StartTime.');
+    if (!endTime) return auth.toastError('Please Enter EndTime.');
+    if (!selectCategoryId) return auth.toastError('Please Select Category.');
+    if (!selectEducationId) return auth.toastError('Please Select Education.');
+    if (!selectSubjectId) return auth.toastError('Please Select Subject.');
+    if (!selectTeacherId) return auth.toastError('Please Select Teacher.');
+    if (!date) return auth.toastError('Please Enter Date.');
+    if (!selectDay) return auth.toastError('Please Enter Day.');
+    if (!selectStatus) return auth.toastError('Please Enter Status.');
+  
     setIsLoading(true);
-
-        const response = await axios.put(`https://bdev.elmanhag.shop/admin/live/update/${liveID}?${params}`, {}, {
-            headers: {
-                Authorization: `Bearer ${auth.user.token}`,
-            },
-        });
+  
+    try {
+      // Ensure the time has the proper format H:i:s
+      const formattedStartTime = startTime.length === 5 ? startTime + ":00" : startTime;
+      const formattedEndTime = endTime.length === 5 ? endTime + ":00" : endTime;
+  
+      const formattedStart = new Date(`1970-01-01T${formattedStartTime}`).toLocaleTimeString('en-GB', { hour12: false });
+      const formattedEnd = new Date(`1970-01-01T${formattedEndTime}`).toLocaleTimeString('en-GB', { hour12: false });
+  
+      let priceEdit = null; // Change to let as the value will be reassigned
+      if (selectStatus === 'Paid') {
+        priceEdit = parseInt(price);
+      } else {
+        priceEdit = 0;
+      }
+  
+      // Prepare the JSON payload
+      const payload = {
+        name,
+        link: url,
+        from: formattedStart,
+        to: formattedEnd,
+        date,
+        day: selectDay,
+        category_id: parseInt(selectCategoryId),
+        teacher_id: parseInt(selectTeacherId),
+        subject_id: parseInt(selectSubjectId),
+        paid: selectStatus === 'Paid' ? 1 : 0,
+        price: priceEdit,
+        inculded: liveIncluded,
+        education_id: selectEducationId ? parseInt(selectEducationId) : null, // Send null if no education is selected
+      };
+  
+      console.log('Payload:', payload); // Debugging log for payload
+  
+      // Send the PUT request with JSON data
+      const response = await axios.put(
+        `https://bdev.elmanhag.shop/admin/live/update/${liveId}`, // liveId from useParams
+        payload, // Send payload as JSON
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`,
+            'Content-Type': 'application/json', // Required for JSON
+          },
+        }
+      );
+  
       if (response.status === 200) {
         auth.toastSuccess('Live Updated successfully!');
         handleGoBack();
       } else {
-              auth.toastError('Failed to update Live.');
+        auth.toastError('Failed to update Live.');
       }
-      } catch (error) {
-        console.log(error.response); // Log the full response for debugging
-        console.log(error.response.data.errors);
-        const errorMessages = error?.response?.data?.errors;
-        let errorMessageString = 'Error occurred';
+    } catch (error) {
+      console.log(error.response); // Log the full response for debugging
+      const errorMessages = error?.response?.data?.errors;
+      let errorMessageString = 'Error occurred';
       if (errorMessages) {
-              errorMessageString = Object.values(errorMessages).flat().join(' ');
+        errorMessageString = Object.values(errorMessages).flat().join(' ');
       }
       auth.toastError('Error', errorMessageString);
-      } finally {
+    } finally {
       setIsLoading(false);
-      }
+    }
   };
 
+
+  if (isLoading) {
+    return (
+      <div className="w-1/4 h-full flex items-start justify-center m-auto mt-36">
+        <Loading />
+      </div>
+    )
+  }
+
   return (
-    <form className="w-full flex flex-col items-center justify-center gap-y-3" onSubmit={(event) => handleSubmitEdit(liveEdit.id, event)}>
-     <div className="w-full flex flex-wrap items-center justify-start gap-3">
-      <div className="lg:w-[30%] sm:w-full">
-        <InputCustom
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <InputCustom
-          type="text"
-          placeholder="Live Link"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-        />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
+    <form className="w-full flex flex-col items-center justify-center gap-y-3" onSubmit={handleSubmitEdit}>
+      <div className="w-full flex flex-wrap items-center justify-start gap-3">
+        <div className="lg:w-[30%] sm:w-full">
+          <InputCustom
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <InputCustom
+            type="text"
+            placeholder="Live Link"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
           <DropDownMenu
             ref={dropdownEducationRef}
             handleOpen={handleOpenSelectEducation}
@@ -571,109 +547,109 @@ const handleOpenSelectStatus = () => {
             options={categoryData}
           />
         </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <DropDownMenu
-          ref={dropdownSubjectRef}
-          handleOpen={handleOpenSelectSubject}
-          handleOpenOption={handleSelectSubject}
-          stateoption={selectSubject}
-          openMenu={openSelectSubject}
-          options={subjectData}
-        />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <DropDownMenu
-          ref={dropdownTeacherRef}
-          handleOpen={handleOpenSelectTeacher}
-          handleOpenOption={handleSelectTeacher}
-          stateoption={selectTeacher}
-          openMenu={openSelectTeacher}
-          options={teacherData}
-        />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <DropDownMenu
-          ref={dropdownDayRef}
-          handleOpen={handleOpenSelectDay}
-          handleOpenOption={handleSelectDay}
-          stateoption={selectDay}
-          openMenu={openSelectDay}
-          options={daysData}
-        />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <InputCustom
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownSubjectRef}
+            handleOpen={handleOpenSelectSubject}
+            handleOpenOption={handleSelectSubject}
+            stateoption={selectSubject}
+            openMenu={openSelectSubject}
+            options={subjectData}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownTeacherRef}
+            handleOpen={handleOpenSelectTeacher}
+            handleOpenOption={handleSelectTeacher}
+            stateoption={selectTeacher}
+            openMenu={openSelectTeacher}
+            options={teacherData}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownDayRef}
+            handleOpen={handleOpenSelectDay}
+            handleOpenOption={handleSelectDay}
+            stateoption={selectDay}
+            openMenu={openSelectDay}
+            options={daysData}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <InputCustom
             type="date"
             placeholder="Date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <h1>Time From</h1>
-        <InputCustom
-          type="time"
-          placeholder="Time From"
-          value={startTime}
-          onChange={(e) => setStartTime(e.target.value)}
-        />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
-      <h1>Time To</h1>
-        <InputCustom
-          type="time"
-          placeholder="Time To"
-          value={endTime}
-          onChange={(e) => setEndTime(e.target.value)}
-        />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <DropDownMenu
-          ref={dropdownStatusRef}
-          handleOpen={handleOpenSelectStatus}
-          handleOpenOption={handleSelectStatus}
-          stateoption={selectStatus}
-          openMenu={openSelectStatus}
-          options={paidData}
-        />
-      </div>
-         {/* Conditionally Render Price Input */}
-         {selectStatus === 'Paid' && (   
-          <div className="lg:w-[30%] sm:w-full">
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <h1>Time From</h1>
           <InputCustom
+            type="time"
+            placeholder="Time From"
+            value={startTime}
+            onChange={(e) => setStartTime(e.target.value)}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <h1>Time To</h1>
+          <InputCustom
+            type="time"
+            placeholder="Time To"
+            value={endTime}
+            onChange={(e) => setEndTime(e.target.value)}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownStatusRef}
+            handleOpen={handleOpenSelectStatus}
+            handleOpenOption={handleSelectStatus}
+            stateoption={selectStatus}
+            openMenu={openSelectStatus}
+            options={paidData}
+          />
+        </div>
+        {/* Conditionally Render Price Input */}
+        {selectStatus === 'Paid' && (
+          <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
               type="text"
               placeholder="Price"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
+          </div>
+        )}
+        <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+          <span className="text-2xl text-thirdColor font-medium">Included:</span>
+          <div>
+            <CheckBox handleClick={handleClick} checked={liveIncluded} />
+          </div>
         </div>
-      )}
-      <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
-            <span className="text-2xl text-thirdColor font-medium">Included:</span>
-            <div>
-              <CheckBox checked={liveIncluded} handleClick={handleClick} />
-            </div>
-        </div>
-      
-    </div>
-    {/* Buttons */}
-    <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
-        <div className="flex items-center justify-center w-72">
-              <Button
-                      type="submit"
-                      Text="Done"
-                      BgColor="bg-mainColor"
-                      Color="text-white"
-                      Width="full"
-                      Size="text-2xl"
-                      px="px-28"
-                      rounded="rounded-2xl"
-                      // stateLoding={isLoading}
-              />
-        </div>
-        <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
+
       </div>
-  </form>
+      {/* Buttons */}
+      <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
+        <div className="flex items-center justify-center w-72">
+          <Button
+            type="submit"
+            Text="Done"
+            BgColor="bg-mainColor"
+            Color="text-white"
+            Width="full"
+            Size="text-2xl"
+            px="px-28"
+            rounded="rounded-2xl"
+          // stateLoding={isLoading}
+          />
+        </div>
+        <button type='button' onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
+      </div>
+    </form>
   )
 }
 
