@@ -40,15 +40,15 @@ const AddLivePage = () => {
   const [price, setPrice] = useState(0);
 
   const [selectEducation, setSelectEducation] = useState('Select Education');
-  const [selectEducationId, setSelectEducationId] = useState(null);
+  const [selectEducationId, setSelectEducationId] = useState('');
   const [openSelectEducation, setOpenSelectEducation] = useState(false);
 
   const [selectSemester, setSelectSemester] = useState('Select Semester');
-  const [selectSemesterName, setSelectSemesterName] = useState(null);
+  const [selectSemesterName, setSelectSemesterName] = useState('');
   const [openSelectSemester, setOpenSelectSemester] = useState(false);
 
   const [selectCategory, setSelectCategory] = useState('Select Category');
-  const [selectCategoryId, setSelectCategoryId] = useState(null);
+  const [selectCategoryId, setSelectCategoryId] = useState('');
   const [openSelectCategory, setOpenSelectCategory] = useState(false);
 
   const [selectSubject, setSelectSubject] = useState('Select Subject');
@@ -56,7 +56,7 @@ const AddLivePage = () => {
   const [openSelectSubject, setOpenSelectSubject] = useState(false);
 
   const [selectTeacher, setSelectTeacher] = useState('Select Teacher');
-  const [selectTeacherId, setSelectTeacherId] = useState(null);
+  const [selectTeacherId, setSelectTeacherId] = useState('');
   const [openSelectTeacher, setOpenSelectTeacher] = useState(false);
 
   const [selectDay, setSelectDay] = useState('Select Day');
@@ -93,7 +93,7 @@ const AddLivePage = () => {
           setData(response.data.live);
           setEducationData([
             ...response.data.education,
-            { id: 'null', name: 'Together' } // Or use some unique key generator
+            { id: 'notfound' , name: 'Together' } // Or use some unique key generator
           ]);
 
           setCategoryData(response.data.category);
@@ -182,76 +182,219 @@ const AddLivePage = () => {
   };
 
   const filterSubjects = (educationId, semesterName, categoryId) => {
+    //Reset state
     setSelectSubject('Select Subject');
     setSelectSubjectId('');
     setSubjectData([]);
 
-    let filteredSubjects = [...allSubjects]; // Start with all subjects
+    let filteredSubjects = allSubjects; // Start with all subjects
 
-    // Filter by educationId if provided
-    if (educationId) {
-      filteredSubjects = filteredSubjects.filter(subject => subject.education_id === educationId);
+    console.log(filteredSubjects);
+
+    // If both semesterName and categoryId are empty, filter only by educationId
+    if (!semesterName && !categoryId) {
+        if (educationId !== 'notfound') {
+            filteredSubjects = filteredSubjects.filter(subject => 
+                subject.education_id === parseInt(educationId)
+            );
+        } else {
+            filteredSubjects = filteredSubjects.filter(subject => 
+                subject.education_id === null || subject.education_id === undefined
+            );
+        }
+    } 
+
+    else if (semesterName && !categoryId){
+      if(educationId){
+        if (educationId !== 'notfound') {
+          filteredSubjects = filteredSubjects.filter(subject => 
+            subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+              subject.education_id === parseInt(educationId)
+          );
+        } else {
+            filteredSubjects = filteredSubjects.filter(subject => 
+              subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+                subject.education_id === null || subject.education_id === undefined
+            );
+        }}
+      else{
+        filteredSubjects = filteredSubjects.filter(subject => 
+          subject.semester.toLowerCase() === semesterName.toLowerCase() 
+         )}
     }
 
-    // Filter by semester and category if both are provided
-    if (semesterName && categoryId) {
-      filteredSubjects = filteredSubjects.filter(subject =>
-        subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-        subject.category_id === categoryId
-      );
-    }
-    // Filter by semester if only semesterName is provided
-    else if (semesterName) {
-      filteredSubjects = filteredSubjects.filter(subject =>
-        subject.semester.toLowerCase() === semesterName.toLowerCase()
-      );
-    }
-    // Filter by category if only categoryId is provided
-    else if (categoryId) {
-      filteredSubjects = filteredSubjects.filter(subject =>
-        subject.category_id === categoryId
-      );
+
+    else if (!semesterName && categoryId){
+      if(educationId){
+        if (educationId !== 'notfound') {
+          filteredSubjects = filteredSubjects.filter(subject => 
+            subject.category_id === categoryId  &&
+            subject.education_id === parseInt(educationId)
+          );
+        } else {
+            filteredSubjects = filteredSubjects.filter(subject => 
+              subject.category_id === categoryId  &&
+              subject.education_id === null || subject.education_id === undefined
+            );
+        }}
+      else{
+        filteredSubjects = filteredSubjects.filter(subject => 
+          subject.category_id === categoryId 
+         )}
     }
 
-    // Check if no subjects match the filters
+    else if (semesterName && categoryId){
+      if(educationId){
+        if (educationId !== 'notfound') {
+          filteredSubjects = filteredSubjects.filter(subject => 
+              subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+              subject.category_id === categoryId &&
+              subject.education_id === parseInt(educationId)
+          );
+        } else {
+            filteredSubjects = filteredSubjects.filter(subject => 
+                subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+                subject.category_id === categoryId  &&
+                subject.education_id === null || subject.education_id === undefined
+            );
+        }}
+      else{
+        filteredSubjects = filteredSubjects.filter(subject => 
+          subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+          subject.category_id === categoryId 
+         )}
+    }
+
+    //Check if no subjects match the filters
     if (filteredSubjects.length === 0) {
-      setSubjectData([{ id: 'Not Found', name: 'Not Found' }]);
+        setSubjectData([{ id: 'Not Found', name: 'Not Found' }]);
     } else {
-      setSelectSubject(filteredSubjects.length > 1 ? 'Select Subject' : filteredSubjects[0].name);
-      setSelectSubjectId(filteredSubjects.length > 1 ? [] : filteredSubjects[0].id);
-
-      setSubjectData(filteredSubjects);
+        setSelectSubject(filteredSubjects.length > 1 ? 'Select Subject' : filteredSubjects[0].name);
+        setSelectSubjectId(filteredSubjects.length > 1 ? [] : filteredSubjects[0].id);
+        setSubjectData(filteredSubjects);
     }
 
-    // Debugging logs
     console.log('semesterName:', semesterName);
     console.log('categoryId:', categoryId);
     console.log('educationId:', educationId);
+
+    // Debugging logs
     console.log('filteredSubjects:', filteredSubjects);
-  };
+};
+
+
+  // const filterSubjects = (educationId, semesterName, categoryId) => {
+  //   setSelectSubject('Select Subject');
+  //   setSelectSubjectId('');
+  //   setSubjectData([]);
+
+  //   let filteredSubjects = [...allSubjects]; // Start with all subjects
+
+  //   // Filter by educationId if provided
+  //   // if (educationId) {
+  //   //   filteredSubjects = filteredSubjects.filter(subject => subject.education_id === educationId);
+  //   // }
+
+  //     // Filter by semesterName if provided
+  //   if (semesterName) {
+  //     filteredSubjects = filteredSubjects.filter(subject =>
+  //       subject.semester.toLowerCase() === semesterName.toLowerCase()
+  //     );
+  //   }
+
+  //   // Filter by educationId if provided
+  //   if (educationId !== 'notfound') {
+  //     filteredSubjects = filteredSubjects.filter(subject => 
+  //       subject.education_id === parseInt(educationId)
+  //     );
+  //   } else {
+  //     filteredSubjects = filteredSubjects.filter(subject => 
+  //       subject.education_id === null || subject.education_id === undefined
+  //     );
+  //   }
 
 
 
+  //   // // Filter by semester and category if both are provided
+  //   // if (semesterName && categoryId) {
+  //   //   filteredSubjects = filteredSubjects.filter(subject =>
+  //   //     subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+  //   //     subject.category_id === categoryId
+  //   //   );
+  //   // }
+  //   // // Filter by semester if only semesterName is provided
+  //   // else if (semesterName) {
+  //   //   filteredSubjects = filteredSubjects.filter(subject =>
+  //   //     subject.semester.toLowerCase() === semesterName.toLowerCase()
+  //   //   );
+  //   // }
+  //   // // Filter by category if only categoryId is provided
+  //   // else if (categoryId) {
+  //   //   filteredSubjects = filteredSubjects.filter(subject =>
+  //   //     subject.category_id === categoryId
+  //   //   );
+  //   // }
+
+  //   // Check if no subjects match the filters
+  //   if (filteredSubjects.length === 0) {
+  //     setSubjectData([{ id: 'Not Found', name: 'Not Found' }]);
+  //   } else {
+  //     setSelectSubject(filteredSubjects.length > 1 ? 'Select Subject' : filteredSubjects[0].name);
+  //     setSelectSubjectId(filteredSubjects.length > 1 ? [] : filteredSubjects[0].id);
+
+  //     setSubjectData(filteredSubjects);
+  //   }
+
+  //   // Debugging logs
+  //   console.log('semesterName:', semesterName);
+  //   console.log('categoryId:', categoryId);
+  //   console.log('educationId:', educationId);
+  //   console.log('filteredSubjects:', filteredSubjects);
+  // };
+
+
+
+
+  // const handleSelectEducation = (e) => {
+  //   const inputElement = e.currentTarget.querySelector('.inputVal');
+  //   const selectedOptionName = e.currentTarget.textContent.trim();
+  //   const selectedOptionValue = inputElement ? inputElement.value : '';
+
+  //   if (selectedOptionValue === 'null') {
+  //     setSelectEducationId(null);
+  //   } else {
+  //     setSelectEducationId(parseInt(selectedOptionValue));
+  //   }
+  //   setSelectEducation(selectedOptionName);
+  //   setOpenSelectEducation(false);
+
+  //   // Filter subjects based on the selected education, semester, and category
+  //   // filterSubjects(selectedOptionValue);
+  //   // const filterr = allSubjects.filter((s) => s.education_id === selectedOptionValue)
+  //   // console.log('filterr', filterr)
+  //   filterSubjects(parseInt(selectedOptionValue), selectSemesterName, selectCategoryId);
+  // };
 
   const handleSelectEducation = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
     const selectedOptionName = e.currentTarget.textContent.trim();
     const selectedOptionValue = inputElement ? inputElement.value : '';
 
-    if (selectedOptionValue === 'null') {
-      setSelectEducationId(null);
+    // Check if the selected option value is 'notfound'
+    if (selectedOptionValue === 'notfound') {
+        setSelectEducationId('notfound');
     } else {
-      setSelectEducationId(parseInt(selectedOptionValue));
+        setSelectEducationId(parseInt(selectedOptionValue)); // Set id or null if not a number
     }
-    setSelectEducation(selectedOptionName);
-    setOpenSelectEducation(false);
+    console.log("selected" , selectedOptionValue)
+
+    setSelectEducation(selectedOptionName); // Set selected education name
+    setOpenSelectEducation(false); // Close the select dropdown
 
     // Filter subjects based on the selected education, semester, and category
-    // filterSubjects(selectedOptionValue);
-    // const filterr = allSubjects.filter((s) => s.education_id === selectedOptionValue)
-    // console.log('filterr', filterr)
-    filterSubjects(parseInt(selectedOptionValue), selectSemesterName, selectCategoryId);
-  };
+    filterSubjects(selectedOptionValue, selectSemesterName, selectCategoryId);
+};
+
 
   // const handleSelectEducation = (e) => {
   //   const inputElement = e.currentTarget.querySelector('.inputVal');
