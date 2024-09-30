@@ -408,7 +408,7 @@ const EditLivePage = () => {
 
   const handleSubmitEdit = async (event) => {
     event.preventDefault();
-  
+
     // Validation checks
     if (!name) return auth.toastError('Please Enter Name.');
     if (!url) return auth.toastError('Please Enter Live Link.');
@@ -421,24 +421,24 @@ const EditLivePage = () => {
     if (!date) return auth.toastError('Please Enter Date.');
     if (!selectDay) return auth.toastError('Please Enter Day.');
     if (!selectStatus) return auth.toastError('Please Enter Status.');
-  
+
     setIsLoading(true);
-  
+
     try {
       // Ensure the time has the proper format H:i:s
       const formattedStartTime = startTime.length === 5 ? startTime + ":00" : startTime;
       const formattedEndTime = endTime.length === 5 ? endTime + ":00" : endTime;
-  
+
       const formattedStart = new Date(`1970-01-01T${formattedStartTime}`).toLocaleTimeString('en-GB', { hour12: false });
       const formattedEnd = new Date(`1970-01-01T${formattedEndTime}`).toLocaleTimeString('en-GB', { hour12: false });
-  
+
       let priceEdit = null; // Change to let as the value will be reassigned
       if (selectStatus === 'Paid') {
         priceEdit = parseInt(price);
       } else {
         priceEdit = 0;
       }
-  
+
       // Prepare the JSON payload
       const payload = {
         name,
@@ -455,9 +455,9 @@ const EditLivePage = () => {
         inculded: liveIncluded,
         education_id: selectEducationId ? parseInt(selectEducationId) : null, // Send null if no education is selected
       };
-  
+
       console.log('Payload:', payload); // Debugging log for payload
-  
+
       // Send the PUT request with JSON data
       const response = await axios.put(
         `https://bdev.elmanhag.shop/admin/live/update/${liveId}`, // liveId from useParams
@@ -469,7 +469,7 @@ const EditLivePage = () => {
           },
         }
       );
-  
+
       if (response.status === 200) {
         auth.toastSuccess('Live Updated successfully!');
         handleGoBack();
