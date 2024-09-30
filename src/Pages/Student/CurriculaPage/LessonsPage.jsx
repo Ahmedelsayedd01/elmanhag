@@ -18,6 +18,12 @@ const LessonsPage = ({ subjectId, lessonId }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [showErrorModal, setShowErrorModal] = useState(false); // Modal state
 
+  const [videoProblemList, setVideoProblemList] = useState({});
+  const [questionProblemList, setQuestionProblemList] = useState({});
+  const [selectedProblem,setSelectedProblem]= useState('')
+  const [problemType ,setProblemType] = useState('')
+  const [dropdownVisible, setDropdownVisible] = useState(false); // For toggling the dropdown visibility
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -112,6 +118,91 @@ const LessonsPage = ({ subjectId, lessonId }) => {
       setMainResource(lessons.resources[0]);
     }
   }, [lessons]);
+
+  const fetchProblemList = async () => {
+    setIsLoading(true);
+    try {
+           const response = await axios.get('https://bdev.elmanhag.shop/student/issues',
+          {
+                  headers: {
+                         Authorization: `Bearer ${auth.user.token}`,
+                         'Content-Type': 'application/json',
+                         Accept: 'application/json',
+                  },
+
+           });
+           if (response.status === 200) {
+                 console.log(response.data)
+                 setVideoProblemList(response.data.video_issues)
+                 setQuestionProblemList(response.data.question_issues)
+           }
+         } 
+    catch (error) {
+          console.log(error.response); // Log the full response for debugging
+          const errorMessages = error?.response?.data?.errors;
+          let errorMessageString = 'Error occurred';
+        if (errorMessages) {
+                errorMessageString = Object.values(errorMessages).flat().join(' ');
+        }
+        auth.toastError('Error', errorMessageString);
+        }
+    finally {
+        setIsLoading(false);
+        }
+    };
+
+   useEffect(() => {
+    fetchProblemList();
+    console.log(videoProblemList)
+   }, []);
+
+
+   const handleSubmitProblem = async (event, problemId, resourceId,resourceType) => {
+    event.preventDefault(); // Prevent the default form submission
+
+    setIsLoading(true); // Show loading state
+
+    try {
+        const formData = new FormData();
+        
+        // Determine the type based on problemType
+        const typeToSend = resourceType === "video" ? "video" : "question"; 
+        formData.append('type', typeToSend);
+        formData.append('issue_id', problemId);
+        formData.append('id', resourceId);
+
+          // Print each FormData entry for debugging
+          for (const [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+
+        const response = await axios.post('https://bdev.elmanhag.shop/student/issues', formData, {
+            headers: {
+                Authorization: `Bearer ${auth.user.token}`,
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        if (response.status === 200) {
+            console.log('formData', formData);
+            auth.toastSuccess("تم ارسال المشكله بنجاح");
+        } else {
+            auth.toastError('فشل ارسال المشكله !.');
+        }
+    } catch (error) {
+        const errorMessages = error?.response?.data.errors;
+        let errorMessageString = 'Error occurred';
+
+        if (errorMessages) {
+            errorMessageString = Object.values(errorMessages).flat().join(' ');
+        }
+        auth.toastError('Error', errorMessageString);
+    } finally {
+        setIsLoading(false);
+    }
+};
+
+
 
   const handleGoBack = () => {
     navigate(-1, { replace: true });
@@ -231,6 +322,41 @@ const LessonsPage = ({ subjectId, lessonId }) => {
                       <source src={`${mainResource.file_link}`} type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
+
+                    <div className="mt-4 relative">             
+                      <button
+                        className="bg-mainColor text-white py-2 px-4 rounded-md flex items-center gap-3"
+                        onClick={() => setDropdownVisible(!dropdownVisible)}
+                      >
+                        <div>
+                          <h1>الإبلاغ عن مشكلة في الفيديو</h1>
+                        </div>
+                        <div
+                          className={`mt-1 transition-transform duration-200 ${dropdownVisible ? 'rotate-180' : 'rotate-0'}`}
+                        >
+                          <IoIosArrowDown size={20}/>
+                        </div>
+                      </button>
+
+                      {dropdownVisible && videoProblemList?.length > 0 && (
+                        <ul className="left-0 mt-2 bg-mainColor text-white border border-red-600 rounded-md shadow-lg z-10 xl:w-1/5 md:w-2/5 w-4/5">
+                          {videoProblemList.map((problem) => (
+                            <li
+                              key={problem.id}
+                              className={`p-2 hover:bg-white hover:text-mainColor rounded-2xl text-lg font-semibold cursor-pointer ${selectedProblem === problem ? "bg-mainColor" : ""}`}
+                              onClick={() => {
+                                setSelectedProblem(problem);
+                                 handleSubmitProblem(event,problem.id, mainResource.id,mainResource.type); // Auto submit when problem is selected
+                              }}
+                            >
+                              {problem.title}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+
+
                   </div>
                 )}
                 {mainResource.type === "voice" && (
