@@ -35,6 +35,7 @@ const EditProfileStudentPage = () => {
        const [confirmPassword,setConfirmPassword] =useState('')
        const [phone ,setPhone] =useState('')
        const [job ,setJob] =useState('')
+       const [gender , setGender] =useState('')
 
        const CountryRef = useRef(null); 
        const CityRef = useRef(null);
@@ -78,7 +79,8 @@ const EditProfileStudentPage = () => {
                   setSelectCityId(response.data.user.city_id)
                   setPhone(response.data.user.phone); 
                   setPreview(response.data.user.image_link); 
-                  // setJob(response.data.user.)
+                  setSelectJobId(response.data.user.sudent_jobs_id)
+                  setGender(response.data.user.gender)
                 }
               } catch (error) {
                 const errorMessages = error?.response?.data?.errors;
@@ -214,6 +216,7 @@ const EditProfileStudentPage = () => {
        formData.append('country_id',selectCountryId);
        formData.append('city_id', selectCityId);
        formData.append('image',image );
+       formData.append('sudent_jobs_id',selectJobId );
 
        for (let pair of formData.entries()) {
          console.log(pair[0] + ', ' + pair[1]);

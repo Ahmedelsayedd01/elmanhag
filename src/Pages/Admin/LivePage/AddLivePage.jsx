@@ -598,7 +598,7 @@ const AddLivePage = () => {
       // formData.append('education_id', selectEducationId);
 
       // Handle education_id appropriately
-      if (selectEducationId === null) {
+      if (selectEducationId === "notfound") {
         formData.append('education_id', ' '); // Send as string 'null'
       } else {
         formData.append('education_id', selectEducationId);
