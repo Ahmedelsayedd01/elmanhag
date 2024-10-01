@@ -111,8 +111,20 @@ const NavbarStudent = () => {
                             </Link>
                         )}
 
+                        {auth.user.role == 'affilate' && (
+                            <button type='button' onClick={handleLogout} className="w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-6 lg:py-3 hover:bg-hoverColor">
+                                تسجيل خروج
+                            </button>
+                        )}
+
+                        {auth.user.role == 'parent' && (
+                            <button type='button' onClick={handleLogout} className="w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-6 lg:py-3 hover:bg-hoverColor">
+                                تسجيل خروج
+                            </button>
+                        )}
+
                     </div>
-                    <div className="w-4/12 lg:flex items-center justify-center gap-4">
+                    {/* <div className="w-4/12 lg:flex items-center justify-center gap-4">
                         {auth.user.role == 'affilate' && (
                             <button type='button' onClick={handleLogout} className="w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-6 lg:py-3 hover:bg-hoverColor">
                                 تسجيل خروج
@@ -125,7 +137,7 @@ const NavbarStudent = () => {
                                 تسجيل خروج
                             </button>
                         )}
-                    </div>
+                    </div> */}
 
                 </div>
                 <div className="flex items-center mt-4 lg:mt-0">
