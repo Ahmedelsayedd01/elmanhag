@@ -137,6 +137,9 @@ export { default as EditProfileStudentPage } from "./Student/ProfileStudent/Edit
 /* Affilate Dashboard Page */
 export { default as AffilatePage } from "./Affilate/AffilatePage";
 /* /////Affilate Dashboard Page */
+/* Parent Dashboard Page */
+export { default as ParentDashboardPage } from "./Parent/ParentDashboardPage";
+/* /////Parent Dashboard Page */
 
 /* Download Mobile Page */
 export { default as DownloadMobilePage } from "./DownloadMobile/DownloadMobilePage";
