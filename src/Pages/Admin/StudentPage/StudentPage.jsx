@@ -47,15 +47,6 @@ const StudentPage = () => {
        const [isDeleting, setIsDeleting] = useState(false);
        const [openDialog, setOpenDialog] = useState(null);
 
-       // const handleOptionCountry = (e) => {
-       //        const ele = e.target.innerText;
-       //        setSelectedOptionCountry(e.target.innerText);
-       //        console.log('e.target.innerText', e.target.innerText)
-       //        const selCountries = students.map((c) => (c.country.name == ele));
-       //        console.log('selCountries', selCountries)
-       //        setStudents(selCountries)
-       //        setOpenCountry(false);
-       // };
        const filterStudents = (country, city, education, category, pay) => {
               let filteredStudents = [...allStudents];
 
@@ -89,11 +80,11 @@ const StudentPage = () => {
               }
 
               // Handle not found case
-              if (filteredStudents.length === 0) {
-                     setNotFound(true);
-              } else {
-                     setNotFound(false);
-              }
+              // if (filteredStudents.length === 0) {
+              //        setNotFound(true);
+              // } else {
+              //        setNotFound(false);
+              // }
 
               // Update students list
               setStudents(filteredStudents);
@@ -273,7 +264,7 @@ const StudentPage = () => {
                      if (response.status === 200) {
                             setData(response.data);
                             setAllStudents(response.data.students);
-                            // setStudents(response.data.students);
+                            setStudents(response.data.students);
                      }
               } catch (error) {
                      console.error('Error fetching student data:', error);
@@ -383,7 +374,7 @@ const StudentPage = () => {
                             <CartStudent name={"Banned students"} count={data.banned_students} />
                      </div>
                      <div className="w-full">
-                            <div className="w-full flex flex-wrap items-center justify-between gap-4">
+                            <div className="w-full flex flex-wrap items-center justify-between gap-4 mt-4">
                                    <div className="sm:w-full xl:w-[30%]">
                                           <SearchBar handleChange={handleChange} value={search} bg={"white"} />
                                    </div>
@@ -551,7 +542,7 @@ const StudentPage = () => {
                                           </tbody>
                                    </table>
 
-                                   {notFound && (
+                                   {students.length === 0 && (
                                           <span className="w-full py-3 text-center text-thirdColor text-xl font-semibold">Not Found Students</span>
                                    )}
                             </div>
