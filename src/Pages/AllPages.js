@@ -10,6 +10,7 @@ export { default as ParentPage } from "./Admin/StudentPage/ParentPage";
 export { default as PurchasesPage } from "./Admin/StudentPage/PurchasesPage";
 export { default as ProgressPage } from "./Admin/StudentPage/ProgressPage";
 export { default as LoginHistoryPage } from "./Admin/StudentPage/LoginHistoryPage";
+export { default as TeachersPage } from "./Admin/StudentPage/TeachersPage";
 /* Education Page */
 export { default as CategoriesPage } from "./Admin/EducationPage/Category/CategoriesPage";
 export { default as AddCategoryPage } from "./Admin/EducationPage/Category/AddCategoryPage";
