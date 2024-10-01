@@ -6,7 +6,7 @@ import TitleHeader from '../../Components/TitleHeader';
 const StudentUser = () => {
        return (
               <>
-                     <div className="flex flex-col items-center  gap-y-4">
+                     <div className="flex flex-col items-center  gap-y-2">
                             <TitleHeader text={"Student"} spaceBottom={3} />
                             <StudentPage />
                      </div>
