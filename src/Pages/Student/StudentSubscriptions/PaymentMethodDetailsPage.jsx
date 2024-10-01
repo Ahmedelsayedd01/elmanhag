@@ -65,12 +65,17 @@ const PaymentMethodDetailsPage = () => {
       // Conditionally append either bundle_id or subject_id based on planType
       if (planType === 'Bundle') {
         formData.append('bundle_id', plan.id);
+
       } else if (planType === 'Subject') {
         formData.append('subject_id', plan.id);
       } 
       else if (planType === 'Live session') {
         formData.append('live_id', plan.id);
       } 
+
+      // Print each FormData entry for debugging
+      for (const [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);}
 
       const response = await axios.post('https://bdev.elmanhag.shop/student/order/place', formData, {
         headers: {

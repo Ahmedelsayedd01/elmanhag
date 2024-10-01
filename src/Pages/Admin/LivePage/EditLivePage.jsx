@@ -93,7 +93,7 @@ const EditLivePage = () => {
 
           setEducationData([
             ...response.data.education,
-            { id: 'null', name: 'Together' } // Add a unique key if needed
+            { id: 'notfound', name: 'Together' } // Add a unique key if needed
           ]);
 
           setCategoryData(response.data.category);
@@ -141,8 +141,16 @@ const EditLivePage = () => {
           setSelectSemester(nameSemester[0].toUpperCase() + nameSemester.slice(1));
           setSelectSemesterName(nameSemester);
 
-          setSelectEducation(data.education.name);
-          setSelectEducationId(data.education.id);
+          // setSelectEducation(data.education.name);
+          // setSelectEducationId(data.education.id);
+
+          if (data.education) {
+            setSelectEducation(data.education.name);
+            setSelectEducationId(data.education.id);
+          } else {
+            setSelectEducation('Together');
+            setSelectEducationId('notfound');
+          }
 
           setSelectCategory(data.category.name);
           setSelectCategoryId(data.category.id);
@@ -163,54 +171,152 @@ const EditLivePage = () => {
         setIsLoading(false);
       }
     };
-
     filterSubjects(selectEducationId, selectSemesterName, selectCategoryId);
     fetchEdit();
   }, []); // Added dependencies
 
   const filterSubjects = (educationId, semesterName, categoryId) => {
+    //Reset state
     setSelectSubject('Select Subject');
     setSelectSubjectId('');
     setSubjectData([]);
 
-    let filteredSubjects = [...allSubjects]; // Use the original subject data list
+    let filteredSubjects = allSubjects; // Start with all subjects
 
-    if (educationId) {
-      filteredSubjects = filteredSubjects.filter(subject => subject.education_id === educationId);
+    console.log(filteredSubjects);
+
+    // If both semesterName and categoryId are empty, filter only by educationId
+    if (!semesterName && !categoryId) {
+        if (educationId !== 'notfound') {
+            filteredSubjects = filteredSubjects.filter(subject => 
+                subject.education_id === parseInt(educationId)
+            );
+        } else {
+            filteredSubjects = filteredSubjects.filter(subject => 
+                subject.education_id === null || subject.education_id === undefined
+            );
+        }
+    } 
+
+    else if (semesterName && !categoryId){
+      if(educationId){
+        if (educationId !== 'notfound') {
+          filteredSubjects = filteredSubjects.filter(subject => 
+            subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+              subject.education_id === parseInt(educationId)
+          );
+        } else {
+            filteredSubjects = filteredSubjects.filter(subject => 
+              subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+                subject.education_id === null || subject.education_id === undefined
+            );
+        }}
+      else{
+        filteredSubjects = filteredSubjects.filter(subject => 
+          subject.semester.toLowerCase() === semesterName.toLowerCase() 
+         )}
     }
 
-    if (semesterName && categoryId) {
-      filteredSubjects = filteredSubjects.filter(subject =>
-        subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-        subject.category_id === categoryId
-      );
-    } else if (semesterName) {
-      filteredSubjects = filteredSubjects.filter(subject =>
-        subject.semester.toLowerCase() === semesterName.toLowerCase()
-      );
-    } else if (categoryId) {
-      filteredSubjects = filteredSubjects.filter(subject =>
-        subject.category_id === categoryId
-      );
+
+    else if (!semesterName && categoryId){
+      if(educationId){
+        if (educationId !== 'notfound') {
+          filteredSubjects = filteredSubjects.filter(subject => 
+            subject.category_id === categoryId  &&
+            subject.education_id === parseInt(educationId)
+          );
+        } else {
+            filteredSubjects = filteredSubjects.filter(subject => 
+              subject.category_id === categoryId  &&
+              subject.education_id === null || subject.education_id === undefined
+            );
+        }}
+      else{
+        filteredSubjects = filteredSubjects.filter(subject => 
+          subject.category_id === categoryId 
+         )}
     }
 
+    else if (semesterName && categoryId){
+      if(educationId){
+        if (educationId !== 'notfound') {
+          filteredSubjects = filteredSubjects.filter(subject => 
+              subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+              subject.category_id === categoryId &&
+              subject.education_id === parseInt(educationId)
+          );
+        } else {
+            filteredSubjects = filteredSubjects.filter(subject => 
+                subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+                subject.category_id === categoryId  &&
+                subject.education_id === null || subject.education_id === undefined
+            );
+        }}
+      else{
+        filteredSubjects = filteredSubjects.filter(subject => 
+          subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+          subject.category_id === categoryId 
+         )}
+    }
+
+    //Check if no subjects match the filters
     if (filteredSubjects.length === 0) {
-      setSubjectData([{ id: 'Not Found', name: 'Not Found' }]);
+        setSubjectData([{ id: 'Not Found', name: 'Not Found' }]);
     } else {
-      setSelectSubject(filteredSubjects.length > 1 ? 'Select Subject' : filteredSubjects[0].name);
-      setSelectSubjectId(filteredSubjects.length > 1 ? [] : filteredSubjects[0].id);
-
-      setSubjectData(filteredSubjects);
+        setSelectSubject(filteredSubjects.length > 1 ? 'Select Subject' : filteredSubjects[0].name);
+        setSelectSubjectId(filteredSubjects.length > 1 ? [] : filteredSubjects[0].id);
+        setSubjectData(filteredSubjects);
     }
 
-    // Debugging logs
     console.log('semesterName:', semesterName);
     console.log('categoryId:', categoryId);
     console.log('educationId:', educationId);
+
+    // Debugging logs
     console.log('filteredSubjects:', filteredSubjects);
-  };
+};
 
+  // const filterSubjects = (educationId, semesterName, categoryId) => {
+  //   setSelectSubject('Select Subject');
+  //   setSelectSubjectId('');
+  //   setSubjectData([]);
 
+  //   let filteredSubjects = [...allSubjects]; // Use the original subject data list
+
+  //   if (educationId) {
+  //     filteredSubjects = filteredSubjects.filter(subject => subject.education_id === educationId);
+  //   }
+
+  //   if (semesterName && categoryId) {
+  //     filteredSubjects = filteredSubjects.filter(subject =>
+  //       subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+  //       subject.category_id === categoryId
+  //     );
+  //   } else if (semesterName) {
+  //     filteredSubjects = filteredSubjects.filter(subject =>
+  //       subject.semester.toLowerCase() === semesterName.toLowerCase()
+  //     );
+  //   } else if (categoryId) {
+  //     filteredSubjects = filteredSubjects.filter(subject =>
+  //       subject.category_id === categoryId
+  //     );
+  //   }
+
+  //   if (filteredSubjects.length === 0) {
+  //     setSubjectData([{ id: 'Not Found', name: 'Not Found' }]);
+  //   } else {
+  //     setSelectSubject(filteredSubjects.length > 1 ? 'Select Subject' : filteredSubjects[0].name);
+  //     setSelectSubjectId(filteredSubjects.length > 1 ? [] : filteredSubjects[0].id);
+
+  //     setSubjectData(filteredSubjects);
+  //   }
+
+  //   // Debugging logs
+  //   console.log('semesterName:', semesterName);
+  //   console.log('categoryId:', categoryId);
+  //   console.log('educationId:', educationId);
+  //   console.log('filteredSubjects:', filteredSubjects);
+  // };
 
   const handleOpenSelectEducation = () => {
     setOpenSelectEducation(!openSelectEducation)
@@ -287,20 +393,40 @@ const EditLivePage = () => {
     const selectedOptionName = e.currentTarget.textContent.trim();
     const selectedOptionValue = inputElement ? inputElement.value : '';
 
-    if (selectedOptionValue === 'null') {
-      setSelectEducationId(null);
+    // Check if the selected option value is 'notfound'
+    if (selectedOptionValue === 'notfound') {
+        setSelectEducationId('notfound');
     } else {
-      setSelectEducationId(parseInt(selectedOptionValue));
+        setSelectEducationId(parseInt(selectedOptionValue)); // Set id or null if not a number
     }
-    setSelectEducation(selectedOptionName);
-    setOpenSelectEducation(false);
+    console.log("selected" , selectedOptionValue)
+
+    setSelectEducation(selectedOptionName); // Set selected education name
+    setOpenSelectEducation(false); // Close the select dropdown
 
     // Filter subjects based on the selected education, semester, and category
-    // filterSubjects(selectedOptionValue);
-    // const filterr = allSubjects.filter((s) => s.education_id === selectedOptionValue)
-    // console.log('filterr', filterr)
-    filterSubjects(parseInt(selectedOptionValue), selectSemesterName, selectCategoryId);
-  };
+    filterSubjects(selectedOptionValue, selectSemesterName, selectCategoryId);
+};
+
+  // const handleSelectEducation = (e) => {
+  //   const inputElement = e.currentTarget.querySelector('.inputVal');
+  //   const selectedOptionName = e.currentTarget.textContent.trim();
+  //   const selectedOptionValue = inputElement ? inputElement.value : '';
+
+  //   if (selectedOptionValue === 'null') {
+  //     setSelectEducationId(null);
+  //   } else {
+  //     setSelectEducationId(parseInt(selectedOptionValue));
+  //   }
+  //   setSelectEducation(selectedOptionName);
+  //   setOpenSelectEducation(false);
+
+  //   // Filter subjects based on the selected education, semester, and category
+  //   // filterSubjects(selectedOptionValue);
+  //   // const filterr = allSubjects.filter((s) => s.education_id === selectedOptionValue)
+  //   // console.log('filterr', filterr)
+  //   filterSubjects(parseInt(selectedOptionValue), selectSemesterName, selectCategoryId);
+  // };
 
 
   const handleSelectSemester = (e) => {
@@ -453,7 +579,7 @@ const EditLivePage = () => {
         paid: selectStatus === 'Paid' ? 1 : 0,
         price: priceEdit,
         inculded: liveIncluded,
-        education_id: selectEducationId ? parseInt(selectEducationId) : null, // Send null if no education is selected
+        education_id: selectEducationId === "notfound" ? ' ' : selectEducationId, // Send null if no education is selected
       };
 
       console.log('Payload:', payload); // Debugging log for payload
