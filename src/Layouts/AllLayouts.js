@@ -2,12 +2,18 @@
 /* Admin Layout */
 export { default as LayoutAdmin } from "./Admin/LayoutAdmin";
 export { default as DashboardAD } from "./Admin/DashboardAD";
-/* USer */
+/* User */
+// Student
 export { default as StudentUser } from "./Admin/StudentUser";
 export { default as AddStudentpage } from "./Admin/AddStydentPage";
 export { default as EditProfileStudent } from "./Admin/EditeProfileStudent";
+// Parent
 export { default as ParentUser } from "./Admin/ParentUser";
-export { default as TeacherUser } from "./Admin/TeacherUser";
+// Teacher
+export { default as TeacherUserLayout } from "./Admin/TeacherUserLayout";
+export { default as AddTeacherUserLayout } from "./Admin/AddTeacherUserLayout";
+export { default as EditTeacherUserLayout } from "./Admin/EditTeacherUserLayout";
+// Admin User
 export { default as AdminUser } from "./Admin/AdminUser";
 /* ////USer */
 /* Education */
