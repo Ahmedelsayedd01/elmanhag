@@ -2,15 +2,18 @@
 export { default as HomePage } from "./HomePage/Homepage";
 /* Admin Dashboard Page */
 /* User -> Student Page */
-export { default as StudentPage } from "./Admin/StudentPage/StudentPage";
-export { default as AddPage } from "./Admin/StudentPage/AddPage";
-export { default as EditProfilePage } from "./Admin/StudentPage/EditProfilePage";
-export { default as ProfilePage } from "./Admin/StudentPage/ProfilePage";
-export { default as ParentPage } from "./Admin/StudentPage/ParentPage";
-export { default as PurchasesPage } from "./Admin/StudentPage/PurchasesPage";
-export { default as ProgressPage } from "./Admin/StudentPage/ProgressPage";
-export { default as LoginHistoryPage } from "./Admin/StudentPage/LoginHistoryPage";
-export { default as TeachersPage } from "./Admin/StudentPage/TeachersPage";
+export { default as StudentPage } from "./Admin/User/StudentPage/StudentPage";
+export { default as AddPage } from "./Admin/User/StudentPage/AddPage";
+export { default as EditProfilePage } from "./Admin/User/StudentPage/EditProfilePage";
+export { default as ProfilePage } from "./Admin/User/StudentPage/ProfilePage";
+export { default as ParentPage } from "./Admin/User/StudentPage/ParentPage";
+export { default as PurchasesPage } from "./Admin/User/StudentPage/PurchasesPage";
+export { default as ProgressPage } from "./Admin/User/StudentPage/ProgressPage";
+export { default as LoginHistoryPage } from "./Admin/User/StudentPage/LoginHistoryPage";
+/* User -> Teacher Page */
+export { default as TeachersPage } from "./Admin/User/TeacherPage/TeachersPage";
+export { default as AddTeacherPage } from "./Admin/User/TeacherPage/AddTeacherPage";
+export { default as EditTeacherPage } from "./Admin/User/TeacherPage/EditTeacherPage";
 /* Education Page */
 export { default as CategoriesPage } from "./Admin/EducationPage/Category/CategoriesPage";
 export { default as AddCategoryPage } from "./Admin/EducationPage/Category/AddCategoryPage";
