@@ -10,6 +10,7 @@ export { default as ParentPage } from "./Admin/StudentPage/ParentPage";
 export { default as PurchasesPage } from "./Admin/StudentPage/PurchasesPage";
 export { default as ProgressPage } from "./Admin/StudentPage/ProgressPage";
 export { default as LoginHistoryPage } from "./Admin/StudentPage/LoginHistoryPage";
+export { default as TeachersPage } from "./Admin/StudentPage/TeachersPage";
 /* Education Page */
 export { default as CategoriesPage } from "./Admin/EducationPage/Category/CategoriesPage";
 export { default as AddCategoryPage } from "./Admin/EducationPage/Category/AddCategoryPage";
@@ -137,6 +138,9 @@ export { default as EditProfileStudentPage } from "./Student/ProfileStudent/Edit
 /* Affilate Dashboard Page */
 export { default as AffilatePage } from "./Affilate/AffilatePage";
 /* /////Affilate Dashboard Page */
+/* Parent Dashboard Page */
+export { default as ParentDashboardPage } from "./Parent/ParentDashboardPage";
+/* /////Parent Dashboard Page */
 
 /* Download Mobile Page */
 export { default as DownloadMobilePage } from "./DownloadMobile/DownloadMobilePage";

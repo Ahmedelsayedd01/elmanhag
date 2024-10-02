@@ -35,6 +35,10 @@ const LoginPage = () => {
 
                             navigate("/dashboard_affilate", { replace: true });
                      }
+                     else if (type === "parent") {
+
+                            navigate("/dashboard_parent", { replace: true });
+                     }
               }
        }, [data]);
 

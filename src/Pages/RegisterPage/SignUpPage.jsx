@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
-import { Navigate, NavLink, useNavigate } from 'react-router-dom';
+import { Link, Navigate, NavLink, useNavigate } from 'react-router-dom';
 import Loading from '../../Components/Loading';
 import { useAuth } from '../../Context/Auth';
 import TextTitle from '../../Components/TextTitle';
@@ -864,7 +864,19 @@ const SignUpPage = () => {
 
 
         </div>
-        <button type="submit" className="w-full text-center text-2xl font-medium text-secoundColor px-6 py-3 bg-mainColor rounded-2xl">تسجيل</button>
+
+        {/* <button type="submit" className="w-full text-center text-2xl font-medium text-secoundColor hover:text-mainColor px-6 py-3 bg-mainColor hover:bg-secoundColor ease-in-out duration-300 rounded-2xl">تسجيل دخول</button> */}
+        <div className="w-full flex flex-col gap-y-4">
+          <button type="submit" className="w-full text-center text-2xl font-medium text-secoundColor px-6 py-3 bg-mainColor rounded-2xl">انشاء حساب</button>
+          <div className="w-full flex items-baseline justify-between">
+            <span className='w-6/12 h-[2px] rounded-2xl bg-thirdColor'></span>
+            <span className='px-2 text-center text-xl text-thirdColor font-semibold'>أو</span>
+            <span className='w-6/12 h-[2px] rounded-2xl bg-thirdColor'></span>
+          </div>
+          <Link to={'/authentication/signup'} className='w-full text-center text-2xl font-medium text-mainColor hover:text-secoundColor px-6 py-3 bg-secoundColor hover:bg-mainColor ease-in-out duration-300 border-2 border-mainColor rounded-2xl'>
+            تسجيل دخول
+          </Link>
+        </div>
       </form>
     </>
   )

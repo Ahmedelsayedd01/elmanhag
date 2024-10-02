@@ -11,7 +11,6 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import DropDownMenu from '../../../Components/DropDownMenu';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
-import { Wroning } from '../../../Components/Icons/All_Icons';
 
 const StudentPage = () => {
        const auth = useAuth();
@@ -21,16 +20,23 @@ const StudentPage = () => {
        const [students, setStudents] = useState([]);
        const [search, setSearch] = useState('');
        const [selectedOptionCountry, setSelectedOptionCountry] = useState('Filter By Country');
+       const [countryName, setCountryName] = useState('');
        const [selectedOptionCity, setSelectedOptionCity] = useState('Filter By City');
+       const [cityName, setCityName] = useState('');
        const [selectedOptionCategory, setSelectedOptionCategory] = useState('Filter By Category');
+       const [categoryName, setCategoryName] = useState('');
        const [selectedOptionEducation, setSelectedOptionEducation] = useState('Filter By Education');
+       const [educationName, setEducationName] = useState('');
        const [selectedOptionType, setSelectedOptionType] = useState('Filter By Free/Paid');
+       const [typeName, setTypeName] = useState('');
        const [openCountry, setOpenCountry] = useState(false);
        const [openCity, setOpenCity] = useState(false);
        const [openCategory, setOpenCategory] = useState(false);
        const [openEducation, setOpenEducation] = useState(false);
        const [openType, setOpenType] = useState(false);
        const [studentsChanged, setStudentsChanged] = useState(false); // Change tracker
+
+       const [notFound, setNotFound] = useState(true); // Change tracker
 
        const dropdownCountryRef = useRef(null);
        const dropdownCityRef = useRef(null);
@@ -41,48 +47,148 @@ const StudentPage = () => {
        const [isDeleting, setIsDeleting] = useState(false);
        const [openDialog, setOpenDialog] = useState(null);
 
-       // const handleOptionCountry = (e) => {
-       //        const ele = e.target.innerText;
-       //        setSelectedOptionCountry(e.target.innerText);
-       //        console.log('e.target.innerText', e.target.innerText)
-       //        const selCountries = students.map((c) => (c.country.name == ele));
-       //        console.log('selCountries', selCountries)
-       //        setStudents(selCountries)
-       //        setOpenCountry(false);
-       // };
+       const filterStudents = (country, city, education, category, pay) => {
+              let filteredStudents = [...allStudents];
+
+              // Filter by country
+              if (country) {
+                     filteredStudents = filteredStudents.filter((student) => student.country?.name === country);
+              }
+
+              // Filter by city
+              if (city) {
+                     filteredStudents = filteredStudents.filter((student) => student.city?.name === city);
+              }
+
+              // Filter by education
+              if (education) {
+                     filteredStudents = filteredStudents.filter((student) => student.education?.name === education);
+              }
+
+              // Filter by category
+              if (category) {
+                     filteredStudents = filteredStudents.filter((student) => student.category?.name === category);
+              }
+
+
+              // Filter by pay type (Free or Paid)
+              if (pay) {
+                     filteredStudents = filteredStudents.filter((student) => {
+                            const isPaid = student.bundlesy === '' && student.subjects === ''; // Assuming this is how "Paid" is determined
+                            return pay === 'Paid' ? isPaid : !isPaid;
+                     });
+              }
+
+              // Handle not found case
+              // if (filteredStudents.length === 0) {
+              //        setNotFound(true);
+              // } else {
+              //        setNotFound(false);
+              // }
+
+              // Update students list
+              setStudents(filteredStudents);
+
+              console.log('country', country)
+              console.log('city', city)
+              console.log('education', education)
+              console.log('category', category)
+              console.log('pay', pay)
+              console.log('filteredStudents', filteredStudents)
+       };
+
+
        const handleOptionCountry = (e) => {
               const selectedCountry = e.target.innerText;
+
               setSelectedOptionCountry(selectedCountry);
+              setCountryName(selectedCountry);
 
               // Filter students based on the selected country
-              const selCountries = allStudents.filter((student) => student.country.name === selectedCountry);
 
-              console.log('Selected Country:', selectedCountry);
-              console.log('Filtered Students:', selCountries);
 
-              // Update the students list to only include filtered countries or append to an array
-              setStudents(selCountries); // or append if necessary
-
-              // Close the dropdown
+              filterStudents(
+                     selectedCountry,
+                     cityName,
+                     educationName,
+                     categoryName,
+                     typeName
+              )
               setOpenCountry(false);
+              console.log('Selected Country:', selectedCountry);
+              console.log('Students:', students);
        };
-
-
        const handleOptionCity = (e) => {
-              setSelectedOptionCity(e.target.innerText);
+              const selectedCity = e.target.innerText;
+
+              setSelectedOptionCity(selectedCity);
+              setCityName(selectedCity);
+
+              // Filter students based on the selected country
+
+              filterStudents(
+                     countryName,
+                     selectedCity,
+                     educationName,
+                     categoryName,
+                     typeName
+              )
               setOpenCity(false);
+              console.log('Selected City:', selectedCity);
+              console.log('Students:', students);
        };
+
+
        const handleOptionCategory = (e) => {
-              setSelectedOptionCategory(e.target.innerText);
+              const selectedCategory = e.target.innerText;
+
+              setSelectedOptionCategory(selectedCategory);
+              setCategoryName(selectedCategory);
+
+              filterStudents(
+                     countryName,
+                     cityName,
+                     educationName,
+                     selectedCategory,
+                     typeName
+              )
+
+              console.log('selected Category:', selectedCategory);
               setOpenCategory(false);
        };
        const handleOptionEducation = (e) => {
-              setSelectedOptionEducation(e.target.innerText);
+              const selectedEducation = e.target.innerText;
+
+              setSelectedOptionEducation(selectedEducation);
+              setEducationName(selectedEducation)
+
+              filterStudents(
+                     countryName,
+                     cityName,
+                     selectedEducation,
+                     categoryName,
+                     typeName
+              )
+              console.log('selected Education:', selectedEducation);
+
               setOpenEducation(false);
        };
 
        const handleOptionType = (e) => {
-              setSelectedOptionType(e.target.innerText);
+              const selectedType = e.target.innerText;
+
+              setSelectedOptionType(selectedType);
+              setTypeName(selectedType);
+
+              filterStudents(
+                     countryName,
+                     cityName,
+                     educationName,
+                     categoryName,
+                     selectedType
+              )
+              console.log('selected Type:', selectedType);
+
               setOpenType(false);
        };
 
@@ -268,7 +374,7 @@ const StudentPage = () => {
                             <CartStudent name={"Banned students"} count={data.banned_students} />
                      </div>
                      <div className="w-full">
-                            <div className="w-full flex flex-wrap items-center justify-between gap-4">
+                            <div className="w-full flex flex-wrap items-center justify-between gap-4 mt-4">
                                    <div className="sm:w-full xl:w-[30%]">
                                           <SearchBar handleChange={handleChange} value={search} bg={"white"} />
                                    </div>
@@ -296,17 +402,6 @@ const StudentPage = () => {
                                    </div>
                                    <div className="sm:w-full xl:w-[30%]">
                                           <DropDownMenu
-                                                 ref={dropdownCategoryRef}
-                                                 iconMenu={<SettingFilter />}
-                                                 handleOpen={handleOpenCategory}
-                                                 handleOpenOption={handleOptionCategory}
-                                                 stateoption={selectedOptionCategory}
-                                                 openMenu={openCategory}
-                                                 options={data.categories}
-                                          />
-                                   </div>
-                                   <div className="sm:w-full xl:w-[30%]">
-                                          <DropDownMenu
                                                  ref={dropdownEducationRef}
                                                  iconMenu={<SettingFilter />}
                                                  handleOpen={handleOpenEducation}
@@ -314,6 +409,17 @@ const StudentPage = () => {
                                                  stateoption={selectedOptionEducation}
                                                  openMenu={openEducation}
                                                  options={data.education}
+                                          />
+                                   </div>
+                                   <div className="sm:w-full xl:w-[30%]">
+                                          <DropDownMenu
+                                                 ref={dropdownCategoryRef}
+                                                 iconMenu={<SettingFilter />}
+                                                 handleOpen={handleOpenCategory}
+                                                 handleOpenOption={handleOptionCategory}
+                                                 stateoption={selectedOptionCategory}
+                                                 openMenu={openCategory}
+                                                 options={data.categories}
                                           />
                                    </div>
                                    <div className="sm:w-full xl:w-[30%]">
@@ -333,7 +439,7 @@ const StudentPage = () => {
                                           </Link>
                                    </div>
                             </div>
-                            <div className="w-full flex items-center justify-between mt-4 overflow-x-auto">
+                            <div className="w-full flex flex-col items-center justify-between mt-4 overflow-x-auto">
                                    <table className="w-full min-w-full table-auto border-collapse bg-white shadow-md rounded-lg">
                                           <thead className="bg-gray-100">
                                                  <tr className="border-b">
@@ -352,6 +458,7 @@ const StudentPage = () => {
                                           </thead>
 
                                           <tbody className="bg-thirdBgColor">
+
                                                  {students.map((student, index) => (
                                                         <tr key={student.id} className="border-b hover:bg-gray-50">
                                                                <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">{index + 1}</td>
@@ -376,7 +483,7 @@ const StudentPage = () => {
                                                                <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">
                                                                       {student.logins?.updated_at || '-'}
                                                                </td>
-                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">
+                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base pay">
                                                                       {student.bundlesy === '' && student.subjects === '' ? 'Paid' : 'Free'}
                                                                </td>
                                                                <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">
@@ -435,8 +542,11 @@ const StudentPage = () => {
                                           </tbody>
                                    </table>
 
+                                   {students.length === 0 && (
+                                          <span className="w-full py-3 text-center text-thirdColor text-xl font-semibold">Not Found Students</span>
+                                   )}
                             </div>
-                     </div >
+                     </div>
               </>
        );
 };

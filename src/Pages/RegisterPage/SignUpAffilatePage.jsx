@@ -173,14 +173,15 @@ const SignUpAffilatePage = () => {
         setRole(response.data.user.role);
         console.log("response", response);
 
-      } else {
-        auth.toastError('Failed to post data');
-        setError('Failed to post data');
-        console.log("error", error);
       }
     } catch (error) {
-      setError('There was an error posting the data!');
-      console.error(error);
+      if (error.response && error.response.status === 400) {
+        auth.toastError(error.response.data.error.phone[0]);
+        console.log('Login failed:', error.response.data.error.phone[0]);
+      } else {
+        auth.toastError('error', error);
+        console.error('An error occurred:', error);
+      }
     } finally {
       setIsLoading(false)
     }

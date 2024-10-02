@@ -111,6 +111,7 @@ import {
   DownloadMobilePage,
   HomePage,
   LoginHistoryPage,
+  ParentDashboardPage,
   ParentPage,
   PayoutHistoryPage,
   PayoutPendingPage,
@@ -359,6 +360,14 @@ const AppLayoutAffilateDashboard = () => (
     {/* <NavbarStudent />
       <AffilatePage /> */}
     {/* <Outlet /> */}
+  </div>
+);
+const AppLayoutParentDashboard = () => (
+  <div className="w-full flex gap-x-4 directionAR">
+    <div className=" w-full h-screen ">
+      <NavbarStudent />
+      <ParentDashboardPage />
+    </div>
   </div>
 );
 
@@ -905,6 +914,8 @@ export const router = createBrowserRouter([
             path: 'reports',
             element: <ReportsAD />,
           },
+          /* Setting */
+          // Admin Roles
           {
             path: 'adminRoles',
             element: <AppLayoutAdminRoles />,
@@ -1096,7 +1107,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: 'my_plans',
-                element: < My_SubscriptionsLayout/>,
+                element: < My_SubscriptionsLayout />,
               },
               {
                 path: "plansMethod",
@@ -1130,6 +1141,15 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/dashboard_affilate',
+        element: <AppLayoutAffilateDashboard />,
+      }
+    ],
+  },
+  {
+    element: <ProtectedRoute allowedRoles={['parent']} />,
+    children: [
+      {
+        path: '/dashboard_parent',
         element: <AppLayoutAffilateDashboard />,
       }
     ],
