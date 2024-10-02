@@ -85,7 +85,9 @@ import {
   ProfileStudent,
   ComplaintLayout,
   AddAffiliateBonusLayout,
-  EditAffiliateBonusLayout
+  EditAffiliateBonusLayout,
+  AddTeacherUserLayout,
+  EditTeacherUserLayout
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -137,7 +139,7 @@ import User from "./Layouts/User/User";
 import Sidebar from "./Components/Sidebar";
 import Navbar from "./Components/Navbar";
 import StudentUser from "./Layouts/Admin/StudentUser";
-import TeacherUser from "./Layouts/Admin/TeacherUser";
+import TeacherUserLayout from "./Layouts/Admin/TeacherUserLayout";
 import ParentUser from "./Layouts/Admin/ParentUser";
 import AdminUser from "./Layouts/Admin/AdminUser";
 import LayoutAdmin from "./Layouts/Admin/LayoutAdmin";
@@ -189,11 +191,43 @@ const AppLayoutAdmin = () => (
     <LayoutAdmin />
   </>
 );
+/* User */
+// Students
 const AppLayoutStudentUser = () => (
   <>
     <Outlet />
   </>
 );
+
+const AppLayoutStudentAdd = () => (
+  <>
+    <AddStudentpage />
+  </>
+);
+const AppLayoutStudentProfile = () => (
+  <>
+    <EditProfilePage />
+  </>
+);
+// Teachers
+const AppLayoutTeachersUser = () => (
+  <>
+    <Outlet />
+  </>
+);
+
+const AppLayoutTeacherAdd = () => (
+  <>
+    <AddTeacherUserLayout />
+  </>
+);
+const AppLayoutTeacherEdit = () => (
+  <>
+    <EditTeacherUserLayout />
+  </>
+);
+
+
 /* Education */
 const AppLayoutCategories = () => (
   <>
@@ -315,16 +349,6 @@ const AppLayoutPaymentMethod = () => (
 );
 
 
-const AppLayoutStudentAdd = () => (
-  <>
-    <AddStudentpage />
-  </>
-);
-const AppLayoutStudentProfile = () => (
-  <>
-    <EditProfilePage />
-  </>
-);
 /* Student Dashboard */
 const AppLayoutStudentDashboard = () => (
   <>
@@ -565,7 +589,21 @@ export const router = createBrowserRouter([
           },
           {
             path: 'teacher',
-            element: <TeacherUser />,
+            element: <AppLayoutTeachersUser />,
+            children: [
+              {
+                path: '',
+                element: <TeacherUserLayout />
+              },
+              {
+                path: 'add',
+                element: <AppLayoutTeacherAdd />
+              },
+              {
+                path: 'edit/:teacherId',
+                element: <AppLayoutTeacherEdit />
+              }
+            ]
           },
           {
             path: 'admin',
