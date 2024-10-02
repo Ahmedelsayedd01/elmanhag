@@ -10,7 +10,7 @@ const AddStydentPage = () => {
        };
        return (
               <>
-                     <HeaderPageSection handleClick={handleGoBack} name="add" />
+                     <HeaderPageSection handleClick={handleGoBack} name="Add Student" />
                      <AddPage />
               </>
        )
