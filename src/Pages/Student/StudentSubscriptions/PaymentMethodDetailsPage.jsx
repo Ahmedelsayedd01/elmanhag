@@ -20,6 +20,9 @@ const PaymentMethodDetailsPage = () => {
   const [email, setEmail] = useState('');
   const [receiptImageFile, setReceiptImageFile] = useState(null);
   const [receiptImage, setReceiptImage] = useState('');
+  const [referenceNumber,setReferenceNumber]=useState('')
+  // const [errorMessage, setErrorMessage] = useState('');
+  const [showModal, setShowModal] = useState(false); // Modal state
 
   const handleReceiptImageClick = () => {
     if (uploadReceiptImageRef.current) {
@@ -50,18 +53,17 @@ const PaymentMethodDetailsPage = () => {
     event.preventDefault();
 
     setIsLoading(true);
+    
+  if(paymentMethod.title !== 'fawry'){
     try {
       const formData = new FormData();
       formData.append('amount', price);
       formData.append('service', planType);
       formData.append('payment_method_id', paymentMethod.id);
-
       // if (receiptImageFile) {  // This checks if receiptImageFile is not null, undefined, or an empty string
         formData.append('receipt', receiptImageFile);
       // }
-    
       // formData.append('bundle_id', plan.id);
-
       // Conditionally append either bundle_id or subject_id based on planType
       if (planType === 'Bundle') {
         formData.append('bundle_id', plan.id);
@@ -73,39 +75,111 @@ const PaymentMethodDetailsPage = () => {
         formData.append('live_id', plan.id);
       } 
 
-      // Print each FormData entry for debugging
-      for (const [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);}
-
-      const response = await axios.post('https://bdev.elmanhag.shop/student/order/place', formData, {
-        headers: {
-          Authorization: `Bearer ${auth.user.token}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      if (response.status === 200) {
-        console.log('formData', formData)
-        auth.toastSuccess("شكرا على اشتاركك في منصة المنهج يتم مراجعة المدفوعات من قبل القسم المختص");
-        handleGoBack();
-      } else {
-        auth.toastError('Failed to add Subject.');
+        // Print each FormData entry for debugging
+        for (const [key, value] of formData.entries()) {
+          console.log(`${key}: ${value}`);}
+  
+        const response = await axios.post('https://bdev.elmanhag.shop/student/order/place', formData, {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+  
+        if (response.status === 200) {
+          console.log('formData', formData)
+          auth.toastSuccess("شكرا على اشتاركك في منصة المنهج يتم مراجعة المدفوعات من قبل القسم المختص");
+          handleGoBack();
+        } else {
+          auth.toastError('Failed to add Subject.');
+        }
+      } catch (error) {
+        const errorMessages = error?.response?.data.errors;
+        let errorMessageString = 'Error occurred';
+  
+        if (errorMessages) {
+          errorMessageString = Object.values(errorMessages).flat().join(' ');
+        }
+        auth.toastError('Error', errorMessageString);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      const errorMessages = error?.response?.data.errors;
-      let errorMessageString = 'Error occurred';
-
-      if (errorMessages) {
-        errorMessageString = Object.values(errorMessages).flat().join(' ');
-      }
-      auth.toastError('Error', errorMessageString);
-    } finally {
-      setIsLoading(false);
     }
+
+     else if(paymentMethod.title === 'fawry'){
+      try {
+        const formData = new FormData();
+
+        const chargeItems = [
+          { 
+              "itemId": plan.id,  // Convert itemId to string
+              "description": planType,      // Keep description as is
+              "quantity": "1"               // Keep quantity as a string
+          },
+        ];
+
+  // Print each FormData entry for debugging
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+    
+        const response = await axios.post('https://bdev.elmanhag.shop/api/pay-at-fawry',{
+          "chargeItems" : chargeItems
+        }, {
+            headers: {
+                Authorization: `Bearer ${auth.user.token}`,
+                // 'Content-Type': 'multipart/form-data',
+            },
+        });
+    
+        if (response.status === 200) {
+            console.log(response.data);
+            setReferenceNumber(response.data.referenceNumber)
+            // setErrorMessage('Lesson data not found.');
+            setShowModal(true); // Show modal when error occurs
+            // auth.toastSuccess("شكرا على اشتراكك في منصة المنهج يتم مراجعة المدفوعات من قبل القسم المختص");
+            // handleGoBack();
+        } else {
+            auth.toastError('Failed to submit.');
+        }
+    } catch (error) {
+        const errorMessages = error?.response?.data.errors;
+        let errorMessageString = 'Error occurred';
+    
+        if (errorMessages) {
+            errorMessageString = Object.values(errorMessages).flat().join(' ');
+        }
+        auth.toastError('Error', errorMessageString);
+    } finally {
+        setIsLoading(false);
+    }}
   };
 
   return (
     <div className="p-6 min-h-screen">
+      
+{showModal && (
+<div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 lg:mr-10">
+  <div className="bg-white p-6 md:p-12 rounded-lg w-11/12 md:w-1/2 lg:w-1/3">
+    <h2 className="text-[#6B6B6B] text-xl md:text-2xl font-bold mb-4">احتفظ بهذا الرقم للدفع بيه <span className='text-mainColor'>{referenceNumber}</span></h2>
+    <div className="flex justify-end gap-4 sm:gap-2">
+    <Button Text="حسناً" Width="auto" BgColor="bg-mainColor" Color="text-white" handleClick={()=>setShowModal(false)} />
+
+      {/* Conditional rendering based on the error message
+      {errorMessage === `عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين. اشترك الآن واستمتع بجميع الدروس بدون قيود !` ? (
+        <>
+          <Link to="/dashboard/subscriptions/plans" state={{ subject_Id: subjectId }}>
+            <Button Text="اشترك الان" Width="auto" BgColor="bg-mainColor" Color="text-white" />
+          </Link>
+          <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
+        </>
+      ) : (
+        <Button Text="حسناً" Width="auto" BgColor="bg-mainColor" Color="text-white" handleClick={handleGoBack} />
+      )} */}
+    </div>
+  </div>
+</div>
+)}
       <div className="flex p-4 mb-8 justify-center gap-5">
         <h2 className="text-2xl font-semibold">{paymentMethod.title}</h2>
         <img src={paymentMethod.thumbnail_link} alt={paymentMethod.title} className="w-15 h-10 mb-4" />
@@ -158,7 +232,7 @@ const PaymentMethodDetailsPage = () => {
             </>
           )}
 
-{paymentMethod.title === 'fawry' && (
+         {paymentMethod.title === 'fawry' && (
             <>
               <div className="lg:w-[30%] sm:w-full">
               <InputCustom
@@ -169,7 +243,7 @@ const PaymentMethodDetailsPage = () => {
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />
               </div>
-              <div className="lg:w-[30%] sm:w-full">
+              {/* <div className="lg:w-[30%] sm:w-full">
               <InputCustom
                 type="text"
                 upload={true}
@@ -184,7 +258,7 @@ const PaymentMethodDetailsPage = () => {
                 onChange={handleReceiptImageChange}
                 ref={uploadReceiptImageRef}
               />
-              </div>
+              </div> */}
             </>
           )}
 
