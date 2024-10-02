@@ -41,7 +41,6 @@ const EditProfileStudentPage = () => {
        const CityRef = useRef(null);
        const JobRef = useRef(null);
 
-
        const [image, setImage] = useState(null);
        const [preview, setPreview] = useState('');
        const fileInputRef = useRef(null); // Create a ref for the file 
@@ -79,6 +78,7 @@ const EditProfileStudentPage = () => {
                   setSelectCityId(response.data.user.city_id)
                   setPhone(response.data.user.phone); 
                   setPreview(response.data.user.image_link); 
+                  setSelectJob(response.data.user.student_jobs?.job)
                   setSelectJobId(response.data.user.sudent_jobs_id)
                   setGender(response.data.user.gender)
                 }
@@ -187,7 +187,7 @@ const EditProfileStudentPage = () => {
        );
      }
 
-     if (!allCountry) {
+     if (!allCountry && !allJob) {
        return (
          <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
            No Data to Edit 
@@ -215,7 +215,8 @@ const EditProfileStudentPage = () => {
        formData.append('conf_password', confirmPassword);
        formData.append('country_id',selectCountryId);
        formData.append('city_id', selectCityId);
-       formData.append('image',image );
+       if(image){
+       formData.append('image',image );}
        formData.append('sudent_jobs_id',selectJobId );
 
        for (let pair of formData.entries()) {
@@ -320,6 +321,7 @@ const EditProfileStudentPage = () => {
                                       value={password}
                                       textDirection="true"
                                       onChange={(e) => setPassword(e.target.value)}
+                                      required={false}
                                 />
                               </div> 
                               <div className="lg:w-[30%] sm:w-full">
@@ -329,6 +331,7 @@ const EditProfileStudentPage = () => {
                                       value={confirmPassword}
                                       textDirection="true"
                                       onChange={(e) => setConfirmPassword(e.target.value)}
+                                      required={false}
                                />
                               </div> 
                         </div>

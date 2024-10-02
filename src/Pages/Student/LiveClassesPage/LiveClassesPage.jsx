@@ -132,6 +132,42 @@ const LiveClassesPage = () => {
     fetchLive();
   }, [auth.user.token]);
 
+  const handleAttendanceClick = async (id, liveLink) => {
+    // e.preventDefault();
+    console.log(id)
+    setIsLoading(true);
+    try {
+      const response = await axios.post(`https://bdev.elmanhag.shop/student/subscription/check/${id}`,
+        {}, // Empty body (optional, depending on API requirements)
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`, // Add the token here
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+        }
+    );
+      if (response.data.success && response.status === 200) {
+        navigate(liveLink); // Redirect to live link if the response is successful
+      }else if (response.data.faild && response.status === 400){
+        auth.toastError('Failed to update profile.');
+      }
+      } catch (error) {
+      const errorMessages = error?.response?.data.errors;
+      console.log(error?.response?.data)
+      let errorMessageString = 'Error occurred';
+
+      if (errorMessages) {
+        errorMessageString = Object.values(errorMessages).flat().join(' ');
+      }
+
+      auth.toastError('Error', errorMessageString);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
   if (isLoading) {
     return (
       <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
@@ -174,6 +210,7 @@ const LiveClassesPage = () => {
         {filteredData.length > 0 ? (
           filteredData.map((live) => (
             <div key={live.id} className="rounded-lg shadow-md bg-mainColor lg:w-4/5 s:w-full">
+            <div>
               <div className="flex gap-5 justify-around bg-[#EBEBEB] p-6 rounded-l-lg h-full mr-10">
                 <div>
                   <img src={live.teacher?.image_link} alt={live.teacher?.name}/>
@@ -187,10 +224,24 @@ const LiveClassesPage = () => {
                 <div>
                   <img src={live.subject?.cover_photo_url} alt={live.subject?.name} className='w-16 h-14'/>
                 </div>
+                </div>
+                <div className='mr-10 bg-[#EBEBEB] border-2 border-mainColor'>
+                <Button
+                    type='submit'
+                      Text=" حضور"
+                      BgColor="bg-[#EBEBEB]"
+                      Color="text-mainColor"
+                      Width="full"
+                      Size="text-2xl"
+                      px="px-3"
+                      rounded=""
+                      handleClick={() => handleAttendanceClick(live.id, live.live_link)}
+                      stateLoding={isLoading}
+                      // stateLoading={isLoading}
+                      // onClick={() => handleAttendanceClick(live.id, live.live_link)} // Wrap with arrow function
+                      />
+                </div>
               </div>
-              {/* <Button
-              text="حضور"
-              /> */}
             </div>
           ))
         ) : (
