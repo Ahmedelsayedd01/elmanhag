@@ -29,6 +29,9 @@ const LiveClassesPage = () => {
   const [filteredData, setFilteredData] = useState([]); // Filtered data based on selected day
   const [selectedDay, setSelectedDay] = useState(new Date()); // Track the selected day
   const auth = useAuth();
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false); // Control modal visibility
+  const [modalMessage, setModalMessage] = useState(''); // Control modal message
 
   const daysInMonth = getDaysInMonth(currentDate);
   const currentMonth = getMonth(currentDate) + 1; // Months are 0-indexed
@@ -96,6 +99,10 @@ const LiveClassesPage = () => {
     setSelectedDay(today); // Highlight the current day by default
   }, []);
 
+  const handleGoBack = () => {
+    navigate(-1, { replace: true });
+  };
+
   const fetchLive = async () => {
     setIsLoading(true);
     try {
@@ -131,6 +138,58 @@ const LiveClassesPage = () => {
   useEffect(() => {
     fetchLive();
   }, [auth.user.token]);
+
+  const handleAttendanceClick = async (id, liveLink) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        `https://bdev.elmanhag.shop/student/subscription/check/${id}`, 
+        {}, 
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`,
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+        }
+      );
+  
+      console.log("Response status:", response.status);
+      console.log("Response data:", response.data);
+  
+      if (response.status === 200 && response.data.success) {
+        console.log('Success:', response.data);
+        navigate(liveLink); // Redirect to live link if the response is successful
+      }
+    } catch (error) {
+      console.log('Error response:', error.response); 
+  
+      // Check if the error response contains the 'faild' message
+      if (error.response && error.response.data && error.response.data.faild) {
+        const faildMessage = error.response.data.faild;
+  
+        // Set the Arabic message if the returned message matches
+        if (faildMessage === 'You must buy live first') {
+          setModalMessage('يجب شراء اللايف'); // Arabic message for the modal
+        } else {
+          setModalMessage(faildMessage); // Set the original error message if it's different
+        }
+  
+        setIsModalOpen(true); // Open the modal
+      } else {
+        // Handle other possible errors (e.g., validation errors)
+        const errorMessages = error?.response?.data?.errors;
+        let errorMessageString = 'Error occurred';
+        if (errorMessages) {
+          errorMessageString = Object.values(errorMessages).flat().join(' ');
+        }
+        auth.toastError('Error', errorMessageString);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
 
   if (isLoading) {
     return (
@@ -173,7 +232,25 @@ const LiveClassesPage = () => {
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-y-5">
         {filteredData.length > 0 ? (
           filteredData.map((live) => (
+            
             <div key={live.id} className="rounded-lg shadow-md bg-mainColor lg:w-4/5 s:w-full">
+              {/* Error Modal */}
+              {isModalOpen && (
+              <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 lg:mr-10">
+                <div className="bg-white p-6 md:p-12 rounded-lg w-11/12 md:w-1/2 lg:w-1/3">
+                  <h2 className="text-[#6B6B6B] text-xl md:text-2xl font-bold mb-4">{modalMessage}</h2>
+                  <div className="flex justify-end gap-4 sm:gap-2">
+                    <Link to="/dashboard/subscriptions/plansMethod" state={{ live, planType: "Live session"}}>
+                    <h1>{live.name}</h1>
+                      <Button Text="اشترك الان" Width="auto" BgColor="bg-mainColor" Color="text-white" />
+                    </Link>
+                    <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
+                  </div>
+                </div>
+              </div>
+              )}
+
+            <div>
               <div className="flex gap-5 justify-around bg-[#EBEBEB] p-6 rounded-l-lg h-full mr-10">
                 <div>
                   <img src={live.teacher?.image_link} alt={live.teacher?.name}/>
@@ -187,10 +264,24 @@ const LiveClassesPage = () => {
                 <div>
                   <img src={live.subject?.cover_photo_url} alt={live.subject?.name} className='w-16 h-14'/>
                 </div>
+                </div>
+                <div className='mr-10 rounded-2xl border-mainColor'>
+                <Button
+                    type='submit'
+                      Text=" حضور"
+                      BgColor="bg-mainColor"
+                      Color="text-white"
+                      Width="full"
+                      Size="text-2xl"
+                      px="px-3"
+                      rounded="rounded-2xl"
+                      handleClick={() => handleAttendanceClick(live.id, live.live_link)}
+                      stateLoding={isLoading}
+                      // stateLoading={isLoading}
+                      // onClick={() => handleAttendanceClick(live.id, live.live_link)} // Wrap with arrow function
+                      />
+                </div>
               </div>
-              {/* <Button
-              text="حضور"
-              /> */}
             </div>
           ))
         ) : (

@@ -150,7 +150,7 @@ const AllPlansPage = () => {
       )}
 
       {/* Live Plans Section */}
-      {livePlans.length > 0 && (
+      {/* {livePlans.length > 0 && (
         <section className="mb-8">
           <h2 className="text-3xl font-semibold text-center mb-4">خطط اللايف</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -182,7 +182,7 @@ const AllPlansPage = () => {
             ))}
           </div>
         </section>
-      )}
+      )} */}
     </div>
   );
 };
