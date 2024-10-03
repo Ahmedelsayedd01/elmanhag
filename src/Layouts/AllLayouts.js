@@ -148,6 +148,9 @@ export { default as PaymentMethodDetailsLayout } from "./Student/PaymentMethodDe
 /* StudentComplaint and suggestion */
 export { default as ComplaintLayout } from "./Student/ComplaintLayout";
 
+//AffilateStudentLayout
+export { default as AffilateStudentLayout } from "./Student/AffilateStudentLayout";
+
 // Units
 export { default as UnitsLayout } from "./Student/UnitsLayout";
 

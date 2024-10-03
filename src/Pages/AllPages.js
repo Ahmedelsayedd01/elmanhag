@@ -132,7 +132,8 @@ export { default as PaymentMethodDetailsPage } from "./Student/StudentSubscripti
 /* StudentComplaint and suggestion */
 export { default as ComplaintPage } from "./Student/Complaint/ComplaintPage";
 
-/* /////Student Dashboard Page */
+/* /////AffilateStudent Page */
+export { default as AffilateStudentPage } from "./Student/AffilateStudent/AffilateStudentPage";
 
 /* /////Student profile Page */
 export { default as ProfileStudentPage } from "./Student/ProfileStudent/ProfileStudentPage";
