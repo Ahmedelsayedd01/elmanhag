@@ -75,25 +75,38 @@ const LessonsPage = ({ subjectId, lessonId }) => {
         // Handle different status codes
         switch (statusCode) {
           case 204:
-            setErrorMessage('This Lesson Is Closed');
+            if (error.response.data.faield === 'This Lesson Is Closed') {
+              setErrorMessage('يجب عليك الاشتراك لتكملة تعلم هذا الدرس');
+            } 
             break;
           case 400:
             if (error.response.data.faield === 'This Material for This Lesson is Closed') {
               setErrorMessage('عفوا هذا الدرس غير متاح حاليا. سوف يتوفر لاحقا');
             } else if (error.response.data.faield === 'This Lesson Unpaid') {
               setErrorMessage('عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين. اشترك الآن واستمتع بجميع الدروس بدون قيود !');
-            } else if (error.response.data.not_found === "This Bundle Don't Have Subject") {
-              setErrorMessage("This Bundle Don't Have Subject");
+            } else if (error.response.data.not_found === "This Bundle Don\'t Have Subject") {
+              setErrorMessage("هذه الباقه لا تحتوي علي الماده");
             } else if (error.response.data.error) {
               setErrorMessage('Error: ' + error.response.data.error);
             }
             break;
           case 404:
-            setErrorMessage('This Lesson Not Found');
+            if (error.response.data.faield === 'This Lesson Not Found') {
+              setErrorMessage('عفوا لا يوجد هذا الدرس');
+            } else if (error.response.data.not_found ==='Not Found homeWork for previous lesson.') {
+              setErrorMessage('عفوا لا يوجد واجبات لهذا الدرس.');
+            } 
             break;
           case 403:
-            setErrorMessage("You Can't Take This Lesson cause You Didn't Finish Homework Before Lesson");
+            if (error.response.data.faield ==='You Can\'t Take This Lesson cuse Don\'t end homework Befor Lesson') {
+              setErrorMessage(" يجب عليك الانتهاء من حل الدرس السابق");
+            }
             break;
+            case 405:
+              if (error.response.data.faield ==='This Material for This Lesson is Closed') {
+                setErrorMessage("عفوا هذا الدرس غير متوفر حاليا ، سوف يتوفر قريباً");
+              }
+              break;
           case 500:
             if (error.response.data.lesson_not_solved === "The previous lesson was not solved.") {
               setErrorMessage('يجب عليك حل الدرس السابق قبل المتابعة.');
