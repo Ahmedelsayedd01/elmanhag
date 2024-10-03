@@ -873,7 +873,7 @@ const SignUpPage = () => {
             <span className='px-2 text-center text-xl text-thirdColor font-semibold'>أو</span>
             <span className='w-6/12 h-[2px] rounded-2xl bg-thirdColor'></span>
           </div>
-          <Link to={'/authentication/signup'} className='w-full text-center text-2xl font-medium text-mainColor hover:text-secoundColor px-6 py-3 bg-secoundColor hover:bg-mainColor ease-in-out duration-300 border-2 border-mainColor rounded-2xl'>
+          <Link to={'/authentication/login'} className='w-full text-center text-2xl font-medium text-mainColor hover:text-secoundColor px-6 py-3 bg-secoundColor hover:bg-mainColor ease-in-out duration-300 border-2 border-mainColor rounded-2xl'>
             تسجيل دخول
           </Link>
         </div>
