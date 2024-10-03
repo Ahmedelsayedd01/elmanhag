@@ -240,8 +240,7 @@ const LiveClassesPage = () => {
                 <div className="bg-white p-6 md:p-12 rounded-lg w-11/12 md:w-1/2 lg:w-1/3">
                   <h2 className="text-[#6B6B6B] text-xl md:text-2xl font-bold mb-4">{modalMessage}</h2>
                   <div className="flex justify-end gap-4 sm:gap-2">
-                    <Link to="/dashboard/subscriptions/plansMethod" state={{ live, planType: "Live session"}}>
-                    <h1>{live.name}</h1>
+                    <Link to="/dashboard/subscriptions/plansMethod" state={{ plan:live, planType: "Live session"}}>
                       <Button Text="اشترك الان" Width="auto" BgColor="bg-mainColor" Color="text-white" />
                     </Link>
                     <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
