@@ -154,13 +154,14 @@ const TeachersPage = () => {
                                                                       {teacher?.name || "-"}
                                                                </td>
                                                                <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">
-                                                                      {teacher?.teacher_subjects.map((s) => (
-                                                                             <span className='flex flex-col' key={s.category.id}>{s.category.name}</span>
-                                                                      )) || "-"}
+                                                                      {teacher?.teacher_subjects.map((s, index) => (
+                                                                             <span className='flex flex-col' key={`${teacher.id}-${s.category.id}-${index}`}>{`${teacher.id}-${s.category.id}-${index}`} {s.category.name}</span>
+                                                                      ))}
+
                                                                </td>
                                                                <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">
                                                                       {teacher?.teacher_subjects.map((s) => (
-                                                                             <span className='flex flex-col' key={s.id}>{s.name}</span>
+                                                                             <span className='flex flex-col' key={s.id}>{s.id},{s.name}</span>
                                                                       )) || "-"}
                                                                </td>
 
@@ -191,30 +192,6 @@ const TeachersPage = () => {
                                                                                     <DeleteIcon />
                                                                              </button>
                                                                       </div>
-                                                                      {/* {openDialog === teacher.id && (
-                                                                             <Dialog open={true} onClose={handleCloseDialog}>
-                                                                                    <DialogBackdrop className="fixed inset-0 bg-gray-400 bg-opacity-75" />
-                                                                                    <div className="fixed inset-0 z-10 flex items-center justify-center">
-                                                                                           <DialogPanel className="bg-white rounded-lg shadow-lg">
-                                                                                                  <div className="p-6">
-                                                                                                         <h3 className="text-lg font-semibold">Delete {teacher?.name || "-"}</h3>
-                                                                                                         <p>Are you sure you want to delete {teacher?.name || "this teacher"}?</p>
-                                                                                                         <div className="mt-4 flex justify-end space-x-3">
-                                                                                                                <button
-                                                                                                                       onClick={() => handleDelete(teacher.id, teacher.name)}
-                                                                                                                       className="bg-red-500 text-white px-4 py-2 rounded-lg"
-                                                                                                                >
-                                                                                                                       {isDeleting ? <Loading /> : 'Delete'}
-                                                                                                                </button>
-                                                                                                                <button onClick={handleCloseDialog} className="bg-gray-300 px-4 py-2 rounded-lg">
-                                                                                                                       Cancel
-                                                                                                                </button>
-                                                                                                         </div>
-                                                                                                  </div>
-                                                                                           </DialogPanel>
-                                                                                    </div>
-                                                                             </Dialog>
-                                                                      )} */}
 
                                                                       {openDialog === teacher.id && (
                                                                              <Dialog open={true} onClose={handleCloseDialog} className="relative z-10">
