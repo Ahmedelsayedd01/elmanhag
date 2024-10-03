@@ -101,7 +101,7 @@ const My_SubscriptionsPage = () => {
       )}
 
       {/* Live Plans Section */}
-      {livePlans.length > 0 && (
+      {/* {livePlans.length > 0 && (
         <section className="mb-8">
           <h2 className="text-3xl font-semibold text-center mb-4"> اللايف</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -112,17 +112,12 @@ const My_SubscriptionsPage = () => {
                     <img src={live.cover_photo_url} alt={live.name} className="" />
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{live.name}</h3>
-                  {/* <p className="text-gray-700 mb-2">
-                      {live.description}
-                  </p> */}
                 </div>
               </div>
             ))}
           </div>
         </section>
-      )}
-
-
+      )} */}
     </div>
   );
 };
