@@ -11,6 +11,7 @@ import DeleteIcon from '../../../../Components/Icons/AdminIcons/DeleteIcon';
 import CheckBox from '../../../../Components/CheckBox';
 
 const AddTeacherPage = () => {
+
   const auth = useAuth();
   const navigate = useNavigate();
 
@@ -28,7 +29,7 @@ const AddTeacherPage = () => {
   const [categoryNameSelected, setCategoryNameSelected] = useState('Select Category')
   const [subjectNameSelected, setSubjectNameSelected] = useState('Select Subject')
 
-  const [categoryIdSelected, setCategoryIdSelected] = useState('')
+  const [categoryIdSelected, setCategoryIdSelected] = useState([])
 
   // const [tableData, setTableData] = useState([
   //   {
@@ -94,6 +95,10 @@ const AddTeacherPage = () => {
     console.log('allCategory', allCategory)
   }, []);
 
+  useEffect(() => {
+    console.log('Updated subjectData:', subjectData);
+  }, [subjectData]);
+
   const handleOpenCategory = () => {
     setOpenCategory(!openCategory);
     setOpenSubject(false);
@@ -102,113 +107,6 @@ const AddTeacherPage = () => {
     setOpenCategory(false);
     setOpenSubject(!openSubject);
   };
-
-  // const filterSubjects = (categoryId) => {
-  //   //Reset state
-  //   setSelectSubject('Select Subject');
-  //   setSelectSubjectId('');
-  //   setSubjectData([]);
-
-  //   let filteredSubjects = allSubjects; // Start with all subjects
-
-  //   console.log(filteredSubjects);
-
-  //   // If both semesterName and categoryId are empty, filter only by educationId
-  //   if (!semesterName && !categoryId) {
-  //     if (educationId !== 'notfound') {
-  //       filteredSubjects = filteredSubjects.filter(subject =>
-  //         subject.education_id === parseInt(educationId)
-  //       );
-  //     } else {
-  //       filteredSubjects = filteredSubjects.filter(subject =>
-  //         subject.education_id === null || subject.education_id === undefined
-  //       );
-  //     }
-  //   }
-
-  //   else if (semesterName && !categoryId) {
-  //     if (educationId) {
-  //       if (educationId !== 'notfound') {
-  //         filteredSubjects = filteredSubjects.filter(subject =>
-  //           subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-  //           subject.education_id === parseInt(educationId)
-  //         );
-  //       } else {
-  //         filteredSubjects = filteredSubjects.filter(subject =>
-  //           subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-  //           subject.education_id === null || subject.education_id === undefined
-  //         );
-  //       }
-  //     }
-  //     else {
-  //       filteredSubjects = filteredSubjects.filter(subject =>
-  //         subject.semester.toLowerCase() === semesterName.toLowerCase()
-  //       )
-  //     }
-  //   }
-
-
-  //   else if (!semesterName && categoryId) {
-  //     if (educationId) {
-  //       if (educationId !== 'notfound') {
-  //         filteredSubjects = filteredSubjects.filter(subject =>
-  //           subject.category_id === categoryId &&
-  //           subject.education_id === parseInt(educationId)
-  //         );
-  //       } else {
-  //         filteredSubjects = filteredSubjects.filter(subject =>
-  //           subject.category_id === categoryId &&
-  //           subject.education_id === null || subject.education_id === undefined
-  //         );
-  //       }
-  //     }
-  //     else {
-  //       filteredSubjects = filteredSubjects.filter(subject =>
-  //         subject.category_id === categoryId
-  //       )
-  //     }
-  //   }
-
-  //   else if (semesterName && categoryId) {
-  //     if (educationId) {
-  //       if (educationId !== 'notfound') {
-  //         filteredSubjects = filteredSubjects.filter(subject =>
-  //           subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-  //           subject.category_id === categoryId &&
-  //           subject.education_id === parseInt(educationId)
-  //         );
-  //       } else {
-  //         filteredSubjects = filteredSubjects.filter(subject =>
-  //           subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-  //           subject.category_id === categoryId &&
-  //           subject.education_id === null || subject.education_id === undefined
-  //         );
-  //       }
-  //     }
-  //     else {
-  //       filteredSubjects = filteredSubjects.filter(subject =>
-  //         subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-  //         subject.category_id === categoryId
-  //       )
-  //     }
-  //   }
-
-  //   //Check if no subjects match the filters
-  //   if (filteredSubjects.length === 0) {
-  //     setSubjectData([{ id: 'Not Found', name: 'Not Found' }]);
-  //   } else {
-  //     setSelectSubject(filteredSubjects.length > 1 ? 'Select Subject' : filteredSubjects[0].name);
-  //     setSelectSubjectId(filteredSubjects.length > 1 ? [] : filteredSubjects[0].id);
-  //     setSubjectData(filteredSubjects);
-  //   }
-
-  //   console.log('semesterName:', semesterName);
-  //   console.log('categoryId:', categoryId);
-  //   console.log('educationId:', educationId);
-
-  //   console.log('filteredSubjects:', filteredSubjects);
-  // };
-
 
   const handleClick = (e) => {
     const isChecked = e.target.checked;
@@ -227,6 +125,7 @@ const AddTeacherPage = () => {
     setCategoryNameSelected(selectedOptionName);
 
     setOpenCategory(false);
+    setCategoryIdSelected([...categoryIdSelected, selectedOptionValue]);
 
     console.log('filterSubjects', filterSubjects);
     console.log('Selected Category:', selectedOptionName);
@@ -253,27 +152,25 @@ const AddTeacherPage = () => {
       ]
     };
 
-    const subjectObj = selectedOptionValue;
+    // Store only the subject ID in subjectData (array of numbers)
+    const subjectId = selectedOptionValue;
 
     // Add the new object to the tableData array
     setTableData((prevTableData) => [...prevTableData, obj]);
 
-    // Update subjectData array properly
-    setSubjectData((prevSubjectData) => [...prevSubjectData, subjectObj]);
+    // Update subjectData array to store just the subject ID (number)
+    setSubjectData((prevSubjectData) => [...prevSubjectData, subjectId]);
 
     // Reset the dropdown selections
     setAllSubjectSelected([]);
-    setCategoryNameSelected('Selected Category');
+    // setCategoryNameSelected('Selected Category');
+    // setCategoryIdSelected((prevCategoryId) => [...prevCategoryId, subjectId]);
     setSubjectNameSelected('Selected Subject');
 
     // Optionally close the dropdown
     setOpenSubject(false);
-
-    // Correct usage of logs after the state updates
-    console.log('setSubjectData:', subjectData);
-    console.log('Added Object to tableData:', obj);
-    console.log('Selected Subject Data:', subjectObj);
   };
+
 
   // console.log('tableData:', tableData);
   // console.log('obj:', obj);
@@ -339,16 +236,56 @@ const AddTeacherPage = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+
+
+    if (!teacherName) {
+      auth.toastError('Please Enter Name.');
+      return;
+    }
+    if (!teacherPhone) {
+      auth.toastError('Please Enter Phone.');
+      return;
+    }
+    if (!teacherPhotoFile) {
+      auth.toastError('Please Enter Teacher Photo.');
+      return;
+    }
+    if (!teacherEmail) {
+      auth.toastError('Please Enter Email.');
+      return;
+    }
+    if (!teacherPassword) {
+      auth.toastError('Please Enter Password.');
+      return;
+    }
+    if (categoryIdSelected.length === 0) {
+      auth.toastError('Please Select Category.');
+      return;
+    }
+    if (subjectData.length === 0) {
+      auth.toastError('Please Select Subject.');
+      return;
+    }
+
+
+
+
+
     setIsLoading(true);
+
     const formData = new FormData();
-    formData.append('name', teacherName)
-    formData.append('phone', teacherPhone)
-    formData.append('image', teacherPhotoFile)
-    formData.append('email', teacherEmail)
-    formData.append('password', teacherPassword)
-    formData.append('status', teacherStatus)
-    formData.append('teacher_subject', subjectData)
+    formData.append('name', teacherName);
+    formData.append('phone', teacherPhone);
+    formData.append('image', teacherPhotoFile);
+    formData.append('email', teacherEmail);
+    formData.append('password', teacherPassword);
+    formData.append('status', teacherStatus);
+
+    // Send the subjectData array directly, not as a JSON string
+    subjectData.forEach((subjectId, index) => {
+      formData.append(`subject[${index}]`, subjectId);
+    });
 
     try {
       const response = await axios.post('https://bdev.elmanhag.shop/admin/teacher/add', formData, {
@@ -357,17 +294,18 @@ const AddTeacherPage = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
+
       if (response.status === 200) {
-        handleGoBack()
+        handleGoBack();
         auth.toastSuccess(`${teacherName} added successfully!`);
       }
     } catch (error) {
-      auth.toastError(`Error ${error}`);
+      auth.toastError(`Error: ${error}`);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
+  };
 
-  }
 
   if (isLoading) {
     return (
@@ -386,6 +324,7 @@ const AddTeacherPage = () => {
               type="text"
               placeholder="Teacher Name"
               value={teacherName}
+              required={false}
               onChange={(e) => setTeacherName(e.target.value)}
             />
           </div>
@@ -394,6 +333,7 @@ const AddTeacherPage = () => {
               type="text"
               placeholder="Teacher Phone"
               value={teacherPhone}
+              required={false}
               onChange={(e) => {
                 const value = e.target.value;
                 // Only allow numbers
@@ -426,6 +366,7 @@ const AddTeacherPage = () => {
               type="email"
               placeholder="Teacher Email"
               value={teacherEmail}
+              required={false}
               onChange={(e) => setTeacherEmail(e.target.value)}
             />
           </div>
@@ -434,6 +375,7 @@ const AddTeacherPage = () => {
               type="password"
               placeholder="Password"
               value={teacherPassword}
+              required={false}
               onChange={(e) => setTeacherPassword(e.target.value)}
             />
           </div>

@@ -137,13 +137,17 @@ export { default as ComplaintPage } from "./Student/Complaint/ComplaintPage";
 /* /////Student profile Page */
 export { default as ProfileStudentPage } from "./Student/ProfileStudent/ProfileStudentPage";
 export { default as EditProfileStudentPage } from "./Student/ProfileStudent/EditProfileStudentPage";
+/* Parent Dashboard Page */
+export { default as ParentDashboardPage } from "./Parent/ParentDashboardPage";
+/* /////Parent Dashboard Page */
 
 /* Affilate Dashboard Page */
 export { default as AffilatePage } from "./Affilate/AffilatePage";
 /* /////Affilate Dashboard Page */
-/* Parent Dashboard Page */
-export { default as ParentDashboardPage } from "./Parent/ParentDashboardPage";
-/* /////Parent Dashboard Page */
+
+/* Teacher Dashboard Page */
+export { default as TeacherPage } from "./Teacher/TecherPage";
+/* /////Teacher Dashboard Page */
 
 /* Download Mobile Page */
 export { default as DownloadMobilePage } from "./DownloadMobile/DownloadMobilePage";

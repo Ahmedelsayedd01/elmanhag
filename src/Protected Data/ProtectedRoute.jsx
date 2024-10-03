@@ -64,8 +64,12 @@ const ProtectedRoute = ({ allowedRoles }) => {
               } else if (auth.user.role === "affilate") {
                      console.log('3')
                      return <Navigate to={'/dashboard_affilate'} />;
-              } else {
+
+              } else if (auth.user.role === "teacher") {
                      console.log('4')
+                     return <Navigate to={'/dashboard_teacher'} />;
+              } else {
+                     console.log('5')
                      return window.location.href = "https://elmanhag.com";
 
               }

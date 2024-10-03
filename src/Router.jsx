@@ -119,7 +119,8 @@ import {
   PayoutPendingPage,
   ProfilePage,
   ProgressPage,
-  PurchasesPage
+  PurchasesPage,
+  TeacherPage
 } from "./Pages/AllPages";
 
 import HeaderHome from "./Components/HeaderHome";
@@ -171,18 +172,6 @@ const AppLayoutHomePage = () => (
       <HeaderHome />
       <Outlet />
       <FooterHome />
-    </div>
-  </>
-);
-
-const AppLayoutSuperAdmin = () => (
-  <>
-    <div className="relative flex gap-x-4">
-      <SidebarSuperAdmin />
-      <div className="contentSection w-4/5 min-h-screen ">
-        {/* <HeaderSuperAdmin /> */}
-        <Outlet />
-      </div>
     </div>
   </>
 );
@@ -386,6 +375,19 @@ const AppLayoutAffilateDashboard = () => (
     {/* <Outlet /> */}
   </div>
 );
+const AppLayoutTeacherDashboard = () => (
+  <div className="w-full flex gap-x-4 directionAR">
+    {/* <SidebarStudent /> */}
+    <div className=" w-full h-screen ">
+      <NavbarStudent />
+      <TeacherPage />
+    </div>
+    {/* <AffilatePage /> */}
+    {/* <NavbarStudent />
+      <AffilatePage /> */}
+    {/* <Outlet /> */}
+  </div>
+);
 const AppLayoutParentDashboard = () => (
   <div className="w-full flex gap-x-4 directionAR">
     <div className=" w-full h-screen ">
@@ -418,65 +420,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  // {
-  //   path: '/authentication',
-  //   element: <AppLayoutAuthentication />,
-  //   children: [
-  //     {
-  //       path: '',
-  //       element: <Authentication />,
-  //       children: [
-  //         {
-  //           path: 'signup',
-  //           index: true,
-  //           element: <SignUpPage />,
-  //         },
-  //         {
-  //           path: 'login',
-  //           element: <LoginUser />,
-  //         },
-  //         {
-  //           path: 'signup_affilate',
-  //           element: <SignUpAffiliatePage />,
-  //         },
-  //       ]
-  //     },
-  //   ],
-  // },
-
-  // {
-  //   path: '/authentication',
-  //   element: <ProtectedLogin />,
-  //   children: [
-  //     {
-  //       path: '',
-  //       element: <AppLayoutAuthentication />,
-  //       children: [
-  //         {
-  //           path: '',
-  //           element: <Authentication />,
-  //           children: [
-  //             {
-  //               path: 'signup',
-  //               index: true,
-  //               element: <SignUpPage />,
-  //             },
-  //             {
-  //               path: 'login',
-  //               element: <LoginUser />,
-  //             },
-  //             {
-  //               path: 'signup_affilate',
-  //               element: <SignUpAffiliatePage />,
-  //             },
-  //           ]
-  //         },
-  //       ],
-  //     },
-
-  //   ]
-
-  // },
+  /* Login Admin */
   {
     path: "/loginWego",
     element: <ProtectedLogin />,
@@ -487,6 +431,7 @@ export const router = createBrowserRouter([
       }
     ]
   },
+  /* Login && SignUp User */
   {
     path: '/authentication',
     element: <ProtectedLogin />,
@@ -518,6 +463,7 @@ export const router = createBrowserRouter([
       }
     ]
   },
+  /* Forget Password User */
   {
     path: '/forget_password',
     element: <ProtectedLogin />,
@@ -528,6 +474,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  /* Admin && Super Admin Dashboard */
   {
     element: <ProtectedRoute allowedRoles={['admin', 'supAdmin']} />,
     path: '/dashboard_admin',
@@ -1061,16 +1008,18 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  {
-    element: <ProtectedRoute allowedRoles={['studentSignup']} />,
-    path: '/download',
-    children: [
-      {
-        path: '',
-        element: <DownloadMobilePage />,
-      },
-    ]
-  },
+  /* Signup coming soon student Dashboard */
+  // {
+  //   element: <ProtectedRoute allowedRoles={['studentSignup']} />,
+  //   path: '/download',
+  //   children: [
+  //     {
+  //       path: '',
+  //       element: <DownloadMobilePage />,
+  //     },
+  //   ]
+  // },
+  /* Student Dashboard */
   {
     element: <ProtectedRoute allowedRoles={['student']} />,
     path: '/dashboard',
@@ -1174,15 +1123,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  {
-    element: <ProtectedRoute allowedRoles={['affilate']} />,
-    children: [
-      {
-        path: '/dashboard_affilate',
-        element: <AppLayoutAffilateDashboard />,
-      }
-    ],
-  },
+  /* Parent Dashboard */
   {
     element: <ProtectedRoute allowedRoles={['parent']} />,
     children: [
@@ -1192,10 +1133,33 @@ export const router = createBrowserRouter([
       }
     ],
   },
+  /* Affiliate Dashboard */
+  {
+    element: <ProtectedRoute allowedRoles={['affilate']} />,
+    children: [
+      {
+        path: '/dashboard_affilate',
+        element: <AppLayoutAffilateDashboard />,
+      }
+    ],
+  },
+  /* Teacher Dashboard */
+  {
+    element: <ProtectedRoute allowedRoles={['teacher']} />,
+    children: [
+      {
+        path: '/dashboard_teacher',
+        element: <AppLayoutTeacherDashboard />,
+      }
+    ],
+  },
+
+  /* Unauthorized Permission Page */
   {
     path: "/unauthorized",
     element: <Unauthorized />,
   },
+  /* Not Found The Page */
   {
     path: "*",
     element: <NotFoundPage />,

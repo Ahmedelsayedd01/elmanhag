@@ -6,7 +6,8 @@ import Loading from '../../../../Components/Loading';
 import axios from 'axios';
 import EditIcon from '../../../../Components/Icons/AdminIcons/EditIcon';
 import DeleteIcon from '../../../../Components/Icons/AdminIcons/DeleteIcon';
-import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
+import { Wroning } from '../../../../Components/Icons/All_Icons';
 
 const TeachersPage = () => {
        const auth = useAuth();
@@ -131,7 +132,7 @@ const TeachersPage = () => {
                                           <ButtonAdd Text={"Add"} isWidth={true} BgColor={"white"} Color={"thirdColor"} Size={"xl"} />
                                    </Link>
                             </div>
-                            <div className="w-full flex flex-col items-center justify-between mt-4 overflow-x-auto">
+                            <div className="w-full flex flex-col items-center justify-between mt-4 overflow-x-auto mb-4">
                                    <table className="w-full min-w-full table-auto border-collapse bg-white shadow-md rounded-lg">
                                           <thead className="bg-gray-100">
                                                  <tr className="border-b">
@@ -152,14 +153,15 @@ const TeachersPage = () => {
                                                                <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">
                                                                       {teacher?.name || "-"}
                                                                </td>
-                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base flex flex-col">
-                                                                      {teacher?.teacher_subjects.map((s) => (
-                                                                             <span className='flex flex-col' key={s.category.id}>{s.category.name}</span>
-                                                                      )) || "-"}
+                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">
+                                                                      {teacher?.teacher_subjects.map((s, index) => (
+                                                                             <span className='flex flex-col' key={`${teacher.id}-${s.category.id}-${index}`}>{`${teacher.id}-${s.category.id}-${index}`} {s.category.name}</span>
+                                                                      ))}
+
                                                                </td>
                                                                <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">
                                                                       {teacher?.teacher_subjects.map((s) => (
-                                                                             <span className='flex flex-col' key={s.id}>{s.name}</span>
+                                                                             <span className='flex flex-col' key={s.id}>{s.id},{s.name}</span>
                                                                       )) || "-"}
                                                                </td>
 
@@ -190,27 +192,43 @@ const TeachersPage = () => {
                                                                                     <DeleteIcon />
                                                                              </button>
                                                                       </div>
+
                                                                       {openDialog === teacher.id && (
-                                                                             <Dialog open={true} onClose={handleCloseDialog}>
-                                                                                    <DialogBackdrop className="fixed inset-0 bg-gray-400 bg-opacity-75" />
-                                                                                    <div className="fixed inset-0 z-10 flex items-center justify-center">
-                                                                                           <DialogPanel className="bg-white rounded-lg shadow-lg">
-                                                                                                  <div className="p-6">
-                                                                                                         <h3 className="text-lg font-semibold">Delete {teacher?.name || "-"}</h3>
-                                                                                                         <p>Are you sure you want to delete {teacher?.name || "this teacher"}?</p>
-                                                                                                         <div className="mt-4 flex justify-end space-x-3">
+                                                                             <Dialog open={true} onClose={handleCloseDialog} className="relative z-10">
+                                                                                    <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                                                                                    <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                                                                                           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                                                                                  <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                                                                                         <div className="flex flex-col items-center justify-center bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                                                                                                <Wroning Width='28' Height='28' aria-hidden="true" />
+                                                                                                                <div className="flex items-center">
+                                                                                                                       <div className="mt-2 text-center">
+                                                                                                                              <DialogTitle as="h3" className="text-xl font-semibold leading-10 text-gray-900">
+                                                                                                                                     You will delete {teacher?.name || "this teacher"}
+                                                                                                                              </DialogTitle>
+                                                                                                                       </div>
+                                                                                                                </div>
+                                                                                                         </div>
+                                                                                                         <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                                                                                                                 <button
-                                                                                                                       onClick={() => handleDelete(teacher.id, teacher.name)}
-                                                                                                                       className="bg-red-500 text-white px-4 py-2 rounded-lg"
+                                                                                                                       type="button"
+                                                                                                                       data-autofocus
+                                                                                                                       onClick={handleCloseDialog}
+                                                                                                                       className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
                                                                                                                 >
-                                                                                                                       {isDeleting ? <Loading /> : 'Delete'}
-                                                                                                                </button>
-                                                                                                                <button onClick={handleCloseDialog} className="bg-gray-300 px-4 py-2 rounded-lg">
                                                                                                                        Cancel
                                                                                                                 </button>
+                                                                                                                <button
+                                                                                                                       type="button"
+                                                                                                                       onClick={() => handleDelete(teacher.id)}
+                                                                                                                       disabled={isDeleting}
+                                                                                                                       className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:mr-3 sm:w-auto"
+                                                                                                                >
+                                                                                                                       {isDeleting ? <div className="flex w-10 h-5"><Loading /></div> : 'Delete'}
+                                                                                                                </button>
                                                                                                          </div>
-                                                                                                  </div>
-                                                                                           </DialogPanel>
+                                                                                                  </DialogPanel>
+                                                                                           </div>
                                                                                     </div>
                                                                              </Dialog>
                                                                       )}

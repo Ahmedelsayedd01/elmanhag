@@ -39,6 +39,10 @@ const LoginPage = () => {
 
                             navigate("/dashboard_parent", { replace: true });
                      }
+                     else if (type === "teacher") {
+
+                            navigate("/dashboard_teacher", { replace: true });
+                     }
               }
        }, [data]);
 
@@ -116,7 +120,7 @@ const LoginPage = () => {
        }
        return (
               <>
-                     <form onSubmit={handleSubmit} className="w-full flex flex-col items-center justify-center gap-2 xl:mt-20">
+                     <form onSubmit={handleSubmit} className="w-full flex flex-col items-center justify-center gap-2">
                             <div className="w-full flex flex-col gap-6 items-end">
                                    <InputCustom
                                           type={"text"}

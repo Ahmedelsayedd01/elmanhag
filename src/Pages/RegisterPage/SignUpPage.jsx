@@ -319,11 +319,11 @@ const SignUpPage = () => {
 
     if (stateData === 2) {
 
-      if (!country) {
+      if (!countryId) {
         auth.toastError("اختر البلد")
         return;
       }
-      if (!city) {
+      if (!cityId) {
         auth.toastError("اختر المدينة")
         return;
       }
@@ -432,11 +432,11 @@ const SignUpPage = () => {
       auth.toastError("خطأ فى تأكيد كلمة السر")
       return;
     }
-    if (!country) {
+    if (!countryId) {
       auth.toastError("اختر البلد")
       return;
     }
-    if (!city) {
+    if (!cityId) {
       auth.toastError("اختر المدينة")
       return;
     }
@@ -575,7 +575,7 @@ const SignUpPage = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="w-full flex flex-col items-start justify-center gap-4">
+      <form onSubmit={handleSubmit} className="w-full flex flex-col items-start justify-center gap-4 mt-5">
         <div className="w-full flex items-center justify-between">
           <div className="relative w-1/3 flex items-center justify-start">
             <span className={`${stateData === 3 ? "text-white bg-mainColor before:content-[''] before:absolute before:top-2/4 before:right-[-30%] before:h-1 before:w-[100%] before:bg-mainColor before:transition-all duration-500 ease-in-out" : "text-mainColor bg-white before:w-[0%] before:bg-transparent before:transition-all duration-500 ease-out"} before:rounded-xl text-3xl font-semibold border-2 border-mainColor px-4 py-1 rounded-full`}>
@@ -598,7 +598,7 @@ const SignUpPage = () => {
         {/* State 1 */}
         {stateData === 1 &&
           (
-            <div className="w-full flex flex-col gap-6 items-start">
+            <div className="w-full flex flex-col sm:gap-2 xl:gap-6 items-start">
               <span className='w-full text-right text-thirdColor text-2xl'>بيانات الطالب</span>
               <div className="w-full flex xl:flex-row-reverse flex-col gap-4 items-start">
                 <InputCustom
@@ -660,7 +660,7 @@ const SignUpPage = () => {
         {/* State 2 */}
         {stateData === 2 &&
           (
-            <div className="w-full flex flex-col gap-6 items-end">
+            <div className="w-full flex flex-col sm:gap-2 xl:gap-6 items-end">
               <span className='w-full text-right text-thirdColor text-2xl'>أهلا بك معنا</span>
               <div className="w-full flex  flex-col xl:flex-row-reverse justify-between gap-4">
 
@@ -742,9 +742,9 @@ const SignUpPage = () => {
         {/* State 3 */}
         {stateData === 3 &&
           (
-            <div className="w-full flex flex-col gap-4 items-end">
+            <div className="w-full flex flex-col gap-2 items-end">
               <span className='w-full text-right text-thirdColor text-2xl'>بيانات ولى الأمر</span>
-              <div className="w-full flex xl:flex-row-reverse flex-col gap-4 items-start">
+              <div className="w-full flex xl:flex-row-reverse flex-col sm:gap-2 xl:gap-6 items-start">
                 <InputCustom
                   textDirection={true}
                   paddinRight={"pr-4"}
@@ -810,7 +810,7 @@ const SignUpPage = () => {
                 textDirection={true}
                 paddinRight='pr-2'
                 required={false}
-                placeholder={"كود السويق التابع له"}
+                placeholder={"كود التسويق التابع له"}
                 value={affiliateCode}
                 onChange={(e) => setAffiliateCode(e.target.value)}
               />
@@ -866,14 +866,14 @@ const SignUpPage = () => {
         </div>
 
         {/* <button type="submit" className="w-full text-center text-2xl font-medium text-secoundColor hover:text-mainColor px-6 py-3 bg-mainColor hover:bg-secoundColor ease-in-out duration-300 rounded-2xl">تسجيل دخول</button> */}
-        <div className="w-full flex flex-col gap-y-4">
+        <div className="w-full flex flex-col gap-y-4 mb-5">
           <button type="submit" className="w-full text-center text-2xl font-medium text-secoundColor px-6 py-3 bg-mainColor rounded-2xl">انشاء حساب</button>
           <div className="w-full flex items-baseline justify-between">
             <span className='w-6/12 h-[2px] rounded-2xl bg-thirdColor'></span>
             <span className='px-2 text-center text-xl text-thirdColor font-semibold'>أو</span>
             <span className='w-6/12 h-[2px] rounded-2xl bg-thirdColor'></span>
           </div>
-          <Link to={'/authentication/signup'} className='w-full text-center text-2xl font-medium text-mainColor hover:text-secoundColor px-6 py-3 bg-secoundColor hover:bg-mainColor ease-in-out duration-300 border-2 border-mainColor rounded-2xl'>
+          <Link to={'/authentication/login'} className='w-full text-center text-2xl font-medium text-mainColor hover:text-secoundColor px-6 py-3 bg-secoundColor hover:bg-mainColor ease-in-out duration-300 border-2 border-mainColor rounded-2xl'>
             تسجيل دخول
           </Link>
         </div>
