@@ -29,7 +29,7 @@ const AddTeacherPage = () => {
   const [categoryNameSelected, setCategoryNameSelected] = useState('Select Category')
   const [subjectNameSelected, setSubjectNameSelected] = useState('Select Subject')
 
-  const [categoryIdSelected, setCategoryIdSelected] = useState('')
+  const [categoryIdSelected, setCategoryIdSelected] = useState([])
 
   // const [tableData, setTableData] = useState([
   //   {
@@ -125,6 +125,7 @@ const AddTeacherPage = () => {
     setCategoryNameSelected(selectedOptionName);
 
     setOpenCategory(false);
+    setCategoryIdSelected([...categoryIdSelected, selectedOptionValue]);
 
     console.log('filterSubjects', filterSubjects);
     console.log('Selected Category:', selectedOptionName);
@@ -162,7 +163,8 @@ const AddTeacherPage = () => {
 
     // Reset the dropdown selections
     setAllSubjectSelected([]);
-    setCategoryNameSelected('Selected Category');
+    // setCategoryNameSelected('Selected Category');
+    // setCategoryIdSelected((prevCategoryId) => [...prevCategoryId, subjectId]);
     setSubjectNameSelected('Selected Subject');
 
     // Optionally close the dropdown
@@ -235,6 +237,41 @@ const AddTeacherPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+
+    if (!teacherName) {
+      auth.toastError('Please Enter Name.');
+      return;
+    }
+    if (!teacherPhone) {
+      auth.toastError('Please Enter Phone.');
+      return;
+    }
+    if (!teacherPhotoFile) {
+      auth.toastError('Please Enter Teacher Photo.');
+      return;
+    }
+    if (!teacherEmail) {
+      auth.toastError('Please Enter Email.');
+      return;
+    }
+    if (!teacherPassword) {
+      auth.toastError('Please Enter Password.');
+      return;
+    }
+    if (categoryIdSelected.length === 0) {
+      auth.toastError('Please Select Category.');
+      return;
+    }
+    if (subjectData.length === 0) {
+      auth.toastError('Please Select Subject.');
+      return;
+    }
+
+
+
+
+
     setIsLoading(true);
 
     const formData = new FormData();
@@ -287,6 +324,7 @@ const AddTeacherPage = () => {
               type="text"
               placeholder="Teacher Name"
               value={teacherName}
+              required={false}
               onChange={(e) => setTeacherName(e.target.value)}
             />
           </div>
@@ -295,6 +333,7 @@ const AddTeacherPage = () => {
               type="text"
               placeholder="Teacher Phone"
               value={teacherPhone}
+              required={false}
               onChange={(e) => {
                 const value = e.target.value;
                 // Only allow numbers
@@ -327,6 +366,7 @@ const AddTeacherPage = () => {
               type="email"
               placeholder="Teacher Email"
               value={teacherEmail}
+              required={false}
               onChange={(e) => setTeacherEmail(e.target.value)}
             />
           </div>
@@ -335,6 +375,7 @@ const AddTeacherPage = () => {
               type="password"
               placeholder="Password"
               value={teacherPassword}
+              required={false}
               onChange={(e) => setTeacherPassword(e.target.value)}
             />
           </div>
