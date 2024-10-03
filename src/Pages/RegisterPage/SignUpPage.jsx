@@ -866,7 +866,7 @@ const SignUpPage = () => {
         </div>
 
         {/* <button type="submit" className="w-full text-center text-2xl font-medium text-secoundColor hover:text-mainColor px-6 py-3 bg-mainColor hover:bg-secoundColor ease-in-out duration-300 rounded-2xl">تسجيل دخول</button> */}
-        <div className="w-full flex flex-col gap-y-4">
+        <div className="w-full flex flex-col gap-y-4 mb-5">
           <button type="submit" className="w-full text-center text-2xl font-medium text-secoundColor px-6 py-3 bg-mainColor rounded-2xl">انشاء حساب</button>
           <div className="w-full flex items-baseline justify-between">
             <span className='w-6/12 h-[2px] rounded-2xl bg-thirdColor'></span>
