@@ -347,6 +347,7 @@ const PaymentMethodDetailsPage = () => {
   const [showModal, setShowModal] = useState(false); 
   const [paymentStatus, setPaymentStatus] = useState(null);
   const [copySuccess, setCopySuccess] = useState(false);
+  const [warningMessage, setWarningMessage] = useState('');
 
   // Function to handle receipt image click
   const handleReceiptImageClick = () => {
@@ -441,7 +442,7 @@ const PaymentMethodDetailsPage = () => {
           setReferenceNumber(response.data.referenceNumber);
           setMerchantNumber(response.data.merchantRefNumber);
           localStorage.setItem('referenceNumber', response.data.referenceNumber);
-          localStorage.setItem('merchantNumber', response.data.merchantRefNumber); 
+          localStorage.setItem('merchantNumber', response.data.merchantRefNumber);
           setShowModal(true); 
         } else {
           auth.toastError('Failed to submit.');
@@ -469,6 +470,7 @@ const PaymentMethodDetailsPage = () => {
         setReferenceNumber(storedReference);
         setMerchantNumber(storedMerchantNumber);
         setShowModal(true); // Show modal
+        setWarningMessage('هناك عملية شراء لم تكتمل بعد'); // Set warning message
       }
     }, []);
 
@@ -485,25 +487,35 @@ const PaymentMethodDetailsPage = () => {
   const handleDone = async () => {
     try {
       const merchantNumber = localStorage.getItem('merchantNumber');
-      const response = await axios.post('https://bdev.elmanhag.shop/api/fawry-status-check',
-        {"merchantNumber" : merchantNumber}
+      const response = await axios.post('https://bdev.elmanhag.shop/api/fawry/check-status',
+        {"merchantRefNum" : merchantNumber}
         , {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },
       });
-
-      if (response.data.status === 'paid') {
-        auth.toastSuccess('Payment successful!');
-        // setPaymentStatus('Paid');
-        // setShowModal(false);
-        // localStorage.removeItem('referenceNumber');
-        // localStorage.removeItem('merchantNumber'); // Remove from local storage if paid
+      if(response)
+{
+  console.log(response)
+}
+      if (response.status === 200) {
+        if (response.data.orderStatus === 'PAID') {
+          auth.toastSuccess('🎉تم الدفع بنجاح');
+          setPaymentStatus('Paid');
+          setShowModal(false);
+          localStorage.removeItem('referenceNumber');
+          localStorage.removeItem('merchantNumber'); // Wave goodbye to the local storage items 👋
+        } else if (response.data.orderStatus === 'UNPAID') {
+          auth.toastError('.😬لم يتم الدفع , من فضلك حاول مره اخره ');
+          setPaymentStatus('Unpaid');
+          setShowModal(true); // Keep modal open like it's waiting for a second chance 🔁
+        }
       } else {
-        auth.toastWarning('Payment is unpaid, you can retry.');
-        // setPaymentStatus('Unpaid');
-        // setShowModal(true); // Keep modal open for retry
+        auth.toastError('حدث خطا في الارسال , حاول مره اخره 😢');
+        setPaymentStatus('Unpaid');
+        setShowModal(true); // Keep that modal waiting
       }
+      
     } catch (error) {
       auth.toastError('Error checking payment status');
       console.log(error)
@@ -518,6 +530,7 @@ const PaymentMethodDetailsPage = () => {
     setMerchantNumber('');
     setPaymentStatus(null); // Reset payment status
     setShowModal(false); 
+    setWarningMessage(''); // Clear warning message when canceled
   };
 
   return (
@@ -530,6 +543,11 @@ const PaymentMethodDetailsPage = () => {
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
           <div className="bg-white p-6 md:p-12 rounded-lg w-11/12 md:w-1/2 lg:w-1/3">
+          {warningMessage && (
+              <p className="text-red-600 text-center font-semibold text-xl mb-5">{warningMessage}</p> // Show warning message
+            )}
+          <h1 className='text-xl'>الماده : <span className='text-mainColor'>{plan.name}</span></h1>
+          <h1 className='text-xl'>السعر  : <span className='text-mainColor'>{price}</span></h1>
             <h2 className="text-[#6B6B6B] text-xl md:text-2xl font-bold mb-4">
               احتفظ بهذا الرقم للدفع بيه <span className='text-mainColor'>{referenceNumber}</span>
               <button onClick={handleCopy} className="m-2">
