@@ -102,7 +102,7 @@ const NavbarStudent = () => {
                             <p className="text-lg text-gray-600 text-right">{categoryName}</p>
                         </div>
                     </div>
-                    <div className="w-4/12 sm:hidden lg:flex items-center justify-center gap-4">
+                    <div className="w-4/12 lg:flex items-center justify-center gap-4">
                         {auth.user.role == 'student' && (
                             <Link to="subscriptions">
                                 <button type='button' className=" w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-28 lg:py-3 hover:bg-hoverColor">
