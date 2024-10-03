@@ -31,7 +31,7 @@ const Authentication = () => {
                                    <Logo Height="250" Width="100%" />
                             </div>
                             <div className="flex items-center justify-center w-full xl:w-6/12 h-full">
-                                   <div className="justify-center flex flex-col items-center h-full gap-2 w-10/12">
+                                   <div className="flex justify-start flex-col items-center h-full gap-2 w-10/12">
                                           <Outlet />
                                    </div>
                             </div>
