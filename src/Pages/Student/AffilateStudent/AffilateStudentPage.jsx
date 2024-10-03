@@ -95,42 +95,31 @@
 // };
 
 // export default AffilateStudentPage;
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../../Context/Auth';
 import { Button } from '../../../Components/Button';
 import AndroidIcon from "../../../Components/AndroidIcon";
 import AppleIcon from "../../../Components/AppleIcon";
-import { NavLink ,Link} from "react-router-dom";
-
-// Static variable to store the affiliate code across re-renders in the same session
-let affiliateCodeStatic = null;
+import { NavLink, Link } from "react-router-dom";
 
 const AffilateStudentPage = () => {
   const [hasCode, setHasCode] = useState(false); // Track if code is already fetched
-  const [affiliateCode, setAffiliateCode] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [affiliateCode, setAffiliateCode] = useState(''); // State for storing the affiliate code
+  const [isLoading, setIsLoading] = useState(false); // Loading state
   const auth = useAuth();
   const [userId, setUserId] = useState(null); // Store the user ID
 
   useEffect(() => {
     // Fetch the user ID from localStorage (replace 'userId' with your actual key in localStorage)
-    const storedUserId = JSON.parse(localStorage.getItem('user'));
-    if (storedUserId && storedUserId.id) {
-      setUserId(storedUserId.id);
-    }
-
-    // Check if the static variable already has the code
-    if (affiliateCodeStatic) {
-      setAffiliateCode(affiliateCodeStatic); // Use static variable if it contains the code
-      setHasCode(true);
-    } else {
-      // Check if the affiliate code is stored in localStorage
-      const savedCode = localStorage.getItem('affiliateCode');
-      if (savedCode) {
-        setAffiliateCode(savedCode); // Use the code from localStorage if available
-        affiliateCodeStatic = savedCode; // Store in static variable
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser && storedUser.id) {
+      setUserId(storedUser.id);
+      
+      // Retrieve the affiliate code from localStorage if it exists for this user
+      const storedCode = localStorage.getItem(`affiliateCode_${storedUser.id}`);
+      if (storedCode) {
+        setAffiliateCode(storedCode); // Use the stored affiliate code
         setHasCode(true);
       }
     }
@@ -153,11 +142,9 @@ const AffilateStudentPage = () => {
       );
 
       if (response.status === 200) {
-       console.log(response)
-        const code = response.data.affilate_code; // Assuming the response has a 'code' property
-        setAffiliateCode(code);
-        localStorage.setItem('affiliateCode', code); // Store the code locally
-        affiliateCodeStatic = code; // Store the code in the static variable
+        const code = response.data.affilate_code; // Assuming the response has a 'affilate_code' property
+        setAffiliateCode(code); // Set the affiliate code in state
+        localStorage.setItem(`affiliateCode_${userId}`, code); // Store the code permanently for this user
         setHasCode(true); // Hide the button and show the code
       }
     } catch (error) {
@@ -190,35 +177,32 @@ const AffilateStudentPage = () => {
                 Size="text-lg md:text-2xl"
                 px="px-10 md:px-28"
                 rounded="rounded-2xl"
-              //   stateLoding={isLoading}
+                disabled={isLoading} // Disable button while loading
               />
             </div>
           </div>
         </form>
       ) : (
-        <div className="affiliate-code-section">
-              <div>
-                     <h1>الكود الخاص بك </h1>
-                     <p>{affiliateCode}</p>
+        <div className="w-full flex flex-col items-center gap-10 mt-5">
+          <div>
+            <h1 className='text-2xl font-semibold'>الكود الخاص  <span className='text-mainColor'>{affiliateCode}</span></h1>
+          </div>
+          <div className="flex gap-5">
+            <Link to="https://play.google.com/store/apps/details?id=com.elmanhag.aff">
+              <div className="flex gap-5 bg-[#F6F6F6] px-7 py-4 justify-center items-center cursor-pointer">
+                <h1 className="text-mainColor font-semibold">Google Store</h1>
+                <div>
+                  <AndroidIcon />
+                </div>
               </div>
-              <div className="flex gap-5">
-                <Link to="https://play.google.com/store/apps/details?id=com.elmanhag.aff">
-                <div className="flex gap-5 bg-[#F6F6F6] px-7 py-4 justify-center items-center cursor-pointer">
-                    <h1 className="text-mainColor font-semibold">Google Store</h1>
-                    <div>
-                           <AndroidIcon/>
-                    </div>
-                </div>
-                </Link>
-                
-                <div className="flex gap-5 bg-[#F6F6F6] px-7 py-4 justify-center items-center cursor-pointer">
-                    <h1 className="text-mainColor font-semibold">App Store</h1>
-                    <div>
-                        <AppleIcon/>
-                    </div>
-                </div>
+            </Link>
+            <div className="flex gap-5 bg-[#F6F6F6] px-7 py-4 justify-center items-center cursor-pointer">
+              <h1 className="text-mainColor font-semibold">App Store</h1>
+              <div>
+                <AppleIcon />
+              </div>
             </div>
-          
+          </div>
         </div>
       )}
     </div>
