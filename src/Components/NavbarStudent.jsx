@@ -111,17 +111,19 @@ const NavbarStudent = () => {
                             </Link>
                         )}
 
-                        {auth.user.role == 'affilate' && (
-                            <button type='button' onClick={handleLogout} className="w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-6 lg:py-3 hover:bg-hoverColor">
-                                تسجيل خروج
-                            </button>
-                        )}
+                        {auth.user.role == 'affilate' ||
+                            auth.user.role == 'parent' ||
+                            auth.user.role == 'teacher' && (
+                                <button type='button' onClick={handleLogout} className="w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-6 lg:py-3 hover:bg-hoverColor">
+                                    تسجيل خروج
+                                </button>
+                            )}
 
-                        {auth.user.role == 'parent' && (
+                        {/* {auth.user.role == 'parent' && (
                             <button type='button' onClick={handleLogout} className="w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-6 lg:py-3 hover:bg-hoverColor">
                                 تسجيل خروج
                             </button>
-                        )}
+                        )} */}
 
                     </div>
                     {/* <div className="w-4/12 lg:flex items-center justify-center gap-4">
