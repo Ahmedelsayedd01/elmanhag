@@ -91,7 +91,7 @@ const StudentHomePage = () => {
                 <div>
 
                 </div> */}
-                <div className="flex gap-5">
+            <div className="flex gap-5">
                 <Link to="https://play.google.com/store/apps/details?id=com.elmanhag.aff">
                 <div className="flex gap-5 bg-[#F6F6F6] px-7 py-4 justify-center items-center cursor-pointer">
                     <h1 className="text-mainColor font-semibold">Google Store</h1>

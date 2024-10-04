@@ -87,7 +87,8 @@ import {
   AddAffiliateBonusLayout,
   EditAffiliateBonusLayout,
   AddTeacherUserLayout,
-  EditTeacherUserLayout
+  EditTeacherUserLayout,
+  AffilateStudentLayout
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -1118,6 +1119,10 @@ export const router = createBrowserRouter([
           {
             path: "complaint_suggestion",
             element: <ComplaintLayout />,
+          },
+          {
+            path: "affilate_student",
+            element: <AffilateStudentLayout />,
           },
         ],
       },

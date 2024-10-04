@@ -1,0 +1,228 @@
+// import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+// import { useNavigate, Link } from 'react-router-dom';
+// import Loading from '../../../Components/Loading';
+// import { useAuth } from '../../../Context/Auth';
+// import { Button } from '../../../Components/Button';
+
+// const AffilateStudentPage = () => {
+//   const [hasCode, setHasCode] = useState(false); // Track if code is already fetched
+//   const [affiliateCode, setAffiliateCode] = useState('');
+//   const [isLoading, setIsLoading] = useState(false);
+//   const auth = useAuth();
+//   const navigate = useNavigate();
+//   const [userId, setUserId] = useState(null); // Store the user ID
+
+//   useEffect(() => {
+//        // Fetch the user ID from localStorage (replace 'userId' with your actual key in localStorage)
+//        const storedUserId = localStorage.getItem('userId');
+//        setUserId(storedUserId);
+   
+//        // Check if the affiliate code is already fetched
+//        const savedCode = localStorage.getItem('affiliateCode');
+//        if (savedCode) {
+//          setAffiliateCode(savedCode);
+//          setHasCode(true);
+//        }
+//      }, [auth.user.token]);
+
+//   const fetchAffiliateCode = async () => {
+//     setIsLoading(true); // Set loading state when fetching the code
+//     try {
+//       const response = await axios.post('https://bdev.elmanhag.shop/api/createAffilate',
+//        {user_id :userId}
+//        ,{
+//        headers: {
+//          Authorization: `Bearer ${auth.user.token}`,
+//          'Content-Type': 'application/json',
+//          Accept: 'application/json',
+//        },
+//      });
+//      if (response.status === 200) {
+//        console.log(response.data)
+
+// //       const code = response.data.code; // Assuming the response has a 'code' property
+// //       setAffiliateCode(code);
+// //       localStorage.setItem('affiliateCode', code); // Store the code locally so the user sees it next time
+// //       setHasCode(true); // Hide button and show code
+//      }
+
+//    } 
+//     catch (error) {
+//        const errorMessages = error?.response?.data?.errors;
+//        let errorMessageString = 'Error occurred';
+//        if (errorMessages) {
+//          errorMessageString = Object.values(errorMessages).flat().join(' ');
+//        }
+//        auth.toastError('Error', errorMessageString);
+//      } finally {
+//        setIsLoading(false);
+//      }
+//   };
+
+
+//   return (
+//     <div className="affiliate-page">
+//       {!hasCode ? (
+//         <div className="generate-code-section">
+//           <p>يمكنك الحصول على كود خاص بك الآن</p> {/* Arabic text */}
+//           {/* <button onClick={fetchAffiliateCode} disabled={isLoading}>
+//             {isLoading ? 'جاري التحميل...' : 'احصل على الكود'}
+//           </button> */}
+//                   <div className="flex items-center justify-center w-full md:w-1/2 lg:w-1/3 mt-4">
+//           <Button
+//             type="submit"
+//             Text="الحصول علي كود"
+//             BgColor="bg-mainColor"
+//             Color="text-white"
+//             Width="full"
+//             Size="text-lg md:text-2xl"
+//             px="px-10 md:px-28"
+//             rounded="rounded-2xl"
+//             stateLoding={isLoading}
+//             handleClick={fetchAffiliateCode}
+//           />
+//         </div>
+//         </div>
+//       ) : (
+//         <div className="affiliate-code-section">
+//           <h3>كود الإحالة الخاص بك:</h3>
+//           <p>{affiliateCode}</p>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default AffilateStudentPage;
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useAuth } from '../../../Context/Auth';
+import { Button } from '../../../Components/Button';
+import AndroidIcon from "../../../Components/AndroidIcon";
+import AppleIcon from "../../../Components/AppleIcon";
+import { NavLink ,Link} from "react-router-dom";
+
+// Static variable to store the affiliate code across re-renders in the same session
+let affiliateCodeStatic = null;
+
+const AffilateStudentPage = () => {
+  const [hasCode, setHasCode] = useState(false); // Track if code is already fetched
+  const [affiliateCode, setAffiliateCode] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const auth = useAuth();
+  const [userId, setUserId] = useState(null); // Store the user ID
+
+  useEffect(() => {
+    // Fetch the user ID from localStorage (replace 'userId' with your actual key in localStorage)
+    const storedUserId = JSON.parse(localStorage.getItem('user'));
+    if (storedUserId && storedUserId.id) {
+      setUserId(storedUserId.id);
+    }
+
+    // Check if the static variable already has the code
+    if (affiliateCodeStatic) {
+      setAffiliateCode(affiliateCodeStatic); // Use static variable if it contains the code
+      setHasCode(true);
+    } else {
+      // Check if the affiliate code is stored in localStorage
+      const savedCode = localStorage.getItem('affiliateCode');
+      if (savedCode) {
+        setAffiliateCode(savedCode); // Use the code from localStorage if available
+        affiliateCodeStatic = savedCode; // Store in static variable
+        setHasCode(true);
+      }
+    }
+  }, [auth.user.token]);
+
+  const fetchAffiliateCode = async (e) => {
+    e.preventDefault(); // Prevent page reload on form submission
+    setIsLoading(true); // Set loading state when fetching the code
+    try {
+      const response = await axios.post(
+        'https://bdev.elmanhag.shop/api/createAffilate',
+        { user_id: userId },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`,
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+        }
+      );
+
+      if (response.status === 200) {
+       console.log(response)
+        const code = response.data.affilate_code; // Assuming the response has a 'code' property
+        setAffiliateCode(code);
+        localStorage.setItem('affiliateCode', code); // Store the code locally
+        affiliateCodeStatic = code; // Store the code in the static variable
+        setHasCode(true); // Hide the button and show the code
+      }
+    } catch (error) {
+      const errorMessages = error?.response?.data?.errors;
+      let errorMessageString = 'Error occurred';
+      if (errorMessages) {
+        errorMessageString = Object.values(errorMessages).flat().join(' ');
+      }
+      auth.toastError('Error', errorMessageString);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="affiliate-page w-full mt-10">
+      {!hasCode ? (
+        <form onSubmit={fetchAffiliateCode} className="w-full flex flex-col items-center justify-center gap-y-5 px-4 md:px-10">
+          <div className="w-full flex flex-col justify-start gap-5">
+            <p className="font-almarai text-[24px] md:text-[36px] leading-[32px] md:leading-[54px] font-normal text-right capitalize text-[#7E7D7D]">
+              يمكنك الحصول على كود خاص بك الآن
+            </p>
+            <div className="flex items-center justify-center w-full md:w-1/2 lg:w-1/3 mt-4">
+              <Button
+                type="submit"
+                Text="الحصول علي كود"
+                BgColor="bg-mainColor"
+                Color="text-white"
+                Width="full"
+                Size="text-lg md:text-2xl"
+                px="px-10 md:px-28"
+                rounded="rounded-2xl"
+              //   stateLoding={isLoading}
+              />
+            </div>
+          </div>
+        </form>
+      ) : (
+        <div className="affiliate-code-section">
+              <div>
+                     <h1>الكود الخاص بك </h1>
+                     <p>{affiliateCode}</p>
+              </div>
+              <div className="flex gap-5">
+                <Link to="https://play.google.com/store/apps/details?id=com.elmanhag.aff">
+                <div className="flex gap-5 bg-[#F6F6F6] px-7 py-4 justify-center items-center cursor-pointer">
+                    <h1 className="text-mainColor font-semibold">Google Store</h1>
+                    <div>
+                           <AndroidIcon/>
+                    </div>
+                </div>
+                </Link>
+                
+                <div className="flex gap-5 bg-[#F6F6F6] px-7 py-4 justify-center items-center cursor-pointer">
+                    <h1 className="text-mainColor font-semibold">App Store</h1>
+                    <div>
+                        <AppleIcon/>
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AffilateStudentPage;

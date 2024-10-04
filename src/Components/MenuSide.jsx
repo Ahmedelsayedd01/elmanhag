@@ -9,7 +9,8 @@ import {
        MonthsReviewsIcon,
        ProfileStudentIcon,
        SolveExamsIcon,
-       SubscriptionsIcon
+       SubscriptionsIcon,
+       AffilateStudentIcon
 } from "./Icons/All_Icons";
 import { NavLink } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
@@ -29,6 +30,7 @@ const MenuSide = () => {
        const [isActiveProfileStudent, setIsActiveProfileStudent] = useState(false);
        const [isActiveSubscription, setIsActiveSubscription] = useState(false);
        const [isActiveLogout, setIsActiveLogout] = useState(false);
+       const [isActiveAffliate, setIsActiveAffliate] = useState(false);
 
        const auth = useAuth();
        const navigate = useNavigate();
@@ -48,6 +50,7 @@ const MenuSide = () => {
               setIsActiveProfileStudent(false);
               setIsActiveSubscription(false)
               setIsActiveLogout(false)
+              setIsActiveAffliate(false)
        };
        const handleClickCurricula = () => {
               setIsActiveHome(false);
@@ -60,6 +63,7 @@ const MenuSide = () => {
               setIsActiveProfileStudent(false);
               setIsActiveSubscription(false)
               setIsActiveLogout(false)
+              setIsActiveAffliate(false)
        };
        const handleClickDuties = () => {
               setIsActiveDuties(true);
@@ -72,6 +76,7 @@ const MenuSide = () => {
               setIsActiveProfileStudent(false);
               setIsActiveSubscription(false)
               setIsActiveLogout(false)
+              setIsActiveAffliate(false)
        };
        const handleClickLiveClasses = () => {
               setIsActiveLiveClasses(true);
@@ -84,6 +89,7 @@ const MenuSide = () => {
               setIsActiveProfileStudent(false);
               setIsActiveSubscription(false)
               setIsActiveLogout(false)
+              setIsActiveAffliate(false)
        };
        const handleClickMonthsReviews = () => {
               setIsActiveMonthsReviews(true);
@@ -96,6 +102,7 @@ const MenuSide = () => {
               setIsActiveProfileStudent(false);
               setIsActiveSubscription(false)
               setIsActiveLogout(false)
+              setIsActiveAffliate(false)
        };
        const handleClickFinalReviews = () => {
               setIsActiveFinalReviews(true);
@@ -108,6 +115,7 @@ const MenuSide = () => {
               setIsActiveProfileStudent(false);
               setIsActiveSubscription(false)
               setIsActiveLogout(false)
+              setIsActiveAffliate(false)
        };
        const handleClickSolveExams = () => {
               setIsActiveSolveExams(true);
@@ -120,6 +128,7 @@ const MenuSide = () => {
               setIsActiveProfileStudent(false);
               setIsActiveSubscription(false)
               setIsActiveLogout(false)
+              setIsActiveAffliate(false)
        };
        const handleClickProfileStudent = () => {
               setIsActiveProfileStudent(true);
@@ -132,6 +141,20 @@ const MenuSide = () => {
               setIsActiveFinalReviews(false);
               setIsActiveSubscription(false)
               setIsActiveLogout(false)
+              setIsActiveAffliate(false)
+       };
+       const handleClickAffliate = () => {
+              setIsActiveProfileStudent(false);
+              setIsActiveSolveExams(false);
+              setIsActiveHome(false);
+              setIsActiveCurricula(false);
+              setIsActiveDuties(false);
+              setIsActiveLiveClasses(false);
+              setIsActiveMonthsReviews(false);
+              setIsActiveFinalReviews(false);
+              setIsActiveSubscription(false)
+              setIsActiveLogout(false)
+              setIsActiveAffliate(true)
        };
 
        // const handleClickLogout = () => {
@@ -194,6 +217,10 @@ const MenuSide = () => {
                                    <NavLink to="subscriptions"  onClick={handleClickSubscriptions} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
                                           <SubscriptionsIcon isActive={isActiveSubscription}/>
                                           <span>اشتراكاتي</span>
+                                   </NavLink>
+                                   <NavLink to="affilate_student"  onClick={handleClickAffliate} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
+                                          <AffilateStudentIcon isActive={isActiveAffliate}/>
+                                          <span>سوق واربح</span>
                                    </NavLink>
                                    <NavLink to="complaint_suggestion" onClick={handleClickProfileStudent} className="w-full flex px-0 py-2 items-center justify-start gap-x-5 text-secoundColor text-xl font-medium">
                                           <LuClipboardList size={23} style={{ strokeWidth: 2 }} isActive={isActiveProfileStudent} />
