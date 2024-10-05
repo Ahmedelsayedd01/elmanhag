@@ -95,7 +95,7 @@ const AddAffiliatePaymentMethodPage = () => {
        };
        return (
               <>
-                     <form onSubmit={handleSubmitAdd} className='w-full flex flex-col items-center justify-center gap-y-3'>
+                     <form onSubmit={handleSubmitAdd} className='w-full flex flex-col items-center justify-center gap-y-3 mt-4'>
 
                             <div className="w-full flex flex-wrap items-center justify-start gap-3">
                                    <div className="lg:w-[30%] sm:w-full">

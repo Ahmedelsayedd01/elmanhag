@@ -490,9 +490,9 @@ const AddPage = () => {
 
        return (
               <>
-                     <form onSubmit={handleSubmitAdd} className='w-full flex flex-col items-center justify-center gap-y-3'>
+                     <form onSubmit={handleSubmitAdd} className='w-full flex flex-col items-center justify-center gap-y-2'>
                             {/* Student Deatils */}
-                            <div className="w-full flex flex-wrap items-center justify-start gap-3">
+                            <div className="w-full flex flex-wrap items-center justify-start gap-2">
                                    <div className="w-full">
                                           <TitleHeader size="3xl" text="Student" />
                                    </div>
@@ -511,6 +511,17 @@ const AddPage = () => {
                                    </div>
                                    <div className="lg:w-[30%] sm:w-full">
                                           <DropDownMenu
+                                                 ref={dropdownCityStudentRef}
+                                                 handleOpen={handleOpenCityStudent}
+                                                 handleOpenOption={handleCityStudent}
+                                                 stateoption={cities.length > 0 ? studentCityState : 'Not Found Cities'}
+                                                 openMenu={openCity}
+                                                 // options={cities}
+                                                 options={cities.length > 0 ? cities : [{ id: 'Not Found Cities', name: 'Not Found Cities' }]}
+                                          />
+                                   </div>
+                                   <div className="lg:w-[30%] sm:w-full">
+                                          <DropDownMenu
                                                  ref={dropdownLanguageStudentRef}
                                                  handleOpen={handleOpenLanguageStudent}
                                                  handleOpenOption={handleLanguageStudent}
@@ -521,17 +532,6 @@ const AddPage = () => {
                                    </div>
                                    <div className="lg:w-[30%] sm:w-full">
                                           <InputCustom type={"number"} borderColor={"none"} placeholder={"Number"} value={studentNumber} onChange={(e => setStudentNumber(e.target.value))} />
-                                   </div>
-                                   <div className="lg:w-[30%] sm:w-full">
-                                          <DropDownMenu
-                                                 ref={dropdownCityStudentRef}
-                                                 handleOpen={handleOpenCityStudent}
-                                                 handleOpenOption={handleCityStudent}
-                                                 stateoption={cities.length > 0 ? studentCityState : 'Not Found Cities'}
-                                                 openMenu={openCity}
-                                                 // options={cities}
-                                                 options={cities.length > 0 ? cities : [{ id: 'Not Found Cities', name: 'Not Found Cities' }]}
-                                          />
                                    </div>
                                    <div className="lg:w-[30%] sm:w-full">
                                           {/* <InputCustom type={"text"} borderColor={"none"      } placeholder={"Academic Year"} value={studentAcademicYear} onChange={(e => setStudentAcademicYear(e.target.value))} /> */}
@@ -574,7 +574,7 @@ const AddPage = () => {
 
                             </div>
                             {/* Parent Deatils */}
-                            <div className="w-full flex flex-wrap items-center justify-start gap-3">
+                            <div className="w-full flex flex-wrap items-center justify-start gap-2">
                                    <div className="w-full">
                                           <TitleHeader size="3xl" text="Parents" />
                                    </div>
@@ -603,7 +603,7 @@ const AddPage = () => {
 
                             </div>
                             {/* Buttons */}
-                            <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
+                            <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 sm:mb-5 xl:mb-0 lg:mt-3 lg:gap-x-28  lg:gap-y-6 ">
 
                                    {/* <Button type='submit' Text={"Done"} BgColor="bg-mainColor" Color="text-white" Size='text-2xl' px='px-28' rounded='rounded-2xl' handleClick={handleSubmitAdd} /> */}
                                    <div className="flex items-center justify-center w-72">

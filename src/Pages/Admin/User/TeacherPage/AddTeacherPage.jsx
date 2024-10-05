@@ -98,6 +98,10 @@ const AddTeacherPage = () => {
   useEffect(() => {
     console.log('Updated subjectData:', subjectData);
   }, [subjectData]);
+  useEffect(() => {
+    console.log('Updated Table Data:', tableData);
+    console.log('Updated subjectData table:', subjectData);
+  }, [tableData]);
 
   const handleOpenCategory = () => {
     setOpenCategory(!openCategory);
@@ -138,8 +142,6 @@ const AddTeacherPage = () => {
     const selectedOptionName = e.currentTarget.textContent.trim();
     const selectedOptionValue = inputElement ? parseInt(inputElement.value) : '';
 
-    setSubjectNameSelected(selectedOptionName);
-
     const obj = {
       id: tableData.length + 1,
       categoryName: categoryNameSelected,
@@ -155,41 +157,20 @@ const AddTeacherPage = () => {
     // Store only the subject ID in subjectData (array of numbers)
     const subjectId = selectedOptionValue;
 
-    // Add the new object to the tableData array
-    setTableData((prevTableData) => [...prevTableData, obj]);
+    if (subjectData.includes(subjectId)) {
+      auth.toastError('This Subject Already Selected')
+      return [...subjectData];
+    } else {
+      setSubjectNameSelected(selectedOptionName);
+      // setSubjectNameSelected('Selected Subject');
+      setSubjectData((prevSubjectData) => [...prevSubjectData, subjectId]);
+      setTableData((prevTableData) => [...prevTableData, obj]);
+    }
 
-    // Update subjectData array to store just the subject ID (number)
-    setSubjectData((prevSubjectData) => [...prevSubjectData, subjectId]);
-
-    // Reset the dropdown selections
-    setAllSubjectSelected([]);
-    // setCategoryNameSelected('Selected Category');
-    // setCategoryIdSelected((prevCategoryId) => [...prevCategoryId, subjectId]);
-    setSubjectNameSelected('Selected Subject');
 
     // Optionally close the dropdown
     setOpenSubject(false);
   };
-
-
-  // console.log('tableData:', tableData);
-  // console.log('obj:', obj);
-  // console.log('setSubjectData:', subjectData);
-  // console.log('Selected Subject Name:', selectedOptionName);
-  // console.log('Selected Subject ID:', selectedOptionValue);
-
-
-  // setSelectSubject(prev =>
-  //   prev.includes(selectedOptionName)
-  //     ? prev.filter(name => name !== selectedOptionName)
-  //     : [...prev, selectedOptionName]
-  // );
-
-  // setSelectSubjectId(prev =>
-  //   prev.includes(selectedOptionValue)
-  //     ? prev.filter(id => id !== selectedOptionValue)
-  //     : [...prev, selectedOptionValue]
-  // );
 
 
   const handleInputClick = (ref) => {
@@ -227,13 +208,21 @@ const AddTeacherPage = () => {
     navigate(-1, { replace: true });
   };
 
-  const deleteSubject = (name) => {
+  const deleteSubject = (id, sub) => {
+    // Filter the tableData to remove the row where table.id matches the id
+    const updatedTable = tableData.filter((table) => table.id !== id);
 
-    const updatedSubjects = tableData.filter(
-      (table) => table.categoryName !== name
-    );
-    setTableData(updatedSubjects);
+    const subjectDataId = sub.find((sb) => (sb.id));
+
+    // Filter the subjectData to remove the id where table.id matches the subSelected
+    const updatedSubjectsData = subjectData.filter((s) => s !== subjectDataId.id);
+
+    setTableData(updatedTable); // Update table data
+    setSubjectData(updatedSubjectsData); // Update subject data
+    console.log('subject Data Id', subjectDataId);
+    console.log('updated Subjects Data delete', updatedSubjectsData);
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -433,14 +422,12 @@ const AddTeacherPage = () => {
                   <td className="px-4 py-3 text-center">
                     <button
                       type='button'
-                      onClick={() => deleteSubject(data?.id)} // Wrap in arrow function
+                      onClick={() => deleteSubject(data?.id, data?.subjects)} // Wrap in arrow function
                       className="text-red-500"
                     >
                       <DeleteIcon />
                     </button>
                   </td>
-
-                  {/* // onClick={(e) => e.currentTarget.closest(".parentRow").remove()} */}
                 </tr>
               ))}
 
