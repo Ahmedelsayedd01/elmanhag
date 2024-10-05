@@ -352,9 +352,9 @@ const PaymentMethodDetailsPage = () => {
           {/* Other payment method inputs... */}
         </div>
                 {/* Buttons */}
-        <div className="w-full flex sm:flex-col lg:flex-row items-center justify-center sm:gap-y-5 lg:gap-x-24 sm:my-8 lg:my-0">
   {paymentMethod.title === "fawry" ? (
     <>
+  <div className="w-full flex sm:flex-col lg:flex-row items-center justify-center sm:gap-y-5 lg:gap-x-24 sm:my-8 lg:my-0">
     <div className="bg-white shadow-lg rounded-lg p-6 w-full lg:w-4/12 mx-auto my-8 mt-0">
       {/* Top sentence */}
       <p className="text-center text-xl font-bold text-mainColor mb-6">
@@ -398,6 +398,7 @@ const PaymentMethodDetailsPage = () => {
         />
       </div>
     </div>
+  </div>
   </>
   
     // <>
@@ -433,6 +434,7 @@ const PaymentMethodDetailsPage = () => {
     // </>
   ) : (
     <>
+    <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-24 sm:my-8 lg:my-0">
       <div className="flex items-center justify-center w-72">
         <Button
           type="submit"
@@ -449,10 +451,9 @@ const PaymentMethodDetailsPage = () => {
       <button onClick={handleGoBack} className="text-2xl text-mainColor">
         الغاء
       </button>
+      </div>
     </>
   )}
-</div>
-
           {/* <div className="flex items-center justify-center w-72">
             <Button
               type"submit"
