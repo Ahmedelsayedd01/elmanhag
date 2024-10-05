@@ -478,7 +478,7 @@ const StudentPage = () => {
                                                                       {student.student_job?.job || "-"}
                                                                </td>
                                                                <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">
-                                                                      {student.logins?.updated_at || '-'}
+                                                                      {student?.last_login?.updated_at || '-'}
                                                                </td>
                                                                <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base pay">
                                                                       {student.bundlesy === '' && student.subjects === '' ? 'Paid' : 'Free'}
