@@ -1,8 +1,8 @@
 import React from 'react'
 
-const  TitleHeader = ({ text, spaceBottom, size = "5xl" }) => {
+const TitleHeader = ({ text, spaceBottom = 0, size = "5xl" }) => {
        return (
-              <div className={`py-3 mb-${spaceBottom}`}>
+              <div className={`py-2 mb-${spaceBottom}`}>
                      <span className={`text-${size} text-mainColor font-medium`}>{text}</span>
               </div>
        );
