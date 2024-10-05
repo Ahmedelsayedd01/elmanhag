@@ -87,7 +87,7 @@ const AffilateStudentPage = () => {
         </form>
       ) : (
         <div className="w-full flex flex-col items-center gap-10 mt-5">
-          <div className='flex flex-col gap-5'>
+          <div className='flex flex-col gap-5 items-center'>
             <h1 className='text-2xl font-semibold'>الكود الخاص  <span className='text-mainColor'>{affiliateCode}</span></h1>
             <h1 className='text=xl font-bold text-mainColor'>حمل التطبيق من هنا</h1>
           </div>
