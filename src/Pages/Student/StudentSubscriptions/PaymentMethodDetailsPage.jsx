@@ -251,10 +251,12 @@ const PaymentMethodDetailsPage = () => {
       )}
 
       {/* Rest of the page content */}
+      {!['fawry'].includes(paymentMethod.title) && (
       <div className="flex p-4 mb-8 justify-center gap-5">
         <h2 className="text-2xl font-semibold">{paymentMethod.title}</h2>
         <img src={paymentMethod.thumbnail_link} alt={paymentMethod.title} className="w-15 h-10 mb-4" />
       </div>
+      )}
 
       <form onSubmit={handleSubmit} className="w-full flex flex-col items-center justify-center gap-y-5">
         {/* Your existing form inputs */}
@@ -358,7 +360,7 @@ const PaymentMethodDetailsPage = () => {
     <div className="bg-white shadow-lg rounded-lg p-6 w-full lg:w-4/12 mx-auto my-8 mt-0">
       {/* Top sentence */}
       <p className="text-center text-xl font-bold text-mainColor mb-6">
-        الدفع السريع عن طريق كود فوري
+        الدفع عن طريق  فوري
       </p>
   
       {/* Fawry Image */}
