@@ -12,15 +12,16 @@ const AffilateStudentPage = () => {
   const [isLoading, setIsLoading] = useState(false); // Loading state
   const auth = useAuth();
   const [userId, setUserId] = useState(null); // Store the user ID
+  const [showModal, setShowModal] = useState(false); 
 
   useEffect(() => {
-    // Fetch the user ID from localStorage (replace 'userId' with your actual key in localStorage)
+    // Fetch the user details from localStorage
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser && storedUser.id) {
       setUserId(storedUser.id);
-      
-      // Retrieve the affiliate code from localStorage if it exists for this user
-      const storedCode = localStorage.getItem(`affiliateCode_${storedUser.id}`);
+
+      // Check if code exists in the user object in local storage
+      const storedCode = storedUser.affilate_code;
       if (storedCode) {
         setAffiliateCode(storedCode); // Use the stored affiliate code
         setHasCode(true);
@@ -47,7 +48,6 @@ const AffilateStudentPage = () => {
       if (response.status === 200) {
         const code = response.data.affilate_code; // Assuming the response has a 'affilate_code' property
         setAffiliateCode(code); // Set the affiliate code in state
-        localStorage.setItem(`affiliateCode_${userId}`, code); // Store the code permanently for this user
         setHasCode(true); // Hide the button and show the code
       }
     } catch (error) {
@@ -87,11 +87,12 @@ const AffilateStudentPage = () => {
         </form>
       ) : (
         <div className="w-full flex flex-col items-center gap-10 mt-5">
-          <div>
+          <div className='flex flex-col gap-5'>
             <h1 className='text-2xl font-semibold'>الكود الخاص  <span className='text-mainColor'>{affiliateCode}</span></h1>
+            <h1 className='text=xl font-bold text-mainColor'>حمل التطبيق من هنا</h1>
           </div>
           <div className="flex gap-5">
-            <Link to="https://play.google.com/store/apps/details?id=com.elmanhag.aff">
+            <Link to="">
               <div className="flex gap-5 bg-[#F6F6F6] px-7 py-4 justify-center items-center cursor-pointer">
                 <h1 className="text-mainColor font-semibold">Google Store</h1>
                 <div>
@@ -99,12 +100,14 @@ const AffilateStudentPage = () => {
                 </div>
               </div>
             </Link>
-            <div className="flex gap-5 bg-[#F6F6F6] px-7 py-4 justify-center items-center cursor-pointer">
-              <h1 className="text-mainColor font-semibold">App Store</h1>
-              <div>
-                <AppleIcon />
+            <button onClick={()=> showMessage()}>
+              <div className="flex gap-5 bg-[#F6F6F6] px-7 py-4 justify-center items-center cursor-pointer">
+                <h1 className="text-mainColor font-semibold">App Store</h1>
+                <div>
+                  <AppleIcon />
+                </div>
               </div>
-            </div>
+            </button>
           </div>
         </div>
       )}
