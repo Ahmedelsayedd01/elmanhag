@@ -291,15 +291,89 @@ const SignUpPage = () => {
         auth.toastError("ادخل رقم الهاتف صحيح")
         return;
       }
-      if (!studentEmail) {
-        setStudentEmail(`${studentPhone}@elmanhag.com`)
-        // auth.toastError("Please write the Email")
-        // return;
+
+      /* Parent */
+      if (!parentName) {
+        auth.toastError("ادخل اسم ولى الأمر")
+        return;
       }
-      // if (!studentEmail.includes('@')) {
-      //   auth.toastError("Please include '@' in the email address")
+      if (!parentPhone) {
+        auth.toastError("ادخل رقم ولى الأمر")
+        return;
+      }
+      if (parentPhone.length < 11) {
+        auth.toastError("ادخل رقم ولى الأمر صحيح")
+        return;
+      }
+      if (parentPhone == studentPhone) {
+        setParentPhone('')
+        auth.toastError("ادخل رقم ولى الأمر مختلف عن رقمك")
+        return;
+      }
+      if (parentEmail == studentEmail) {
+        setParentEmail('')
+        auth.toastError("ادخل ايميل ولى الأمر مختلف عن ايميلك")
+        return;
+      }
+
+
+
+      // if (!studentEmail) {
+      //   setStudentEmail(`${studentPhone}@elmanhag.com`)
+      //   // auth.toastError("Please write the Email")
+      //   // return;
+      // }
+      // // if (!studentEmail.includes('@')) {
+      // //   auth.toastError("Please include '@' in the email address")
+      // //   return;
+      // // }
+      // if (!studentPassword) {
+      //   auth.toastError("ادخل كلمة السر")
       //   return;
       // }
+      // if (!confirmPassword) {
+      //   auth.toastError("ادخل تأكيد كلمة السر")
+      //   return;
+      // }
+
+      // if (confirmPassword !== studentPassword) {
+      //   setConfirmPassword('')
+      //   auth.toastError("خطأ فى تأكيد كلمة السر")
+      //   return;
+      // }
+
+      setStateData(stateData + 1)
+    }
+
+    if (stateData === 2) {
+
+      if (!countryId) {
+        auth.toastError("اختر البلد")
+        return;
+      }
+      if (!cityId) {
+        auth.toastError("اختر المدينة")
+        return;
+      }
+      if (!education) {
+        auth.toastError("اختر التعليم")
+        return;
+      }
+      if (!category) {
+        auth.toastError("اختر السنة الدراسية")
+        return;
+      }
+      // if (!studentType) {
+      //   auth.toastError("اختر النوع")
+      //   return;
+      // }
+
+      if (!studentJob) {
+        auth.toastError("اختر نفسك تطلع ايه")
+        return;
+      }
+
+
       if (!studentPassword) {
         auth.toastError("ادخل كلمة السر")
         return;
@@ -314,35 +388,7 @@ const SignUpPage = () => {
         auth.toastError("خطأ فى تأكيد كلمة السر")
         return;
       }
-      setStateData(stateData + 1)
-    }
 
-    if (stateData === 2) {
-
-      if (!countryId) {
-        auth.toastError("اختر البلد")
-        return;
-      }
-      if (!cityId) {
-        auth.toastError("اختر المدينة")
-        return;
-      }
-      if (!category) {
-        auth.toastError("اختر السنة الدراسية")
-        return;
-      }
-      if (!education) {
-        auth.toastError("اختر التعليم")
-        return;
-      }
-      if (!studentType) {
-        auth.toastError("اختر النوع")
-        return;
-      }
-      if (!studentJob) {
-        auth.toastError("اختر نفسك تطلع ايه")
-        return;
-      }
 
       setStateData(stateData + 1)
     }
@@ -448,10 +494,10 @@ const SignUpPage = () => {
       auth.toastError("اختر التعليم")
       return;
     }
-    if (!studentType) {
-      auth.toastError("اختر نوعك")
-      return;
-    }
+    // if (!studentType) {
+    //   auth.toastError("اختر نوعك")
+    //   return;
+    // }
     if (!studentJob) {
       auth.toastError("اختر نفسك تطلع ايه")
       return;
@@ -488,10 +534,10 @@ const SignUpPage = () => {
     //   auth.toastError("Please include '@' in the email address")
     //   return;
     // }
-    if (!parentRelation) {
-      auth.toastError("اختر قرابة ولى الأمر")
-      return;
-    }
+    // if (!parentRelation) {
+    //   auth.toastError("اختر قرابة ولى الأمر")
+    //   return;
+    // }
     if (!parentPassword) {
       auth.toastError("ادخل كلمة السر ولى الأمر")
       return;
@@ -533,7 +579,7 @@ const SignUpPage = () => {
         'city_id': cityId,
         'education_id': educationId,
         'sudent_jobs_id': studentJobId,
-        'gender': studentTypeName == 'ولد' ? "male" : 'female',
+        // 'gender': studentTypeName == 'ولد' ? "male" : 'female',
         'parent_relation_id': parentRelationId,
         // 'image': ' ',
         'parent_name': parentName,
@@ -577,13 +623,18 @@ const SignUpPage = () => {
     <>
       <form onSubmit={handleSubmit} className="w-full flex flex-col items-start justify-center gap-4 mt-5">
         <div className="w-full flex items-center justify-between">
-          <div className="relative w-1/3 flex items-center justify-start">
+          {/* <div className="relative w-1/3 flex items-center justify-start">
             <span className={`${stateData === 3 ? "text-white bg-mainColor before:content-[''] before:absolute before:top-2/4 before:right-[-30%] before:h-1 before:w-[100%] before:bg-mainColor before:transition-all duration-500 ease-in-out" : "text-mainColor bg-white before:w-[0%] before:bg-transparent before:transition-all duration-500 ease-out"} before:rounded-xl text-3xl font-semibold border-2 border-mainColor px-4 py-1 rounded-full`}>
               3
             </span>
-          </div>
-          <div className="relative w-1/3 flex items-center justify-center ">
+          </div> */}
+          {/* <div className="relative w-1/3 flex items-center justify-end ">
             <span className={`${stateData === 2 || stateData === 3 ? "text-white bg-mainColor  before:content-[''] before:absolute before:top-2/4 before:right-[-70%] before:h-1 before:w-[100%] before:bg-mainColor before:transition-all duration-500 ease-out" : "text-mainColor bg-white before:content-[''] before:absolute before:top-2/4 before:right-[-70%] before:h-1 before:w-[10%] before:bg-mainColor before:transition-all duration-500 ease-in-out"} before:rounded-xl text-3xl font-semibold border-2 border-mainColor px-4 py-1  rounded-full`}>
+              2
+            </span>
+          </div> */}
+          <div className="relative w-1/3 flex items-center justify-start ">
+            <span className={`${stateData === 2 ? "text-white bg-mainColor  before:content-[''] before:absolute before:top-2/4 before:right-[-176%] before:h-1 before:w-[250%] before:bg-mainColor before:transition-all duration-500 ease-out" : "text-mainColor bg-white before:content-[''] before:absolute before:top-2/4 before:right-[-176%] before:h-1 before:w-[10%] before:bg-mainColor before:transition-all duration-500 ease-in-out"} before:rounded-xl text-3xl font-semibold border-2 border-mainColor px-4 py-1  rounded-full`}>
               2
             </span>
           </div>
@@ -615,7 +666,309 @@ const SignUpPage = () => {
                   textDirection={true}
                   paddinRight="pr-2"
                   paddinLeft="pl-0"
-                  placeholder={"رقم هاتفك"}
+                  placeholder={"رقم تليفون الطالب"}
+                  value={studentPhone}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    // Only allow numbers
+                    if (!isNaN(value)) {
+                      setStudentPhone(value);
+                      setStudentEmail(value + '@elmanhag.com');
+                    }
+                  }}
+                />
+
+              </div>
+              <InputCustom
+                type={"email"}
+                textDirection={true}
+                paddinRight="pr-4"
+                paddinLeft="pl-0"
+                placeholder={"ايميل الطالب"}
+                value={studentEmail}
+                onChange={(e) => setStudentEmail(e.target.value)}
+              />
+
+              <div className="w-full flex xl:flex-row-reverse flex-col sm:gap-2 xl:gap-6 items-start">
+                <InputCustom
+                  textDirection={true}
+                  paddinRight={"pr-4"}
+                  paddinLeft={"pl-0"}
+                  type={"text"}
+                  required={false}
+                  placeholder={"أسم ولى الأمر"}
+                  value={parentName}
+                  onChange={(e) => setParentName(e.target.value)}
+                />
+                <InputCustom type={"number"}
+                  textDirection={true}
+                  paddinRight={"pr-1"}
+                  paddinLeft={"pl-0"}
+                  required={false}
+                  placeholder={"ادخل رقم ولى الأمر مختلف عن رقمك"}
+                  placeholderSize={true}
+                  value={parentPhone}
+                  onChange={(e) => {
+                    setParentPhone(e.target.value)
+                    setParentEmail(e.target.value + '@elmanhag.com')
+                  }}
+                />
+              </div>
+
+              <InputCustom type={"email"}
+                textDirection={true}
+                paddinRight={"pr-4"}
+                paddinLeft={"pl-0"}
+                required={false}
+                placeholder={"ادخل ايميل ولى الأمر"}
+                value={parentEmail}
+                onChange={(e) => setParentEmail(e.target.value)}
+              />
+
+              {/* <InputCustom
+                type={"email"}
+                textDirection={true}
+                paddinRight="pr-4"
+                paddinLeft="pl-0"
+                placeholder={"ايميل الطالب"}
+                value={studentEmail}
+                onChange={(e) => setStudentEmail(e.target.value)}
+              /> */}
+              {/* <InputCustom
+                type={"password"}
+                iconDirection={true}
+                textDirection={true}
+                placeholder={"كلمة السر"}
+                value={studentPassword}
+                onChange={(e) => setStudentPassword(e.target.value)}
+              />
+              <InputCustom
+                type={"password"}
+                iconDirection={true}
+                textDirection={true}
+                placeholder={"تأكيد كلمة السر"}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              /> */}
+            </div>
+
+          )
+        }
+        {/* State 2 */}
+        {stateData === 2 &&
+          (
+            <div className="w-full flex flex-col sm:gap-2 xl:gap-6 items-end">
+              <span className='w-full text-right text-thirdColor text-2xl'>أهلا بك معنا</span>
+              <div className="w-full flex  flex-col xl:flex-row-reverse justify-between gap-4">
+
+                <div className="w-full">
+                  <DropDownMenu
+                    ref={CountriesRef}
+                    iconDirection={true}
+                    handleOpen={handleOpenCountry}
+                    handleOpenOption={handleCountry}
+                    stateoption={countriesState}
+                    openMenu={openCountry}
+                    options={countries}
+                  />
+                </div>
+
+                <div className="w-full">
+                  <DropDownMenu
+                    ref={CitiesRef}
+                    iconDirection={true}
+                    handleOpen={handleOpenCity}
+                    handleOpenOption={handleCity}
+                    stateoption={citiesState}
+                    openMenu={openCity}
+                    options={cities.length > 0 ? cities : [{ id: "لا يوجد مدن", name: "لا يوجد مدن" }]}
+                  />
+                </div>
+              </div>
+
+              <div className="w-full flex  justify-between gap-4">
+
+                <div className="w-full">
+                  <DropDownMenu
+                    ref={CategoryRef}
+                    iconDirection={true}
+                    handleOpen={handleOpenCategory}
+                    handleOpenOption={handleCategory}
+                    stateoption={categoryState}
+                    openMenu={openCategory}
+                    options={categories}
+                  />
+                </div>
+
+                <div className="w-full">
+                  <DropDownMenu
+                    ref={EducationRef}
+                    iconDirection={true}
+                    handleOpen={handleOpenEducation}
+                    handleOpenOption={handleEducation}
+                    stateoption={educationState}
+                    openMenu={openEducation}
+                    options={educations}
+                  />
+                </div>
+              </div>
+
+              {/* <div className="w-full">
+                <DropDownMenu
+                  ref={StudentTypeRef}
+                  iconDirection={true}
+                  handleOpen={handleOpenStudentType}
+                  handleOpenOption={handleStudentType}
+                  stateoption={studentTypeState}
+                  openMenu={openStudentType}
+                  options={studentTypes}
+                />
+              </div> */}
+
+              <div className="w-full">
+                <DropDownMenu
+                  ref={StudentJobRef}
+                  iconDirection={true}
+                  handleOpen={handleOpenStudentJob}
+                  handleOpenOption={handleStudentJob}
+                  stateoption={studentJobState}
+                  openMenu={openStudentJob}
+                  options={studentJobs}
+                />
+              </div>
+              <InputCustom
+                type={"password"}
+                iconDirection={true}
+                textDirection={true}
+                placeholder={"كلمة السر"}
+                value={studentPassword}
+                onChange={(e) => {
+                  setStudentPassword(e.target.value)
+                  setParentPassword(e.target.value)
+                }}
+              />
+              <InputCustom
+                type={"password"}
+                iconDirection={true}
+                textDirection={true}
+                placeholder={"تأكيد كلمة السر"}
+                value={confirmPassword}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value)
+                  setConfirmParentPassword(e.target.value)
+                }}
+              />
+              <InputCustom type={"text"}
+                textDirection={true}
+                paddinRight='pr-2'
+                required={false}
+                placeholder={"كود التسويق التابع له"}
+                value={affiliateCode}
+                onChange={(e) => setAffiliateCode(e.target.value)}
+              />
+
+            </div>
+          )
+        }
+        {/* State 3 */}
+        {/* {stateData === 3 &&
+          (
+            <div className="w-full flex flex-col gap-2 items-end">
+              <span className='w-full text-right text-thirdColor text-2xl'>بيانات ولى الأمر</span>
+              <div className="w-full flex xl:flex-row-reverse flex-col sm:gap-2 xl:gap-6 items-start">
+                <InputCustom
+                  textDirection={true}
+                  paddinRight={"pr-4"}
+                  paddinLeft={"pl-0"}
+                  type={"text"}
+                  required={false}
+                  placeholder={"أسم ولى الأمر"}
+                  value={parentName}
+                  onChange={(e) => setParentName(e.target.value)}
+                />
+                <InputCustom type={"number"}
+                  textDirection={true}
+                  paddinRight={"pr-2"}
+                  paddinLeft={"pl-0"}
+                  required={false}
+                  placeholder={"ادخل رقم ولى الأمر مختلف عن رقمك"}
+                  placeholderSize={true}
+                  value={parentPhone}
+                  onChange={(e) => {
+                    setParentPhone(e.target.value)
+                    setParentEmail(e.target.value + '@elmanhag.com')
+                  }}
+                />
+              </div>
+              <InputCustom type={"email"}
+                textDirection={true}
+                paddinRight={"pr-4"}
+                paddinLeft={"pl-0"}
+                required={false}
+                placeholder={"ادخل ايميل ولى الأمر مختلف عن ايميلك"}
+                value={parentEmail}
+                onChange={(e) => setParentEmail(e.target.value)}
+              />
+              <div className="w-full">
+                <DropDownMenu
+                  ref={ParentRelationRef}
+                  iconDirection={true}
+                  handleOpen={handleOpenParentRelation}
+                  handleOpenOption={handleParentRelation}
+                  stateoption={parentRelationState}
+                  openMenu={openParentRelation}
+                  options={parentRelations}
+                />
+              </div>
+              <InputCustom type={"password"}
+                iconDirection={true}
+                textDirection={true}
+                required={false}
+                placeholder={"كلمة السر"}
+                value={parentPassword}
+                onChange={(e) => setParentPassword(e.target.value)}
+              />
+              <InputCustom
+                type={"password"}
+                iconDirection={true}
+                textDirection={true}
+                required={false}
+                placeholder={"تاكيد كلمة السر"}
+                value={confirmParentPassword}
+                onChange={(e) => setConfirmParentPassword(e.target.value)}
+              />
+              <InputCustom type={"text"}
+                textDirection={true}
+                paddinRight='pr-2'
+                required={false}
+                placeholder={"كود التسويق التابع له"}
+                value={affiliateCode}
+                onChange={(e) => setAffiliateCode(e.target.value)}
+              />
+            </div>
+          )
+        } */}
+
+        {/*  {stateData === 1 &&
+          (
+            <div className="w-full flex flex-col sm:gap-2 xl:gap-6 items-start">
+              <span className='w-full text-right text-thirdColor text-2xl'>بيانات الطالب</span>
+              <div className="w-full flex xl:flex-row-reverse flex-col gap-4 items-start">
+                <InputCustom
+                  type={"text"}
+                  textDirection={true}
+                  paddinRight="pr-4"
+                  paddinLeft="pl-0"
+                  placeholder={"اسم الطالب"}
+                  value={studentName}
+                  onChange={(e) => setStudentName(e.target.value)}
+                />
+                <InputCustom
+                  type={"text"}
+                  textDirection={true}
+                  paddinRight="pr-2"
+                  paddinLeft="pl-0"
+                  placeholder={"رقم تليفون الطالب"}
                   value={studentPhone}
                   onChange={(e) => {
                     const value = e.target.value;
@@ -657,8 +1010,7 @@ const SignUpPage = () => {
 
           )
         }
-        {/* State 2 */}
-        {stateData === 2 &&
+ {stateData === 2 &&
           (
             <div className="w-full flex flex-col sm:gap-2 xl:gap-6 items-end">
               <span className='w-full text-right text-thirdColor text-2xl'>أهلا بك معنا</span>
@@ -739,8 +1091,7 @@ const SignUpPage = () => {
             </div>
           )
         }
-        {/* State 3 */}
-        {stateData === 3 &&
+ {stateData === 3 &&
           (
             <div className="w-full flex flex-col gap-2 items-end">
               <span className='w-full text-right text-thirdColor text-2xl'>بيانات ولى الأمر</span>
@@ -817,7 +1168,7 @@ const SignUpPage = () => {
 
             </div>
           )
-        }
+        } */}
 
         {/* {error && <div className="w-full text-mainColor text-center text-2xl mb-4 font-bold">{error}</div>} */}
 
@@ -833,15 +1184,25 @@ const SignUpPage = () => {
               </>
             )
           }
-          {stateData === 2 &&
+          {/* {stateData === 2 &&
             (
               <>
                 <Button Text="التالى" handleClick={handleClickNext} />
                 <Button Text="السابق" handleClick={handleClickPrev} />
               </>
             )
-          }
-          {stateData === 3 &&
+          } */}
+          {/* {stateData === 3 &&
+            (
+              <>
+                <div className="w-full text-end">
+
+                  <Button Text="السابق" handleClick={handleClickPrev} />
+                </div>
+              </>
+            )
+          } */}
+          {stateData === 2 &&
             (
               <>
                 <div className="w-full text-end">
