@@ -69,10 +69,15 @@ const LiveClassesPage = () => {
     }
   };
 
+  // const visibleDays = eachDayOfInterval({
+  //   start: new Date(currentYear, currentMonth - 1, dayOffset + 1),
+  //   end: new Date(currentYear, currentMonth - 1, Math.min(dayOffset + 7, daysInMonth)),
+  // });
   const visibleDays = eachDayOfInterval({
-    start: new Date(currentYear, currentMonth - 1, dayOffset + 1),
-    end: new Date(currentYear, currentMonth - 1, Math.min(dayOffset + 7, daysInMonth)),
+    start: new Date(currentYear, currentMonth - 1, getDate(new Date()) + dayOffset), // Start from the current day
+    end: new Date(currentYear, currentMonth - 1, Math.min(getDate(new Date()) + dayOffset + 6, daysInMonth)), // Show the next 7 days starting from today
   });
+  
 
   const handleDayClick = (day) => {
     setSelectedDay(day); // Update the selected day state
@@ -139,27 +144,26 @@ const LiveClassesPage = () => {
     fetchLive();
   }, [auth.user.token]);
 
-  const handleAttendanceClick = async (id, liveLink) => {
+  const handleAttendanceClick = async (id,live) => {
     setIsLoading(true);
+    console.log("live is :",live,live.link)
     try {
       const response = await axios.post(
-        `https://bdev.elmanhag.shop/student/subscription/check/${id}`, 
-        {}, 
+        `https://bdev.elmanhag.shop/student/subscription/check/${id}`, {},
         {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,
             'Content-Type': 'application/json',
-            Accept: 'application/json',
           },
         }
       );
   
       console.log("Response status:", response.status);
-      console.log("Response data:", response.data);
+      console.log("Response data:", response);
   
       if (response.status === 200 && response.data.success) {
         console.log('Success:', response.data);
-        navigate(liveLink); // Redirect to live link if the response is successful
+        window.open(live.link, '_blank', 'noopener noreferrer');
       }
     } catch (error) {
       console.log('Error response:', error.response); 
@@ -228,6 +232,7 @@ const LiveClassesPage = () => {
         ))}
       </div>
 
+
       {/* Filtered Data Display */}
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-y-5">
         {filteredData.length > 0 ? (
@@ -274,7 +279,7 @@ const LiveClassesPage = () => {
                       Size="text-2xl"
                       px="px-3"
                       rounded="rounded-2xl"
-                      handleClick={() => handleAttendanceClick(live.id, live.live_link)}
+                      handleClick={() => handleAttendanceClick(live.id,live)}
                       stateLoding={isLoading}
                       // stateLoading={isLoading}
                       // onClick={() => handleAttendanceClick(live.id, live.live_link)} // Wrap with arrow function

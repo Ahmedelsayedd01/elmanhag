@@ -187,7 +187,9 @@ const SubscriptionsPaymentPage = () => {
                 onClick={() => setSelectedPaymentMethod(method)}
               >
                 <div className={`w-6 h-6 rounded-full border-2 ${selectedPaymentMethod.title === method.title ? 'border-red-500 bg-mainColor' : 'border-gray-300'} mr-3`} />
-                <img src={method.thumbnail_link} alt={method.title} className="w-10 h-10" />
+                <img src={method.thumbnail_link} alt={method.title} 
+                  className={`${method.title ==="Vodafone cash" ? '' : 'h-14'}`} 
+               />
                 <h3 className="text-lg font-semibold">{method.title}</h3>
               </div>
             ))}
