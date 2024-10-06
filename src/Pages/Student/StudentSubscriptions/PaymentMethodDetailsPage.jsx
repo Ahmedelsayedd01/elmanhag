@@ -357,7 +357,7 @@ const PaymentMethodDetailsPage = () => {
   {paymentMethod.title === "fawry" ? (
     <>
   <div className="w-full flex sm:flex-col lg:flex-row items-center justify-center sm:gap-y-5 lg:gap-x-24 sm:my-8 lg:my-0">
-    <div className="bg-white shadow-lg rounded-lg p-6 w-full lg:w-4/12 mx-auto my-8 mt-0">
+    <div className="bg-white shadow-lg rounded-lg p-6 w-full lg:w-96 mx-auto my-8 mt-0">
       {/* Top sentence */}
       <p className="text-center text-xl font-bold text-mainColor mb-6">
         الدفع عن طريق  فوري

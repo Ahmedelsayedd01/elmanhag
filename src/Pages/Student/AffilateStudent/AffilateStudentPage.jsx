@@ -4,6 +4,7 @@ import { useAuth } from '../../../Context/Auth';
 import { Button } from '../../../Components/Button';
 import AndroidIcon from "../../../Components/AndroidIcon";
 import AppleIcon from "../../../Components/AppleIcon";
+import Loading from '../../../Components/Loading';
 import { NavLink, Link } from "react-router-dom";
 
 const AffilateStudentPage = () => {
@@ -61,6 +62,14 @@ const AffilateStudentPage = () => {
       setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <div className="affiliate-page w-full mt-10">
