@@ -579,7 +579,7 @@ const SignUpPage = () => {
         'city_id': cityId,
         'education_id': educationId,
         'sudent_jobs_id': studentJobId,
-        // 'gender': studentTypeName == 'ولد' ? "male" : 'female',
+        'gender': studentTypeName == 'ولد' ? "male" : 'female',
         'parent_relation_id': parentRelationId,
         // 'image': ' ',
         'parent_name': parentName,
@@ -688,6 +688,17 @@ const SignUpPage = () => {
                 value={studentEmail}
                 onChange={(e) => setStudentEmail(e.target.value)}
               />
+              <div className="w-full">
+                <DropDownMenu
+                  ref={StudentTypeRef}
+                  iconDirection={true}
+                  handleOpen={handleOpenStudentType}
+                  handleOpenOption={handleStudentType}
+                  stateoption={studentTypeState}
+                  openMenu={openStudentType}
+                  options={studentTypes}
+                />
+              </div>
 
               <div className="w-full flex xl:flex-row-reverse flex-col sm:gap-2 xl:gap-6 items-start">
                 <InputCustom
