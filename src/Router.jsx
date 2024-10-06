@@ -15,8 +15,6 @@ import {
   LiveLayout,
   AddLiveLayout,
   EditLiveLayout,
-  SupportAD,
-  ReportsAD,
   NoticeBoardAD,
   BundlesEducationLayout,
   CategoriesEducationLayout,
@@ -88,7 +86,10 @@ import {
   EditAffiliateBonusLayout,
   AddTeacherUserLayout,
   EditTeacherUserLayout,
-  AffilateStudentLayout
+  AffilateStudentLayout,
+  ReportsAD,
+  ComplaintsLayout,
+  SuggestionsLayout
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -111,6 +112,8 @@ import SignUpPage from "./Pages/RegisterPage/SignUpPage";
 
 import {
   AffilatePage,
+  ComplaintsHistoryPage,
+  ComplaintsPage,
   DownloadMobilePage,
   HomePage,
   LoginHistoryPage,
@@ -121,6 +124,8 @@ import {
   ProfilePage,
   ProgressPage,
   PurchasesPage,
+  SuggestionsHistoryPage,
+  SuggestionsPage,
   TeacherPage
 } from "./Pages/AllPages";
 
@@ -282,6 +287,12 @@ const AppLayoutPopUp = () => (
 );
 /* Affiliate */
 const AppLayoutAffilate = () => (
+  <>
+    <Outlet />
+  </>
+);
+/* Support */
+const AppLayoutSupport = () => (
   <>
     <Outlet />
   </>
@@ -892,9 +903,43 @@ export const router = createBrowserRouter([
               },
             ]
           },
+          /* Support */
           {
             path: 'support',
-            element: <SupportAD />,
+            element: <AppLayoutSupport />,
+            children: [
+              {
+                path: 'complaints',
+                element: <ComplaintsLayout />,
+                children: [
+                  {
+                    index: true,
+                    path: '',
+                    element: <ComplaintsPage />
+                  },
+                  {
+                    path: 'history',
+                    element: <ComplaintsHistoryPage />
+                  }
+                ]
+              },
+              {
+                path: 'suggestions',
+                element: <SuggestionsLayout />,
+                children: [
+                  {
+                    index: true,
+                    path: '',
+                    element: <SuggestionsPage />
+                  },
+                  {
+                    path: 'history',
+                    element: <SuggestionsHistoryPage />
+                  }
+                ]
+              },
+
+            ]
           },
           {
             path: 'reports',
