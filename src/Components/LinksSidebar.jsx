@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+
 import {
        AffiliateIcon,
        DashboardIcon,
@@ -16,11 +17,12 @@ import {
        SupportIcon,
        UserIcon,
 } from "./Icons/All_Icons";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 
 const LinksSidebar = () => {
        const location = useLocation();
+       const navigate = useNavigate();
        console.log('location', location)
        const savedState = JSON.parse(localStorage.getItem('sidebarState')) || {};
 
@@ -77,7 +79,14 @@ const LinksSidebar = () => {
        const [isActiveAffiliatePayout, setIsActiveAffiliatePayout] = useState(savedState.isActiveAffiliatePayout ?? false);
        /* ////Childern Affiliate */
        /* ///Affiliate */
+       /* Support */
        const [isActiveSupport, setIsActiveSupport] = useState(savedState.isActiveSupport ?? false);
+       const [openListSupport, setOpenListSupport] = useState(savedState.openListSupport ?? false);
+       /* Childern Support */
+       const [isActiveComplaints, setIsActiveComplaints] = useState(savedState.isActiveComplaints ?? false);
+       const [isActiveSuggestions, setIsActiveSuggestions] = useState(savedState.isActiveSuggestions ?? false);
+       /* // Childern Support */
+       /* // Support */
        const [isActiveReports, setIsActiveReports] = useState(savedState.isActiveReports ?? false);
        /* Setting */
        /* Childern Setting */
@@ -129,6 +138,9 @@ const LinksSidebar = () => {
                      isActiveAffiliateBonus,
                      isActiveAffiliatePayout,
                      isActiveSupport,
+                     openListSupport,
+                     isActiveComplaints,
+                     isActiveSuggestions,
                      isActiveReports,
                      isActiveSetting,
                      openListSetting,
@@ -176,6 +188,9 @@ const LinksSidebar = () => {
               isActiveAffiliateBonus,
               isActiveAffiliatePayout,
               isActiveSupport,
+              openListSupport,
+              isActiveComplaints,
+              isActiveSuggestions,
               isActiveReports,
               isActiveSetting,
               openListSetting,
@@ -224,6 +239,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -281,6 +299,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -337,6 +358,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -384,6 +408,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -439,6 +466,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -494,6 +524,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -551,6 +584,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -607,6 +643,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -654,6 +693,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -709,6 +751,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -764,6 +809,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -820,6 +868,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -875,6 +926,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -930,6 +984,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -985,6 +1042,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -1041,6 +1101,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -1096,6 +1159,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -1143,6 +1209,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -1198,6 +1267,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -1253,6 +1325,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -1310,6 +1385,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -1365,6 +1443,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -1412,6 +1493,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -1469,6 +1553,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -1524,6 +1611,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -1571,6 +1661,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -1626,6 +1719,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -1681,6 +1777,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(true)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -1737,6 +1836,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(true)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -1758,6 +1860,7 @@ const LinksSidebar = () => {
        }, [location])
 
        /* ///Affiliate */
+       /* Support */
        const handleClickSupport = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -1794,6 +1897,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(true)
+              setOpenListSupport(true)
+              setIsActiveComplaints(true)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -1808,11 +1914,142 @@ const LinksSidebar = () => {
        useEffect(() => {
               const part = location.pathname;
               const parts = part.split('/');
-              const result = parts.slice(0, 3).join('/');
-              if (result == "/dashboard_admin/support") {
-                     handleClickSupport()
+              const result = parts.slice(0, 4).join('/');
+
+              console.log('parts1', parts)
+              console.log('result1', result)
+              // Check only if the path matches without constantly re-triggering state updates
+              if (result === "/dashboard_admin/support" || result === "/dashboard_admin/support/") {
+                     handleClickSupport(); // Calls state changes
+                     navigate('support/complaints'); // Prevent triggering navigate on every render
+              }
+       }, [location]); // Only trigger when the `pathname` changes
+       // Complaints 
+       const handleClickComplaints = () => {
+              setIsActiveDashboard(false);
+              setIsActiveUser(false);
+              setOpenListUser(false);
+              setIsActiveStudent(false);
+              setIsActiveParent(false);
+              setIsActiveTeacher(false);
+              setIsActiveAdmin(false);
+              setIsActiveEducation(false)
+              setOpenListEducation(false)
+              setIsActiveCategories(false)
+              setIsActiveSubject(false)
+              setIsActiveBundles(false)
+              setIsActiveQuestionsBank(false)
+              setIsActiveHomeWork(false)
+              setIsActiveRevision(false)
+              setIsActivExams(false)
+              setIsActiveLive(false)
+              setIsActiveMarketing(false)
+              setOpenListMarketing(false)
+              setIsActiveDiscount(false)
+              setIsActivePromoCode(false)
+              setIsActiveReview(false)
+              setIsActivePopUp(false)
+              setIsActiveFinancial(false)
+              setOpenListFinancial(false)
+              setIsActiveFinancialPendingPayments(false)
+              setIsActiveFinancialPayments(false)
+              setIsActiveAffiliate(false)
+              setOpenListAffiliate(false)
+              setIsActiveAffiliateUser(false)
+              setIsActiveAffiliatePaymentMethod(false)
+              setIsActiveAffiliateCommissions(false)
+              setIsActiveAffiliateBonus(false)
+              setIsActiveAffiliatePayout(false)
+              setIsActiveSupport(true)
+              setOpenListSupport(true)
+              setIsActiveComplaints(true)
+              setIsActiveSuggestions(false)
+              setIsActiveReports(false)
+              setIsActiveSetting(false)
+              setOpenListSetting(false)
+              setIsActiveAdminRoles(false)
+              setIsActiveCountries(false)
+              setIsActiveCities(false)
+              setIsActiveParentRelation(false)
+              setIsActiveOperations(false)
+              setIsActivePaymentMethod(false)
+              setIsActiveNoticeBoard(false)
+       };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 4).join('/');
+              console.log('parts2', parts)
+              console.log('result2', result)
+              if (result == "/dashboard_admin/support/complaints") {
+                     handleClickComplaints()
               }
        }, [location])
+       // Suggestions
+       const handleClickSuggestions = () => {
+              setIsActiveDashboard(false);
+              setIsActiveUser(false);
+              setOpenListUser(false);
+              setIsActiveStudent(false);
+              setIsActiveParent(false);
+              setIsActiveTeacher(false);
+              setIsActiveAdmin(false);
+              setIsActiveEducation(false)
+              setOpenListEducation(false)
+              setIsActiveCategories(false)
+              setIsActiveSubject(false)
+              setIsActiveBundles(false)
+              setIsActiveQuestionsBank(false)
+              setIsActiveHomeWork(false)
+              setIsActiveRevision(false)
+              setIsActivExams(false)
+              setIsActiveLive(false)
+              setIsActiveMarketing(false)
+              setOpenListMarketing(false)
+              setIsActiveDiscount(false)
+              setIsActivePromoCode(false)
+              setIsActiveReview(false)
+              setIsActivePopUp(false)
+              setIsActiveFinancial(false)
+              setOpenListFinancial(false)
+              setIsActiveFinancialPendingPayments(false)
+              setIsActiveFinancialPayments(false)
+              setIsActiveAffiliate(false)
+              setOpenListAffiliate(false)
+              setIsActiveAffiliateUser(false)
+              setIsActiveAffiliatePaymentMethod(false)
+              setIsActiveAffiliateCommissions(false)
+              setIsActiveAffiliateBonus(false)
+              setIsActiveAffiliatePayout(false)
+              setIsActiveSupport(true)
+              setOpenListSupport(true)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(true)
+              setIsActiveReports(false)
+              setIsActiveSetting(false)
+              setOpenListSetting(false)
+              setIsActiveAdminRoles(false)
+              setIsActiveCountries(false)
+              setIsActiveCities(false)
+              setIsActiveParentRelation(false)
+              setIsActiveOperations(false)
+              setIsActivePaymentMethod(false)
+              setIsActiveNoticeBoard(false)
+       };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 4).join('/');
+              console.log('parts3', parts)
+              console.log('result3', result)
+              if (result == "/dashboard_admin/support/suggestions") {
+                     handleClickSuggestions()
+              }
+              console.log('isActiveSuggestions', isActiveSuggestions)
+       }, [location])
+
+
+       /* // Support */
        const handleClickReports = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
@@ -1849,6 +2086,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(true)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -1905,6 +2145,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(true)
               setOpenListSetting(true)
@@ -1961,6 +2204,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(true)
               setOpenListSetting(true)
@@ -2008,6 +2254,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(true)
               setOpenListSetting(true)
@@ -2063,6 +2312,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(true)
               setOpenListSetting(true)
@@ -2118,6 +2370,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(true)
               setOpenListSetting(true)
@@ -2173,6 +2428,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(true)
               setOpenListSetting(true)
@@ -2228,6 +2486,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(true)
               setOpenListSetting(true)
@@ -2284,6 +2545,9 @@ const LinksSidebar = () => {
               setIsActiveAffiliateBonus(false)
               setIsActiveAffiliatePayout(false)
               setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
               setIsActiveReports(false)
               setIsActiveSetting(false)
               setOpenListSetting(false)
@@ -2388,6 +2652,12 @@ const LinksSidebar = () => {
                                    <SupportIcon Width={25} Height={23} isActive={isActiveSupport} />
                                    <span className={`${isActiveSupport ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Support</span>
                             </Link>
+                            <div className={`${openListSupport ? "h-16" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                   <ul className={`${openListSupport ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                          <li className={`${isActiveComplaints ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"support/complaints"} onClick={handleClickComplaints}>Complaints</Link></li>
+                                          <li className={`${isActiveSuggestions ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"support/suggestions"} onClick={handleClickSuggestions}>Suggestions</Link></li>
+                                   </ul>
+                            </div>
                             <Link to="reports" onClick={handleClickReports} className={`${isActiveReports ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
                                    <ReportsIcon Width={25} Height={23} isActive={isActiveReports} />
                                    <span className={`${isActiveReports ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Reports</span>
