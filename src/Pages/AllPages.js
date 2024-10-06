@@ -90,6 +90,16 @@ export { default as PayoutPendingPage } from "./Admin/AffiliatePage/PayoutPendin
 export { default as PayoutHistoryPage } from "./Admin/AffiliatePage/PayoutHistoryPage";
 /* ////Affiliate Pages */
 
+/* Support Page */
+// Complaints
+export { default as ComplaintsNavPage } from "./Admin/Support/Complaints/ComplaintsNavPage";
+export { default as ComplaintsPage } from "./Admin/Support/Complaints/ComplaintsPage";
+export { default as ComplaintsHistoryPage } from "./Admin/Support/Complaints/ComplaintsHistoryPage";
+// Suggestions
+export { default as SuggestionsNavPage } from "./Admin/Support/Suggestions/SuggestionsNavPage";
+export { default as SuggestionsPage } from "./Admin/Support/Suggestions/SuggestionsPage";
+export { default as SuggestionsHistoryPage } from "./Admin/Support/Suggestions/SuggestionsHistoryPage";
+
 /* Setting Page */
 export { default as AdminRolesPage } from "./Admin/SettingPage/AdminRolesPage";
 export { default as CountriesPage } from "./Admin/SettingPage/Countries/CountriesPage";
@@ -138,6 +148,7 @@ export { default as AffilateStudentPage } from "./Student/AffilateStudent/Affila
 /* /////Student profile Page */
 export { default as ProfileStudentPage } from "./Student/ProfileStudent/ProfileStudentPage";
 export { default as EditProfileStudentPage } from "./Student/ProfileStudent/EditProfileStudentPage";
+
 /* Parent Dashboard Page */
 export { default as ParentDashboardPage } from "./Parent/ParentDashboardPage";
 /* /////Parent Dashboard Page */

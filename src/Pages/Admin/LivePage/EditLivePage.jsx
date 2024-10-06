@@ -712,6 +712,7 @@ const EditLivePage = () => {
         <div className="lg:w-[30%] sm:w-full">
           <InputCustom
             type="date"
+            minDate={false}
             placeholder="Date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
