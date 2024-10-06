@@ -117,9 +117,6 @@ const ComplaintsPage = () => {
                                                         <td
                                                                className="min-w-[120px] sm:min-w-[80px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                         >
-                                                               {/* {complaint.status == null ? <span className='text-green-500'>Aprrove</span>
-                                                                             : <span className='text-mainColor'>Rejected</span>
-                                                                      } */}
                                                                <div className="flex items-center justify-center gap-x-3">
 
                                                                       {complaint.status === 0 && (
@@ -130,14 +127,6 @@ const ComplaintsPage = () => {
                                                                                     Active
                                                                              </button>
                                                                       )}
-                                                                      {/* {complaint.status === 0 && (
-                                                                             <button
-                                                                                    className="bg-red-500 text-white px-4 py-2 rounded-lg"
-                                                                                    onClick={() => handleStatus(complaints.id, complaints.name, 1)}
-                                                                             >
-                                                                                    Done
-                                                                             </button>
-                                                                      )} */}
 
                                                                </div>
                                                         </td>
