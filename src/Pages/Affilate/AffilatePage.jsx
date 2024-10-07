@@ -1,18 +1,8 @@
-// import React, { useState } from 'react';
-// import { useAuth } from '../../Context/Auth';
-// import AndroidIcon from "../../Components/AndroidIcon";
-// import AppleIcon from "../../Components/AppleIcon";
-// import { Link } from "react-router-dom";
-// import { Button } from '../../Components/Button';
-// import apkFile from '../../../public/assets/AppApk'; // Ensure this path is correct
 import React, { useState } from 'react';
 import { useAuth } from '../../Context/Auth';
 import AndroidIcon from "../../Components/AndroidIcon";
 import AppleIcon from "../../Components/AppleIcon";
 import { Button } from '../../Components/Button';
-
-// Correctly reference the APK file from the public folder
-const apkFile = '/assets/AppApk/app-release.apk'; // Adjust this path if necessary
 
 const AffilatePage = () => {
     const auth = useAuth();
@@ -32,13 +22,11 @@ const AffilatePage = () => {
         setIsWarningOpen(false);
     };
 
-    const triggerDownload = () => {
-        const link = document.createElement('a');
-        link.href = apkFile; // This directly references the file path in the public folder
-        link.setAttribute('download', 'app-release.apk'); // Specify the file name
-        document.body.appendChild(link);
+    const handleDownload = () => {
+        const link = document.createElement("a");
+        link.href = "/app.apk";  // Correct path to the APK
+        link.download = "app.apk";  // Name of the file when downloaded
         link.click();
-        document.body.removeChild(link);
     };
 
     return (
@@ -48,14 +36,14 @@ const AffilatePage = () => {
                     <h1 className="text-2xl sm:text-4xl font-bold mb-8 text-mainColor">حمل التطبيق الان</h1>
                     <div className="flex flex-wrap justify-center gap-8">
                         {/* Google Store link for downloading the APK */}
-                        <div onClick={triggerDownload} style={{ cursor: "pointer" }}>
+                        <button style={{ cursor: "pointer" }} onClick={handleDownload}>
                             <div className="flex gap-5 bg-[#F6F6F6] px-7 py-4 justify-center items-center">
                                 <h1 className="text-mainColor font-semibold">Google Store</h1>
                                 <div>
                                     <AndroidIcon />
                                 </div>
                             </div>
-                        </div>
+                        </button>
 
                         {/* iOS "Coming Soon" Button */}
                         <button onClick={showWarning}>
