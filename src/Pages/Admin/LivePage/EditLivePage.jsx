@@ -135,7 +135,7 @@ const EditLivePage = () => {
           setSelectDay(data.day || '');
           setSelectStatus(data.paid === 1 ? "Paid" : "Free"); // Updated this logic
           setPrice(data.price || 0);
-          setLiveIncluded(data.inculded || null); // Fixed typo
+          setLiveIncluded(data?.inculded || 0); // Fixed typo
 
           const nameSemester = data.subject.semester;
           setSelectSemester(nameSemester[0].toUpperCase() + nameSemester.slice(1));
