@@ -2652,10 +2652,10 @@ const LinksSidebar = () => {
                                    <SupportIcon Width={25} Height={23} isActive={isActiveSupport} />
                                    <span className={`${isActiveSupport ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Support</span>
                             </Link>
-                            <div className={`${openListSupport ? "h-16" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                            <div className={`${openListSupport ? "h-10" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
                                    <ul className={`${openListSupport ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
                                           <li className={`${isActiveComplaints ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"support/complaints"} onClick={handleClickComplaints}>Complaints</Link></li>
-                                          <li className={`${isActiveSuggestions ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"support/suggestions"} onClick={handleClickSuggestions}>Suggestions</Link></li>
+                                          {/* <li className={`${isActiveSuggestions ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"support/suggestions"} onClick={handleClickSuggestions}>Suggestions</Link></li> */}
                                    </ul>
                             </div>
                             <Link to="reports" onClick={handleClickReports} className={`${isActiveReports ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
