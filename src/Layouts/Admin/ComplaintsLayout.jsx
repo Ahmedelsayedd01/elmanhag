@@ -7,7 +7,7 @@ const ComplaintsLayout = () => {
        return (
               <>
                      <div className="flex flex-col items-center h-full gap-y-4">
-                            <TitleHeader text={"Complaints"} />
+                            <TitleHeader text={"Complaints && Suggestions"} />
                             <ComplaintsNavPage />
                             <Outlet />
                      </div>
