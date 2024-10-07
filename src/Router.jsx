@@ -923,21 +923,21 @@ export const router = createBrowserRouter([
                   }
                 ]
               },
-              {
-                path: 'suggestions',
-                element: <SuggestionsLayout />,
-                children: [
-                  {
-                    index: true,
-                    path: '',
-                    element: <SuggestionsPage />
-                  },
-                  {
-                    path: 'history',
-                    element: <SuggestionsHistoryPage />
-                  }
-                ]
-              },
+              // {
+              //   path: 'suggestions',
+              //   element: <SuggestionsLayout />,
+              //   children: [
+              //     {
+              //       index: true,
+              //       path: '',
+              //       element: <SuggestionsPage />
+              //     },
+              //     {
+              //       path: 'history',
+              //       element: <SuggestionsHistoryPage />
+              //     }
+              //   ]
+              // },
 
             ]
           },
