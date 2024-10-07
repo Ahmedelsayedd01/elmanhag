@@ -570,7 +570,7 @@ const SignUpPage = () => {
 
       const response = await axios.post('https://bdev.elmanhag.shop/student/auth/signup/create', {
         'name': studentName,
-        'phone': parseInt(studentPhone),
+        'phone': studentPhone,
         'email': studentEmail,
         'password': studentPassword,
         'conf_password': confirmPassword,
@@ -583,7 +583,7 @@ const SignUpPage = () => {
         'parent_relation_id': parentRelationId,
         // 'image': ' ',
         'parent_name': parentName,
-        'parent_phone': parseInt(parentPhone),
+        'parent_phone': parentPhone,
         'parent_email': parentEmailObj,
         'parent_password': parentPassword,
         'affilate_code': affiliateCode,
