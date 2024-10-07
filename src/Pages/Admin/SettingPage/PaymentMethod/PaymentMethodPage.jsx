@@ -129,7 +129,7 @@ const PaymentMethodPage = () => {
         }
       );
       if (response.status === 200) {
-        setPaymentMethods(response.data.payment_methods|| []);
+        setPaymentMethods(response.data.payment_methods || []);
         console.log(response.data.payment_methods)
       }
     } catch (error) {
@@ -169,7 +169,7 @@ const PaymentMethodPage = () => {
     number: index + 1,
     thumbnail: method.thumbnail_link,
     title: method.title,
-    status: method.status === 1 ? 'Active' : 'Disabled',
+    status: method.status === 1 ? <span className="text-green-500 px-4 py-2 rounded-lg">Active</span> : <span className="text-red-500 px-4 py-2 rounded-lg"> Disabled</span>,
   }));
 
   localStorage.setItem("PaymentMethods", JSON.stringify(paymentMethods));

@@ -570,7 +570,7 @@ const SignUpPage = () => {
 
       const response = await axios.post('https://bdev.elmanhag.shop/student/auth/signup/create', {
         'name': studentName,
-        'phone': parseInt(studentPhone),
+        'phone': studentPhone,
         'email': studentEmail,
         'password': studentPassword,
         'conf_password': confirmPassword,
@@ -579,11 +579,11 @@ const SignUpPage = () => {
         'city_id': cityId,
         'education_id': educationId,
         'sudent_jobs_id': studentJobId,
-        // 'gender': studentTypeName == 'ولد' ? "male" : 'female',
+        'gender': studentTypeName == 'ولد' ? "male" : 'female',
         'parent_relation_id': parentRelationId,
         // 'image': ' ',
         'parent_name': parentName,
-        'parent_phone': parseInt(parentPhone),
+        'parent_phone': parentPhone,
         'parent_email': parentEmailObj,
         'parent_password': parentPassword,
         'affilate_code': affiliateCode,
@@ -688,6 +688,17 @@ const SignUpPage = () => {
                 value={studentEmail}
                 onChange={(e) => setStudentEmail(e.target.value)}
               />
+              <div className="w-full">
+                <DropDownMenu
+                  ref={StudentTypeRef}
+                  iconDirection={true}
+                  handleOpen={handleOpenStudentType}
+                  handleOpenOption={handleStudentType}
+                  stateoption={studentTypeState}
+                  openMenu={openStudentType}
+                  options={studentTypes}
+                />
+              </div>
 
               <div className="w-full flex xl:flex-row-reverse flex-col sm:gap-2 xl:gap-6 items-start">
                 <InputCustom
@@ -700,7 +711,8 @@ const SignUpPage = () => {
                   value={parentName}
                   onChange={(e) => setParentName(e.target.value)}
                 />
-                <InputCustom type={"number"}
+                <InputCustom
+                  type={"text"}
                   textDirection={true}
                   paddinRight={"pr-1"}
                   paddinLeft={"pl-0"}
@@ -709,8 +721,12 @@ const SignUpPage = () => {
                   placeholderSize={true}
                   value={parentPhone}
                   onChange={(e) => {
-                    setParentPhone(e.target.value)
-                    setParentEmail(e.target.value + '@elmanhag.com')
+                    const value = e.target.value;
+                    // Only allow numbers
+                    if (!isNaN(value)) {
+                      setParentPhone(e.target.value)
+                      setParentEmail(e.target.value + '@elmanhag.com')
+                    }
                   }}
                 />
               </div>

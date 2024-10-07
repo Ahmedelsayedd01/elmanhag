@@ -97,8 +97,13 @@ export { default as EditAffiliateBonusLayout } from "./Admin/EditAffiliateBonusL
 // Payout
 export { default as AffiliatePayoutLayout } from "./Admin/AffiliatePayoutLayout";
 
-export { default as SupportAD } from "./Admin/SupportAD";
+/* Support */
+// Show Complaints
+export { default as ComplaintsLayout } from "./Admin/ComplaintsLayout";
+export { default as SuggestionsLayout } from "./Admin/SuggestionsLayout";
+/* Reports */
 export { default as ReportsAD } from "./Admin/ReportsAD";
+// export { default as SuggestionsLayout } from "./Admin/SuggestionsLayout";
 /* Setting */
 export { default as AdminRolesAD } from "./Admin/AdminRolesAD";
 

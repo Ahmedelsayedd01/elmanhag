@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Button } from '../../../../Components/Button';
+import { Button, ButtonAdd } from '../../../../Components/Button';
 import DropDownMenu from '../../../../Components/DropDownMenu';
 import { useAuth } from '../../../../Context/Auth';
 import axios from 'axios';
 import InputCustom from '../../../../Components/InputCustom';
 import CheckBox from '../../../../Components/CheckBox';
-import RadioCheck from '../../../../Components/RadioCheck';
+import { RadioCheck } from '../../../../Components/RadioCheck';
+import { RadioCheckGroup } from '../../../../Components/RadioCheck';
 
 const AddQuestionPage = () => {
        const auth = useAuth();
@@ -92,9 +93,21 @@ const AddQuestionPage = () => {
 
        // const [isCheckedTrue, setIsCheckedTrue] = useState(false);
        // const [isCheckedFalse, setIsCheckedFalse] = useState(false);
+
        const [options] = useState([{ value: 'true', label: 'True' },
        { value: 'false', label: 'False' }]);
+
+       const [optionsGroup, setOptionsGroup] = useState([
+              { value: 'a', label: 'A_', answer: '' },
+              { value: 'b', label: 'B_', answer: '' },
+              { value: 'c', label: 'C_', answer: '' },
+              { value: 'd', label: 'D_', answer: '' },
+       ]);
+       const [answerComplete, setAnswerComplete] = useState([''])
+
        const [selectBoolean, setSelectBoolean] = useState(null); // Manage selected option
+       const [selectRightAnswer, setSelectRightAnswer] = useState(null); // Manage selected option
+       const [allAnswer, setAllAnswer] = useState(null); // Manage selected option
 
 
 
@@ -386,6 +399,39 @@ const AddQuestionPage = () => {
               setSelectBoolean(value)
               console.log('Selected Option:', value);
        }
+       const handleSelectAnswer = (value) => {
+              setSelectRightAnswer(value)
+              console.log('Selectedss Option:', value);
+       }
+
+       // const handleAllAnswer = (value) => {
+       //        setAllAnswer(value)
+       //        console.log('Selectedss answer:', value);
+       // }
+
+       const handleAllAnswer = (answers) => {
+              setAllAnswer(answers)
+              console.log('All answers:', answers); // Log all answers
+       };
+
+       // Function to handle adding a new answer option
+       const handleAddAnswer = () => {
+              const nextValue = String.fromCharCode(97 + optionsGroup.length); // Generate the next value (e, f, etc.)
+              const newAnswer = { value: nextValue, label: `${nextValue.toUpperCase()}_`, answer: '' };
+              setOptionsGroup([...optionsGroup, newAnswer]); // Add the new answer to the array
+       };
+
+       const handleAddAnswerComplete = () => {
+              setAnswerComplete([...answerComplete, '']); // Add a new empty string for the new input
+       };
+
+       const handleAnswerComplete = (index, value) => {
+              const newAnswers = [...answerComplete];
+              newAnswers[index] = value; // Update the value for the specific index
+              setAnswerComplete(newAnswers); // Set the new state
+
+              console.log('newAnswers', newAnswers)
+       };
 
        const handleClickNext = (e) => {
               e.preventDefault();
@@ -666,10 +712,46 @@ const AddQuestionPage = () => {
                                                         )}
 
                                                         {answerType == 'Mcq' && (
-                                                               'Mcq'
+                                                               <>
+                                                                      <div className="w-full">
+                                                                             <RadioCheckGroup radioGroup={optionsGroup} check={handleSelectAnswer} allAnswer={handleAllAnswer} />
+
+                                                                             <div className="w-2/12">
+                                                                                    <ButtonAdd
+                                                                                           Text={"Add More"}
+                                                                                           isWidth={true}
+                                                                                           BgColor={"white"}
+                                                                                           Color={"mainColor"}
+                                                                                           Size={"xl"}
+                                                                                           handleClick={handleAddAnswer}
+                                                                                    />
+                                                                             </div>
+                                                                      </div>
+                                                               </>
                                                         )}
                                                         {answerType == 'Complete' && (
-                                                               'Complete'
+                                                               <div className='w-full flex flex-wrap items-center justify-start gap-4'>
+                                                                      {answerComplete.map((answer, index) => (
+                                                                             <div key={index} className="sm:w-full xl:w-[30%]">
+                                                                                    <InputCustom
+                                                                                           type="text"
+                                                                                           placeholder="Answer"
+                                                                                           value={answer || ''} // Set the current answer from the array
+                                                                                           onChange={(e) => handleAnswerComplete(index, e.target.value)} // Pass index and value
+                                                                                    />
+                                                                             </div>
+                                                                      ))}
+                                                                      <div className="w-2/12">
+                                                                             <ButtonAdd
+                                                                                    Text={"Add More"}
+                                                                                    isWidth={true}
+                                                                                    BgColor={"white"}
+                                                                                    Color={"mainColor"}
+                                                                                    Size={"xl"}
+                                                                                    handleClick={handleAddAnswerComplete}
+                                                                             />
+                                                                      </div>
+                                                               </div>
                                                         )}
                                                         {answerType == 'Join' && (
                                                                'Join'
@@ -693,16 +775,20 @@ const AddQuestionPage = () => {
                                    {stateData === 2 &&
                                           (
                                                  <>
-                                                        <Button Text="Prev" handleClick={handleClickPrev} />
-                                                        <Button Text="Next" handleClick={handleClickNext} />
+                                                        <div className="w-full flex items-center justify-between">
+                                                               <Button Text="Prev" handleClick={handleClickPrev} />
+                                                               <Button Text="Next" handleClick={handleClickNext} />
+                                                        </div>
                                                  </>
                                           )
                                    }
                                    {stateData === 3 &&
                                           (
                                                  <>
-                                                        <Button Text="Prev" handleClick={handleClickPrev} />
-                                                        <Button Text="Add" handleClick={handleQuestionAdd} />
+                                                        <div className="mb-4 w-full flex items-center justify-between">
+                                                               <Button Text="Prev" handleClick={handleClickPrev} />
+                                                               <Button Text="Add" handleClick={handleQuestionAdd} />
+                                                        </div>
                                                  </>
                                           )
                                    }
