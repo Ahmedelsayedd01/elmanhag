@@ -1,72 +1,94 @@
-import React from 'react'
-import { useAuth } from '../../Context/Auth'
+// import React, { useState } from 'react';
+// import { useAuth } from '../../Context/Auth';
+// import AndroidIcon from "../../Components/AndroidIcon";
+// import AppleIcon from "../../Components/AppleIcon";
+// import { Link } from "react-router-dom";
+// import { Button } from '../../Components/Button';
+// import apkFile from '../../../public/assets/AppApk'; // Ensure this path is correct
+import React, { useState } from 'react';
+import { useAuth } from '../../Context/Auth';
+import AndroidIcon from "../../Components/AndroidIcon";
+import AppleIcon from "../../Components/AppleIcon";
 import { Button } from '../../Components/Button';
-import { DiAndroid, DiApple } from "react-icons/di";
+
+// Correctly reference the APK file from the public folder
+const apkFile = '/assets/AppApk/app-release.apk'; // Adjust this path if necessary
 
 const AffilatePage = () => {
-       const auth = useAuth();
-       const handleLogOut = () => {
-              auth.logout()
-              navigate("/authentication/login", { replace: true });
-       }
-       return (
-              <>
-                     <div className="w-full flex flex-col gap-y-5 p-3">
-                            {/* <div className='flex items-center gap-5'>
-                                   <h1 className='w-52'>Download Android App : </h1>
-                                   <div className="flex items-center justify-center w-100">
-                                          <Button
-                                                 type="submit"
-                                                 Text="Download App"
-                                                 BgColor="bg-mainColor"
-                                                 Color="text-white"
-                                                 Width="full"
-                                                 Size="text-2xl"
-                                                 px="px-28"
-                                                 rounded="rounded-2xl"
-                                          // stateLoding={isLoading}
-                                          />
-                                   </div>
+    const auth = useAuth();
+    const [isWarningOpen, setIsWarningOpen] = useState(false);
+    const warningMessage = "Coming Soon on App Store!";
+
+    const handleLogOut = () => {
+        auth.logout();
+        navigate("/authentication/login", { replace: true });
+    };
+
+    const showWarning = () => {
+        setIsWarningOpen(true);
+    };
+
+    const handleCloseWarning = () => {
+        setIsWarningOpen(false);
+    };
+
+    const triggerDownload = () => {
+        const link = document.createElement('a');
+        link.href = apkFile; // This directly references the file path in the public folder
+        link.setAttribute('download', 'app-release.apk'); // Specify the file name
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    return (
+        <>
+            <div className="w-full flex flex-col gap-y-5 p-3">
+                <div className="mt-12 text-center">
+                    <h1 className="text-2xl sm:text-4xl font-bold mb-8 text-mainColor">حمل التطبيق الان</h1>
+                    <div className="flex flex-wrap justify-center gap-8">
+                        {/* Google Store link for downloading the APK */}
+                        <div onClick={triggerDownload} style={{ cursor: "pointer" }}>
+                            <div className="flex gap-5 bg-[#F6F6F6] px-7 py-4 justify-center items-center">
+                                <h1 className="text-mainColor font-semibold">Google Store</h1>
+                                <div>
+                                    <AndroidIcon />
+                                </div>
                             </div>
+                        </div>
 
-                            <div className='flex items-center gap-5'>
-                                   <h1 className='w-52'>Download IOS App :</h1>
-                                   <div className="flex items-center justify-center w-100">
-                                          <Button
-                                                 type="submit"
-                                                 Text="Download App"
-                                                 BgColor="bg-mainColor"
-                                                 Color="text-white"
-                                                 Width="full"
-                                                 Size="text-2xl"
-                                                 px="px-28"
-                                                 rounded="rounded-2xl"
-                                          // stateLoding={isLoading}
-                                          />
-                                   </div>
-                            </div> */}
-                            <div className="mt-12 text-center">
-                                   <h1 className="text-2xl sm:text-4xl font-bold mb-8 text-mainColor">حمل التطبيق الان</h1>
-                                   <div className="flex flex-wrap justify-center gap-8">
-                                          {/* Android Download */}
-                                          <div
-                                                 // onClick={() => window.open('https://play.google.com/store/apps/details?id=com.elmanhag.aff', '_blank', 'noopener,noreferrer')}
-                                                 className="w-36 sm:w-44 h-36 sm:h-44 bg-black rounded-full shadow-lg flex flex-col items-center justify-center hover:scale-110 transform transition duration-300 ease-in-out cursor-pointer"
-                                          >
-                                                 <DiAndroid className="text-5xl sm:text-6xl text-white" />
-                                                 <span className="block mt-3 text-white text-lg sm:text-xl">Android</span>
-                                          </div>
-
-                                          {/* iOS Download */}
-                                          <div className="w-36 sm:w-44 h-36 sm:h-44 bg-black rounded-full shadow-lg flex flex-col items-center justify-center hover:scale-110 transform transition duration-300 ease-in-out cursor-pointer">
-                                                 <DiApple className="text-5xl sm:text-6xl text-white" />
-                                                 <span className="block mt-3 text-white text-lg sm:text-xl">iOS</span>
-                                          </div>
-                                   </div>
+                        {/* iOS "Coming Soon" Button */}
+                        <button onClick={showWarning}>
+                            <div className="flex gap-5 bg-[#F6F6F6] px-7 py-4 justify-center items-center cursor-pointer">
+                                <h1 className="text-mainColor font-semibold">App Store</h1>
+                                <div>
+                                    <AppleIcon />
+                                </div>
                             </div>
-                     </div>
-              </>
-       )
-}
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-export default AffilatePage
+            {/* Warning Modal */}
+            {isWarningOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 lg:mr-10">
+                    <div className="bg-white p-6 md:p-12 rounded-lg w-11/12 md:w-1/2 lg:w-1/3">
+                        <h2 className="text-[#6B6B6B] text-xl md:text-2xl font-bold mb-4">{warningMessage}</h2>
+                        <div className="flex justify-end gap-4 sm:gap-2">
+                            <Button
+                                Text="حسنا"
+                                Width="auto"
+                                BgColor="bg-gray-300"
+                                Color="text-black"
+                                handleClick={handleCloseWarning} // Close modal when clicked
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
+        </>
+    );
+};
+
+export default AffilatePage;

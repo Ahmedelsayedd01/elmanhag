@@ -18,6 +18,9 @@ import {
   differenceInDays, // Add the missing import
 } from 'date-fns';
 import { arSA } from 'date-fns/locale'; // Arabic Saudi locale for formatting month names
+import { ar } from 'date-fns/locale'; // Import the Arabic locale for date-fns
+import { Warning } from 'postcss';
+
 
 const formatMonthYear = (date) => format(date, 'MMMM yyyy', { locale: arSA });
 
@@ -33,57 +36,112 @@ const LiveClassesPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // Control modal visibility
   const [modalMessage, setModalMessage] = useState(''); // Control modal message
 
+  const [isWorningOpen, setIsWorningOpen] = useState(false); // Control modal visibility
+  const [warningMessage, setWarningMessage] = useState(''); // Control modal message
+  
+
   const daysInMonth = getDaysInMonth(currentDate);
   const currentMonth = getMonth(currentDate) + 1; // Months are 0-indexed
   const currentYear = getYear(currentDate);
 
-  const weekDays = ['السبت', 'الاحد', 'الاثنين', 'الثلاثاء', 'الاربعاء', 'الخميس', 'الجمعه'];
+  // const weekDays = ['السبت', 'الاحد', 'الاثنين', 'الثلاثاء', 'الاربعاء', 'الخميس', 'الجمعه'];
 
-  const prevDays = () => {
-    const today = new Date();
-    const currentDayOfMonth = getDate(today);
+  // const prevDays = () => {
+  //   const today = new Date();
+  //   const currentDayOfMonth = getDate(today);
   
-    if (currentDate.getMonth() === today.getMonth() && currentDate.getFullYear() === today.getFullYear()) {
-      // Check if the previous week would include days before today
-      if (dayOffset <= Math.floor((currentDayOfMonth - 1) / 7) * 7) {
-        return; // Prevent going back further than the current week
-      }
-    }
+  //   if (currentDate.getMonth() === today.getMonth() && currentDate.getFullYear() === today.getFullYear()) {
+  //     // Check if the previous week would include days before today
+  //     if (dayOffset <= Math.floor((currentDayOfMonth - 1) / 7) * 7) {
+  //       return; // Prevent going back further than the current week
+  //     }
+  //   }
   
-    if (dayOffset === 0) {
-      const prevMonth = addMonths(currentDate, -1);
-      setCurrentDate(prevMonth);
-      setDayOffset(Math.max(getDaysInMonth(prevMonth) - 7, 0));
-    } else {
-      setDayOffset(Math.max(dayOffset - 7, 0));
-    }
-  };
+  //   if (dayOffset === 0) {
+  //     const prevMonth = addMonths(currentDate, -1);
+  //     setCurrentDate(prevMonth);
+  //     setDayOffset(Math.max(getDaysInMonth(prevMonth) - 7, 0));
+  //   } else {
+  //     setDayOffset(Math.max(dayOffset - 7, 0));
+  //   }
+  // };
 
-  const nextDays = () => {
-    if (dayOffset + 7 >= daysInMonth) {
-      const nextMonth = addMonths(currentDate, 1);
-      setCurrentDate(nextMonth);
-      setDayOffset(0);
-    } else {
-      setDayOffset(dayOffset + 7);
-    }
-  };
+  // const nextDays = () => {
+  //   if (dayOffset + 7 >= daysInMonth) {
+  //     const nextMonth = addMonths(currentDate, 1);
+  //     setCurrentDate(nextMonth);
+  //     setDayOffset(0);
+  //   } else {
+  //     setDayOffset(dayOffset + 7);
+  //   }
+  // };
 
+  // // const visibleDays = eachDayOfInterval({
+  // //   start: new Date(currentYear, currentMonth - 1, dayOffset + 1),
+  // //   end: new Date(currentYear, currentMonth - 1, Math.min(dayOffset + 7, daysInMonth)),
+  // // });
   // const visibleDays = eachDayOfInterval({
-  //   start: new Date(currentYear, currentMonth - 1, dayOffset + 1),
-  //   end: new Date(currentYear, currentMonth - 1, Math.min(dayOffset + 7, daysInMonth)),
+  //   start: new Date(currentYear, currentMonth - 1, getDate(new Date()) + dayOffset), // Start from the current day
+  //   end: new Date(currentYear, currentMonth - 1, Math.min(getDate(new Date()) + dayOffset + 6, daysInMonth)), // Show the next 7 days starting from today
   // });
-  const visibleDays = eachDayOfInterval({
-    start: new Date(currentYear, currentMonth - 1, getDate(new Date()) + dayOffset), // Start from the current day
-    end: new Date(currentYear, currentMonth - 1, Math.min(getDate(new Date()) + dayOffset + 6, daysInMonth)), // Show the next 7 days starting from today
-  });
   
 
-  const handleDayClick = (day) => {
-    setSelectedDay(day); // Update the selected day state
-    const filtered = liveData.filter((item) => isSameDay(new Date(item.date), day));
-    setFilteredData(filtered);
-  };
+  // const handleDayClick = (day) => {
+  //   setSelectedDay(day); // Update the selected day state
+  //   const filtered = liveData.filter((item) => isSameDay(new Date(item.date), day));
+  //   setFilteredData(filtered);
+  // };
+
+
+
+// Generate dynamic weekdays based on the visibleDays
+const getWeekDays = (visibleDays) => {
+  return visibleDays.map((day) => format(day, 'eeee', { locale: ar }));
+};
+
+const prevDays = () => {
+  const today = new Date();
+  const currentDayOfMonth = getDate(today);
+
+  if (currentDate.getMonth() === today.getMonth() && currentDate.getFullYear() === today.getFullYear()) {
+    if (dayOffset <= Math.floor((currentDayOfMonth - 1) / 7) * 7) {
+      return; // Prevent going back further than the current week
+    }
+  }
+
+  if (dayOffset === 0) {
+    const prevMonth = addMonths(currentDate, -1);
+    setCurrentDate(prevMonth);
+    setDayOffset(Math.max(getDaysInMonth(prevMonth) - 7, 0));
+  } else {
+    setDayOffset(Math.max(dayOffset - 7, 0));
+  }
+};
+
+const nextDays = () => {
+  if (dayOffset + 7 >= daysInMonth) {
+    const nextMonth = addMonths(currentDate, 1);
+    setCurrentDate(nextMonth);
+    setDayOffset(0);
+  } else {
+    setDayOffset(dayOffset + 7);
+  }
+};
+
+// Calculate visible days
+const visibleDays = eachDayOfInterval({
+  start: new Date(currentYear, currentMonth - 1, getDate(new Date()) + dayOffset),
+  end: new Date(currentYear, currentMonth - 1, Math.min(getDate(new Date()) + dayOffset + 6, daysInMonth)),
+});
+
+// Dynamically generate weekdays in Arabic
+const weekDays = getWeekDays(visibleDays);
+
+const handleDayClick = (day) => {
+  setSelectedDay(day); // Update the selected day state
+  const filtered = liveData.filter((item) => isSameDay(new Date(item.date), day));
+  setFilteredData(filtered);
+};
 
   const formatTimeToArabic = (time) => {
     const [hours, minutes] = time.split(':'); // Split time into hours and minutes
@@ -144,10 +202,169 @@ const LiveClassesPage = () => {
     fetchLive();
   }, [auth.user.token]);
 
-  const handleAttendanceClick = async (id,live) => {
+  // const handleAttendanceClick = async (id,live) => {
+  //   setIsLoading(true);
+  //   console.log("live is :",live,live.link)
+  //   try {
+  //     const response = await axios.post(
+  //       `https://bdev.elmanhag.shop/student/subscription/check/${id}`, {},
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${auth.user.token}`,
+  //           'Content-Type': 'application/json',
+  //         },
+  //       }
+  //     );
+  
+  //     console.log("Response status:", response.status);
+  //     console.log("Response data:", response);
+  
+  //     if (response.status === 200 && response.data.success) {
+  //       console.log('Success:', response.data);
+  //       window.open(live.link, '_blank', 'noopener noreferrer');
+  //     }
+  //   } catch (error) {
+  //     console.log('Error response:', error.response); 
+  
+  //     // Check if the error response contains the 'faild' message
+  //     if (error.response && error.response.data && error.response.data.faild) {
+  //       const faildMessage = error.response.data.faild;
+  
+  //       // Set the Arabic message if the returned message matches
+  //       if (faildMessage === 'You must buy live first') {
+  //         setModalMessage('يجب شراء اللايف'); // Arabic message for the modal
+  //       } else {
+  //         setModalMessage(faildMessage); // Set the original error message if it's different
+  //       }
+  
+  //       setIsModalOpen(true); // Open the modal
+  //     } else {
+  //       // Handle other possible errors (e.g., validation errors)
+  //       const errorMessages = error?.response?.data?.errors;
+  //       let errorMessageString = 'Error occurred';
+  //       if (errorMessages) {
+  //         errorMessageString = Object.values(errorMessages).flat().join(' ');
+  //       }
+  //       auth.toastError('Error', errorMessageString);
+  //     }
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+  
+  // const handleAttendanceClick = async (id, live) => {
+  //   setIsLoading(true);
+  //   console.log("live is:", live, live.link);
+  
+  //   try {
+  //     const currentTime = new Date(); // Get the current time
+  //     const fromTime = new Date(live.from); // Convert fromTime to a Date object
+  //     const toTime = new Date(live.to); // Convert toTime to a Date object
+  
+  //     // Calculate the time difference in milliseconds
+  //     const diffFromTime = (fromTime - currentTime) / (1000 * 60); // Difference in minutes
+  //     const diffToTime = (currentTime - toTime) / (1000 * 60); // Difference in minutes
+  
+  //     // Check if the current time is more than 30 minutes before the live start time
+  //     if (diffFromTime > 30) {
+  //       setModalMessage('الحدث لم يبدأ بعد. الرجاء العودة لاحقًا.'); // Arabic message for "Event hasn't started yet"
+  //       setIsModalOpen(true);
+  //       return;
+  //     }
+  
+  //     // Check if the live session has already ended
+  //     if (diffToTime > 0) {
+  //       setModalMessage('انتهى الحدث. لا يمكنك الانضمام بعد الآن.'); // Arabic message for "Event has ended"
+  //       setIsModalOpen(true);
+  //       return;
+  //     }
+  
+  //     // Proceed with API call if time conditions are met
+  //     const response = await axios.post(
+  //       `https://bdev.elmanhag.shop/student/subscription/check/${id}`, {},
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${auth.user.token}`,
+  //           'Content-Type': 'application/json',
+  //         },
+  //       }
+  //     );
+  
+  //     console.log("Response status:", response.status);
+  //     console.log("Response data:", response);
+  
+  //     if (response.status === 200 && response.data.success) {
+  //       console.log('Success:', response.data);
+  //       window.open(live.link, '_blank', 'noopener noreferrer');
+  //     }
+  //   } catch (error) {
+  //     console.log('Error response:', error.response);
+  
+  //     // Check if the error response contains the 'faild' message
+  //     if (error.response && error.response.data && error.response.data.faild) {
+  //       const faildMessage = error.response.data.faild;
+  
+  //       // Set the Arabic message if the returned message matches
+  //       if (faildMessage === 'You must buy live first') {
+  //         setModalMessage('يجب شراء اللايف'); // Arabic message for the modal
+  //       } else {
+  //         setModalMessage(faildMessage); // Set the original error message if it's different
+  //       }
+  
+  //       setIsModalOpen(true); // Open the modal
+  //     } else {
+  //       // Handle other possible errors (e.g., validation errors)
+  //       const errorMessages = error?.response?.data?.errors;
+  //       let errorMessageString = 'Error occurred';
+  //       if (errorMessages) {
+  //         errorMessageString = Object.values(errorMessages).flat().join(' ');
+  //       }
+  //       auth.toastError('Error', errorMessageString);
+  //     }
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  const handleAttendanceClick = async (id, live) => {
     setIsLoading(true);
-    console.log("live is :",live,live.link)
+    console.log("live is:", live, live.link);
+  
     try {
+      const currentTime = new Date(); // Get the current date and time
+  
+      // Helper function to create a Date object with today's date and a given time (HH:MM:SS)
+      const parseTime = (timeString) => {
+        const [hours, minutes, seconds] = timeString.split(':').map(Number);
+        const date = new Date();
+        date.setHours(hours, minutes, seconds, 0); // Set hours, minutes, and seconds
+        return date;
+      };
+  
+      const fromTime = parseTime(live.from); // Convert fromTime to a Date object
+      const toTime = parseTime(live.to); // Convert toTime to a Date object
+  
+      // Calculate the time difference in minutes
+      const diffFromTime = (fromTime - currentTime) / (1000 * 60); // Difference in minutes
+      const diffToTime = (currentTime - toTime) / (1000 * 60); // Difference in minutes
+  
+      // Check if the current time is more than 30 minutes before the live start time
+      if (diffFromTime > 30) {
+        setWarningMessage('اللايف لم يبدأ بعد. الرجاء العودة لاحقًا قبل الموعد بعشر دقائق'); // Arabic message for "Event hasn't started yet"
+        setIsWorningOpen(true); // Open the warning modal
+        setIsLoading(false); // Stop loading
+        return; // Exit the function, prevent API call
+      }
+  
+      // Check if the live session has already ended
+      if (diffToTime > 0) {
+        setWarningMessage('انتهى اللايف. لا يمكنك الانضمام بعد الآن.'); // Arabic message for "Event has ended"
+        setIsWorningOpen(true); // Open the warning modal
+        setIsLoading(false); // Stop loading
+        return; // Exit the function, prevent API call
+      }
+  
+      // Proceed with API call if time conditions are met
       const response = await axios.post(
         `https://bdev.elmanhag.shop/student/subscription/check/${id}`, {},
         {
@@ -166,7 +383,7 @@ const LiveClassesPage = () => {
         window.open(live.link, '_blank', 'noopener noreferrer');
       }
     } catch (error) {
-      console.log('Error response:', error.response); 
+      console.log('Error response:', error.response);
   
       // Check if the error response contains the 'faild' message
       if (error.response && error.response.data && error.response.data.faild) {
@@ -194,7 +411,8 @@ const LiveClassesPage = () => {
     }
   };
   
-
+  
+  
   if (isLoading) {
     return (
       <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
@@ -253,6 +471,17 @@ const LiveClassesPage = () => {
                 </div>
               </div>
               )}
+
+{isWorningOpen && (
+              <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 lg:mr-10">
+                <div className="bg-white p-6 md:p-12 rounded-lg w-11/12 md:w-1/2 lg:w-1/3">
+                  <h2 className="text-[#6B6B6B] text-xl md:text-2xl font-bold mb-4">{warningMessage}</h2>
+                  <div className="flex justify-end gap-4 sm:gap-2">
+                    <Button Text="حسنا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
+                  </div>
+                </div>
+              </div>
+    )}
 
             <div>
               <div className="flex gap-5 justify-around bg-[#EBEBEB] p-6 rounded-l-lg h-full mr-10">
