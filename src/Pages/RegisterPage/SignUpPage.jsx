@@ -711,7 +711,8 @@ const SignUpPage = () => {
                   value={parentName}
                   onChange={(e) => setParentName(e.target.value)}
                 />
-                <InputCustom type={"number"}
+                <InputCustom
+                  type={"text"}
                   textDirection={true}
                   paddinRight={"pr-1"}
                   paddinLeft={"pl-0"}
@@ -720,8 +721,12 @@ const SignUpPage = () => {
                   placeholderSize={true}
                   value={parentPhone}
                   onChange={(e) => {
-                    setParentPhone(e.target.value)
-                    setParentEmail(e.target.value + '@elmanhag.com')
+                    const value = e.target.value;
+                    // Only allow numbers
+                    if (!isNaN(value)) {
+                      setParentPhone(e.target.value)
+                      setParentEmail(e.target.value + '@elmanhag.com')
+                    }
                   }}
                 />
               </div>
