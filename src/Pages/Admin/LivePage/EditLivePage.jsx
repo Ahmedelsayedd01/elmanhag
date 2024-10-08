@@ -67,6 +67,7 @@ const EditLivePage = () => {
   const [openSelectStatus, setOpenSelectStatus] = useState(false);
 
   const [liveIncluded, setLiveIncluded] = useState(null);
+  const [liveFixed, setLiveFixed] = useState(null);
 
   const dropdownEducationRef = useRef();
   const dropdownSemesterRef = useRef();
@@ -136,6 +137,7 @@ const EditLivePage = () => {
           setSelectStatus(data.paid === 1 ? "Paid" : "Free"); // Updated this logic
           setPrice(data.price || 0);
           setLiveIncluded(data?.inculded || 0); // Fixed typo
+          setLiveFixed(data?.fixed || 0); // Fixed typo
 
           const nameSemester = data.subject.semester;
           setSelectSemester(nameSemester[0].toUpperCase() + nameSemester.slice(1));
@@ -503,9 +505,13 @@ const EditLivePage = () => {
     // console.log('Paid ID:', selectedOptionValue);
   };
 
-  const handleClick = (e) => {
+  const handleIncludedClick = (e) => {
     const isChecked = e.target.checked;
     setLiveIncluded(isChecked ? 1 : 0);
+  };
+  const handleFixedClick = (e) => {
+    const isChecked = e.target.checked;
+    setLiveFixed(isChecked ? 1 : 0);
   };
 
   useEffect(() => {
@@ -585,6 +591,7 @@ const EditLivePage = () => {
         paid: selectStatus === 'Paid' ? 1 : 0,
         price: priceEdit,
         inculded: liveIncluded,
+        fixed: liveFixed,
         education_id: selectEducationId === "notfound" ? ' ' : selectEducationId, // Send null if no education is selected
       };
 
@@ -760,7 +767,14 @@ const EditLivePage = () => {
         <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
           <span className="text-2xl text-thirdColor font-medium">Included:</span>
           <div>
-            <CheckBox handleClick={handleClick} checked={liveIncluded} />
+            <CheckBox handleClick={handleIncludedClick} checked={liveIncluded} />
+          </div>
+        </div>
+
+        <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+          <span className="text-2xl text-thirdColor font-medium">Fixed:</span>
+          <div>
+            <CheckBox handleClick={handleFixedClick} checked={liveFixed} />
           </div>
         </div>
 
