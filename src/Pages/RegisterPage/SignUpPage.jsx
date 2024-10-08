@@ -293,28 +293,28 @@ const SignUpPage = () => {
       }
 
       /* Parent */
-      if (!parentName) {
-        auth.toastError("ادخل اسم ولى الأمر")
-        return;
-      }
-      if (!parentPhone) {
-        auth.toastError("ادخل رقم ولى الأمر")
-        return;
-      }
-      if (parentPhone.length < 11) {
-        auth.toastError("ادخل رقم ولى الأمر صحيح")
-        return;
-      }
-      if (parentPhone == studentPhone) {
-        setParentPhone('')
-        auth.toastError("ادخل رقم ولى الأمر مختلف عن رقمك")
-        return;
-      }
-      if (parentEmail == studentEmail) {
-        setParentEmail('')
-        auth.toastError("ادخل ايميل ولى الأمر مختلف عن ايميلك")
-        return;
-      }
+      // if (!parentName) {
+      //   auth.toastError("ادخل اسم ولى الأمر")
+      //   return;
+      // }
+      // if (!parentPhone) {
+      //   auth.toastError("ادخل رقم ولى الأمر")
+      //   return;
+      // }
+      // if (parentPhone.length < 11) {
+      //   auth.toastError("ادخل رقم ولى الأمر صحيح")
+      //   return;
+      // }
+      // if (parentPhone == studentPhone) {
+      //   setParentPhone('')
+      //   auth.toastError("ادخل رقم ولى الأمر مختلف عن رقمك")
+      //   return;
+      // }
+      // if (parentEmail == studentEmail) {
+      //   setParentEmail('')
+      //   auth.toastError("ادخل ايميل ولى الأمر مختلف عن ايميلك")
+      //   return;
+      // }
 
 
 
@@ -503,28 +503,28 @@ const SignUpPage = () => {
       return;
     }
     /* Parent */
-    if (!parentName) {
-      auth.toastError("ادخل اسم ولى الأمر")
-      return;
-    }
-    if (!parentPhone) {
-      auth.toastError("ادخل رقم ولى الأمر")
-      return;
-    }
-    if (parentPhone.length < 11) {
-      auth.toastError("ادخل رقم ولى الأمر صحيح")
-      return;
-    }
-    if (parentPhone == studentPhone) {
-      setParentPhone('')
-      auth.toastError("ادخل رقم ولى الأمر مختلف عن رقمك")
-      return;
-    }
-    if (parentEmail == studentEmail) {
-      setParentEmail('')
-      auth.toastError("ادخل ايميل ولى الأمر مختلف عن ايميلك")
-      return;
-    }
+    // if (!parentName) {
+    //   auth.toastError("ادخل اسم ولى الأمر")
+    //   return;
+    // }
+    // if (!parentPhone) {
+    //   auth.toastError("ادخل رقم ولى الأمر")
+    //   return;
+    // }
+    // if (parentPhone.length < 11) {
+    //   auth.toastError("ادخل رقم ولى الأمر صحيح")
+    //   return;
+    // }
+    // if (parentPhone == studentPhone) {
+    //   setParentPhone('')
+    //   auth.toastError("ادخل رقم ولى الأمر مختلف عن رقمك")
+    //   return;
+    // }
+    // if (parentEmail == studentEmail) {
+    //   setParentEmail('')
+    //   auth.toastError("ادخل ايميل ولى الأمر مختلف عن ايميلك")
+    //   return;
+    // }
     // if (!parentEmail) {
     //   setParentEmail(`${parentPhone}@elmanhag.com`)
     //   auth.toastError("Please write the Parent Email")
@@ -538,30 +538,30 @@ const SignUpPage = () => {
     //   auth.toastError("اختر قرابة ولى الأمر")
     //   return;
     // }
-    if (!parentPassword) {
-      auth.toastError("ادخل كلمة السر ولى الأمر")
-      return;
-    }
-    if (!confirmParentPassword) {
-      auth.toastError("ادخل تاكيد كلمة السر ولى الأمر")
-      return;
-    }
+    // if (!parentPassword) {
+    //   auth.toastError("ادخل كلمة السر ولى الأمر")
+    //   return;
+    // }
+    // if (!confirmParentPassword) {
+    //   auth.toastError("ادخل تاكيد كلمة السر ولى الأمر")
+    //   return;
+    // }
 
-    if (confirmParentPassword !== parentPassword) {
-      setConfirmParentPassword('')
-      auth.toastError("خطأ فى تاكيد كلمة السر ولى الأمر ")
-      return;
-    }
+    // if (confirmParentPassword !== parentPassword) {
+    //   setConfirmParentPassword('')
+    //   auth.toastError("خطأ فى تاكيد كلمة السر ولى الأمر ")
+    //   return;
+    // }
     // if (!affiliateCode) {
     //   setAffiliateCode(' ')
     //   return;
     // }
-    console.log('parentName', parentName)
-    console.log('parentPhone', parentPhone)
-    console.log('parentEmail', parentEmail)
-    console.log('parentRelation', parentRelation)
-    console.log('parentPassword', parentPassword)
-    console.log('confirmParentPassword', confirmParentPassword)
+    // console.log('parentName', parentName)
+    // console.log('parentPhone', parentPhone)
+    // console.log('parentEmail', parentEmail)
+    // console.log('parentRelation', parentRelation)
+    // console.log('parentPassword', parentPassword)
+    // console.log('confirmParentPassword', confirmParentPassword)
     console.log('affiliateCode', affiliateCode)
 
     setIsLoading(true)
@@ -584,7 +584,8 @@ const SignUpPage = () => {
         // 'image': ' ',
         'parent_name': parentName,
         'parent_phone': parentPhone,
-        'parent_email': parentEmailObj,
+        // 'parent_email': parentEmailObj,
+        'parent_email': '',
         'parent_password': parentPassword,
         'affilate_code': affiliateCode,
       });
@@ -700,7 +701,7 @@ const SignUpPage = () => {
                 />
               </div>
 
-              <div className="w-full flex xl:flex-row-reverse flex-col sm:gap-2 xl:gap-6 items-start">
+              {/* <div className="w-full flex xl:flex-row-reverse flex-col sm:gap-2 xl:gap-6 items-start">
                 <InputCustom
                   textDirection={true}
                   paddinRight={"pr-4"}
@@ -739,7 +740,7 @@ const SignUpPage = () => {
                 placeholder={"ادخل ايميل ولى الأمر"}
                 value={parentEmail}
                 onChange={(e) => setParentEmail(e.target.value)}
-              />
+              /> */}
 
               {/* <InputCustom
                 type={"email"}
