@@ -66,6 +66,7 @@ const AddLivePage = () => {
   const [openSelectStatus, setOpenSelectStatus] = useState(false);
 
   const [liveIncluded, setLiveIncluded] = useState(0);
+  const [liveFixed, setLiveFixed] = useState(0);
 
   const dropdownEducationRef = useRef();
   const dropdownSemesterRef = useRef();
@@ -93,7 +94,7 @@ const AddLivePage = () => {
           setData(response.data.live);
           setEducationData([
             ...response.data.education,
-            { id: 'notfound' , name: 'Together' } // Or use some unique key generator
+            { id: 'notfound', name: 'Together' } // Or use some unique key generator
           ]);
 
           setCategoryData(response.data.category);
@@ -193,85 +194,91 @@ const AddLivePage = () => {
 
     // If both semesterName and categoryId are empty, filter only by educationId
     if (!semesterName && !categoryId) {
-        if (educationId !== 'notfound') {
-            filteredSubjects = filteredSubjects.filter(subject => 
-                subject.education_id === parseInt(educationId)
-            );
-        } else {
-            filteredSubjects = filteredSubjects.filter(subject => 
-                subject.education_id === null || subject.education_id === undefined
-            );
-        }
-    } 
-
-    else if (semesterName && !categoryId){
-      if(educationId){
-        if (educationId !== 'notfound') {
-          filteredSubjects = filteredSubjects.filter(subject => 
-            subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-              subject.education_id === parseInt(educationId)
-          );
-        } else {
-            filteredSubjects = filteredSubjects.filter(subject => 
-              subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-                subject.education_id === null || subject.education_id === undefined
-            );
-        }}
-      else{
-        filteredSubjects = filteredSubjects.filter(subject => 
-          subject.semester.toLowerCase() === semesterName.toLowerCase() 
-         )}
+      if (educationId !== 'notfound') {
+        filteredSubjects = filteredSubjects.filter(subject =>
+          subject.education_id === parseInt(educationId)
+        );
+      } else {
+        filteredSubjects = filteredSubjects.filter(subject =>
+          subject.education_id === null || subject.education_id === undefined
+        );
+      }
     }
 
-
-    else if (!semesterName && categoryId){
-      if(educationId){
+    else if (semesterName && !categoryId) {
+      if (educationId) {
         if (educationId !== 'notfound') {
-          filteredSubjects = filteredSubjects.filter(subject => 
-            subject.category_id === categoryId  &&
+          filteredSubjects = filteredSubjects.filter(subject =>
+            subject.semester.toLowerCase() === semesterName.toLowerCase() &&
             subject.education_id === parseInt(educationId)
           );
         } else {
-            filteredSubjects = filteredSubjects.filter(subject => 
-              subject.category_id === categoryId  &&
-              subject.education_id === null || subject.education_id === undefined
-            );
-        }}
-      else{
-        filteredSubjects = filteredSubjects.filter(subject => 
-          subject.category_id === categoryId 
-         )}
+          filteredSubjects = filteredSubjects.filter(subject =>
+            subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+            subject.education_id === null || subject.education_id === undefined
+          );
+        }
+      }
+      else {
+        filteredSubjects = filteredSubjects.filter(subject =>
+          subject.semester.toLowerCase() === semesterName.toLowerCase()
+        )
+      }
     }
 
-    else if (semesterName && categoryId){
-      if(educationId){
+
+    else if (!semesterName && categoryId) {
+      if (educationId) {
         if (educationId !== 'notfound') {
-          filteredSubjects = filteredSubjects.filter(subject => 
-              subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-              subject.category_id === categoryId &&
-              subject.education_id === parseInt(educationId)
+          filteredSubjects = filteredSubjects.filter(subject =>
+            subject.category_id === categoryId &&
+            subject.education_id === parseInt(educationId)
           );
         } else {
-            filteredSubjects = filteredSubjects.filter(subject => 
-                subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-                subject.category_id === categoryId  &&
-                subject.education_id === null || subject.education_id === undefined
-            );
-        }}
-      else{
-        filteredSubjects = filteredSubjects.filter(subject => 
+          filteredSubjects = filteredSubjects.filter(subject =>
+            subject.category_id === categoryId &&
+            subject.education_id === null || subject.education_id === undefined
+          );
+        }
+      }
+      else {
+        filteredSubjects = filteredSubjects.filter(subject =>
+          subject.category_id === categoryId
+        )
+      }
+    }
+
+    else if (semesterName && categoryId) {
+      if (educationId) {
+        if (educationId !== 'notfound') {
+          filteredSubjects = filteredSubjects.filter(subject =>
+            subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+            subject.category_id === categoryId &&
+            subject.education_id === parseInt(educationId)
+          );
+        } else {
+          filteredSubjects = filteredSubjects.filter(subject =>
+            subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+            subject.category_id === categoryId &&
+            subject.education_id === null || subject.education_id === undefined
+          );
+        }
+      }
+      else {
+        filteredSubjects = filteredSubjects.filter(subject =>
           subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-          subject.category_id === categoryId 
-         )}
+          subject.category_id === categoryId
+        )
+      }
     }
 
     //Check if no subjects match the filters
     if (filteredSubjects.length === 0) {
-        setSubjectData([{ id: 'Not Found', name: 'Not Found' }]);
+      setSubjectData([{ id: 'Not Found', name: 'Not Found' }]);
     } else {
-        setSelectSubject(filteredSubjects.length > 1 ? 'Select Subject' : filteredSubjects[0].name);
-        setSelectSubjectId(filteredSubjects.length > 1 ? [] : filteredSubjects[0].id);
-        setSubjectData(filteredSubjects);
+      setSelectSubject(filteredSubjects.length > 1 ? 'Select Subject' : filteredSubjects[0].name);
+      setSelectSubjectId(filteredSubjects.length > 1 ? [] : filteredSubjects[0].id);
+      setSubjectData(filteredSubjects);
     }
 
     console.log('semesterName:', semesterName);
@@ -280,7 +287,7 @@ const AddLivePage = () => {
 
     // Debugging logs
     console.log('filteredSubjects:', filteredSubjects);
-};
+  };
 
 
   // const filterSubjects = (educationId, semesterName, categoryId) => {
@@ -382,18 +389,18 @@ const AddLivePage = () => {
 
     // Check if the selected option value is 'notfound'
     if (selectedOptionValue === 'notfound') {
-        setSelectEducationId('notfound');
+      setSelectEducationId('notfound');
     } else {
-        setSelectEducationId(parseInt(selectedOptionValue)); // Set id or null if not a number
+      setSelectEducationId(parseInt(selectedOptionValue)); // Set id or null if not a number
     }
-    console.log("selected" , selectedOptionValue)
+    console.log("selected", selectedOptionValue)
 
     setSelectEducation(selectedOptionName); // Set selected education name
     setOpenSelectEducation(false); // Close the select dropdown
 
     // Filter subjects based on the selected education, semester, and category
     filterSubjects(selectedOptionValue, selectSemesterName, selectCategoryId);
-};
+  };
 
 
   // const handleSelectEducation = (e) => {
@@ -491,9 +498,13 @@ const AddLivePage = () => {
     // console.log('Paid ID:', selectedOptionValue);
   };
 
-  const handleClick = (e) => {
+  const handleIncludedClick = (e) => {
     const isChecked = e.target.checked;
     setLiveIncluded(isChecked ? 1 : 0);
+  };
+  const handleFixedClick = (e) => {
+    const isChecked = e.target.checked;
+    setLiveFixed(isChecked ? 1 : 0);
   };
 
   useEffect(() => {
@@ -594,6 +605,7 @@ const AddLivePage = () => {
       formData.append('paid', selectStatus === "Paid" ? 1 : 0);
       formData.append('price', price || 0);
       formData.append('inculded', liveIncluded);
+      formData.append('fixed', liveFixed);
       formData.append('category_id', selectCategoryId);
       // formData.append('education_id', selectEducationId);
 
@@ -772,7 +784,14 @@ const AddLivePage = () => {
         <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
           <span className="text-2xl text-thirdColor font-medium">Included:</span>
           <div>
-            <CheckBox checked={liveIncluded} handleClick={handleClick} />
+            <CheckBox checked={liveIncluded} handleClick={handleIncludedClick} />
+          </div>
+        </div>
+
+        <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+          <span className="text-2xl text-thirdColor font-medium">Fixed:</span>
+          <div>
+            <CheckBox checked={liveFixed} handleClick={handleFixedClick} />
           </div>
         </div>
 
