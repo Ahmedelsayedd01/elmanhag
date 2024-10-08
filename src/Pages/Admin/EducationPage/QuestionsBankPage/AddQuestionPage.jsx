@@ -7,14 +7,20 @@ import InputCustom from '../../../../Components/InputCustom';
 import CheckBox from '../../../../Components/CheckBox';
 import { RadioCheck } from '../../../../Components/RadioCheck';
 import { RadioCheckGroup } from '../../../../Components/RadioCheck';
+import Loading from '../../../../Components/Loading';
+import { useNavigate } from 'react-router-dom';
 
 const AddQuestionPage = () => {
        const auth = useAuth();
+       const navigate = useNavigate();
        const semesterRef = useRef();
        const categoryRef = useRef();
        const subjectRef = useRef();
        const chapterRef = useRef();
        const lessonRef = useRef();
+
+
+       const [isLoading, setIsLoading] = useState(false);
 
        const questionTypeRef = useRef();
        const difficultyRef = useRef();
@@ -47,7 +53,7 @@ const AddQuestionPage = () => {
        const [allChapters, setAllChapters] = useState(null);
        const [allLessons, setAllLessons] = useState(null);
 
-       const [semesters, setSemesters] = useState([{ name: 'first' }, { name: 'second' }]);
+       const [semesters] = useState([{ name: 'first' }, { name: 'second' }]);
        const [categories, setCategories] = useState([]);
        const [subjects, setSubjects] = useState([]);
        const [chapters, setChapters] = useState([]);
@@ -107,7 +113,7 @@ const AddQuestionPage = () => {
 
        const [selectBoolean, setSelectBoolean] = useState(null); // Manage selected option
        const [selectRightAnswer, setSelectRightAnswer] = useState(null); // Manage selected option
-       const [allAnswer, setAllAnswer] = useState(null); // Manage selected option
+       const [allAnswer, setAllAnswer] = useState([]); // Manage selected option
 
 
 
@@ -361,6 +367,8 @@ const AddQuestionPage = () => {
               console.log('options:', options);
               console.log('Selected NameL:', selectedOptionName);
               console.log('Selected ValueL:', selectedOptionValue);
+              console.log('answerComplete:', answerComplete);
+
        };
 
        const handleImageClick = () => {
@@ -410,9 +418,15 @@ const AddQuestionPage = () => {
        // }
 
        const handleAllAnswer = (answers) => {
-              setAllAnswer(answers)
-              console.log('All answers:', answers); // Log all answers
+              const trimmedAnswers = answers
+                     .map(answer => answer.trim())  // Trim each string
+                     .filter(answer => answer !== ''); // Remove empty strings
+
+              setAllAnswer(trimmedAnswers);
+              console.log('All answers:', trimmedAnswers); // Log trimmed answers
        };
+
+
 
        // Function to handle adding a new answer option
        const handleAddAnswer = () => {
@@ -425,13 +439,25 @@ const AddQuestionPage = () => {
               setAnswerComplete([...answerComplete, '']); // Add a new empty string for the new input
        };
 
+       // const handleAnswerComplete = (index, value) => {
+       //        const newAnswers = [...answerComplete];
+       //        newAnswers[index] = value; // Update the value for the specific index
+       //        setAnswerComplete(newAnswers); // Set the new state
+
+       //        console.log('newAnswers', newAnswers)
+       // };
+
        const handleAnswerComplete = (index, value) => {
               const newAnswers = [...answerComplete];
-              newAnswers[index] = value; // Update the value for the specific index
-              setAnswerComplete(newAnswers); // Set the new state
+              newAnswers[index] = value.trim(); // Trim the value for the specific index
 
-              console.log('newAnswers', newAnswers)
+              // Remove empty strings from the array
+              const filteredAnswers = newAnswers.filter(answer => answer !== '');
+
+              setAnswerComplete(filteredAnswers); // Set the new state with filtered answers
+              console.log('newAnswers', filteredAnswers);
        };
+
 
        const handleClickNext = (e) => {
               e.preventDefault();
@@ -530,9 +556,233 @@ const AddQuestionPage = () => {
               };
        }, []);
 
+       const handleGoBack = () => {
+              navigate(-1, { replace: true });
+       };
+       // const handleQuestionAdd = async (e) => {
+       //        e.preventDefault();
 
 
-       const handleQuestionAdd = () => { }
+       //        if (!answerType) {
+       //               auth.toastError('Please Select Answer Type.');
+       //               return;
+       //        }
+       //        if (answerType == 'T/F') {
+       //               if (!selectBoolean) {
+       //                      auth.toastError('Please Choose The Right Answer.');
+       //                      return;
+
+       //               }
+
+       //        } else if (answerType == 'Mcq') {
+
+       //               if (allAnswer.length === 0) {
+       //                      auth.toastError('Please Enter Answer.');
+       //                      return;
+
+       //               }
+       //               if (allAnswer.length <= 3) {
+       //                      auth.toastError('Please Enter Answer.');
+       //                      return;
+
+       //               }
+       //               if (!selectRightAnswer) {
+       //                      auth.toastError('Please Select The Right Answer.');
+       //                      return;
+
+       //               }
+       //        } else if (answerType == 'Complete') {
+
+       //               if (answerComplete.length === 0 || answerComplete[0] === '') {
+       //                      auth.toastError('Please Add Answer.');
+       //                      return;
+
+       //               }
+
+       //        }
+
+       //        setIsLoading(true)
+
+       //        const formData = new FormData();
+
+       //        /* Questin Info */
+       //        formData.append('Semester', semester);
+       //        formData.append('category_id', categoryId);
+       //        formData.append('subject_id', subjectId);
+       //        formData.append('chapter_id', chapterId);
+       //        formData.append('lesson_id', lessonId);
+
+       //        /* Questin Details */
+       //        formData.append('difficulty', difficulty);
+       //        formData.append('question_type', questionType);
+       //        formData.append('status', questionActive);
+
+       //        /* Answers */
+       //        formData.append('answer_type', answerType);
+       //        /* T/F */
+       //        formData.append('answer', ['true', 'false']);
+       //        formData.append('true_answer', selectBoolean);
+       //        /* MCQ */
+       //        formData.append('answer', allAnswer);
+       //        formData.append('true_answer', selectRightAnswer);
+       //        /* Complate */
+       //        formData.append('answer', answerComplete);
+
+       //        if (questionType === 'text') {
+       //               formData.append('question', questionVal);
+       //        } else if (questionType === 'image') {
+       //               formData.append('image', questionImageFile);
+       //        } else if (questionType === 'audio') {
+       //               formData.append('audio', questionAudioFile);
+       //        }
+
+
+       //        try {
+       //               const response = await axios.post('https://bdev.elmanhag.shop/admin/question/add', formData, {
+       //                      headers: {
+       //                             Authorization: `Bearer ${auth.user.token}`,
+       //                             'Content-Type': 'multipart/form-data',
+       //                      },
+       //               });
+       //               if (response.status === 200) {
+       //                      console.log('responsessss', response)
+       //                      auth.toastSuccess('Question added successfully!');
+       //                      handleGoBack();
+       //               } else {
+       //                      auth.toastError('Failed to add Question.');
+       //               }
+       //        } catch (error) {
+       //               const errorMessages = error?.response?.data.errors;
+       //               let errorMessageString = 'Error occurred';
+
+       //               if (errorMessages) {
+       //                      errorMessageString = Object.values(errorMessages).flat().join(' ');
+       //               }
+       //               auth.toastError('Error', errorMessageString);
+       //        } finally {
+       //               setIsLoading(false);
+       //        }
+       // }
+
+       const handleQuestionAdd = async (e) => {
+              e.preventDefault();
+
+              // Validate answerType
+              if (!answerType) {
+                     auth.toastError('Please Select Answer Type.');
+                     return;
+              }
+
+              // Validate for 'T/F' answer type
+              if (answerType === 'T/F') {
+                     if (!selectBoolean) {
+                            auth.toastError('Please Choose The Right Answer.');
+                            return;
+                     }
+              }
+              // Validate for 'Mcq' answer type
+              else if (answerType === 'Mcq') {
+                     if (allAnswer.length === 0) {
+                            auth.toastError('Please Enter Answer.');
+                            return;
+                     }
+                     if (allAnswer.length <= 3) {
+                            auth.toastError('Please Enter at least 4 Answers.');
+                            return;
+                     }
+                     if (!selectRightAnswer) {
+                            auth.toastError('Please Select The Right Answer.');
+                            return;
+                     }
+              }
+              // Validate for 'Complete' answer type
+              else if (answerType === 'Complete') {
+                     if (answerComplete.length === 0 || answerComplete[0] === '') {
+                            auth.toastError('Please Add Answer.');
+                            return;
+                     }
+              }
+
+              setIsLoading(true);
+
+              const formData = new FormData();
+
+              // Question Info
+              formData.append('semester', semester);
+              formData.append('category_id', categoryId);
+              formData.append('subject_id', subjectId);
+              formData.append('chapter_id', chapterId);
+              formData.append('lesson_id', lessonId);
+
+              // Question Details
+              formData.append('difficulty', difficulty);
+              formData.append('question_type', questionType);
+              formData.append('status', questionActive);
+
+              // Conditionally append answers based on answer type
+              formData.append('answer_type', answerType);
+
+              if (answerType === 'T/F') {
+                     // T/F specific data
+                     formData.append('answer', JSON.stringify(['true', 'false']));
+                     formData.append('true_answer', selectBoolean);
+              }
+              else if (answerType === 'Mcq') {
+                     // MCQ specific data
+                     formData.append('answer', JSON.stringify(allAnswer)); // Convert array to JSON
+                     formData.append('true_answer', selectRightAnswer);
+              }
+              else if (answerType === 'Complete') {
+                     // Complete answer specific data
+                     formData.append('answer', JSON.stringify(answerComplete)); // Convert array to JSON
+              }
+
+              // Add question type specific fields
+              if (questionType === 'text') {
+                     formData.append('question', questionVal);
+              } else if (questionType === 'image') {
+                     formData.append('image', questionImageFile);
+              } else if (questionType === 'audio') {
+                     formData.append('audio', questionAudioFile);
+              }
+
+              try {
+                     const response = await axios.post('https://bdev.elmanhag.shop/admin/question/add', formData, {
+                            headers: {
+                                   Authorization: `Bearer ${auth.user.token}`,
+                                   'Content-Type': 'multipart/form-data',
+                            },
+                     });
+
+                     if (response.status === 200) {
+                            console.log('Response:', response);
+                            auth.toastSuccess('Question added successfully!');
+                            handleGoBack();
+                     } else {
+                            auth.toastError('Failed to add Question.');
+                     }
+              } catch (error) {
+                     const errorMessages = error?.response?.data.errors;
+                     let errorMessageString = 'Error occurred';
+
+                     if (errorMessages) {
+                            errorMessageString = Object.values(errorMessages).flat().join(' ');
+                     }
+                     auth.toastError('Error', errorMessageString);
+              } finally {
+                     setIsLoading(false);
+              }
+       };
+
+
+       if (isLoading) {
+              return (
+                     <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
+                            <Loading />
+                     </div>
+              );
+       }
+
        return (
               <>
                      <form onSubmit={handleQuestionAdd} className="w-full flex flex-col items-start justify-center gap-4">
