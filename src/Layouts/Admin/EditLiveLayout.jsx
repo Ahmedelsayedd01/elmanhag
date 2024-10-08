@@ -1,7 +1,7 @@
 import React from 'react'
 import HeaderPageSection from '../../Components/HeaderPageSection'
-import { EditLivePage } from '../../Pages/AllPages'
 import { useNavigate } from 'react-router-dom';
+import { EditLiveUpcomingPage } from '../../Pages/AllPages';
 
 const EditLiveLayout = () => {
 
@@ -42,7 +42,7 @@ const EditLiveLayout = () => {
     <>
       <HeaderPageSection handleClick={handleGoBack} name="Edit Lives" />
       {/* <LiveEditContext.Provider value={liveEdit}> */}
-      <EditLivePage />
+      <EditLiveUpcomingPage />
       {/* </LiveEditContext.Provider> */}
     </>
   )
