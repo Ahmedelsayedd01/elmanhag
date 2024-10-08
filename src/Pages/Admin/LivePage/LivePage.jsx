@@ -225,6 +225,9 @@ const LivePage = () => {
                 <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">
                   Teacher
                 </th>
+                <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">
+                  Fixed
+                </th>
                 <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">
                   Date
                 </th>
@@ -262,6 +265,22 @@ const LivePage = () => {
                   </td>
                   <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                     {live.teacher?.name || "-"}
+                  </td>
+                  <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-4 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                    {live.fixed === 1 && (
+                      <span
+                        className="bg-green-500 text-white px-4 py-2 rounded-lg"
+                      >
+                        True
+                      </span>
+                    )}
+                    {live.fixed === 0 && (
+                      <span
+                        className="bg-red-500 text-white px-4 py-2 rounded-lg"
+                      >
+                        False
+                      </span>
+                    )}
                   </td>
                   <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                     {live?.date || "-"}
