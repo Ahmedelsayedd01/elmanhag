@@ -1,13 +1,16 @@
 import React from 'react'
-import { LivePage } from '../../Pages/AllPages'
 import TitleHeader from '../../Components/TitleHeader'
+import { Outlet } from 'react-router-dom'
+import { LiveNavPage } from '../../Pages/AllPages'
 
 const LiveLayout = () => {
        return (
               <>
                      <div className="flex flex-col items-center gap-y-4">
                             <TitleHeader text={"Live"} spaceBottom={3} />
-                            <LivePage />
+                            {/* <LivePage /> */}
+                            <LiveNavPage />
+                            <Outlet />
                      </div>
               </>
        )
