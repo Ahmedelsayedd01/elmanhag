@@ -111,11 +111,14 @@ import LoginUser from "./Pages/RegisterPage/LoginUser";
 import SignUpPage from "./Pages/RegisterPage/SignUpPage";
 
 import {
+  AddLiveUpcomingPage,
   AffilatePage,
   ComplaintsHistoryPage,
   ComplaintsPage,
   DownloadMobilePage,
+  EditLiveUpcomingPage,
   HomePage,
+  LiveUpcomingPage,
   LoginHistoryPage,
   ParentDashboardPage,
   ParentPage,
@@ -261,7 +264,8 @@ const AppLayoutQuestionsBank = () => (
 /* Live */
 const AppLayoutLive = () => (
   <>
-    <Outlet />
+    {/* <Outlet /> */}
+    <LiveLayout />
   </>
 );
 /* Marketing */
@@ -718,19 +722,49 @@ export const router = createBrowserRouter([
             element: <AppLayoutLive />,
             children: [
               {
-                path: '',
-                element: <LiveLayout />
+                path: 'upcoming',
+                element: <LiveUpcomingPage />,
+                children: [
+                  {
+                    path: 'add',
+                    element: <AddLiveUpcomingPage />
+                  },
+                  {
+                    path: 'edit/:liveId',
+                    element: <EditLiveUpcomingPage />
+                  },
+
+                ]
               },
               {
-                path: 'add',
-                element: <AddLiveLayout />
-              },
-              {
-                path: 'edit/:liveId',
-                element: <EditLiveLayout />
+                path: 'history',
+                element: <AppLayoutLive />,
+                children: [
+
+                ]
               },
             ]
           },
+
+
+          // {
+          //   path: 'live',
+          //   element: <AppLayoutLive />,
+          //   children: [
+          //     {
+          //       path: '',
+          //       element: <LiveLayout />
+          //     },
+          //     {
+          //       path: 'add',
+          //       element: <AddLiveLayout />
+          //     },
+          //     {
+          //       path: 'edit/:liveId',
+          //       element: <EditLiveLayout />
+          //     },
+          //   ]
+          // },
 
 
 
