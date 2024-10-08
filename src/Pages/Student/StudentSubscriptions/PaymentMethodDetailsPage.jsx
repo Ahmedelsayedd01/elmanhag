@@ -27,6 +27,7 @@ const PaymentMethodDetailsPage = () => {
   const [paymentStatus, setPaymentStatus] = useState(null);
   const [copySuccess, setCopySuccess] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
+  const [subjectsId,setSubjectsId] = useState([])
 
   // Function to handle receipt image click
   const handleReceiptImageClick = () => {
@@ -55,6 +56,7 @@ const PaymentMethodDetailsPage = () => {
     console.log("The plan price is ", price);
     console.log("The plan Type is ", planType);
     console.log("The payment method is ", paymentMethod);
+    setSubjectsId(plan.id)
   }, []);
 
   // Function to submit payment details
@@ -71,11 +73,11 @@ const PaymentMethodDetailsPage = () => {
           formData.append('receipt', receiptImageFile);
         }
         if (planType === 'Bundle') {
-          formData.append('bundle_id', plan.id);
+          formData.append('bundle_id', subjectsId);
         } else if (planType === 'Subject') {
-          formData.append('subject_id', plan.id);
+          formData.append('subject_id',  subjectsId);
         } else if (planType === 'Live session') {
-          formData.append('live_id', plan.id);
+          formData.append('live_id', subjectsId);
         }
 
         const response = await axios.post('https://bdev.elmanhag.shop/student/order/place', formData, {
