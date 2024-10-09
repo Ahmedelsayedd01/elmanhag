@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import TitleHeader from '../../Components/TitleHeader'
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { LiveNavPage } from '../../Pages/AllPages'
 
 const LiveLayout = () => {
        const location = useLocation();
+       const navigate = useNavigate();
        console.log('location', location);
+
+
+       useEffect(() => {
+              if (location.pathname === '/dashboard_admin/live' || location.pathname === '/dashboard_admin/live/') {
+                     navigate('upcoming'); // Navigate to 'upcoming' when at '/live' path
+              }
+       }, [location.pathname, navigate]);
 
        return (
               <>
