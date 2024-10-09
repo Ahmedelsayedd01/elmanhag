@@ -19,10 +19,11 @@ import {
        FaRegArrowAltCircleRight,
 } from "react-icons/fa";
 
-const LiveHistoryPage = () => {
+const LiveUpcomingPage = () => {
 
        const auth = useAuth();
        const [isLoading, setIsLoading] = useState(false);
+       const [allLivesHistory, setAllLivesHistory] = useState(null);
        const [livesHistory, setLivesHistory] = useState([]);
        const [livesHistoryChanged, setLivesHistoryChanged] = useState(false); // Change tracker
 
@@ -30,9 +31,19 @@ const LiveHistoryPage = () => {
        const [openDialog, setOpenDialog] = useState(null);
 
        const [filterDate, setFilterDate] = useState(new Date());
+
        // Function to handle filtering logic
        const filterByDate = (date) => {
-              console.log("Filtering data for date:", date);
+              const selectedDateString = date.toISOString().split('T')[0]; // Format the selected date to 'YYYY-MM-DD'
+
+              console.log("Filtering data for date:", selectedDateString);
+
+              const filterLiveHistory = allLivesHistory.filter((live) => {
+                     const liveDateString = new Date(live.date).toISOString().split('T')[0]; // Convert live.date to 'YYYY-MM-DD'
+                     return liveDateString === selectedDateString; // Compare the formatted dates
+              });
+              setLivesHistory(filterLiveHistory)
+              console.log('filterLiveHistory', filterLiveHistory);
        };
 
        // Date change handler
@@ -40,7 +51,9 @@ const LiveHistoryPage = () => {
               const selectedDate = new Date(event.target.value);
               setFilterDate(selectedDate);
               filterByDate(selectedDate);
+              console.log('selectedDate', selectedDate);
        };
+
 
        // Function to get the previous day
        const handlePreviousDay = () => {
@@ -79,17 +92,18 @@ const LiveHistoryPage = () => {
                      );
                      if (response.status === 200) {
                             console.log('response3', response.data);
+                            setAllLivesHistory(response.data.history);
                             setLivesHistory(response.data.history);
                      }
               } catch (error) {
-                     console.error("Error fetching Lives History data:", error);
+                     console.error("Error fetching Lives data:", error);
               } finally {
                      setIsLoading(false);
               }
        };
 
        useEffect(() => {
-              fetchLivesHistory(); // Fetch lives History initially and whenever livesHistoryChanged changes
+              fetchLivesHistory(); // Fetch lives initially and whenever livesChanged changes
        }, [livesHistoryChanged]);
 
        const handleOpenDialog = (liveId) => {
@@ -100,24 +114,18 @@ const LiveHistoryPage = () => {
               setOpenDialog(null);
        };
 
-       const handleDelete = async (livesHistoryId) => {
+       const handleDelete = async (livesId) => {
               setIsDeleting(true);
-              const success = await deleteLivesHistory(livesHistoryId, auth.user.token);
+              const success = await deleteLives(livesId, auth.user.token);
               setIsDeleting(false);
               handleCloseDialog();
 
-              // if (success) {
-              //        auth.toastSuccess("Live deleted successfully!");
-              //        setLivesHistoryChanged(!livesHistoryChanged);
-              // } else {
-              //        auth.toastError("Failed to Delete Live.");
-              // }
        };
 
-       const deleteLivesHistory = async (livesHistoryId, authToken) => {
+       const deleteLives = async (livesId, authToken) => {
               try {
                      const response = await axios.delete(
-                            `https://bdev.elmanhag.shop/admin/live/delete/${livesHistoryId}`,
+                            `https://bdev.elmanhag.shop/admin/live/delete/${livesId}`,
                             {
                                    headers: {
                                           Authorization: `Bearer ${authToken}`,
@@ -138,7 +146,7 @@ const LiveHistoryPage = () => {
                             return false;
                      }
               } catch (error) {
-                     console.error("Error deleting Lives History:", error);
+                     console.error("Error deleting Lives:", error);
                      return false;
               }
        };
@@ -151,12 +159,12 @@ const LiveHistoryPage = () => {
        //   );
        // }
 
-       // if (!livesHistory) {
-       //        return (
-       //               <div className="text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center mt-52">
-       //                      No Lives History data available
-       //               </div>
-       //        );
+       // if (!lives) {
+       //   return (
+       //     <div className="text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center mt-52">
+       //       No Lives data available
+       //     </div>
+       //   );
        // }
 
 
@@ -218,75 +226,47 @@ const LiveHistoryPage = () => {
 
                                    livesHistory.length === 0 ?
                                           <div className="text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center mt-44">
-                                                 No Lives History data available
+                                                 No Lives data available
                                           </div>
                                           :
                                           <div className="w-full flex items-center justify-between mt-4 overflow-x-auto">
                                                  <table className="w-full sm:min-w-0">
                                                         <thead className="w-full">
                                                                <tr className="w-full border-b-2">
-                                                                      <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">
-                                                                             #
-                                                                      </th>
-                                                                      <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">
-                                                                             Name
-                                                                      </th>
-                                                                      <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">
-                                                                             Subject
-                                                                      </th>
-                                                                      <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">
-                                                                             Teacher
-                                                                      </th>
-                                                                      <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">
-                                                                             Fixed
-                                                                      </th>
-                                                                      <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">
-                                                                             Date
-                                                                      </th>
-                                                                      <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">
-                                                                             Day
-                                                                      </th>
-                                                                      <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">
-                                                                             Time From
-                                                                      </th>
-                                                                      <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">
-                                                                             Time To
-                                                                      </th>
-                                                                      <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">
-                                                                             Price
-                                                                      </th>
-                                                                      <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">
-                                                                             Status
-                                                                      </th>
-                                                                      <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">
-                                                                             Action
-                                                                      </th>
+                                                                      {['#', 'Name', 'Subject', 'Teacher', 'Fixed', 'Date', 'Day', 'Time From', 'Time To', 'Price', 'Status', 'Action'].map((header, index) => (
+                                                                             <th
+                                                                                    key={index}
+                                                                                    className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3"
+                                                                             >
+                                                                                    {header}
+                                                                             </th>
+                                                                      ))}
                                                                </tr>
                                                         </thead>
                                                         <tbody className="w-full">
-                                                               {livesHistory.map((liveHistory, index) => (
-                                                                      <tr className="w-full border-b-2" key={liveHistory.id}>
+                                                               {livesHistory.map((live, index) => (
+                                                                      <tr className="w-full border-b-2" key={live.id}>
                                                                              <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                                                                                     {index + 1}
                                                                              </td>
                                                                              <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                                    {liveHistory?.name || "-"}
+                                                                                    {live?.name || "-"}
                                                                              </td>
                                                                              <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                                    {liveHistory.subject?.name || "-"}
+                                                                                    {live.subject?.name || "-"}
                                                                              </td>
                                                                              <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                                    {liveHistory.teacher?.name || "-"}
+                                                                                    {live.teacher?.name || "-"}
                                                                              </td>
                                                                              <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-4 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                                    {liveHistory.fixed === 1 && (
+                                                                                    {live.fixed === 1 && (
                                                                                            <span
                                                                                                   className="bg-green-500 text-white px-4 py-2 rounded-lg"
                                                                                            >
                                                                                                   True
                                                                                            </span>
                                                                                     )}
-                                                                                    {liveHistory.fixed === 0 && (
+                                                                                    {live.fixed === 0 && (
                                                                                            <span
                                                                                                   className="bg-red-500 text-white px-4 py-2 rounded-lg"
                                                                                            >
@@ -295,35 +275,35 @@ const LiveHistoryPage = () => {
                                                                                     )}
                                                                              </td>
                                                                              <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                                    {liveHistory?.date || "-"}
+                                                                                    {live?.date || "-"}
                                                                              </td>
                                                                              <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                                    {liveHistory?.day || "-"}
+                                                                                    {live?.day || "-"}
                                                                              </td>
                                                                              <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                                    {liveHistory?.from || "-"}
+                                                                                    {live?.from || "-"}
                                                                              </td>
                                                                              <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                                    {liveHistory?.to || "-"}
+                                                                                    {live?.to || "-"}
                                                                              </td>
                                                                              <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                                    {liveHistory?.price || "-"}
+                                                                                    {live?.price || "-"}
                                                                              </td>
                                                                              <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                                    {liveHistory.paid === 1 ? "paid" : "free"}
+                                                                                    {live.paid === 1 ? "paid" : "free"}
                                                                              </td>
                                                                              <td className="min-w-[100px] sm:min-w-[80px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                                                                                     <div className="flex items-center justify-center gap-x-3">
-                                                                                           {/* <Link to={`edit/${liveHistory.id}`} type="button">
+                                                                                           {/* <Link to={`edit/${live.id}`} type="button">
                                                                                                   <EditIcon />
                                                                                            </Link> */}
                                                                                            <button
                                                                                                   type="button"
-                                                                                                  onClick={() => handleOpenDialog(liveHistory.id)}
+                                                                                                  onClick={() => handleOpenDialog(live.id)}
                                                                                            >
                                                                                                   <DeleteIcon />
                                                                                            </button>
-                                                                                           {openDialog === liveHistory.id && (
+                                                                                           {openDialog === live.id && (
                                                                                                   <Dialog
                                                                                                          open={true}
                                                                                                          onClose={handleCloseDialog}
@@ -345,7 +325,7 @@ const LiveHistoryPage = () => {
                                                                                                                                                           as="h3"
                                                                                                                                                           className="text-xl font-semibold leading-10 text-gray-900"
                                                                                                                                                    >
-                                                                                                                                                          You will delete liveHistory {liveHistory?.name || "-"}
+                                                                                                                                                          You will delete live {live?.name || "-"}
                                                                                                                                                    </DialogTitle>
                                                                                                                                             </div>
                                                                                                                                      </div>
@@ -353,7 +333,7 @@ const LiveHistoryPage = () => {
                                                                                                                               <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                                                                                                                                      <button
                                                                                                                                             type="button"
-                                                                                                                                            onClick={() => handleDelete(liveHistory.id)}
+                                                                                                                                            onClick={() => handleDelete(live.id)}
                                                                                                                                             disabled={isDeleting}
                                                                                                                                             className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
                                                                                                                                      >
@@ -393,4 +373,4 @@ const LiveHistoryPage = () => {
        );
 };
 
-export default LiveHistoryPage;
+export default LiveUpcomingPage;
