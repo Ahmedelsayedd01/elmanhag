@@ -30,7 +30,7 @@ const AddQuestionPage = () => {
        const imageRef = useRef(null);
        const audioRef = useRef(null);
 
-       const [stateData, setStateData] = useState(3);
+       const [stateData, setStateData] = useState(1);
 
        const [semesterState, setSemesterState] = useState('Select Semester');
        const [categoryState, setCategoryState] = useState('Select Category');
