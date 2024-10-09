@@ -7,7 +7,7 @@ const LiveLayout = () => {
        return (
               <>
                      <div className="flex flex-col items-center gap-y-4">
-                            <TitleHeader text={"Live"} spaceBottom={3} />
+                            <TitleHeader text={"Live"} spaceBottom={0} />
                             {/* <LivePage /> */}
                             <LiveNavPage />
                             <Outlet />
