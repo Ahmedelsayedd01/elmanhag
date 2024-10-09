@@ -23,6 +23,7 @@ const LiveUpcomingPage = () => {
 
   const auth = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [allLives, setAllLives] = useState(null);
   const [lives, setLives] = useState([]);
   const [livesChanged, setLivesChanged] = useState(false); // Change tracker
 
@@ -30,9 +31,19 @@ const LiveUpcomingPage = () => {
   const [openDialog, setOpenDialog] = useState(null);
 
   const [filterDate, setFilterDate] = useState(new Date());
+
   // Function to handle filtering logic
   const filterByDate = (date) => {
-    console.log("Filtering data for date:", date);
+    const selectedDateString = date.toISOString().split('T')[0]; // Format the selected date to 'YYYY-MM-DD'
+
+    console.log("Filtering data for date:", selectedDateString);
+
+    const filterLive = allLives.filter((live) => {
+      const liveDateString = new Date(live.date).toISOString().split('T')[0]; // Convert live.date to 'YYYY-MM-DD'
+      return liveDateString === selectedDateString; // Compare the formatted dates
+    });
+    setLives(filterLive)
+    console.log('filterLive', filterLive);
   };
 
   // Date change handler
@@ -40,7 +51,9 @@ const LiveUpcomingPage = () => {
     const selectedDate = new Date(event.target.value);
     setFilterDate(selectedDate);
     filterByDate(selectedDate);
+    console.log('selectedDate', selectedDate);
   };
+
 
   // Function to get the previous day
   const handlePreviousDay = () => {
@@ -79,6 +92,7 @@ const LiveUpcomingPage = () => {
       );
       if (response.status === 200) {
         console.log('response3', response.data);
+        setAllLives(response.data.live);
         setLives(response.data.live);
       }
     } catch (error) {
@@ -106,12 +120,6 @@ const LiveUpcomingPage = () => {
     setIsDeleting(false);
     handleCloseDialog();
 
-    // if (success) {
-    //   auth.toastSuccess("Live deleted successfully!");
-    //   setLivesChanged(!livesChanged);
-    // } else {
-    //   auth.toastError("Failed to Delete Live.");
-    // }
   };
 
   const deleteLives = async (livesId, authToken) => {
