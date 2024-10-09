@@ -163,6 +163,7 @@ import EditQuestionLayout from "./Layouts/Admin/EditQuestionLayout";
 import QuestionLayout from "./Layouts/Admin/QuestionLayout";
 import Complaint from "./Pages/Student/Complaint/ComplaintPage";
 import EditProfileStudentLayout from "./Layouts/Student/EditProfileStudentLayout";
+import LiveHistoryPage from "./Pages/Admin/LivePage/History/LiveHistoryPage";
 
 export const ContextNumper = createContext()
 const AppLayoutAuthentication = () => (
@@ -724,27 +725,46 @@ export const router = createBrowserRouter([
               {
                 path: 'upcoming',
                 element: <LiveUpcomingPage />,
-                children: [
-                  {
-                    path: 'add',
-                    element: <AddLiveUpcomingPage />
-                  },
-                  {
-                    path: 'edit/:liveId',
-                    element: <EditLiveUpcomingPage />
-                  },
-
-                ]
+              },
+              {
+                path: 'upcoming/add',
+                element: <AddLiveUpcomingPage />
+              },
+              {
+                path: 'upcoming/edit/:liveId',
+                element: <EditLiveUpcomingPage />
               },
               {
                 path: 'history',
-                element: <AppLayoutLive />,
-                children: [
-
-                ]
+                element: <LiveHistoryPage />,
               },
             ]
           },
+          // {
+          //   path: 'live',
+          //   element: <AppLayoutLive />,
+          //   children: [
+          //     {
+          //       path: 'upcoming',
+          //       element: <LiveUpcomingPage />,
+          //       children: [
+          //         {
+          //           path: 'upcoming/add',
+          //           element: <AddLiveUpcomingPage />
+          //         },
+          //         {
+          //           path: 'upcoming/edit/:liveId',
+          //           element: <EditLiveUpcomingPage />
+          //         },
+
+          //       ]
+          //     },
+          //     {
+          //       path: 'history',
+          //       element: <LiveHistoryPage />,
+          //     },
+          //   ]
+          // },
 
 
           // {
