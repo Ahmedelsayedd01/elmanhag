@@ -104,7 +104,10 @@ export { default as SuggestionsPage } from "./Admin/Support/Suggestions/Suggesti
 export { default as SuggestionsHistoryPage } from "./Admin/Support/Suggestions/SuggestionsHistoryPage";
 
 /* Setting Page */
-export { default as AdminRolesPage } from "./Admin/SettingPage/AdminRolesPage";
+// Admin Roles
+export { default as AdminRolesPage } from "./Admin/SettingPage/AdminRoles/AdminRolesPage";
+export { default as AddAdminRolesPage } from "./Admin/SettingPage/AdminRoles/AddAdminRolesPage";
+
 export { default as CountriesPage } from "./Admin/SettingPage/Countries/CountriesPage";
 export { default as AddCountryPage } from "./Admin/SettingPage/Countries/AddCountryPage";
 export { default as EditCountryPage } from "./Admin/SettingPage/Countries/EditCountryPage";
