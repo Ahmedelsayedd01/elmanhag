@@ -21,7 +21,7 @@ import {
   SubjectEducationLayout,
   QuestionsBankLayout,
   AddStudentpage,
-  AdminRolesAD,
+  AdminRolesLayout,
   AddCountryLayout,
   EditCountryLayout,
   CountriesLayout,
@@ -164,6 +164,7 @@ import QuestionLayout from "./Layouts/Admin/QuestionLayout";
 import Complaint from "./Pages/Student/Complaint/ComplaintPage";
 import EditProfileStudentLayout from "./Layouts/Student/EditProfileStudentLayout";
 import LiveHistoryPage from "./Pages/Admin/LivePage/History/LiveHistoryPage";
+import AddAdminRolesLayout from "./Layouts/Admin/AddAdminRolesLayout";
 
 export const ContextNumper = createContext()
 const AppLayoutAuthentication = () => (
@@ -740,54 +741,6 @@ export const router = createBrowserRouter([
               },
             ]
           },
-          // {
-          //   path: 'live',
-          //   element: <AppLayoutLive />,
-          //   children: [
-          //     {
-          //       path: 'upcoming',
-          //       element: <LiveUpcomingPage />,
-          //       children: [
-          //         {
-          //           path: 'upcoming/add',
-          //           element: <AddLiveUpcomingPage />
-          //         },
-          //         {
-          //           path: 'upcoming/edit/:liveId',
-          //           element: <EditLiveUpcomingPage />
-          //         },
-
-          //       ]
-          //     },
-          //     {
-          //       path: 'history',
-          //       element: <LiveHistoryPage />,
-          //     },
-          //   ]
-          // },
-
-
-          // {
-          //   path: 'live',
-          //   element: <AppLayoutLive />,
-          //   children: [
-          //     {
-          //       path: '',
-          //       element: <LiveLayout />
-          //     },
-          //     {
-          //       path: 'add',
-          //       element: <AddLiveLayout />
-          //     },
-          //     {
-          //       path: 'edit/:liveId',
-          //       element: <EditLiveLayout />
-          //     },
-          //   ]
-          // },
-
-
-
           /* Marketing */
           {
             path: 'discount',
@@ -1007,7 +960,11 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: '',
-                element: <AdminRolesAD />,
+                element: <AdminRolesLayout />,
+              },
+              {
+                path: 'add',
+                element: <AddAdminRolesLayout />,
               }
             ]
           },
