@@ -1,14 +1,15 @@
 import React, { useRef, useState, useEffect } from 'react';
-import InputCustom from '../../../Components/InputCustom';
-import { Button } from '../../../Components/Button';
-import { useAuth } from '../../../Context/Auth';
-import DropDownMenu from '../../../Components/DropDownMenu';
+import InputCustom from '../../../../Components/InputCustom';
+import { Button } from '../../../../Components/Button';
+import { useAuth } from '../../../../Context/Auth';
+import DropDownMenu from '../../../../Components/DropDownMenu';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import CheckBox from '../../../Components/CheckBox';
-import Loading from '../../../Components/Loading';
+import CheckBox from '../../../../Components/CheckBox';
+import Loading from '../../../../Components/Loading';
+import HeaderPageSection from '../../../../Components/HeaderPageSection';
 
-const AddLivePage = () => {
+const LiveUpcomingPage = () => {
   const auth = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +37,8 @@ const AddLivePage = () => {
   const [url, setUrl] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
-  const [date, setDate] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [price, setPrice] = useState(0);
 
   const [selectEducation, setSelectEducation] = useState('Select Education');
@@ -52,7 +54,7 @@ const AddLivePage = () => {
   const [openSelectCategory, setOpenSelectCategory] = useState(false);
 
   const [selectSubject, setSelectSubject] = useState('Select Subject');
-  const [selectSubjectId, setSelectSubjectId] = useState([]);
+  const [selectSubjectId, setSelectSubjectId] = useState('');
   const [openSelectSubject, setOpenSelectSubject] = useState(false);
 
   const [selectTeacher, setSelectTeacher] = useState('Select Teacher');
@@ -60,12 +62,14 @@ const AddLivePage = () => {
   const [openSelectTeacher, setOpenSelectTeacher] = useState(false);
 
   const [selectDay, setSelectDay] = useState('Select Day');
+  const [selectDayName, setSelectDayName] = useState('');
   const [openSelectDay, setOpenSelectDay] = useState(false);
 
   const [selectStatus, setSelectStatus] = useState('Free');
   const [openSelectStatus, setOpenSelectStatus] = useState(false);
 
   const [liveIncluded, setLiveIncluded] = useState(0);
+  const [liveFixed, setLiveFixed] = useState(0);
 
   const dropdownEducationRef = useRef();
   const dropdownSemesterRef = useRef();
@@ -93,7 +97,7 @@ const AddLivePage = () => {
           setData(response.data.live);
           setEducationData([
             ...response.data.education,
-            { id: 'notfound' , name: 'Together' } // Or use some unique key generator
+            { id: 'notfound', name: 'Together' } // Or use some unique key generator
           ]);
 
           setCategoryData(response.data.category);
@@ -193,94 +197,101 @@ const AddLivePage = () => {
 
     // If both semesterName and categoryId are empty, filter only by educationId
     if (!semesterName && !categoryId) {
-        if (educationId !== 'notfound') {
-            filteredSubjects = filteredSubjects.filter(subject => 
-                subject.education_id === parseInt(educationId)
-            );
-        } else {
-            filteredSubjects = filteredSubjects.filter(subject => 
-                subject.education_id === null || subject.education_id === undefined
-            );
-        }
-    } 
-
-    else if (semesterName && !categoryId){
-      if(educationId){
-        if (educationId !== 'notfound') {
-          filteredSubjects = filteredSubjects.filter(subject => 
-            subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-              subject.education_id === parseInt(educationId)
-          );
-        } else {
-            filteredSubjects = filteredSubjects.filter(subject => 
-              subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-                subject.education_id === null || subject.education_id === undefined
-            );
-        }}
-      else{
-        filteredSubjects = filteredSubjects.filter(subject => 
-          subject.semester.toLowerCase() === semesterName.toLowerCase() 
-         )}
+      if (educationId !== 'notfound') {
+        filteredSubjects = filteredSubjects.filter(subject =>
+          subject.education_id === parseInt(educationId)
+        );
+      } else {
+        filteredSubjects = filteredSubjects.filter(subject =>
+          subject.education_id === null || subject.education_id === undefined
+        );
+      }
     }
 
-
-    else if (!semesterName && categoryId){
-      if(educationId){
+    else if (semesterName && !categoryId) {
+      if (educationId) {
         if (educationId !== 'notfound') {
-          filteredSubjects = filteredSubjects.filter(subject => 
-            subject.category_id === categoryId  &&
+          filteredSubjects = filteredSubjects.filter(subject =>
+            subject.semester.toLowerCase() === semesterName.toLowerCase() &&
             subject.education_id === parseInt(educationId)
           );
         } else {
-            filteredSubjects = filteredSubjects.filter(subject => 
-              subject.category_id === categoryId  &&
-              subject.education_id === null || subject.education_id === undefined
-            );
-        }}
-      else{
-        filteredSubjects = filteredSubjects.filter(subject => 
-          subject.category_id === categoryId 
-         )}
+          filteredSubjects = filteredSubjects.filter(subject =>
+            subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+            subject.education_id === null || subject.education_id === undefined
+          );
+        }
+      }
+      else {
+        filteredSubjects = filteredSubjects.filter(subject =>
+          subject.semester.toLowerCase() === semesterName.toLowerCase()
+        )
+      }
     }
 
-    else if (semesterName && categoryId){
-      if(educationId){
+
+    else if (!semesterName && categoryId) {
+      if (educationId) {
         if (educationId !== 'notfound') {
-          filteredSubjects = filteredSubjects.filter(subject => 
-              subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-              subject.category_id === categoryId &&
-              subject.education_id === parseInt(educationId)
+          filteredSubjects = filteredSubjects.filter(subject =>
+            subject.category_id === categoryId &&
+            subject.education_id === parseInt(educationId)
           );
         } else {
-            filteredSubjects = filteredSubjects.filter(subject => 
-                subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-                subject.category_id === categoryId  &&
-                subject.education_id === null || subject.education_id === undefined
-            );
-        }}
-      else{
-        filteredSubjects = filteredSubjects.filter(subject => 
+          filteredSubjects = filteredSubjects.filter(subject =>
+            subject.category_id === categoryId &&
+            subject.education_id === null || subject.education_id === undefined
+          );
+        }
+      }
+      else {
+        filteredSubjects = filteredSubjects.filter(subject =>
+          subject.category_id === categoryId
+        )
+      }
+    }
+
+    else if (semesterName && categoryId) {
+      if (educationId) {
+        if (educationId !== 'notfound') {
+          filteredSubjects = filteredSubjects.filter(subject =>
+            subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+            subject.category_id === categoryId &&
+            subject.education_id === parseInt(educationId)
+          );
+        } else {
+          filteredSubjects = filteredSubjects.filter(subject =>
+            subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+            subject.category_id === categoryId &&
+            subject.education_id === null || subject.education_id === undefined
+          );
+        }
+      }
+      else {
+        filteredSubjects = filteredSubjects.filter(subject =>
           subject.semester.toLowerCase() === semesterName.toLowerCase() &&
-          subject.category_id === categoryId 
-         )}
+          subject.category_id === categoryId
+        )
+      }
     }
 
     //Check if no subjects match the filters
     if (filteredSubjects.length === 0) {
-        setSubjectData([{ id: 'Not Found', name: 'Not Found' }]);
+      setSubjectData([{ id: 'Not Found', name: 'Not Found' }]);
     } else {
-        setSelectSubject(filteredSubjects.length > 1 ? 'Select Subject' : filteredSubjects[0].name);
-        setSelectSubjectId(filteredSubjects.length > 1 ? [] : filteredSubjects[0].id);
-        setSubjectData(filteredSubjects);
+      setSelectSubject(filteredSubjects.length >= 1 ? 'Select Subject' : filteredSubjects[0].name);
+      setSelectSubjectId(filteredSubjects.length >= 1 ? [] : filteredSubjects[0].id);
+      setSubjectData(filteredSubjects);
     }
 
     console.log('semesterName:', semesterName);
     console.log('categoryId:', categoryId);
     console.log('educationId:', educationId);
+    console.log('selectSubjectId:', selectSubjectId);
 
     // Debugging logs
     console.log('filteredSubjects:', filteredSubjects);
-};
+  };
 
 
   // const filterSubjects = (educationId, semesterName, categoryId) => {
@@ -382,18 +393,18 @@ const AddLivePage = () => {
 
     // Check if the selected option value is 'notfound'
     if (selectedOptionValue === 'notfound') {
-        setSelectEducationId('notfound');
+      setSelectEducationId('notfound');
     } else {
-        setSelectEducationId(parseInt(selectedOptionValue)); // Set id or null if not a number
+      setSelectEducationId(parseInt(selectedOptionValue)); // Set id or null if not a number
     }
-    console.log("selected" , selectedOptionValue)
+    console.log("selected", selectedOptionValue)
 
     setSelectEducation(selectedOptionName); // Set selected education name
     setOpenSelectEducation(false); // Close the select dropdown
 
     // Filter subjects based on the selected education, semester, and category
     filterSubjects(selectedOptionValue, selectSemesterName, selectCategoryId);
-};
+  };
 
 
   // const handleSelectEducation = (e) => {
@@ -476,6 +487,7 @@ const AddLivePage = () => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
     const selectedOptionName = e.currentTarget.textContent.trim();
     setSelectDay(selectedOptionName);
+    setSelectDayName(selectedOptionName);
     setOpenSelectDay(false);
     console.log('Selected Day:', selectedOptionName);
   };
@@ -491,9 +503,13 @@ const AddLivePage = () => {
     // console.log('Paid ID:', selectedOptionValue);
   };
 
-  const handleClick = (e) => {
+  const handleIncludedClick = (e) => {
     const isChecked = e.target.checked;
     setLiveIncluded(isChecked ? 1 : 0);
+  };
+  const handleFixedClick = (e) => {
+    const isChecked = e.target.checked;
+    setLiveFixed(isChecked ? 1 : 0);
   };
 
   useEffect(() => {
@@ -539,23 +555,19 @@ const AddLivePage = () => {
       auth.toastError('Please Enter Live Link.');
       return;
     }
-    if (!startTime) {
-      auth.toastError('Please Enter StartTime.');
+    if (!selectEducationId) {
+      auth.toastError('Please Select Education.');
       return;
     }
-    if (!endTime) {
-      auth.toastError('Please Enter EndTime.');
+    if (!selectSemesterName) {
+      auth.toastError('Please Select Semester.');
       return;
     }
     if (!selectCategoryId) {
       auth.toastError('Please Select Category.');
       return;
     }
-    // if (selectEducationId === null || selectEducationId === 'null') {
-    //   auth.toastError('Please Select Education.');
-    //   return;
-    // }    
-    if (!selectSubjectId) {
+    if (selectSubjectId.length === 0) {
       auth.toastError('Please Select Subject.');
       return;
     }
@@ -563,16 +575,29 @@ const AddLivePage = () => {
       auth.toastError('Please Select Teacher.');
       return;
     }
-    if (!date) {
-      auth.toastError('Please Enter Date.');
+    if (!selectDayName) {
+      auth.toastError('Please Select Day.');
       return;
     }
-    if (!selectDay) {
-      auth.toastError('Please Enter Day.');
+    if (!startDate) {
+      auth.toastError('Please Select Start Date.');
+      return;
+    }
+    if (!startTime) {
+      auth.toastError('Please Enter Start Time.');
+      return;
+    }
+    if (!endTime) {
+      auth.toastError('Please Enter End Time.');
       return;
     }
     if (!selectStatus) {
       auth.toastError('Please Enter Status.');
+      return;
+    }
+
+    if (parseInt(liveFixed) === 1 && !endDate) {
+      auth.toastError('Please Select End Date.');
       return;
     }
 
@@ -587,21 +612,21 @@ const AddLivePage = () => {
       formData.append('link', url);
       formData.append('from', formattedStartTime);
       formData.append('to', formattedEndTime);
-      formData.append('date', date);
-      formData.append('day', selectDay);
+      formData.append('date', startDate);
+      formData.append('day', selectDayName);
       formData.append('teacher_id', selectTeacherId);
       formData.append('subject_id', selectSubjectId);
-      formData.append('paid', selectStatus === "Paid" ? 1 : 0);
+      formData.append('paid', selectStatus === 'Paid' ? 1 : 0);
       formData.append('price', price || 0);
       formData.append('inculded', liveIncluded);
+      formData.append('fixed', liveFixed);
       formData.append('category_id', selectCategoryId);
-      // formData.append('education_id', selectEducationId);
 
       // Handle education_id appropriately
-      if (selectEducationId === "notfound") {
-        formData.append('education_id', ' '); // Send as string 'null'
-      } else {
-        formData.append('education_id', selectEducationId);
+      formData.append('education_id', selectEducationId === 'notfound' ? ' ' : selectEducationId);
+
+      if (parseInt(liveFixed) === 1) {
+        formData.append('end_date', endDate);
       }
 
       for (let pair of formData.entries()) {
@@ -634,169 +659,200 @@ const AddLivePage = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
-        <Loading />
-      </div>
-    );
-  }
-
   return (
-    <form className="w-full flex flex-col items-center justify-center gap-y-3" onSubmit={handleSubmit}>
-      <div className="w-full flex flex-wrap items-center justify-start gap-3">
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            type="text"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+    <>
+      <HeaderPageSection handleClick={handleGoBack} name="Add Live" />
+      {isLoading ? <>
+        <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
+          <Loading />
         </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            type="text"
-            placeholder="Live Link"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <DropDownMenu
-            ref={dropdownEducationRef}
-            handleOpen={handleOpenSelectEducation}
-            handleOpenOption={handleSelectEducation}
-            stateoption={selectEducation}
-            openMenu={openSelectEducation}
-            options={educationData}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <DropDownMenu
-            ref={dropdownSemesterRef}
-            handleOpen={handleOpenSelectSemester}
-            handleOpenOption={handleSelectSemester}
-            stateoption={selectSemester}
-            openMenu={openSelectSemester}
-            options={semesterData}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <DropDownMenu
-            ref={dropdownCategoryRef}
-            handleOpen={handleOpenSelectCategory}
-            handleOpenOption={handleSelectCategory}
-            stateoption={selectCategory}
-            openMenu={openSelectCategory}
-            options={categoryData}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <DropDownMenu
-            ref={dropdownSubjectRef}
-            handleOpen={handleOpenSelectSubject}
-            handleOpenOption={handleSelectSubject}
-            stateoption={selectSubject}
-            // stateoption={subjectData.length > 1 ? selectSubject : 'Not Found'}
-            openMenu={openSelectSubject}
-            options={subjectData.length === 0 ? [{ id: 'Not Found', name: 'Not Found' }] : subjectData}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <DropDownMenu
-            ref={dropdownTeacherRef}
-            handleOpen={handleOpenSelectTeacher}
-            handleOpenOption={handleSelectTeacher}
-            stateoption={selectTeacher}
-            openMenu={openSelectTeacher}
-            options={teacherData}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <DropDownMenu
-            ref={dropdownDayRef}
-            handleOpen={handleOpenSelectDay}
-            handleOpenOption={handleSelectDay}
-            stateoption={selectDay}
-            openMenu={openSelectDay}
-            options={daysData}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            type="date"
-            placeholder="Date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <h1>Time From</h1>
-          <InputCustom
-            type="time"
-            placeholder="Time From"
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <h1>Time To</h1>
-          <InputCustom
-            type="time"
-            placeholder="Time To"
-            value={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <DropDownMenu
-            ref={dropdownStatusRef}
-            handleOpen={handleOpenSelectStatus}
-            handleOpenOption={handleSelectStatus}
-            stateoption={selectStatus}
-            openMenu={openSelectStatus}
-            options={paidData}
-          />
-        </div>
-        {/* Conditionally Render Price Input */}
-        {selectStatus === 'Paid' && (
-          <div className="lg:w-[30%] sm:w-full">
-            <InputCustom
-              type="text"
-              placeholder="Price"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-            />
-          </div>
-        )}
-        <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
-          <span className="text-2xl text-thirdColor font-medium">Included:</span>
-          <div>
-            <CheckBox checked={liveIncluded} handleClick={handleClick} />
-          </div>
-        </div>
+      </> :
+        <form className="w-full flex flex-col items-center justify-center gap-y-3" onSubmit={handleSubmit}>
+          <div className="w-full flex flex-wrap items-center justify-start gap-3">
+            <div className="lg:w-[30%] sm:w-full">
+              <InputCustom
+                type="text"
+                placeholder="Name"
+                value={name}
+                required={false}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <InputCustom
+                type="text"
+                placeholder="Live Link"
+                value={url}
+                required={false}
+                onChange={(e) => setUrl(e.target.value)}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <DropDownMenu
+                ref={dropdownEducationRef}
+                handleOpen={handleOpenSelectEducation}
+                handleOpenOption={handleSelectEducation}
+                stateoption={selectEducation}
+                openMenu={openSelectEducation}
+                options={educationData}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <DropDownMenu
+                ref={dropdownSemesterRef}
+                handleOpen={handleOpenSelectSemester}
+                handleOpenOption={handleSelectSemester}
+                stateoption={selectSemester}
+                openMenu={openSelectSemester}
+                options={semesterData}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <DropDownMenu
+                ref={dropdownCategoryRef}
+                handleOpen={handleOpenSelectCategory}
+                handleOpenOption={handleSelectCategory}
+                stateoption={selectCategory}
+                openMenu={openSelectCategory}
+                options={categoryData}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <DropDownMenu
+                ref={dropdownSubjectRef}
+                handleOpen={handleOpenSelectSubject}
+                handleOpenOption={handleSelectSubject}
+                stateoption={selectSubject}
+                // stateoption={subjectData.length > 1 ? selectSubject : 'Not Found'}
+                openMenu={openSelectSubject}
+                options={subjectData.length === 0 ? [{ id: 'Not Found', name: 'Not Found' }] : subjectData}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <DropDownMenu
+                ref={dropdownTeacherRef}
+                handleOpen={handleOpenSelectTeacher}
+                handleOpenOption={handleSelectTeacher}
+                stateoption={selectTeacher}
+                openMenu={openSelectTeacher}
+                options={teacherData}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <DropDownMenu
+                ref={dropdownDayRef}
+                handleOpen={handleOpenSelectDay}
+                handleOpenOption={handleSelectDay}
+                stateoption={selectDay}
+                openMenu={openSelectDay}
+                options={daysData}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <DropDownMenu
+                ref={dropdownStatusRef}
+                handleOpen={handleOpenSelectStatus}
+                handleOpenOption={handleSelectStatus}
+                stateoption={selectStatus}
+                openMenu={openSelectStatus}
+                options={paidData}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <span className='text-thirdColor font-semibold text-xl pl-1'>Start Date</span>
+              <InputCustom
+                type="date"
+                placeholder="Start Date"
+                value={startDate}
+                required={false}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+            </div>
+            {liveFixed === 1 && (
+              <>
+                <div className="lg:w-[30%] sm:w-full">
+                  <span className='text-thirdColor font-semibold text-xl pl-1'>End Date</span>
+                  <InputCustom
+                    type="date"
+                    placeholder="End Date"
+                    value={endDate}
+                    required={false}
+                    onChange={(e) => setEndDate(e.target.value)}
+                  />
+                </div>
+              </>
 
-      </div>
-      {/* Buttons */}
-      <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
-        <div className="flex items-center justify-center w-72">
-          <Button
-            type="submit"
-            Text="Done"
-            BgColor="bg-mainColor"
-            Color="text-white"
-            Width="full"
-            Size="text-2xl"
-            px="px-28"
-            rounded="rounded-2xl"
-          // stateLoding={isLoading}
-          />
-        </div>
-        <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
-      </div>
-    </form>
+            )}
+            <div className="lg:w-[30%] sm:w-full">
+              <span className='text-thirdColor font-semibold text-xl pl-1'>Time From</span>
+              <InputCustom
+                type="time"
+                placeholder="Time From"
+                value={startTime}
+                required={false}
+                onChange={(e) => setStartTime(e.target.value)}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <span className='text-thirdColor font-semibold text-xl pl-1'>Time To</span>
+              <InputCustom
+                type="time"
+                placeholder="Time To"
+                value={endTime}
+                required={false}
+                onChange={(e) => setEndTime(e.target.value)}
+              />
+            </div>
+
+            {/* Conditionally Render Price Input */}
+            {selectStatus === 'Paid' && (
+              <div className="lg:w-[30%] sm:w-full">
+                <InputCustom
+                  type="text"
+                  placeholder="Price"
+                  value={price}
+                  required={false}
+                  onChange={(e) => setPrice(e.target.value)}
+                />
+              </div>
+            )}
+            <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+              <span className="text-2xl text-thirdColor font-medium">Included:</span>
+              <div>
+                <CheckBox checked={liveIncluded} handleClick={handleIncludedClick} />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+              <span className="text-2xl text-thirdColor font-medium">Fixed:</span>
+              <div>
+                <CheckBox checked={liveFixed} handleClick={handleFixedClick} />
+              </div>
+            </div>
+
+          </div>
+          {/* Buttons */}
+          <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
+            <div className="flex items-center justify-center w-72">
+              <Button
+                type="submit"
+                Text="Done"
+                BgColor="bg-mainColor"
+                Color="text-white"
+                Width="full"
+                Size="text-2xl"
+                px="px-28"
+                rounded="rounded-2xl"
+              // stateLoding={isLoading}
+              />
+            </div>
+            <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
+          </div>
+        </form>
+      }
+    </>
   )
 }
 
-export default AddLivePage
+export default LiveUpcomingPage
 

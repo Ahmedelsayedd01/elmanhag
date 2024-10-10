@@ -111,11 +111,14 @@ import LoginUser from "./Pages/RegisterPage/LoginUser";
 import SignUpPage from "./Pages/RegisterPage/SignUpPage";
 
 import {
+  AddLiveUpcomingPage,
   AffilatePage,
   ComplaintsHistoryPage,
   ComplaintsPage,
   DownloadMobilePage,
+  EditLiveUpcomingPage,
   HomePage,
+  LiveUpcomingPage,
   LoginHistoryPage,
   ParentDashboardPage,
   ParentPage,
@@ -160,6 +163,7 @@ import EditQuestionLayout from "./Layouts/Admin/EditQuestionLayout";
 import QuestionLayout from "./Layouts/Admin/QuestionLayout";
 import Complaint from "./Pages/Student/Complaint/ComplaintPage";
 import EditProfileStudentLayout from "./Layouts/Student/EditProfileStudentLayout";
+import LiveHistoryPage from "./Pages/Admin/LivePage/History/LiveHistoryPage";
 
 export const ContextNumper = createContext()
 const AppLayoutAuthentication = () => (
@@ -261,7 +265,8 @@ const AppLayoutQuestionsBank = () => (
 /* Live */
 const AppLayoutLive = () => (
   <>
-    <Outlet />
+    {/* <Outlet /> */}
+    <LiveLayout />
   </>
 );
 /* Marketing */
@@ -718,19 +723,68 @@ export const router = createBrowserRouter([
             element: <AppLayoutLive />,
             children: [
               {
-                path: '',
-                element: <LiveLayout />
+                path: 'upcoming',
+                element: <LiveUpcomingPage />,
               },
               {
-                path: 'add',
-                element: <AddLiveLayout />
+                path: 'upcoming/add',
+                element: <AddLiveUpcomingPage />
               },
               {
-                path: 'edit/:liveId',
-                element: <EditLiveLayout />
+                path: 'upcoming/edit/:liveId',
+                element: <EditLiveUpcomingPage />
+              },
+              {
+                path: 'history',
+                element: <LiveHistoryPage />,
               },
             ]
           },
+          // {
+          //   path: 'live',
+          //   element: <AppLayoutLive />,
+          //   children: [
+          //     {
+          //       path: 'upcoming',
+          //       element: <LiveUpcomingPage />,
+          //       children: [
+          //         {
+          //           path: 'upcoming/add',
+          //           element: <AddLiveUpcomingPage />
+          //         },
+          //         {
+          //           path: 'upcoming/edit/:liveId',
+          //           element: <EditLiveUpcomingPage />
+          //         },
+
+          //       ]
+          //     },
+          //     {
+          //       path: 'history',
+          //       element: <LiveHistoryPage />,
+          //     },
+          //   ]
+          // },
+
+
+          // {
+          //   path: 'live',
+          //   element: <AppLayoutLive />,
+          //   children: [
+          //     {
+          //       path: '',
+          //       element: <LiveLayout />
+          //     },
+          //     {
+          //       path: 'add',
+          //       element: <AddLiveLayout />
+          //     },
+          //     {
+          //       path: 'edit/:liveId',
+          //       element: <EditLiveLayout />
+          //     },
+          //   ]
+          // },
 
 
 

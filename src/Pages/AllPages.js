@@ -48,9 +48,12 @@ export { default as AddHomeWorkPage } from "./Admin/HomeWorkPage/AddHomeWorkPage
 export { default as EditHomeWorkPage } from "./Admin/HomeWorkPage/EditHomeWorkPage";
 
 /* Live Page */
-export { default as LivePage } from "./Admin/LivePage/LivePage";
-export { default as AddLivePage } from "./Admin/LivePage/AddLivePage";
-export { default as EditLivePage } from "./Admin/LivePage/EditLivePage";
+export { default as LiveNavPage } from "./Admin/LivePage/LiveNavPage";
+// Upcoming
+export { default as LiveUpcomingPage } from "./Admin/LivePage/Upcoming/LiveUpcomingPage";
+export { default as AddLiveUpcomingPage } from "./Admin/LivePage/Upcoming/AddLiveUpcomingPage";
+export { default as EditLiveUpcomingPage } from "./Admin/LivePage/Upcoming/EditLiveUpcomingPage";
+// History
 
 /* Marketing Pages */
 //Discount Pages

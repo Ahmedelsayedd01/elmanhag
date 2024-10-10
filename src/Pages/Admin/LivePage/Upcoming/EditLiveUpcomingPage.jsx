@@ -1,15 +1,16 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
-import InputCustom from '../../../Components/InputCustom';
-import { Button } from '../../../Components/Button';
-import { useAuth } from '../../../Context/Auth';
-import DropDownMenu from '../../../Components/DropDownMenu';
-import MultipleChoiceMenu from '../../../Components/MultipleChoiceMenu';
+import InputCustom from '../../../../Components/InputCustom';
+import { Button } from '../../../../Components/Button';
+import { useAuth } from '../../../../Context/Auth';
+import DropDownMenu from '../../../../Components/DropDownMenu';
+import MultipleChoiceMenu from '../../../../Components/MultipleChoiceMenu';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import CheckBox from '../../../Components/CheckBox';
-import Loading from '../../../Components/Loading';
+import CheckBox from '../../../../Components/CheckBox';
+import Loading from '../../../../Components/Loading';
+import HeaderPageSection from '../../../../Components/HeaderPageSection';
 
-const EditLivePage = () => {
+const LiveUpcomingPage = () => {
 
   const auth = useAuth();
   const { liveId } = useParams();
@@ -67,6 +68,7 @@ const EditLivePage = () => {
   const [openSelectStatus, setOpenSelectStatus] = useState(false);
 
   const [liveIncluded, setLiveIncluded] = useState(null);
+  const [liveFixed, setLiveFixed] = useState(null);
 
   const dropdownEducationRef = useRef();
   const dropdownSemesterRef = useRef();
@@ -136,6 +138,7 @@ const EditLivePage = () => {
           setSelectStatus(data.paid === 1 ? "Paid" : "Free"); // Updated this logic
           setPrice(data.price || 0);
           setLiveIncluded(data?.inculded || 0); // Fixed typo
+          setLiveFixed(data?.fixed || 0); // Fixed typo
 
           const nameSemester = data.subject.semester;
           setSelectSemester(nameSemester[0].toUpperCase() + nameSemester.slice(1));
@@ -503,9 +506,13 @@ const EditLivePage = () => {
     // console.log('Paid ID:', selectedOptionValue);
   };
 
-  const handleClick = (e) => {
+  const handleIncludedClick = (e) => {
     const isChecked = e.target.checked;
     setLiveIncluded(isChecked ? 1 : 0);
+  };
+  const handleFixedClick = (e) => {
+    const isChecked = e.target.checked;
+    setLiveFixed(isChecked ? 1 : 0);
   };
 
   useEffect(() => {
@@ -585,6 +592,7 @@ const EditLivePage = () => {
         paid: selectStatus === 'Paid' ? 1 : 0,
         price: priceEdit,
         inculded: liveIncluded,
+        fixed: liveFixed,
         education_id: selectEducationId === "notfound" ? ' ' : selectEducationId, // Send null if no education is selected
       };
 
@@ -622,168 +630,184 @@ const EditLivePage = () => {
   };
 
 
-  if (isLoading) {
-    return (
-      <div className="w-1/4 h-full flex items-start justify-center m-auto mt-36">
-        <Loading />
-      </div>
-    )
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="w-1/4 h-full flex items-start justify-center m-auto mt-36">
+  //       <Loading />
+  //     </div>
+  //   )
+  // }
 
   return (
-    <form className="w-full flex flex-col items-center justify-center gap-y-3" onSubmit={handleSubmitEdit}>
-      <div className="w-full flex flex-wrap items-center justify-start gap-3">
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            type="text"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+    <>
+      <HeaderPageSection handleClick={handleGoBack} name="Edit Live" />
+      {isLoading ? <>
+        <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
+          <Loading />
         </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            type="text"
-            placeholder="Live Link"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <DropDownMenu
-            ref={dropdownEducationRef}
-            handleOpen={handleOpenSelectEducation}
-            handleOpenOption={handleSelectEducation}
-            stateoption={selectEducation}
-            openMenu={openSelectEducation}
-            options={educationData}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <DropDownMenu
-            ref={dropdownSemesterRef}
-            handleOpen={handleOpenSelectSemester}
-            handleOpenOption={handleSelectSemester}
-            stateoption={selectSemester}
-            openMenu={openSelectSemester}
-            options={semesterData}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <DropDownMenu
-            ref={dropdownCategoryRef}
-            handleOpen={handleOpenSelectCategory}
-            handleOpenOption={handleSelectCategory}
-            stateoption={selectCategory}
-            openMenu={openSelectCategory}
-            options={categoryData}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <DropDownMenu
-            ref={dropdownSubjectRef}
-            handleOpen={handleOpenSelectSubject}
-            handleOpenOption={handleSelectSubject}
-            stateoption={selectSubject}
-            openMenu={openSelectSubject}
-            options={subjectData}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <DropDownMenu
-            ref={dropdownTeacherRef}
-            handleOpen={handleOpenSelectTeacher}
-            handleOpenOption={handleSelectTeacher}
-            stateoption={selectTeacher}
-            openMenu={openSelectTeacher}
-            options={teacherData}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <DropDownMenu
-            ref={dropdownDayRef}
-            handleOpen={handleOpenSelectDay}
-            handleOpenOption={handleSelectDay}
-            stateoption={selectDay}
-            openMenu={openSelectDay}
-            options={daysData}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            type="date"
-            minDate={false}
-            placeholder="Date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <h1>Time From</h1>
-          <InputCustom
-            type="time"
-            placeholder="Time From"
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <h1>Time To</h1>
-          <InputCustom
-            type="time"
-            placeholder="Time To"
-            value={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
-          />
-        </div>
-        <div className="lg:w-[30%] sm:w-full">
-          <DropDownMenu
-            ref={dropdownStatusRef}
-            handleOpen={handleOpenSelectStatus}
-            handleOpenOption={handleSelectStatus}
-            stateoption={selectStatus}
-            openMenu={openSelectStatus}
-            options={paidData}
-          />
-        </div>
-        {/* Conditionally Render Price Input */}
-        {selectStatus === 'Paid' && (
-          <div className="lg:w-[30%] sm:w-full">
-            <InputCustom
-              type="text"
-              placeholder="Price"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-            />
-          </div>
-        )}
-        <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
-          <span className="text-2xl text-thirdColor font-medium">Included:</span>
-          <div>
-            <CheckBox handleClick={handleClick} checked={liveIncluded} />
-          </div>
-        </div>
+      </> :
+        <form className="w-full flex flex-col items-center justify-center gap-y-3" onSubmit={handleSubmitEdit}>
+          <div className="w-full flex flex-wrap items-center justify-start gap-3">
+            <div className="lg:w-[30%] sm:w-full">
+              <InputCustom
+                type="text"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <InputCustom
+                type="text"
+                placeholder="Live Link"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <DropDownMenu
+                ref={dropdownEducationRef}
+                handleOpen={handleOpenSelectEducation}
+                handleOpenOption={handleSelectEducation}
+                stateoption={selectEducation}
+                openMenu={openSelectEducation}
+                options={educationData}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <DropDownMenu
+                ref={dropdownSemesterRef}
+                handleOpen={handleOpenSelectSemester}
+                handleOpenOption={handleSelectSemester}
+                stateoption={selectSemester}
+                openMenu={openSelectSemester}
+                options={semesterData}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <DropDownMenu
+                ref={dropdownCategoryRef}
+                handleOpen={handleOpenSelectCategory}
+                handleOpenOption={handleSelectCategory}
+                stateoption={selectCategory}
+                openMenu={openSelectCategory}
+                options={categoryData}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <DropDownMenu
+                ref={dropdownSubjectRef}
+                handleOpen={handleOpenSelectSubject}
+                handleOpenOption={handleSelectSubject}
+                stateoption={selectSubject}
+                openMenu={openSelectSubject}
+                options={subjectData}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <DropDownMenu
+                ref={dropdownTeacherRef}
+                handleOpen={handleOpenSelectTeacher}
+                handleOpenOption={handleSelectTeacher}
+                stateoption={selectTeacher}
+                openMenu={openSelectTeacher}
+                options={teacherData}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <DropDownMenu
+                ref={dropdownDayRef}
+                handleOpen={handleOpenSelectDay}
+                handleOpenOption={handleSelectDay}
+                stateoption={selectDay}
+                openMenu={openSelectDay}
+                options={daysData}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <InputCustom
+                type="date"
+                minDate={false}
+                placeholder="Date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <h1>Time From</h1>
+              <InputCustom
+                type="time"
+                placeholder="Time From"
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <h1>Time To</h1>
+              <InputCustom
+                type="time"
+                placeholder="Time To"
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+              />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <DropDownMenu
+                ref={dropdownStatusRef}
+                handleOpen={handleOpenSelectStatus}
+                handleOpenOption={handleSelectStatus}
+                stateoption={selectStatus}
+                openMenu={openSelectStatus}
+                options={paidData}
+              />
+            </div>
+            {/* Conditionally Render Price Input */}
+            {selectStatus === 'Paid' && (
+              <div className="lg:w-[30%] sm:w-full">
+                <InputCustom
+                  type="text"
+                  placeholder="Price"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                />
+              </div>
+            )}
+            <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+              <span className="text-2xl text-thirdColor font-medium">Included:</span>
+              <div>
+                <CheckBox handleClick={handleIncludedClick} checked={liveIncluded} />
+              </div>
+            </div>
 
-      </div>
-      {/* Buttons */}
-      <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
-        <div className="flex items-center justify-center w-72">
-          <Button
-            type="submit"
-            Text="Done"
-            BgColor="bg-mainColor"
-            Color="text-white"
-            Width="full"
-            Size="text-2xl"
-            px="px-28"
-            rounded="rounded-2xl"
-          // stateLoding={isLoading}
-          />
-        </div>
-        <button type='button' onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
-      </div>
-    </form>
+            <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+              <span className="text-2xl text-thirdColor font-medium">Fixed:</span>
+              <div>
+                <CheckBox handleClick={handleFixedClick} checked={liveFixed} />
+              </div>
+            </div>
+
+          </div>
+          {/* Buttons */}
+          <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
+            <div className="flex items-center justify-center w-72">
+              <Button
+                type="submit"
+                Text="Done"
+                BgColor="bg-mainColor"
+                Color="text-white"
+                Width="full"
+                Size="text-2xl"
+                px="px-28"
+                rounded="rounded-2xl"
+              // stateLoding={isLoading}
+              />
+            </div>
+            <button type='button' onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
+          </div>
+        </form>
+      }
+    </>
   )
 }
 
-export default EditLivePage
+export default LiveUpcomingPage

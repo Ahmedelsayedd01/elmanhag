@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import InputCustom from './InputCustom';
+import { useAuth } from '../Context/Auth';
 
 const RadioCheck = ({ options, check }) => {
+
        const [selectedOption, setSelectedOption] = useState('');
 
        const handleOptionChange = (value) => {
@@ -45,13 +47,37 @@ const RadioCheck = ({ options, check }) => {
 
 // RadioCheckGroup component
 const RadioCheckGroup = ({ radioGroup, check, allAnswer }) => {
+       const auth = useAuth();
        const [selectedOptionGroup, setSelectedOptionGroup] = useState('');
        const [answerGroup, setAnswerGroup] = useState([]);
 
-       const handleOptionGroupChange = (value) => {
-              setSelectedOptionGroup(value);
-              check(value); // Pass the selected option to the parent or external logic
+       const handleOptionGroupChange = (e, value) => {
+
+              const closestElement = e.target.closest('.parAsnwer'); // Get the closest ancestor with the class 'parAsnwer'
+              if (closestElement) {
+                     const valRightAnswerInput = closestElement.querySelector('.valRightAnswer').getElementsByTagName('input')[0]; // Get the first 'input' element inside '.valRightAnswer'
+
+                     if (valRightAnswerInput) {
+                            const valRightAnswer = valRightAnswerInput.value; // Get the value of the input
+                            if (valRightAnswer == '') {
+                                   auth.toastError('please Set the answer')
+                                   return;
+                            } else {
+                                   setSelectedOptionGroup(value);
+                                   // check(value); // Pass the selected option to the parent or external logic
+                                   console.log('value', value);
+                                   check(valRightAnswer)
+                            }
+                            console.log('valRightAnswer', valRightAnswer);
+                     } else {
+                            console.log('No input element found inside .valRightAnswer');
+                     }
+              } else {
+                     console.log('No closest .parAsnwer element found');
+              }
        };
+
+
 
        const handleAnswerGroup = (index, value) => {
               // Create a copy of the current answerGroup to avoid mutating state directly
@@ -65,14 +91,14 @@ const RadioCheckGroup = ({ radioGroup, check, allAnswer }) => {
               <div>
                      {radioGroup.map((answer, index) => (
                             <div key={answer.value} className="relative flex flex-col gap-y-5 cursor-pointer">
-                                   <div className="flex items-center justify-start gap-x-4 mb-4">
+                                   <div className="flex items-center justify-start gap-x-4 mb-4 parAsnwer">
                                           <input
                                                  name="radio-group"
                                                  id={answer.value}
                                                  className="radio-button__input absolute opacity-0 w-0 h-0"
                                                  type="radio"
                                                  checked={selectedOptionGroup === answer.value}
-                                                 onChange={() => handleOptionGroupChange(answer.value)} // Call handler on change
+                                                 onChange={(e) => handleOptionGroupChange(e, answer.value)} // Call handler on change
                                           />
                                           <label
                                                  htmlFor={answer.value}
@@ -87,14 +113,14 @@ const RadioCheckGroup = ({ radioGroup, check, allAnswer }) => {
                                                  ></span>
                                                  {answer.label}
                                           </label>
-                                          <div className="w-2/4">
+                                          <div className="w-2/4 valRightAnswer">
 
-                                                                                                                                            <InputCustom
-                                                                                                                                                   type="text"
-                                                                                                                                                   placeholder="Answer"
-                                                                                                                                                   value={answerGroup[index] || ''} // Set the current answer from the array
-                                                                                                                                                   onChange={(e) => handleAnswerGroup(index, e.target.value)} // Pass index and value
-                                                                                                                                            />
+                                                 <InputCustom
+                                                        type="text"
+                                                        placeholder="Answer"
+                                                        value={answerGroup[index] || ''} // Set the current answer from the array
+                                                        onChange={(e) => handleAnswerGroup(index, e.target.value)} // Pass index and value
+                                                 />
                                           </div>
                                    </div>
                             </div>
