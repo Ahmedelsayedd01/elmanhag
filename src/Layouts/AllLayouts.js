@@ -104,8 +104,10 @@ export { default as SuggestionsLayout } from "./Admin/SuggestionsLayout";
 /* Reports */
 export { default as ReportsAD } from "./Admin/ReportsAD";
 // export { default as SuggestionsLayout } from "./Admin/SuggestionsLayout";
+
 /* Setting */
-export { default as AdminRolesAD } from "./Admin/AdminRolesAD";
+// Admin Roles
+export { default as AdminRolesLayout } from "./Admin/AdminRolesLayout";
 
 export { default as CountriesLayout } from "./Admin/CountriesLayout";
 export { default as AddCountryLayout } from "./Admin/AddCountryLayout";

@@ -1,8 +1,8 @@
 import React from 'react'
-import { AdminRolesPage } from '../../Pages/AllPages'
 import TitleHeader from '../../Components/TitleHeader'
+import { AdminRolesPage } from '../../Pages/AllPages'
 
-const AdminRoles = () => {
+const AdminRolesLayout = () => {
        return (
               <>
                      <div className="flex flex-col items-center h-full gap-y-4">
@@ -13,4 +13,4 @@ const AdminRoles = () => {
        )
 }
 
-export default AdminRoles
+export default AdminRolesLayout
