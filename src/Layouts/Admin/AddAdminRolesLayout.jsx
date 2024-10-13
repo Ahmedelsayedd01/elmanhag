@@ -10,7 +10,7 @@ const AddAdminRolesLayout = () => {
        }
        return (
               <>
-                     <HeaderPageSection handleClick={handleGoBack} name={'Add Admin Role'} />
+                     <HeaderPageSection handleClick={handleGoBack} name={'Add Role'} />
                      <AddAdminRolesPage />
               </>
        )
