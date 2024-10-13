@@ -27,7 +27,7 @@ const PaymentMethodDetailsPage = () => {
   const [paymentStatus, setPaymentStatus] = useState(null);
   const [copySuccess, setCopySuccess] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
-  const [subjectsId, setSubjectsId] = useState(null)
+  // const [subjectsId, setSubjectsId] = useState([])
 
   // Function to handle receipt image click
   const handleReceiptImageClick = () => {
@@ -51,17 +51,17 @@ const PaymentMethodDetailsPage = () => {
   };
 
   // Effect to log plan details
-  useEffect(() => {
-    setSubjectsId([plan.id]);
-  }, [plan.id]); // Dependency array includes plan.id
+  // useEffect(() => {
+  //   setSubjectsId([plan.id]);
+  // }, [plan.id]); // Dependency array includes plan.id
 
   useEffect(() => {
-    console.log("setSubjectsId", subjectsId);
+    // console.log("setSubjectsId", subjectsId);
     console.log("The plan is ", plan);
     console.log("The plan price is ", price);
     console.log("The plan Type is ", planType);
     console.log("The payment method is ", paymentMethod);
-  }, [subjectsId, plan, price, planType, paymentMethod]); // This will re-run when subjectsId or any other dependencies change
+  }, [ plan, price, planType, paymentMethod]); // This will re-run when subjectsId or any other dependencies change
 
 
   // Function to submit payment details
@@ -113,6 +113,11 @@ const PaymentMethodDetailsPage = () => {
         //   subjectsId.forEach((subjectId) => {
         //     formData.append('live_id[]', subjectId); // Use 'live_id[]' for arrays
         //   });
+        // } }
+        
+        // } else if (planType === 'Bundle') {
+        //   // Plan type is Bundle, send id as an integer (no need to convert to string)
+        //   formData.append('bundle_id', subjectsId); 
         // }
 
         const formData = new FormData();
@@ -124,16 +129,22 @@ const PaymentMethodDetailsPage = () => {
           formData.append('receipt', receiptImageFile);
         }
 
-        // Send subjectsId as a stringified array for each planType
-        if (planType === 'Bundle') {
-          formData.append('bundle_id', JSON.stringify(subjectsId.map(String))); // Convert numbers to strings, then JSON stringify
-        } else if (planType === 'Subject') {
-          formData.append('subject_id', JSON.stringify(subjectsId.map(String))); // Convert numbers to strings, then JSON stringify
-        } else if (planType === 'Live session') {
-          formData.append('live_id', JSON.stringify(subjectsId.map(String))); // Convert numbers to strings, then JSON stringify
+        if (planType === 'Subject') {
+          if (Array.isArray(plan)) {
+            // Plan is an array, map over it to get all ids, convert ids to strings and JSON stringify
+            const subjectIds = plan.map(singlePlan => singlePlan.id); // Extract all plan IDs
+            formData.append('subject_id', JSON.stringify(subjectIds.map(String))); // Convert to string and JSON stringify
+          } else {
+            // Plan is a single object, convert the id to a string and JSON stringify it as a list
+            formData.append('subject_id', JSON.stringify([plan.id.toString()])); 
+          }
+        } else if (planType === 'Bundle') {
+          // Plan type is Bundle, send id as an integer (no need to convert to string)
+          console.log(plan.id)
+          formData.append('bundle_id', JSON.stringify([plan.id.toString()])); 
         }
-
-
+        
+        
 
         // Now formData is ready to be sent
 
@@ -152,6 +163,7 @@ const PaymentMethodDetailsPage = () => {
           auth.toastError('Failed to add Subject.');
         }
       } catch (error) {
+        console.log(error)
         const errorMessages = error?.response?.data.errors;
         let errorMessageString = 'Error occurred';
         if (errorMessages) {
@@ -161,22 +173,84 @@ const PaymentMethodDetailsPage = () => {
       } finally {
         setIsLoading(false);
       }
-    } else if (paymentMethod.title === 'fawry') {
-      try {
-        const chargeItems = [{
-          "itemId": plan.id,
-          "description": planType,
-          "quantity": "1"
-        }];
+    } 
+    
+    // else if (paymentMethod.title === 'fawry') {
+    //   try {
+    //     const chargeItems = [{
+    //       "itemId": plan.id,
+    //       "description": planType,
+    //       "quantity": "1"
+    //     }];
 
+    //     const response = await axios.post('https://bdev.elmanhag.shop/api/pay-at-fawry', {
+    //       "chargeItems": chargeItems
+    //     }, {
+    //       headers: {
+    //         Authorization: `Bearer ${auth.user.token}`,
+    //       },
+    //     });
+
+    //     if (response.status === 200) {
+    //       setReferenceNumber(response.data.referenceNumber);
+    //       setMerchantNumber(response.data.merchantRefNumber);
+    //       localStorage.setItem('referenceNumber', response.data.referenceNumber);
+    //       localStorage.setItem('merchantNumber', response.data.merchantRefNumber);
+    //       setShowModal(true);
+    //     } else {
+    //       auth.toastError('Failed to submit.');
+    //     }
+    //   } catch (error) {
+    //     const errorMessages = error?.response?.data.errors;
+    //     let errorMessageString = 'Error occurred';
+    //     if (errorMessages) {
+    //       errorMessageString = Object.values(errorMessages).flat().join(' ');
+    //     }
+    //     auth.toastError('Error', errorMessageString);
+    //   } finally {
+    //     setIsLoading(false);
+    //   }
+    // }
+
+    else if (paymentMethod.title === 'fawry') {
+      try {
+        let chargeItems = [];
+    
+        if (planType === 'Subject') {
+          if (Array.isArray(plan)) {
+            // Plan is an array, send list of string ids
+            chargeItems = plan.map(singlePlan => ({
+              "itemId": singlePlan.id.toString(), // Convert id to string
+              "description": 'Subject',
+              "quantity": "1"
+            }));
+          } else {
+            // Plan is a single object, send id as string in a list
+            chargeItems = [{
+              "itemId": plan.id.toString(), // Convert id to string
+              "description": 'Subject',
+              "quantity": "1"
+            }];
+          }
+        } else if (planType === 'Bundle') {
+          // Plan type is Bundle, send id as an integer
+          chargeItems = [{
+            "itemId": plan.id, // Keep id as an integer
+            "description": 'Bundle',
+            "quantity": "1"
+          }];
+        }
+    
+        // Send request to Fawry API
         const response = await axios.post('https://bdev.elmanhag.shop/api/pay-at-fawry', {
-          "chargeItems": chargeItems
+          "chargeItems": chargeItems,
+          "amount" :price
         }, {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,
           },
         });
-
+    
         if (response.status === 200) {
           setReferenceNumber(response.data.referenceNumber);
           setMerchantNumber(response.data.merchantRefNumber);
@@ -197,6 +271,7 @@ const PaymentMethodDetailsPage = () => {
         setIsLoading(false);
       }
     }
+    
   };
 
   // Function to show modal if values exist in local storage
@@ -284,7 +359,17 @@ const PaymentMethodDetailsPage = () => {
             {warningMessage && (
               <p className="text-red-600 text-center font-semibold text-xl mb-5">{warningMessage}</p> // Show warning message
             )}
-            <h1 className='text-xl'>الماده : <span className='text-mainColor'>{plan.name}</span></h1>
+            {/* <h1 className='text-xl'>الماده : <span className='text-mainColor'>{plan.name}</span></h1> */}
+            <h1 className='text-xl'>
+              الماده : 
+              <span className='text-mainColor'>
+                {Array.isArray(plan) 
+                  ? plan.map(singlePlan => singlePlan.name).join(', ') // If plan is an array, join all names with a comma
+                  : plan.name // If plan is a single object, display its name
+                }
+              </span>
+            </h1>
+
             <h1 className='text-xl'>السعر  : <span className='text-mainColor'>{price}</span></h1>
             <h2 className="text-[#6B6B6B] text-xl md:text-2xl font-bold mb-4">
               احتفظ بهذا الرقم للدفع بيه <span className='text-mainColor'>{referenceNumber}</span>
