@@ -108,6 +108,8 @@ export { default as ReportsAD } from "./Admin/ReportsAD";
 /* Setting */
 // Admin Roles
 export { default as AdminRolesLayout } from "./Admin/AdminRolesLayout";
+export { default as AddAdminRolesLayout } from "./Admin/AddAdminRolesLayout";
+export { default as EditAdminRolesLayout } from "./Admin/EditAdminRolesLayout";
 
 export { default as CountriesLayout } from "./Admin/CountriesLayout";
 export { default as AddCountryLayout } from "./Admin/AddCountryLayout";
