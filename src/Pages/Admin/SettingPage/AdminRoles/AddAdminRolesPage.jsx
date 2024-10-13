@@ -6,6 +6,7 @@ import { useAuth } from '../../../../Context/Auth';
 import Loading from '../../../../Components/Loading';
 import axios from 'axios';
 import { Button } from '../../../../Components/Button';
+import DeleteIcon from '../../../../Components/Icons/AdminIcons/DeleteIcon';
 
 const AddAdminRolesPage = () => {
        const premissionRoleRef = useRef();
@@ -14,7 +15,6 @@ const AddAdminRolesPage = () => {
        const navigate = useNavigate();
        const [isLoading, setIsLoading] = useState(false);
 
-       const [roleNameState, setRoleNameState] = useState('Select Education');
        const [roleName, setRoleName] = useState('');
 
        const [premissionRoleData, setPremissionRoleData] = useState([]);
@@ -63,7 +63,7 @@ const AddAdminRolesPage = () => {
                      auth.toastError('This Premission Already Selected')
                      return [...premissionRole];
               } else {
-                     setPremissionRoleState(selectedOptionName);
+                     setPremissionRoleState('Select Premission');
                      setPremissionRole((prev) => [...prev, Premission]);
               }
 
@@ -72,7 +72,7 @@ const AddAdminRolesPage = () => {
        };
 
        useEffect(() => {
-              console.log('premissionRole efef', premissionRole)
+              console.log('premissionRole', premissionRole)
               document.addEventListener('mousedown', handleClickOutside);
               return () => {
                      document.removeEventListener('mousedown', handleClickOutside);
@@ -87,36 +87,54 @@ const AddAdminRolesPage = () => {
               }
        };
 
+
+
+       const handleDelete = (indexToDelete) => {
+              const updatedPremissionRole = premissionRole.filter((_, index) => index !== indexToDelete);
+              setPremissionRole(updatedPremissionRole);
+       };
+
        const handleGoBack = () => {
               navigate(-1, { replace: true });
        };
+
+
        const handleSubmit = async (e) => {
-              e.preventdefault();
+              e.preventDefault();
 
               if (!roleName) {
                      auth.toastError('Please Enter Role Name.');
                      return;
               }
-              if (!premissionRole) {
-                     auth.toastError('Please Select Premission Role.');
+
+              if (!premissionRole || premissionRole.length === 0) {
+                     auth.toastError('Please Select Permission Role.');
                      return;
               }
-              setIsLoading(true)
+
+              setIsLoading(true);
+
               try {
-                     const formData = new formData();
+                     const formData = new FormData();
                      formData.append('name', roleName);
-                     formData.append('roles', premissionRole);
+
+                     // Append each permission role individually as roles[]
+                     premissionRole.forEach((role, index) => {
+                            formData.append(`roles[${index}]`, role);
+                     });
 
                      const response = await axios.post('https://bdev.elmanhag.shop/admin/adminRole/add', formData, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                                    'Content-Type': 'multipart/form-data',
+                                   'Cache-Control': 'no-cache',           // Disable cache
+                                   'Pragma': 'no-cache',                 // Disable cache
+                                   'Expires': '0',                       // Disable cache
                             },
                      });
 
                      if (response.status === 200) {
                             handleGoBack();
-                            // auth.toastSuccess(`${teacherName} added successfully!`);
                             auth.toastSuccess("Role added successfully!");
                      }
               } catch (error) {
@@ -124,7 +142,11 @@ const AddAdminRolesPage = () => {
               } finally {
                      setIsLoading(false);
               }
-       }
+       };
+
+
+
+
        return (
               <>
                      {isLoading ? <>
@@ -132,7 +154,7 @@ const AddAdminRolesPage = () => {
                                    <Loading />
                             </div>
                      </> :
-                            <form className="w-full flex flex-col items-center justify-center gap-y-3" onSubmit={handleSubmit}>
+                            <form className="w-full flex flex-col items-center justify-center gap-y-8 mt-4" onSubmit={handleSubmit}>
                                    <div className="w-full flex flex-wrap items-center justify-start gap-3">
                                           <div className="lg:w-[30%] sm:w-full">
                                                  <InputCustom
@@ -154,6 +176,20 @@ const AddAdminRolesPage = () => {
                                                  />
                                           </div>
                                    </div>
+                                   <div className="w-full flex flex-wrap items-center justify-start gap-4">
+                                          {premissionRole.map((premission, index) => {
+                                                 const displayIndex = index + 1; // Create a separate variable for the display index
+                                                 return (
+                                                        <div className="sm:w-full lg:w-5/12 xl:w-2/12 flex items-center justify-between shadow-md hover:shadow-none duration-300 py-3 px-4 rounded-xl" key={index}>
+                                                               <span className='text-mainColor text-xl font-semibold capitalize'>{displayIndex}. {premission}</span>
+
+                                                               <span className='hover:cursor-pointer' onClick={() => handleDelete(index)}>
+                                                                      <DeleteIcon />
+                                                               </span>
+                                                        </div>
+                                                 );
+                                          })}
+                                   </div>
                                    {/* Buttons */}
                                    <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
                                           <div className="flex items-center justify-center w-72">
@@ -168,7 +204,7 @@ const AddAdminRolesPage = () => {
                                                         rounded="rounded-2xl"
                                                  />
                                           </div>
-                                          <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
+                                          <button type='button' onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
                                    </div>
                             </form>
                      }
