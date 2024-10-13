@@ -107,6 +107,7 @@ export { default as SuggestionsHistoryPage } from "./Admin/Support/Suggestions/S
 // Admin Roles
 export { default as AdminRolesPage } from "./Admin/SettingPage/AdminRoles/AdminRolesPage";
 export { default as AddAdminRolesPage } from "./Admin/SettingPage/AdminRoles/AddAdminRolesPage";
+export { default as EditAdminRolesPage } from "./Admin/SettingPage/AdminRoles/EditAdminRolesPage";
 
 export { default as CountriesPage } from "./Admin/SettingPage/Countries/CountriesPage";
 export { default as AddCountryPage } from "./Admin/SettingPage/Countries/AddCountryPage";
