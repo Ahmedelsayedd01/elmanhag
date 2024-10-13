@@ -18,12 +18,15 @@ import {
        UserIcon,
 } from "./Icons/All_Icons";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../Context/Auth";
 
 
 const LinksSidebar = () => {
        const location = useLocation();
+       const auth = useAuth();
        const navigate = useNavigate();
        console.log('location', location)
+       const [Premission] = useState(auth.user.premissions)
        const savedState = JSON.parse(localStorage.getItem('sidebarState')) || {};
 
        // Define the initial state values using the saved state or fallback to default values
@@ -2568,120 +2571,368 @@ const LinksSidebar = () => {
        }, [location])
        return (
               <>
-                     <div className="LinksSidebar w-full h-full flex flex-col items-center justify-start">
-                            <Link to="/dashboard_admin" onClick={handleClickDashboard} className={`${isActiveDashboard ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
-                                   <DashboardIcon isActive={isActiveDashboard} />
-                                   <span className={`${isActiveDashboard ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Dashboard</span>
-                            </Link>
-                            <Link to="student" onClick={handleClickUser} className={`${isActiveUser ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
-                                   <UserIcon Width={25} Height={23} isActive={isActiveUser} />
-                                   <span className={`${isActiveUser ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>User</span>
-                            </Link>
-                            <div className={`${openListUser ? "h-36" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
-                                   <ul className={`${openListUser ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
-                                          <li className={`${isActiveStudent ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"student"} onClick={handleClickStudent}>Student</Link></li>
-                                          <li className={`${isActiveParent ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"parent"} onClick={handleClickParent}>Parent</Link></li>
-                                          <li className={`${isActiveTeacher ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"teacher"} onClick={handleClickTeacher}>Teacher</Link></li>
-                                          <li className={`${isActiveAdmin ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"admin"} onClick={handleClickAdmin}>Admin</Link></li>
-                                   </ul>
-                            </div>
-                            <Link to="categories" onClick={handleClickEducation} className={` ${isActiveEducation ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
-                                   <EducationIcon Width={25} Height={23} isActive={isActiveEducation} />
-                                   <span className={`${isActiveEducation ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Education</span>
-                            </Link>
-                            <div className={`${openListEducation ? "h-36" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
-                                   <ul className={`${openListEducation ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
-                                          <li className={`${isActiveCategories ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"categories"} onClick={handleClickCategories}>Categories</Link></li>
-                                          <li className={`${isActiveSubject ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"subject"} onClick={handleClickSubject}>Subject</Link></li>
-                                          <li className={`${isActiveBundles ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"bundles"} onClick={handleClickBundles}>Bundles</Link></li>
-                                          <li className={`${isActiveQuestionsBank ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"questionsbank"} onClick={handleClickQuestionsBank}>Questions Bank</Link></li>
-                                   </ul>
-                            </div>
-                            <Link to="homework" onClick={handleClickHomeWork} className={`${isActiveHomeWork ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
-                                   <HomeWorkIcon Width={25} Height={23} isActive={isActiveHomeWork} />
-                                   <span className={`${isActiveHomeWork ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>H.W</span>
-                            </Link>
-                            <Link to="revision" onClick={handleClickRevision} className={`${isActiveRevision ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
-                                   <RevisionIcon Width={25} Height={23} isActive={isActiveRevision} />
-                                   <span className={`${isActiveRevision ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Revision</span>
-                            </Link>
-                            <Link to="exams" onClick={handleClickExams} className={`${isActiveExams ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
-                                   <ExamsIcon Width={25} Height={23} isActive={isActiveExams} />
-                                   <span className={`${isActiveExams ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Exams</span>
-                            </Link>
-                            <Link to="live" onClick={handleClickLive} className={`${isActiveLive ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
-                                   <LiveIcon Width={25} Height={23} isActive={isActiveLive} />
-                                   <span className={`${isActiveLive ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Live</span>
-                            </Link>
-                            <Link to="discount" onClick={handleClickMarketing} className={`${isActiveMarketing ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
-                                   <MarketingIcon Width={25} Height={23} isActive={isActiveMarketing} />
-                                   <span className={`${isActiveMarketing ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Marketing</span>
-                            </Link>
-                            <div className={`${openListMarketing ? "h-36" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
-                                   <ul className={`${openListMarketing ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
-                                          <li className={`${isActiveDiscount ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"discount"} onClick={handleClickDiscount}>Discount</Link></li>
-                                          <li className={`${isActivePromoCode ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"promo_code"} onClick={handleClickPromoCode}>PromoCode</Link></li>
-                                          <li className={`${isActiveReview ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"review"} onClick={handleClickReviews}>Reviews</Link></li>
-                                          <li className={`${isActivePopUp ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"pop_up"} onClick={handleClickPopUp}>Pop Up</Link></li>
-                                   </ul>
-                            </div>
-                            <Link to="financial_pending_Payments" onClick={handleClickFinancial} className={`${isActiveFinancial ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
-                                   <FinancialIcon Width={25} Height={23} isActive={isActiveFinancial} />
-                                   <span className={`${isActiveFinancial ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Financial</span>
-                            </Link>
-                            <div className={`${openListFinancial ? "h-24" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
-                                   <ul className={`${openListFinancial ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
-                                          <li className={`${isActiveFinancialPendingPayments ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"financial_pending_Payments"} onClick={handleClickFinancialPendingPayments}>Pending Payments</Link></li>
-                                          <li className={`${isActiveFinancialPayments ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"financial_payments"} onClick={handleClickFinancialPayments}>Payments</Link></li>
-                                   </ul>
-                            </div>
-                            <Link to="affiliate_user" onClick={handleClickAffiliate} className={`${isActiveAffiliate ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
-                                   <AffiliateIcon Width={25} Height={23} isActive={isActiveAffiliate} />
-                                   <span className={`${isActiveAffiliate ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Affiliate</span>
-                            </Link>
-                            <div className={`${openListAffiliate ? "h-44" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
-                                   <ul className={`${openListAffiliate ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
-                                          <li className={`${isActiveAffiliateUser ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_user"} onClick={handleClickAffiliateUser}>User</Link></li>
-                                          <li className={`${isActiveAffiliatePaymentMethod ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_Payment_method"} onClick={handleClickAffiliatePaymentMethod}>Payment Method</Link></li>
-                                          <li className={`${isActiveAffiliateCommissions ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_commissions"} onClick={handleClickAffiliateCommissions}>Commissions</Link></li>
-                                          <li className={`${isActiveAffiliateBonus ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_bonus"} onClick={handleClickAffiliateBonus}>Bonus</Link></li>
-                                          <li className={`${isActiveAffiliatePayout ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_payout/pending"} onClick={handleClickAffiliatePayout}>Payout</Link></li>
-                                   </ul>
-                            </div>
-                            <Link to="support" onClick={handleClickSupport} className={`${isActiveSupport ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
-                                   <SupportIcon Width={25} Height={23} isActive={isActiveSupport} />
-                                   <span className={`${isActiveSupport ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Support</span>
-                            </Link>
-                            <div className={`${openListSupport ? "h-10" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
-                                   <ul className={`${openListSupport ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
-                                          <li className={`${isActiveComplaints ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"support/complaints"} onClick={handleClickComplaints}>Complaints</Link></li>
-                                          {/* <li className={`${isActiveSuggestions ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"support/suggestions"} onClick={handleClickSuggestions}>Suggestions</Link></li> */}
-                                   </ul>
-                            </div>
-                            <Link to="reports" onClick={handleClickReports} className={`${isActiveReports ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
-                                   <ReportsIcon Width={25} Height={23} isActive={isActiveReports} />
-                                   <span className={`${isActiveReports ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Reports</span>
-                            </Link>
-                            <Link to="adminRoles" onClick={handleClickSetting} className={`${isActiveSetting ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
-                                   <SettingsIcon Width={25} Height={23} isActive={isActiveSetting} />
-                                   <span className={`${isActiveSetting ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Setting</span>
-                            </Link>
-                            <div className={`${openListSetting ? "h-42" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
-                                   <ul className={`${openListSetting ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
-                                          <li className={`${isActiveAdminRoles ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"adminRoles"} onClick={handleClickAdminRoles}>Admin Roles</Link></li>
-                                          <li className={`${isActiveCountries ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"countries"} onClick={handleClickCountries}>Countries</Link></li>
-                                          <li className={`${isActiveCities ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"cities"} onClick={handleClickCities}>Cities</Link></li>
-                                          <li className={`${isActiveParentRelation ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"parentRelation"} onClick={handleClickParentRelatioen}>Parent Relation</Link></li>
-                                          <li className={`${isActiveOperations ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"operations"} onClick={handleClickOperations}>Operations</Link></li>
-                                          <li className={`${isActivePaymentMethod ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"paymentMethod"} onClick={handleClickPaymentMethod}>PaymentMethod</Link></li>
-                                   </ul>
-                            </div>
-                            <Link to="noticeboard" onClick={handleClickNoticeBoard} className={`${isActiveNoticeBoard ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
-                                   <NoticeBoardIcon Width={25} Height={23} isActive={isActiveNoticeBoard} />
-                                   <span className={`${isActiveNoticeBoard ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Notice Board</span>
-                            </Link>
+                     {auth.user.role !== 'supAdmin' ? (
+                            <div className="LinksSidebar w-full h-full flex flex-col items-center justify-start">
 
-                     </div>
+                                   <Link to="/dashboard_admin" onClick={handleClickDashboard} className={`${isActiveDashboard ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                          <DashboardIcon isActive={isActiveDashboard} />
+                                          <span className={`${isActiveDashboard ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Dashboard</span>
+                                   </Link>
+
+
+                                   <Link to="student" onClick={handleClickUser} className={`${isActiveUser ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                          <UserIcon Width={25} Height={23} isActive={isActiveUser} />
+                                          <span className={`${isActiveUser ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>User</span>
+                                   </Link>
+                                   <div className={`${openListUser ? "h-36" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                          <ul className={`${openListUser ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                                 <li className={`${isActiveStudent ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"student"} onClick={handleClickStudent}>Student</Link></li>
+
+
+                                                 <li className={`${isActiveParent ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"parent"} onClick={handleClickParent}>Parent</Link></li>
+
+                                                 <li className={`${isActiveTeacher ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"teacher"} onClick={handleClickTeacher}>Teacher</Link></li>
+
+                                                 <li className={`${isActiveAdmin ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"admin"} onClick={handleClickAdmin}>Admin</Link></li>
+
+                                          </ul>
+                                   </div>
+
+                                   <Link to="categories" onClick={handleClickEducation} className={` ${isActiveEducation ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                          <EducationIcon Width={25} Height={23} isActive={isActiveEducation} />
+                                          <span className={`${isActiveEducation ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Education</span>
+                                   </Link>
+                                   <div className={`${openListEducation ? "h-36" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                          <ul className={`${openListEducation ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                                 <li className={`${isActiveCategories ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"categories"} onClick={handleClickCategories}>Categories</Link></li>
+
+                                                 <li className={`${isActiveSubject ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"subject"} onClick={handleClickSubject}>Subject</Link></li>
+
+                                                 <li className={`${isActiveBundles ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"bundles"} onClick={handleClickBundles}>Bundles</Link></li>
+
+                                                 <li className={`${isActiveQuestionsBank ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"questionsbank"} onClick={handleClickQuestionsBank}>Questions Bank</Link></li>
+
+                                          </ul>
+                                   </div>
+
+                                   <Link to="homework" onClick={handleClickHomeWork} className={`${isActiveHomeWork ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                          <HomeWorkIcon Width={25} Height={23} isActive={isActiveHomeWork} />
+                                          <span className={`${isActiveHomeWork ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>H.W</span>
+                                   </Link>
+
+
+                                   <Link to="revision" onClick={handleClickRevision} className={`${isActiveRevision ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                          <RevisionIcon Width={25} Height={23} isActive={isActiveRevision} />
+                                          <span className={`${isActiveRevision ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Revision</span>
+                                   </Link>
+
+
+                                   <Link to="exams" onClick={handleClickExams} className={`${isActiveExams ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                          <ExamsIcon Width={25} Height={23} isActive={isActiveExams} />
+                                          <span className={`${isActiveExams ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Exams</span>
+                                   </Link>
+
+
+                                   <Link to="live" onClick={handleClickLive} className={`${isActiveLive ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                          <LiveIcon Width={25} Height={23} isActive={isActiveLive} />
+                                          <span className={`${isActiveLive ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Live</span>
+                                   </Link>
+
+
+                                   <Link to="discount" onClick={handleClickMarketing} className={`${isActiveMarketing ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                          <MarketingIcon Width={25} Height={23} isActive={isActiveMarketing} />
+                                          <span className={`${isActiveMarketing ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Marketing</span>
+                                   </Link>
+                                   <div className={`${openListMarketing ? "h-36" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                          <ul className={`${openListMarketing ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                                 <li className={`${isActiveDiscount ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"discount"} onClick={handleClickDiscount}>Discount</Link></li>
+
+                                                 <li className={`${isActivePromoCode ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"promo_code"} onClick={handleClickPromoCode}>PromoCode</Link></li>
+
+                                                 <li className={`${isActiveReview ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"review"} onClick={handleClickReviews}>Reviews</Link></li>
+
+                                                 <li className={`${isActivePopUp ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"pop_up"} onClick={handleClickPopUp}>Pop Up</Link></li>
+
+                                          </ul>
+                                   </div>
+
+                                   <>
+                                          <Link to="financial_pending_Payments" onClick={handleClickFinancial} className={`${isActiveFinancial ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                                 <FinancialIcon Width={25} Height={23} isActive={isActiveFinancial} />
+                                                 <span className={`${isActiveFinancial ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Financial</span>
+                                          </Link>
+                                          <div className={`${openListFinancial ? "h-24" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                                 <ul className={`${openListFinancial ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                                        <li className={`${isActiveFinancialPendingPayments ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"financial_pending_Payments"} onClick={handleClickFinancialPendingPayments}>Pending Payments</Link></li>
+                                                        <li className={`${isActiveFinancialPayments ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"financial_payments"} onClick={handleClickFinancialPayments}>Payments</Link></li>
+                                                 </ul>
+                                          </div>
+                                   </>
+
+
+                                   <>
+                                          <Link to="affiliate_user" onClick={handleClickAffiliate} className={`${isActiveAffiliate ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                                 <AffiliateIcon Width={25} Height={23} isActive={isActiveAffiliate} />
+                                                 <span className={`${isActiveAffiliate ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Affiliate</span>
+                                          </Link>
+                                          <div className={`${openListAffiliate ? "h-44" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                                 <ul className={`${openListAffiliate ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                                        <li className={`${isActiveAffiliateUser ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_user"} onClick={handleClickAffiliateUser}>User</Link></li>
+                                                        <li className={`${isActiveAffiliatePaymentMethod ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_Payment_method"} onClick={handleClickAffiliatePaymentMethod}>Payment Method</Link></li>
+                                                        <li className={`${isActiveAffiliateCommissions ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_commissions"} onClick={handleClickAffiliateCommissions}>Commissions</Link></li>
+                                                        <li className={`${isActiveAffiliateBonus ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_bonus"} onClick={handleClickAffiliateBonus}>Bonus</Link></li>
+                                                        <li className={`${isActiveAffiliatePayout ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_payout/pending"} onClick={handleClickAffiliatePayout}>Payout</Link></li>
+                                                 </ul>
+                                          </div>
+                                   </>
+
+
+                                   <Link to="support" onClick={handleClickSupport} className={`${isActiveSupport ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                          <SupportIcon Width={25} Height={23} isActive={isActiveSupport} />
+                                          <span className={`${isActiveSupport ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Support</span>
+                                   </Link>
+                                   <div className={`${openListSupport ? "h-10" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                          <ul className={`${openListSupport ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                                 <li className={`${isActiveComplaints ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"support/complaints"} onClick={handleClickComplaints}>Complaints</Link></li>
+
+                                                 {/* <li className={`${isActiveSuggestions ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"support/suggestions"} onClick={handleClickSuggestions}>Suggestions</Link></li> */}
+                                          </ul>
+                                   </div>
+
+                                   <Link to="reports" onClick={handleClickReports} className={`${isActiveReports ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                          <ReportsIcon Width={25} Height={23} isActive={isActiveReports} />
+                                          <span className={`${isActiveReports ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Reports</span>
+                                   </Link>
+
+
+                                   <>
+                                          <Link to="adminRoles" onClick={handleClickSetting} className={`${isActiveSetting ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                                 <SettingsIcon Width={25} Height={23} isActive={isActiveSetting} />
+                                                 <span className={`${isActiveSetting ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Setting</span>
+                                          </Link>
+                                          <div className={`${openListSetting ? "h-42" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                                 <ul className={`${openListSetting ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                                        <li className={`${isActiveAdminRoles ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"adminRoles"} onClick={handleClickAdminRoles}>Admin Roles</Link></li>
+                                                        <li className={`${isActiveCountries ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"countries"} onClick={handleClickCountries}>Countries</Link></li>
+                                                        <li className={`${isActiveCities ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"cities"} onClick={handleClickCities}>Cities</Link></li>
+                                                        <li className={`${isActiveParentRelation ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"parentRelation"} onClick={handleClickParentRelatioen}>Parent Relation</Link></li>
+                                                        <li className={`${isActiveOperations ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"operations"} onClick={handleClickOperations}>Operations</Link></li>
+                                                        <li className={`${isActivePaymentMethod ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"paymentMethod"} onClick={handleClickPaymentMethod}>PaymentMethod</Link></li>
+                                                 </ul>
+                                          </div>
+                                   </>
+
+                                   <>
+
+                                          <Link to="noticeboard" onClick={handleClickNoticeBoard} className={`${isActiveNoticeBoard ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                                 <NoticeBoardIcon Width={25} Height={23} isActive={isActiveNoticeBoard} />
+                                                 <span className={`${isActiveNoticeBoard ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Notice Board</span>
+                                          </Link>
+                                   </>
+
+
+                            </div>
+                     ) : (
+                            <div className="LinksSidebar w-full h-full flex flex-col items-center justify-start">
+
+                                   <Link to="/dashboard_admin" onClick={handleClickDashboard} className={`${isActiveDashboard ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                          <DashboardIcon isActive={isActiveDashboard} />
+                                          <span className={`${isActiveDashboard ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Dashboard</span>
+                                   </Link>
+
+
+                                   {(Premission.includes("students") || Premission.includes("parent") || Premission.includes("teachers") || Premission.includes("admins")) && (
+                                          <>
+                                                 <Link to="student" onClick={handleClickUser} className={`${isActiveUser ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                                        <UserIcon Width={25} Height={23} isActive={isActiveUser} />
+                                                        <span className={`${isActiveUser ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>User</span>
+                                                 </Link>
+                                                 <div className={`${openListUser ? "" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                                        <ul className={`${openListUser ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                                               {Premission.includes("students") && (
+                                                                      <li className={`${isActiveStudent ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"student"} onClick={handleClickStudent}>Student</Link></li>
+
+                                                               )}
+                                                               {Premission.includes("parent") && (
+                                                                      <li className={`${isActiveParent ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"parent"} onClick={handleClickParent}>Parent</Link></li>
+                                                               )}
+                                                               {Premission.includes("teachers") && (
+                                                                      <li className={`${isActiveTeacher ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"teacher"} onClick={handleClickTeacher}>Teacher</Link></li>
+                                                               )}
+                                                               {Premission.includes("admins") && (
+                                                                      <li className={`${isActiveAdmin ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"admin"} onClick={handleClickAdmin}>Admin</Link></li>
+                                                               )}
+                                                        </ul>
+                                                 </div>
+                                          </>
+                                   )}
+                                   {(Premission.includes("categories") || Premission.includes("subjects") || Premission.includes("bundles") || Premission.includes("questions")) && (
+                                          <>
+
+                                                 <Link to="categories" onClick={handleClickEducation} className={` ${isActiveEducation ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                                        <EducationIcon Width={25} Height={23} isActive={isActiveEducation} />
+                                                        <span className={`${isActiveEducation ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Education</span>
+                                                 </Link>
+                                                 <div className={`${openListEducation ? "" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                                        <ul className={`${openListEducation ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                                               {Premission.includes("categories") && (
+                                                                      <li className={`${isActiveCategories ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"categories"} onClick={handleClickCategories}>Categories</Link></li>
+                                                               )}
+                                                               {Premission.includes("subjects") && (
+                                                                      <li className={`${isActiveSubject ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"subject"} onClick={handleClickSubject}>Subject</Link></li>
+                                                               )}
+                                                               {Premission.includes("bundles") && (
+                                                                      <li className={`${isActiveBundles ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"bundles"} onClick={handleClickBundles}>Bundles</Link></li>
+                                                               )}
+                                                               {Premission.includes("questions") && (
+                                                                      <li className={`${isActiveQuestionsBank ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"questionsbank"} onClick={handleClickQuestionsBank}>Questions Bank</Link></li>
+                                                               )}
+                                                        </ul>
+                                                 </div>
+
+                                          </>
+                                   )}
+                                   {Premission.includes("hw") && (
+                                          <Link to="homework" onClick={handleClickHomeWork} className={`${isActiveHomeWork ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                                 <HomeWorkIcon Width={25} Height={23} isActive={isActiveHomeWork} />
+                                                 <span className={`${isActiveHomeWork ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>H.W</span>
+                                          </Link>
+                                   )}
+
+                                   {Premission.includes("revisions") && (
+                                          <Link to="revision" onClick={handleClickRevision} className={`${isActiveRevision ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                                 <RevisionIcon Width={25} Height={23} isActive={isActiveRevision} />
+                                                 <span className={`${isActiveRevision ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Revision</span>
+                                          </Link>
+                                   )}
+
+                                   {Premission.includes("exams") && (
+                                          <Link to="exams" onClick={handleClickExams} className={`${isActiveExams ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                                 <ExamsIcon Width={25} Height={23} isActive={isActiveExams} />
+                                                 <span className={`${isActiveExams ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Exams</span>
+                                          </Link>
+                                   )}
+
+                                   {Premission.includes("live") && (
+                                          <Link to="live" onClick={handleClickLive} className={`${isActiveLive ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                                 <LiveIcon Width={25} Height={23} isActive={isActiveLive} />
+                                                 <span className={`${isActiveLive ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Live</span>
+                                          </Link>
+                                   )}
+
+                                   {(Premission.includes("discounts") || Premission.includes("promocode") || Premission.includes("reviews") || Premission.includes("pop up")) && (
+                                          <>
+
+                                                 <Link to="discount" onClick={handleClickMarketing} className={`${isActiveMarketing ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                                        <MarketingIcon Width={25} Height={23} isActive={isActiveMarketing} />
+                                                        <span className={`${isActiveMarketing ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Marketing</span>
+                                                 </Link>
+                                                 <div className={`${openListMarketing ? "" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                                        <ul className={`${openListMarketing ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                                               {Premission.includes("discounts") && (
+                                                                      <li className={`${isActiveDiscount ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"discount"} onClick={handleClickDiscount}>Discount</Link></li>
+                                                               )}
+                                                               {Premission.includes("promocode") && (
+                                                                      <li className={`${isActivePromoCode ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"promo_code"} onClick={handleClickPromoCode}>PromoCode</Link></li>
+                                                               )}
+                                                               {Premission.includes("reviews") && (
+                                                                      <li className={`${isActiveReview ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"review"} onClick={handleClickReviews}>Reviews</Link></li>
+                                                               )}
+                                                               {Premission.includes("pop up") && (
+                                                                      <li className={`${isActivePopUp ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"pop_up"} onClick={handleClickPopUp}>Pop Up</Link></li>
+                                                               )}
+                                                        </ul>
+                                                 </div>
+                                          </>
+                                   )}
+
+                                   {Premission.includes("payments") && (
+                                          <>
+                                                 <Link to="financial_pending_Payments" onClick={handleClickFinancial} className={`${isActiveFinancial ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                                        <FinancialIcon Width={25} Height={23} isActive={isActiveFinancial} />
+                                                        <span className={`${isActiveFinancial ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Financial</span>
+                                                 </Link>
+                                                 <div className={`${openListFinancial ? "h-24" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                                        <ul className={`${openListFinancial ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                                               <li className={`${isActiveFinancialPendingPayments ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"financial_pending_Payments"} onClick={handleClickFinancialPendingPayments}>Pending Payments</Link></li>
+                                                               <li className={`${isActiveFinancialPayments ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"financial_payments"} onClick={handleClickFinancialPayments}>Payments</Link></li>
+                                                        </ul>
+                                                 </div>
+                                          </>
+                                   )}
+
+                                   {Premission.includes("affilate") && (
+                                          <>
+                                                 <Link to="affiliate_user" onClick={handleClickAffiliate} className={`${isActiveAffiliate ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                                        <AffiliateIcon Width={25} Height={23} isActive={isActiveAffiliate} />
+                                                        <span className={`${isActiveAffiliate ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Affiliate</span>
+                                                 </Link>
+                                                 <div className={`${openListAffiliate ? "" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                                        <ul className={`${openListAffiliate ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                                               <li className={`${isActiveAffiliateUser ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_user"} onClick={handleClickAffiliateUser}>User</Link></li>
+                                                               <li className={`${isActiveAffiliatePaymentMethod ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_Payment_method"} onClick={handleClickAffiliatePaymentMethod}>Payment Method</Link></li>
+                                                               <li className={`${isActiveAffiliateCommissions ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_commissions"} onClick={handleClickAffiliateCommissions}>Commissions</Link></li>
+                                                               <li className={`${isActiveAffiliateBonus ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_bonus"} onClick={handleClickAffiliateBonus}>Bonus</Link></li>
+                                                               <li className={`${isActiveAffiliatePayout ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"affiliate_payout/pending"} onClick={handleClickAffiliatePayout}>Payout</Link></li>
+                                                        </ul>
+                                                 </div>
+                                          </>
+                                   )}
+
+                                   {(Premission.includes("complaint")) && (
+                                          <>
+                                                 <Link to="support" onClick={handleClickSupport} className={`${isActiveSupport ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                                        <SupportIcon Width={25} Height={23} isActive={isActiveSupport} />
+                                                        <span className={`${isActiveSupport ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Support</span>
+                                                 </Link>
+                                                 <div className={`${openListSupport ? "" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                                        <ul className={`${openListSupport ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                                               {Premission.includes("complaint") && (
+                                                                      <li className={`${isActiveComplaints ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"support/complaints"} onClick={handleClickComplaints}>Complaints</Link></li>
+                                                               )}
+                                                               {/* <li className={`${isActiveSuggestions ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"support/suggestions"} onClick={handleClickSuggestions}>Suggestions</Link></li> */}
+                                                        </ul>
+                                                 </div>
+                                          </>
+                                   )}
+
+                                   {Premission.includes("reports") && (
+                                          <Link to="reports" onClick={handleClickReports} className={`${isActiveReports ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                                 <ReportsIcon Width={25} Height={23} isActive={isActiveReports} />
+                                                 <span className={`${isActiveReports ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Reports</span>
+                                          </Link>
+                                   )}
+
+                                   {Premission.includes("settings") && (
+                                          <>
+                                                 <Link to="adminRoles" onClick={handleClickSetting} className={`${isActiveSetting ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                                        <SettingsIcon Width={25} Height={23} isActive={isActiveSetting} />
+                                                        <span className={`${isActiveSetting ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Setting</span>
+                                                 </Link>
+                                                 <div className={`${openListSetting ? "" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                                        <ul className={`${openListSetting ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                                               <li className={`${isActiveAdminRoles ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"adminRoles"} onClick={handleClickAdminRoles}>Admin Roles</Link></li>
+                                                               <li className={`${isActiveCountries ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"countries"} onClick={handleClickCountries}>Countries</Link></li>
+                                                               <li className={`${isActiveCities ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"cities"} onClick={handleClickCities}>Cities</Link></li>
+                                                               <li className={`${isActiveParentRelation ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"parentRelation"} onClick={handleClickParentRelatioen}>Parent Relation</Link></li>
+                                                               <li className={`${isActiveOperations ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"operations"} onClick={handleClickOperations}>Operations</Link></li>
+                                                               <li className={`${isActivePaymentMethod ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"paymentMethod"} onClick={handleClickPaymentMethod}>PaymentMethod</Link></li>
+                                                        </ul>
+                                                 </div>
+                                          </>
+                                   )}
+                                   {Premission.includes("notice board") && (
+                                          <>
+
+                                                 <Link to="noticeboard" onClick={handleClickNoticeBoard} className={`${isActiveNoticeBoard ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                                        <NoticeBoardIcon Width={25} Height={23} isActive={isActiveNoticeBoard} />
+                                                        <span className={`${isActiveNoticeBoard ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Notice Board</span>
+                                                 </Link>
+                                          </>
+                                   )}
+
+                            </div>
+                     )}
               </>
        );
 }
