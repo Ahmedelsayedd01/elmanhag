@@ -14,7 +14,9 @@ export { default as TeacherUserLayout } from "./Admin/TeacherUserLayout";
 export { default as AddTeacherUserLayout } from "./Admin/AddTeacherUserLayout";
 export { default as EditTeacherUserLayout } from "./Admin/EditTeacherUserLayout";
 // Admin User
-export { default as AdminUser } from "./Admin/AdminUser";
+export { default as AdminUserLayout } from "./Admin/AdminUserLayout";
+export { default as AddAdminUserLayout } from "./Admin/AddAdminUserLayout";
+export { default as EditAdminUserLayout } from "./Admin/EditAdminUserLayout";
 /* ////USer */
 /* Education */
 export { default as CategoriesEducationLayout } from "./Admin/CategoriesEducationLayout";
