@@ -14,6 +14,11 @@ export { default as LoginHistoryPage } from "./Admin/User/StudentPage/LoginHisto
 export { default as TeachersPage } from "./Admin/User/TeacherPage/TeachersPage";
 export { default as AddTeacherPage } from "./Admin/User/TeacherPage/AddTeacherPage";
 export { default as EditTeacherPage } from "./Admin/User/TeacherPage/EditTeacherPage";
+/* User -> Admin Page */
+export { default as AdminsPage } from "./Admin/User/AdminPage/AdminsPage";
+export { default as AddAdminPage } from "./Admin/User/AdminPage/AddAdminPage";
+export { default as EditAdminPage } from "./Admin/User/AdminPage/EditAdminPage";
+
 /* Education Page */
 export { default as CategoriesPage } from "./Admin/EducationPage/Category/CategoriesPage";
 export { default as AddCategoryPage } from "./Admin/EducationPage/Category/AddCategoryPage";
