@@ -186,6 +186,7 @@ const AllPlansPage = () => {
       });
 
       if (response.status === 200) {
+        console.log(response.data)
         setPlans(response.data);
         const allSubjects = response.data.subjects || [];
 
