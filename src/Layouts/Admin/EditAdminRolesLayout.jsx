@@ -1,19 +1,19 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import HeaderPageSection from '../../Components/HeaderPageSection'
-import { AddAdminRolesPage } from '../../Pages/AllPages'
+import { EditAdminRolesPage } from '../../Pages/AllPages'
 
-const AddAdminRolesLayout = () => {
+const EditAdminRolesLayout = () => {
        const navigate = useNavigate()
        const handleGoBack = () => {
               navigate(-1, { replace: true })
        }
        return (
               <>
-                     <HeaderPageSection handleClick={handleGoBack} name={'Add Role'} />
-                     <AddAdminRolesPage />
+                     <HeaderPageSection handleClick={handleGoBack} name={'Edit Role'} />
+                     <EditAdminRolesPage />
               </>
        )
 }
 
-export default AddAdminRolesLayout
+export default EditAdminRolesLayout

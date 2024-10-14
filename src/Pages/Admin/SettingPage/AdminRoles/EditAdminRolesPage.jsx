@@ -1,19 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react'
-import InputCustom from '../../../../Components/InputCustom'
-import DropDownMenu from '../../../../Components/DropDownMenu'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../../../Context/Auth';
-import Loading from '../../../../Components/Loading';
 import axios from 'axios';
+import InputCustom from '../../../../Components/InputCustom';
+import DropDownMenu from '../../../../Components/DropDownMenu';
 import { Button } from '../../../../Components/Button';
+import Loading from '../../../../Components/Loading';
 import DeleteIcon from '../../../../Components/Icons/AdminIcons/DeleteIcon';
 
-const AddAdminRolesPage = () => {
-       const premissionRoleRef = useRef();
-
+const EditAdminRolesPage = () => {
+       const { roleId } = useParams()
        const auth = useAuth();
        const navigate = useNavigate();
-       const [isLoading, setIsLoading] = useState(false);
+
+       const premissionRoleRef = useRef();
 
        const [roleName, setRoleName] = useState('');
 
@@ -22,6 +22,8 @@ const AddAdminRolesPage = () => {
        const [premissionRole, setPremissionRole] = useState([]);
 
        const [openPremissionRole, setOpenPremissionRole] = useState(false);
+
+       const [isLoading, setIsLoading] = useState(false);
 
        useEffect(() => {
               const fetchPremissionRole = async () => {
@@ -49,6 +51,42 @@ const AddAdminRolesPage = () => {
               fetchPremissionRole(); // Fetch lives initially and whenever livesChanged changes
        }, []);
 
+       useEffect(() => {
+              const fetchEdit = async () => {
+                     setIsLoading(true);
+                     try {
+                            const response = await axios.get(`https://bdev.elmanhag.shop/admin/adminRole/role/${roleId}`, {
+                                   headers: {
+                                          Authorization: `Bearer ${auth.user.token}`,
+                                   },
+                            });
+
+                            if (response.status === 200) {
+                                   // console.log('response premission', response);
+
+                                   const data = response.data.admin_position;
+                                   console.log('data premission', data);
+                                   // data.map((role, index) => (
+
+                                   // ))
+                                   setRoleName(data?.name || '-')
+                                   setPremissionRole(data?.roles.map((role) => (role.role)) || '-')
+
+
+                            } else {
+                                   console.log('response Role error');
+                            }
+                     } catch (error) {
+                            console.log('error', error);
+                     } finally {
+                            setIsLoading(false);
+                     }
+              };
+              fetchEdit();
+       }, []);
+
+
+
        const handleOpenPremissionRole = () => {
               setOpenPremissionRole(!openPremissionRole)
        };
@@ -72,12 +110,12 @@ const AddAdminRolesPage = () => {
        };
 
        useEffect(() => {
-              console.log('premissionRole', premissionRole)
+              // console.log('premissionRole', premissionRole)
               document.addEventListener('mousedown', handleClickOutside);
               return () => {
                      document.removeEventListener('mousedown', handleClickOutside);
               };
-       }, [premissionRole]);
+       }, []);
 
        const handleClickOutside = (event) => {
 
@@ -123,7 +161,7 @@ const AddAdminRolesPage = () => {
                             formData.append(`roles[${index}]`, role);
                      });
 
-                     const response = await axios.post('https://bdev.elmanhag.shop/admin/adminRole/add', formData, {
+                     const response = await axios.post(`https://bdev.elmanhag.shop/admin/adminRole/update/${roleId}`, formData, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                                    'Content-Type': 'multipart/form-data',
@@ -143,10 +181,6 @@ const AddAdminRolesPage = () => {
                      setIsLoading(false);
               }
        };
-
-
-
-
        return (
               <>
                      {isLoading ? <>
@@ -177,18 +211,26 @@ const AddAdminRolesPage = () => {
                                           </div>
                                    </div>
                                    <div className="w-full flex flex-wrap items-center justify-start gap-4">
-                                          {premissionRole.map((premission, index) => {
-                                                 const displayIndex = index + 1; // Create a separate variable for the display index
-                                                 return (
-                                                        <div className="sm:w-full lg:w-5/12 xl:w-2/12 flex items-center justify-between shadow-md hover:shadow-none duration-300 py-3 px-4 rounded-xl" key={index}>
-                                                               <span className='text-mainColor text-xl font-semibold capitalize'>{displayIndex}. {premission}</span>
-
-                                                               <span className='hover:cursor-pointer' onClick={() => handleDelete(index)}>
-                                                                      <DeleteIcon />
-                                                               </span>
+                                          {premissionRole.length === 0 ? (
+                                                 <>
+                                                        <div className="w-full text-center text-lg font-semibold text-mainColor my-4">
+                                                               No permissions available for this role.
                                                         </div>
-                                                 );
-                                          })}
+                                                 </>
+                                          ) : (
+                                                 premissionRole.map((premission, index) => {
+                                                        const displayIndex = index + 1; // Create a separate variable for the display index
+                                                        return (
+                                                               <div className="sm:w-full lg:w-5/12 xl:w-2/12 flex items-center justify-between shadow-md hover:shadow-none duration-300 py-3 px-4 rounded-xl" key={index}>
+                                                                      <span className='text-mainColor text-xl font-semibold capitalize'>{displayIndex}. {premission.role || premission}</span>
+
+                                                                      <span className='hover:cursor-pointer' onClick={() => handleDelete(index)}>
+                                                                             <DeleteIcon />
+                                                                      </span>
+                                                               </div>
+                                                        );
+                                                 })
+                                          )}
                                    </div>
                                    {/* Buttons */}
                                    <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
@@ -212,4 +254,4 @@ const AddAdminRolesPage = () => {
        )
 }
 
-export default AddAdminRolesPage
+export default EditAdminRolesPage

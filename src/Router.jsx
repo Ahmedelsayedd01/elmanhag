@@ -89,7 +89,9 @@ import {
   AffilateStudentLayout,
   ReportsAD,
   ComplaintsLayout,
-  SuggestionsLayout
+  SuggestionsLayout,
+  EditAdminRolesLayout,
+  AddAdminRolesLayout
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -164,7 +166,6 @@ import QuestionLayout from "./Layouts/Admin/QuestionLayout";
 import Complaint from "./Pages/Student/Complaint/ComplaintPage";
 import EditProfileStudentLayout from "./Layouts/Student/EditProfileStudentLayout";
 import LiveHistoryPage from "./Pages/Admin/LivePage/History/LiveHistoryPage";
-import AddAdminRolesLayout from "./Layouts/Admin/AddAdminRolesLayout";
 
 export const ContextNumper = createContext()
 const AppLayoutAuthentication = () => (
@@ -965,6 +966,10 @@ export const router = createBrowserRouter([
               {
                 path: 'add',
                 element: <AddAdminRolesLayout />,
+              },
+              {
+                path: 'edit/:roleId',
+                element: <EditAdminRolesLayout />,
               }
             ]
           },
