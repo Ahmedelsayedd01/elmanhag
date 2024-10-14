@@ -2571,7 +2571,7 @@ const LinksSidebar = () => {
        }, [location])
        return (
               <>
-                     {auth.user.role !== 'supAdmin' ? (
+                     {auth.user.role === 'supAdmin' ? (
                             <div className="LinksSidebar w-full h-full flex flex-col items-center justify-start">
 
                                    <Link to="/dashboard_admin" onClick={handleClickDashboard} className={`${isActiveDashboard ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
