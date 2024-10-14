@@ -91,7 +91,10 @@ import {
   ComplaintsLayout,
   SuggestionsLayout,
   EditAdminRolesLayout,
-  AddAdminRolesLayout
+  AddAdminRolesLayout,
+  AdminUserLayout,
+  AddAdminUserLayout,
+  EditAdminUserLayout
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -153,7 +156,7 @@ import Navbar from "./Components/Navbar";
 import StudentUser from "./Layouts/Admin/StudentUser";
 import TeacherUserLayout from "./Layouts/Admin/TeacherUserLayout";
 import ParentUser from "./Layouts/Admin/ParentUser";
-import AdminUser from "./Layouts/Admin/AdminUser";
+import AdminUser from "./Layouts/Admin/AdminUserLayout";
 import LayoutAdmin from "./Layouts/Admin/LayoutAdmin";
 import EditProfilePage from "./Layouts/Admin/EditeProfileStudent";
 import EditCategoryLayout from "./Layouts/Admin/EditCategoryLayout";
@@ -225,6 +228,12 @@ const AppLayoutTeacherAdd = () => (
 const AppLayoutTeacherEdit = () => (
   <>
     <EditTeacherUserLayout />
+  </>
+);
+// Admin User
+const AppLayoutAdminUser = () => (
+  <>
+    <Outlet />
   </>
 );
 
@@ -573,7 +582,21 @@ export const router = createBrowserRouter([
           },
           {
             path: 'admin',
-            element: <AdminUser />,
+            element: <AppLayoutAdminUser />,
+            children: [
+              {
+                path: '',
+                element: <AdminUserLayout />,
+              },
+              {
+                path: 'add',
+                element: <AddAdminUserLayout />,
+              },
+              {
+                path: 'edit/:adminId',
+                element: <EditAdminUserLayout />,
+              },
+            ],
           },
           {
             path: 'categories',
