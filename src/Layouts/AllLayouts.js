@@ -1,7 +1,7 @@
-/* Super Admin Layout */
-/* Admin Layout */
+/* Admin && SupAdmin Dashboard  Layout */
 export { default as LayoutAdmin } from "./Admin/LayoutAdmin";
 export { default as DashboardAD } from "./Admin/DashboardAD";
+
 /* User */
 // Student
 export { default as StudentUser } from "./Admin/StudentUser";
@@ -17,7 +17,7 @@ export { default as EditTeacherUserLayout } from "./Admin/EditTeacherUserLayout"
 export { default as AdminUserLayout } from "./Admin/AdminUserLayout";
 export { default as AddAdminUserLayout } from "./Admin/AddAdminUserLayout";
 export { default as EditAdminUserLayout } from "./Admin/EditAdminUserLayout";
-/* ////USer */
+
 /* Education */
 export { default as CategoriesEducationLayout } from "./Admin/CategoriesEducationLayout";
 export { default as AddCategoryLayout } from "./Admin/AddCategoryLayout";
@@ -80,7 +80,7 @@ export { default as EditPopUpLayout } from "./Admin/EditPopUpLayout";
 export { default as FinancialPendingPaymentsLayout } from "./Admin/FinancialPendingPaymentsLayout";
 // Payments  Layout
 export { default as FinancialPaymentsLayout } from "./Admin/FinancialPaymentsLayout";
-/* ///Financial Layout */
+
 /* Affiliate Layouts */
 // Users
 export { default as AffiliateUserLayout } from "./Admin/AffiliateUserLayout";
@@ -112,32 +112,43 @@ export { default as ReportsAD } from "./Admin/ReportsAD";
 export { default as AdminRolesLayout } from "./Admin/AdminRolesLayout";
 export { default as AddAdminRolesLayout } from "./Admin/AddAdminRolesLayout";
 export { default as EditAdminRolesLayout } from "./Admin/EditAdminRolesLayout";
-
+// Countries
 export { default as CountriesLayout } from "./Admin/CountriesLayout";
 export { default as AddCountryLayout } from "./Admin/AddCountryLayout";
 export { default as EditCountryLayout } from "./Admin/EditCountryLayout";
-
+// Cities
 export { default as CitiesLayout } from "./Admin/CitiesLayout";
 export { default as AddCityLayout } from "./Admin/AddCityLayout";
 export { default as EditCityLayout } from "./Admin/EditCityLayout";
-
+// Parent Relation
 export { default as ParentRelationLayout } from "./Admin/ParentRelationLayout";
 export { default as AddParentRelationLayout } from "./Admin/AddParentRelationLayout";
 export { default as EditParentRelationLayout } from "./Admin/EditParentRelationLayout";
-
+// Operations
 export { default as OperationsLayout } from "./Admin/OperationsLayout";
-
+// Payment Method
 export { default as PaymentMethodLayout } from "./Admin/PaymentMethodLayout";
 export { default as AddPaymentMethodLayout } from "./Admin/AddPaymentMethodLayout";
 export { default as EditPaymentMethodLayout } from "./Admin/EditPaymentMethodLayout";
-/* ////Setting */
+
+// Question Issues
+export { default as QuestionIssuesLayout } from "./Admin/QuestionIssuesLayout";
+export { default as AddQuestionIssuesLayout } from "./Admin/AddQuestionIssuesLayout";
+export { default as EditQuestionIssuesLayout } from "./Admin/EditQuestionIssuesLayout";
+
+// Video Issues
+export { default as VideoIssuesLayout } from "./Admin/VideoIssuesLayout";
+export { default as AddVideoIssuesLayout } from "./Admin/AddVideoIssuesLayout";
+export { default as EditVideoIssuesLayout } from "./Admin/EditVideoIssuesLayout";
+
+/* Notice Board */
 export { default as NoticeBoardAD } from "./Admin/NoticeBoardAD";
 
 /* Teachers Layout */
 /* Parent Layout */
 /* Affiliate Layout */
 
-/* Student Layout */
+/* Student Dashboard Layout */
 export { default as LayoutStudent } from "./Student/LayoutStudent";
 export { default as HomeLayout } from "./Student/HomeLayout";
 export { default as Curricula } from "./Student/Curricula";
