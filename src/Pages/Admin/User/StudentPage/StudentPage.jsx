@@ -458,7 +458,7 @@ const StudentPage = () => {
 
                             <div className="w-full flex flex-col items-center justify-between mt-4 overflow-x-auto">
                                    {/* Table */}
-                                   <table className="w-full min-w-full table-auto border-collapse bg-white shadow-md rounded-lg">
+                                   <table className="w-full min-w-full table-auto border-collapse bg-white shadow-sm rounded-lg">
                                           <thead className="bg-gray-100">
                                                  <tr className="border-b">
                                                         {/* Table Headers */}
@@ -512,16 +512,24 @@ const StudentPage = () => {
                                    )}
 
                                    {/* Pagination Tabs */}
-                                   <div className="mt-4">
+                                   <div className="my-6 flex items-center justify-center gap-x-4">
+                                          {currentPage !== 1 && (
+
+                                                 <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-secoundColor font-medium' onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
+                                          )}
                                           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                                                  <button
                                                         key={page}
                                                         onClick={() => handlePageChange(page)}
-                                                        className={`px-4 py-2 mx-1 ${currentPage === page ? 'bg-mainColor text-white' : 'bg-gray-200 text-mainColor'}`}
+                                                        className={`px-4 py-2 mx-1 text-lg font-semibold rounded-full duration-300 ${currentPage === page ? 'bg-mainColor text-white' : ' text-mainColor'}`}
                                                  >
                                                         {page}
                                                  </button>
                                           ))}
+                                          {totalPages !== currentPage && (
+
+                                                 <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-secoundColor font-medium' onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+                                          )}
                                    </div>
                             </div>
                      </div>
