@@ -114,21 +114,38 @@ export { default as AdminRolesPage } from "./Admin/SettingPage/AdminRoles/AdminR
 export { default as AddAdminRolesPage } from "./Admin/SettingPage/AdminRoles/AddAdminRolesPage";
 export { default as EditAdminRolesPage } from "./Admin/SettingPage/AdminRoles/EditAdminRolesPage";
 
+// Countries Page
 export { default as CountriesPage } from "./Admin/SettingPage/Countries/CountriesPage";
 export { default as AddCountryPage } from "./Admin/SettingPage/Countries/AddCountryPage";
 export { default as EditCountryPage } from "./Admin/SettingPage/Countries/EditCountryPage";
+
+// Cities Page
 export { default as CitiesPage } from "./Admin/SettingPage/Cities/CitiesPage";
 export { default as AddCityPage } from "./Admin/SettingPage/Cities/AddCityPage";
 export { default as EditCityPage } from "./Admin/SettingPage/Cities/EditCityPage";
+
+// Parent Relation Page
 export { default as ParentRelationPage } from "./Admin/SettingPage/ParentRelations/ParentRelationPage";
 export { default as AddParentRelationPage } from "./Admin/SettingPage/ParentRelations/AddParentRelationPage";
 export { default as EditParentRelationPage } from "./Admin/SettingPage/ParentRelations/EditParentRelationPage";
 
+// Operations Page
+export { default as OperationsPage } from "./Admin/SettingPage/Operations/OperationsPage";
+
+// Payment Method Page
 export { default as PaymentMethodPage } from "./Admin/SettingPage/PaymentMethod/PaymentMethodPage";
 export { default as AddPaymentMethodPage } from "./Admin/SettingPage/PaymentMethod/AddPaymentMethodPage";
 export { default as EditPaymentMethodPage } from "./Admin/SettingPage/PaymentMethod/EditPaymentMethodPage";
 
-export { default as OperationsPage } from "./Admin/SettingPage/Operations/OperationsPage";
+// Question Issues Page
+export { default as QuestionIssuesPage } from "./Admin/SettingPage/QuestionIssues/QuestionIssuesPage";
+export { default as AddQuestionIssuesPage } from "./Admin/SettingPage/QuestionIssues/AddQuestionIssuesPage";
+export { default as EditQuestionIssuesPage } from "./Admin/SettingPage/QuestionIssues/EditQuestionIssuesPage";
+
+// Video Issues Page
+export { default as VideoIssuesPage } from "./Admin/SettingPage/VideoIssues/VideoIssuesPage";
+export { default as AddVideoIssuesPage } from "./Admin/SettingPage/VideoIssues/AddVideoIssuesPage";
+export { default as EditVideoIssuesPage } from "./Admin/SettingPage/VideoIssues/EditVideoIssuesPage";
 
 /* /////Admin Dashboard Page */
 
