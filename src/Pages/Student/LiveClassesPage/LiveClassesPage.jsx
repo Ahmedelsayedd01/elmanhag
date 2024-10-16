@@ -326,90 +326,90 @@
 //   //   }
 //   // };
 
-//   const handleAttendanceClick = async (id, live) => {
-//     setIsLoading(true);
-//     console.log("live is:", live, live.link);
+  // const handleAttendanceClick = async (id, live) => {
+  //   setIsLoading(true);
+  //   console.log("live is:", live, live.link);
   
-//     try {
-//       const currentTime = new Date(); // Get the current date and time
+  //   try {
+  //     const currentTime = new Date(); // Get the current date and time
   
-//       // Helper function to create a Date object with today's date and a given time (HH:MM:SS)
-//       const parseTime = (timeString) => {
-//         const [hours, minutes, seconds] = timeString.split(':').map(Number);
-//         const date = new Date();
-//         date.setHours(hours, minutes, seconds, 0); // Set hours, minutes, and seconds
-//         return date;
-//       };
+  //     // Helper function to create a Date object with today's date and a given time (HH:MM:SS)
+  //     const parseTime = (timeString) => {
+  //       const [hours, minutes, seconds] = timeString.split(':').map(Number);
+  //       const date = new Date();
+  //       date.setHours(hours, minutes, seconds, 0); // Set hours, minutes, and seconds
+  //       return date;
+  //     };
   
-//       const fromTime = parseTime(live.from); // Convert fromTime to a Date object
-//       const toTime = parseTime(live.to); // Convert toTime to a Date object
+  //     const fromTime = parseTime(live.from); // Convert fromTime to a Date object
+  //     const toTime = parseTime(live.to); // Convert toTime to a Date object
   
-//       // Calculate the time difference in minutes
-//       const diffFromTime = (fromTime - currentTime) / (1000 * 60); // Difference in minutes
-//       const diffToTime = (currentTime - toTime) / (1000 * 60); // Difference in minutes
+  //     // Calculate the time difference in minutes
+  //     const diffFromTime = (fromTime - currentTime) / (1000 * 60); // Difference in minutes
+  //     const diffToTime = (currentTime - toTime) / (1000 * 60); // Difference in minutes
   
-//       // Check if the current time is more than 30 minutes before the live start time
-//       if (diffFromTime > 30) {
-//         setWarningMessage('اللايف لم يبدأ بعد. الرجاء العودة لاحقًا قبل الموعد بعشر دقائق'); // Arabic message for "Event hasn't started yet"
-//         setIsWorningOpen(true); // Open the warning modal
-//         setIsLoading(false); // Stop loading
-//         return; // Exit the function, prevent API call
-//       }
+  //     // Check if the current time is more than 30 minutes before the live start time
+  //     if (diffFromTime > 30) {
+  //       setWarningMessage('اللايف لم يبدأ بعد. الرجاء العودة لاحقًا قبل الموعد بعشر دقائق'); // Arabic message for "Event hasn't started yet"
+  //       setIsWorningOpen(true); // Open the warning modal
+  //       setIsLoading(false); // Stop loading
+  //       return; // Exit the function, prevent API call
+  //     }
   
-//       // Check if the live session has already ended
-//       if (diffToTime > 0) {
-//         setWarningMessage('انتهى اللايف. لا يمكنك الانضمام بعد الآن.'); // Arabic message for "Event has ended"
-//         setIsWorningOpen(true); // Open the warning modal
-//         setIsLoading(false); // Stop loading
-//         return; // Exit the function, prevent API call
-//       }
+  //     // Check if the live session has already ended
+  //     if (diffToTime > 0) {
+  //       setWarningMessage('انتهى اللايف. لا يمكنك الانضمام بعد الآن.'); // Arabic message for "Event has ended"
+  //       setIsWorningOpen(true); // Open the warning modal
+  //       setIsLoading(false); // Stop loading
+  //       return; // Exit the function, prevent API call
+  //     }
   
-//       // Proceed with API call if time conditions are met
-//       const response = await axios.post(
-//         `https://bdev.elmanhag.shop/student/subscription/check/${id}`, {},
-//         {
-//           headers: {
-//             Authorization: `Bearer ${auth.user.token}`,
-//             'Content-Type': 'application/json',
-//           },
-//         }
-//       );
+  //     // Proceed with API call if time conditions are met
+  //     const response = await axios.post(
+  //       `https://bdev.elmanhag.shop/student/subscription/check/${id}`, {},
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${auth.user.token}`,
+  //           'Content-Type': 'application/json',
+  //         },
+  //       }
+  //     );
   
-//       console.log("Response status:", response.status);
-//       console.log("Response data:", response);
+  //     console.log("Response status:", response.status);
+  //     console.log("Response data:", response);
   
-//       if (response.status === 200 && response.data.success) {
-//         console.log('Success:', response.data);
-//         window.open(live.link, '_blank', 'noopener noreferrer');
-//       }
-//     } catch (error) {
-//       console.log('Error response:', error.response);
+  //     if (response.status === 200 && response.data.success) {
+  //       console.log('Success:', response.data);
+  //       window.open(live.link, '_blank', 'noopener noreferrer');
+  //     }
+  //   } catch (error) {
+  //     console.log('Error response:', error.response);
   
-//       // Check if the error response contains the 'faild' message
-//       if (error.response && error.response.data && error.response.data.faild) {
-//         const faildMessage = error.response.data.faild;
+  //     // Check if the error response contains the 'faild' message
+  //     if (error.response && error.response.data && error.response.data.faild) {
+  //       const faildMessage = error.response.data.faild;
   
-//         // Set the Arabic message if the returned message matches
-//         if (faildMessage === 'You must buy live first') {
-//           setModalMessage('يجب شراء اللايف'); // Arabic message for the modal
-//         } else {
-//           setModalMessage(faildMessage); // Set the original error message if it's different
-//         }
+  //       // Set the Arabic message if the returned message matches
+  //       if (faildMessage === 'You must buy live first') {
+  //         setModalMessage('يجب شراء اللايف'); // Arabic message for the modal
+  //       } else {
+  //         setModalMessage(faildMessage); // Set the original error message if it's different
+  //       }
   
-//         setIsModalOpen(true); // Open the modal
-//       } else {
-//         // Handle other possible errors (e.g., validation errors)
-//         const errorMessages = error?.response?.data?.errors;
-//         let errorMessageString = 'Error occurred';
-//         if (errorMessages) {
-//           errorMessageString = Object.values(errorMessages).flat().join(' ');
-//         }
-//         auth.toastError('Error', errorMessageString);
-//       }
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
+  //       setIsModalOpen(true); // Open the modal
+  //     } else {
+  //       // Handle other possible errors (e.g., validation errors)
+  //       const errorMessages = error?.response?.data?.errors;
+  //       let errorMessageString = 'Error occurred';
+  //       if (errorMessages) {
+  //         errorMessageString = Object.values(errorMessages).flat().join(' ');
+  //       }
+  //       auth.toastError('Error', errorMessageString);
+  //     }
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
   
   
   
@@ -543,6 +543,12 @@ const LiveClassesPage = () => {
   const [filteredData, setFilteredData] = useState([]); // Filtered data based on selected day
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDay, setSelectedDay] = useState(new Date()); // Track the selected day
+
+  const [isModalOpen, setIsModalOpen] = useState(false); // Control modal visibility
+  const [modalMessage, setModalMessage] = useState(''); // Control modal message
+  const [isWorningOpen, setIsWorningOpen] = useState(false); // Control modal visibility
+  const [warningMessage, setWarningMessage] = useState(''); // Control modal message
+
   const today = new Date();
   const auth = useAuth();
   const navigate = useNavigate();
@@ -661,6 +667,94 @@ const LiveClassesPage = () => {
     return Array.from({ length: 7 }, (_, i) => addDays(startDate, i));
   };
 
+
+  
+  const handleAttendanceClick = async (id, live) => {
+    setIsLoading(true);
+    console.log("live is:", live, live.link);
+  
+    try {
+      const currentTime = new Date(); // Get the current date and time
+  
+      // Helper function to create a Date object with today's date and a given time (HH:MM:SS)
+      const parseTime = (timeString) => {
+        const [hours, minutes, seconds] = timeString.split(':').map(Number);
+        const date = new Date();
+        date.setHours(hours, minutes, seconds, 0); // Set hours, minutes, and seconds
+        return date;
+      };
+  
+      const fromTime = parseTime(live.from); // Convert fromTime to a Date object
+      const toTime = parseTime(live.to); // Convert toTime to a Date object
+  
+      // Calculate the time difference in minutes
+      const diffFromTime = (fromTime - currentTime) / (1000 * 60); // Difference in minutes
+      const diffToTime = (currentTime - toTime) / (1000 * 60); // Difference in minutes
+  
+      // Check if the current time is more than 30 minutes before the live start time
+      if (diffFromTime > 30) {
+        setWarningMessage('اللايف لم يبدأ بعد. الرجاء العودة لاحقًا قبل الموعد بعشر دقائق'); // Arabic message for "Event hasn't started yet"
+        setIsWorningOpen(true); // Open the warning modal
+        setIsLoading(false); // Stop loading
+        return; // Exit the function, prevent API call
+      }
+  
+      // Check if the live session has already ended
+      if (diffToTime > 0) {
+        setWarningMessage('انتهى اللايف. لا يمكنك الانضمام بعد الآن.'); // Arabic message for "Event has ended"
+        setIsWorningOpen(true); // Open the warning modal
+        setIsLoading(false); // Stop loading
+        return; // Exit the function, prevent API call
+      }
+  
+      // Proceed with API call if time conditions are met
+      const response = await axios.post(
+        `https://bdev.elmanhag.shop/student/subscription/check/${id}`, {},
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+  
+      console.log("Response status:", response.status);
+      console.log("Response data:", response);
+  
+      if (response.status === 200 && response.data.success) {
+        console.log('Success:', response.data);
+        window.open(live.link, '_blank', 'noopener noreferrer');
+      }
+    } catch (error) {
+      console.log('Error response:', error.response);
+  
+      // Check if the error response contains the 'faild' message
+      if (error.response && error.response.data && error.response.data.faild) {
+        const faildMessage = error.response.data.faild;
+  
+        // Set the Arabic message if the returned message matches
+        if (faildMessage === 'You must buy live first') {
+          setModalMessage('يجب شراء اللايف'); // Arabic message for the modal
+        } else {
+          setModalMessage(faildMessage); // Set the original error message if it's different
+        }
+  
+        setIsModalOpen(true); // Open the modal
+      } else {
+        // Handle other possible errors (e.g., validation errors)
+        const errorMessages = error?.response?.data?.errors;
+        let errorMessageString = 'Error occurred';
+        if (errorMessages) {
+          errorMessageString = Object.values(errorMessages).flat().join(' ');
+        }
+        auth.toastError('Error', errorMessageString);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+
   return (
     <>
       <div className="w-full p-4 bg-white shadow-lg rounded-lg" dir="rtl">
@@ -713,6 +807,33 @@ const LiveClassesPage = () => {
         {filteredData.length > 0 ? (
           filteredData.map((live) => (
             <div key={live.id} className="rounded-lg shadow-md bg-mainColor lg:w-4/5 s:w-full">
+
+              {/* Error Modal */}
+              {isModalOpen && (
+              <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 lg:mr-10">
+                <div className="bg-white p-6 md:p-12 rounded-lg w-11/12 md:w-1/2 lg:w-1/3">
+                  <h2 className="text-[#6B6B6B] text-xl md:text-2xl font-bold mb-4">{modalMessage}</h2>
+                  <div className="flex justify-end gap-4 sm:gap-2">
+                    <Link to="/dashboard/subscriptions/plansMethod" state={{ plan:live, planType: "Live session"}}>
+                      <Button Text="اشترك الان" Width="auto" BgColor="bg-mainColor" Color="text-white" />
+                    </Link>
+                    <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
+                  </div>
+                </div>
+              </div>
+              )}
+
+            {isWorningOpen && (
+              <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 lg:mr-10">
+                <div className="bg-white p-6 md:p-12 rounded-lg w-11/12 md:w-1/2 lg:w-1/3">
+                  <h2 className="text-[#6B6B6B] text-xl md:text-2xl font-bold mb-4">{warningMessage}</h2>
+                  <div className="flex justify-end gap-4 sm:gap-2">
+                    <Button Text="حسنا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
+                  </div>
+                </div>
+              </div>
+            )}
+
               <div>
                 <div className="flex gap-5 justify-around bg-[#EBEBEB] p-6 rounded-l-lg h-full mr-10">
                   <div>
