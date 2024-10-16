@@ -102,21 +102,25 @@ const NavbarStudent = () => {
                             <p className="text-lg text-gray-600 text-right">{categoryName}</p>
                         </div>
                     </div>
-                    <div className="w-4/12 flex items-center justify-center gap-4">
+                    {/* <div className="w-4/12 flex items-center justify-center gap-4"> */}
                         {auth.user.role == 'student' && (
+                          <div className="w-4/12 flex items-center justify-center gap-4 hidden md:flex">
                             <Link to="subscriptions">
                                 <button type='button' className=" w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-28 lg:py-3 hover:bg-hoverColor">
                                     اشتراكاتي
                                 </button>
                             </Link>
+                            </div>
                         )}
 
                         {(auth.user.role == 'affilate' ||
                             auth.user.role == 'parent' ||
                             auth.user.role == 'teacher') && (
+                                <div className="w-4/12 flex items-center justify-center gap-4">
                                 <button type='button' onClick={handleLogout} className="w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-6 lg:py-3 hover:bg-hoverColor">
                                     تسجيل خروج
                                 </button>
+                                </div>
                             )}
 
 
@@ -126,7 +130,7 @@ const NavbarStudent = () => {
                             </button>
                         )} */}
 
-                    </div>
+                    {/* </div> */}
                     {/* <div className="w-4/12 lg:flex items-center justify-center gap-4">
                         {auth.user.role == 'affilate' && (
                             <button type='button' onClick={handleLogout} className="w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-6 lg:py-3 hover:bg-hoverColor">
