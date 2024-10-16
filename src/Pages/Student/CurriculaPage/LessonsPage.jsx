@@ -403,7 +403,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
               {pdfResources.length === 0 ? (
                 <p>No PDF resources available.</p>
               ) : (
-                <ul className="list-disc ml-5 space-y-4 w-full">
+                <ul className="list-disc ml-5 space-y-4 w-full p-4">
                   {pdfResources.map((pdf, index) => (
                     <li key={index} className="flex items-center w-1/2">
                       <Button
@@ -422,16 +422,25 @@ const LessonsPage = ({ subjectId, lessonId }) => {
           )}
 
           {activeTab === "homework" && (
-            <div>
-              <h4 className="text-2xl text-mainColor font-semibold">Homeworks</h4>
+            <div className="mt-5 w-full">
+              {/* <h4 className="text-2xl text-mainColor font-semibold">Homeworks</h4> */}
               {lessons.homework.length === 0 ? (
                 <p>No homeworks available.</p>
               ) : (
-                <ul className="list-disc ml-5 space-y-4">
+                <ul className="list-disc ml-5 space-y-4 p-4 w-full">
                   {lessons.homework.map((task, index) => (
-                    <li key={index}>
-                      <p>{task.description}</p>
+                    // <li key={index}>
+                      <li key={index} className="flex items-center w-1/2">
+                      <Button
+                        Text={task.title || `PDF File ${index + 1}`}
+                        Icon={<FaDownload />}
+                        Width="w-1/2"
+                        BgColor="bg-mainColor"
+                        Color="text-white"
+                        handleClick={() => handleDownload(task.homework_link,task.title || `PDF_File_${index + 1}.pdf`)}
+                      />
                     </li>
+                    // </li>
                   ))}
                 </ul>
               )}
