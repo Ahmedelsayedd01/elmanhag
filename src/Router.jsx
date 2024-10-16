@@ -544,7 +544,7 @@ export const router = createBrowserRouter([
                 element: <AppLayoutStudentAdd />,
               },
               {
-                path: 'edit/:profileId',
+                path: 'edit/:profileStudentId',
                 element: <AppLayoutStudentProfile />,
                 children: [
                   {
