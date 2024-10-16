@@ -49,6 +49,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import { PiVideoFill } from "react-icons/pi";
 
 const DropDownUnits = ({ unit,lessons, onClick, isOpen }) => {
 
@@ -85,7 +86,7 @@ const DropDownUnits = ({ unit,lessons, onClick, isOpen }) => {
             {sortedLessons.map((lesson, index) => (
               <div key={index} className="flex items-center gap-3">
                 {/* Dot */}
-                <div className="text-mainColor text-3xl mr-2">•</div>
+                <div className="text-mainColor text-2xl mr-2"><PiVideoFill/></div>
                 {/* Lesson Name */}
                 <Link
                   to={lesson.path}
