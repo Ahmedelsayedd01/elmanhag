@@ -239,7 +239,7 @@ const EditCategoryPage = () => {
                                    <div className="flex items-center justify-center w-72">
                                           <Button
                                                  type="submit"
-                                                 Text="Done"
+                                                 Text="Edit"
                                                  BgColor="bg-mainColor"
                                                  Color="text-white"
                                                  Width="full"
