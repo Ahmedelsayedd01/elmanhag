@@ -101,6 +101,8 @@ const LinksSidebar = () => {
        const [isActiveParentRelation, setIsActiveParentRelation] = useState(savedState.isActiveParentRelation ?? false);
        const [isActiveOperations, setIsActiveOperations] = useState(savedState.isActiveOperations ?? false);
        const [isActivePaymentMethod, setIsActivePaymentMethod] = useState(savedState.isActivePaymentMethod ?? false);
+       const [isActiveQuestionIssues, setIsActiveQuestionIssues] = useState(savedState.isActiveQuestionIssues ?? false);
+       const [isActiveVideoIssues, setIsActiveVideoIssues] = useState(savedState.isActiveVideoIssues ?? false);
        /* ///Childern Setting */
        const [isActiveNoticeBoard, setIsActiveNoticeBoard] = useState(savedState.isActiveNoticeBoard ?? false);
 
@@ -153,6 +155,8 @@ const LinksSidebar = () => {
                      isActiveParentRelation,
                      isActiveOperations,
                      isActivePaymentMethod,
+                     isActiveQuestionIssues,
+                     isActiveVideoIssues,
                      isActiveNoticeBoard,
               };
               localStorage.setItem('sidebarState', JSON.stringify(sidebarState));
@@ -203,6 +207,8 @@ const LinksSidebar = () => {
               isActiveParentRelation,
               isActiveOperations,
               isActivePaymentMethod,
+              isActiveQuestionIssues,
+              isActiveVideoIssues,
               isActiveNoticeBoard]);
 
 
@@ -254,6 +260,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -314,6 +322,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -373,6 +383,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        const handleClickParent = () => {
@@ -423,6 +435,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -481,6 +495,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -539,6 +555,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -599,6 +617,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -658,6 +678,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        const handleClickSubject = () => {
@@ -708,6 +730,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -766,6 +790,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -824,6 +850,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -883,6 +911,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -941,6 +971,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -999,6 +1031,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -1057,6 +1091,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -1116,6 +1152,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -1174,6 +1212,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        }
        const handleClickPromoCode = () => {
@@ -1224,6 +1264,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        }
        useEffect(() => {
@@ -1282,6 +1324,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        }
        useEffect(() => {
@@ -1340,6 +1384,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        }
        useEffect(() => {
@@ -1400,6 +1446,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -1458,6 +1506,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        const handleClickFinancialPayments = () => {
@@ -1508,6 +1558,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -1568,6 +1620,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -1626,6 +1680,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        const handleClickAffiliatePaymentMethod = () => {
@@ -1676,6 +1732,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -1734,6 +1792,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -1792,6 +1852,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -1851,6 +1913,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -1912,6 +1976,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -1976,6 +2042,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -2037,6 +2105,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -2101,6 +2171,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        };
        useEffect(() => {
@@ -2159,6 +2231,8 @@ const LinksSidebar = () => {
               setIsActiveCities(false)
               setIsActiveParentRelation(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
 
        };
@@ -2219,6 +2293,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        }
        const handleClickCountries = () => {
@@ -2269,6 +2345,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        }
        useEffect(() => {
@@ -2327,6 +2405,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        }
        useEffect(() => {
@@ -2385,6 +2465,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(true)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        }
        useEffect(() => {
@@ -2443,6 +2525,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(true)
               setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        }
        useEffect(() => {
@@ -2501,6 +2585,8 @@ const LinksSidebar = () => {
               setIsActiveParentRelation(false)
               setIsActiveOperations(false)
               setIsActivePaymentMethod(true)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
               setIsActiveNoticeBoard(false)
        }
        useEffect(() => {
@@ -2509,6 +2595,128 @@ const LinksSidebar = () => {
               const result = parts.slice(0, 3).join('/');
               if (result == "/dashboard_admin/paymentMethod") {
                      handleClickPaymentMethod()
+              }
+       }, [location])
+       // Question Issues
+       const handleClickQuestionIssues = () => {
+              setIsActiveDashboard(false);
+              setIsActiveUser(false);
+              setOpenListUser(false);
+              setIsActiveStudent(false);
+              setIsActiveParent(false);
+              setIsActiveTeacher(false);
+              setIsActiveAdmin(false);
+              setIsActiveEducation(false)
+              setOpenListEducation(false)
+              setIsActiveCategories(false)
+              setIsActiveSubject(false)
+              setIsActiveBundles(false)
+              setIsActiveQuestionsBank(false)
+              setIsActiveHomeWork(false)
+              setIsActiveRevision(false)
+              setIsActivExams(false)
+              setIsActiveLive(false)
+              setIsActiveMarketing(false)
+              setOpenListMarketing(false)
+              setIsActiveDiscount(false)
+              setIsActivePromoCode(false)
+              setIsActiveReview(false)
+              setIsActivePopUp(false)
+              setIsActiveFinancial(false)
+              setOpenListFinancial(false)
+              setIsActiveFinancialPendingPayments(false)
+              setIsActiveFinancialPayments(false)
+              setIsActiveAffiliate(false)
+              setOpenListAffiliate(false)
+              setIsActiveAffiliateUser(false)
+              setIsActiveAffiliatePaymentMethod(false)
+              setIsActiveAffiliateCommissions(false)
+              setIsActiveAffiliateBonus(false)
+              setIsActiveAffiliatePayout(false)
+              setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
+              setIsActiveReports(false)
+              setIsActiveSetting(true)
+              setOpenListSetting(true)
+              setIsActiveAdminRoles(false)
+              setIsActiveCountries(false)
+              setIsActiveCities(false)
+              setIsActiveParentRelation(false)
+              setIsActiveOperations(false)
+              setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(true)
+              setIsActiveVideoIssues(false)
+              setIsActiveNoticeBoard(false)
+       }
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/question_issues") {
+                     handleClickQuestionIssues()
+              }
+       }, [location])
+       // Video Issues
+       const handleClickVideoIssues = () => {
+              setIsActiveDashboard(false);
+              setIsActiveUser(false);
+              setOpenListUser(false);
+              setIsActiveStudent(false);
+              setIsActiveParent(false);
+              setIsActiveTeacher(false);
+              setIsActiveAdmin(false);
+              setIsActiveEducation(false)
+              setOpenListEducation(false)
+              setIsActiveCategories(false)
+              setIsActiveSubject(false)
+              setIsActiveBundles(false)
+              setIsActiveQuestionsBank(false)
+              setIsActiveHomeWork(false)
+              setIsActiveRevision(false)
+              setIsActivExams(false)
+              setIsActiveLive(false)
+              setIsActiveMarketing(false)
+              setOpenListMarketing(false)
+              setIsActiveDiscount(false)
+              setIsActivePromoCode(false)
+              setIsActiveReview(false)
+              setIsActivePopUp(false)
+              setIsActiveFinancial(false)
+              setOpenListFinancial(false)
+              setIsActiveFinancialPendingPayments(false)
+              setIsActiveFinancialPayments(false)
+              setIsActiveAffiliate(false)
+              setOpenListAffiliate(false)
+              setIsActiveAffiliateUser(false)
+              setIsActiveAffiliatePaymentMethod(false)
+              setIsActiveAffiliateCommissions(false)
+              setIsActiveAffiliateBonus(false)
+              setIsActiveAffiliatePayout(false)
+              setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
+              setIsActiveReports(false)
+              setIsActiveSetting(true)
+              setOpenListSetting(true)
+              setIsActiveAdminRoles(false)
+              setIsActiveCountries(false)
+              setIsActiveCities(false)
+              setIsActiveParentRelation(false)
+              setIsActiveOperations(false)
+              setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(true)
+              setIsActiveNoticeBoard(false)
+       }
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/video_issues") {
+                     handleClickVideoIssues()
               }
        }, [location])
        /* /////Setting Childern */
@@ -2718,6 +2926,8 @@ const LinksSidebar = () => {
                                                         <li className={`${isActiveParentRelation ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"parentRelation"} onClick={handleClickParentRelatioen}>Parent Relation</Link></li>
                                                         <li className={`${isActiveOperations ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"operations"} onClick={handleClickOperations}>Operations</Link></li>
                                                         <li className={`${isActivePaymentMethod ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"paymentMethod"} onClick={handleClickPaymentMethod}>PaymentMethod</Link></li>
+                                                        <li className={`${isActiveQuestionIssues ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"question_issues"} onClick={handleClickQuestionIssues}>Question Issues</Link></li>
+                                                        <li className={`${isActiveVideoIssues ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"video_issues"} onClick={handleClickVideoIssues}>Video Issues</Link></li>
                                                  </ul>
                                           </div>
                                    </>
@@ -2916,7 +3126,7 @@ const LinksSidebar = () => {
                                                                <li className={`${isActiveCities ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"cities"} onClick={handleClickCities}>Cities</Link></li>
                                                                <li className={`${isActiveParentRelation ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"parentRelation"} onClick={handleClickParentRelatioen}>Parent Relation</Link></li>
                                                                <li className={`${isActiveOperations ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"operations"} onClick={handleClickOperations}>Operations</Link></li>
-                                                               <li className={`${isActivePaymentMethod ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"paymentMethod"} onClick={handleClickPaymentMethod}>PaymentMethod</Link></li>
+                                                               <li className={`${isActivePaymentMethod ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"paymentMethod"} onClick={handleClickPaymentMethod}>PaaymentMethods</Link></li>
                                                         </ul>
                                                  </div>
                                           </>

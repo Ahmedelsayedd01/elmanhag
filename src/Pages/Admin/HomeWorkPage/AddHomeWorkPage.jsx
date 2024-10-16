@@ -64,6 +64,7 @@ const AddHomeWorkPage = () => {
   const [selectLessonId, setSelectLessonId] = useState(null);
   const [openSelectLesson, setOpenSelectLesson] = useState(false);
 
+
   const [mark, setMark] = useState('');
 
   const [selectSubject, setSelectSubject] = useState('Select By Subject');
@@ -77,6 +78,12 @@ const AddHomeWorkPage = () => {
   const [selectHW, setSelectHW] = useState('Select By H.W');
   const [selectHWId, setSelectHWId] = useState(null);
   const [openSelectHW, setOpenSelectHW] = useState(false);
+
+  const [homeWorkDate, setHomeWorkDate] = useState('');
+  const [homeWorkPdf, setHomeWorkPdf] = useState('');
+  const [homeWorkPdfFile, setHomeWorkPdfFile] = useState();
+
+  const pdfRef = useRef();
 
   const dropdownSemesterRef = useRef(null);
   const dropdownLessonRef = useRef(null);
@@ -92,20 +99,20 @@ const AddHomeWorkPage = () => {
 
     // If both semester and category are selected, filter by both
     if (semesterName && categoryId) {
-      filteredSubjects = filteredSubjects.filter(subject => 
-        subject.semester.toLowerCase() === semesterName.toLowerCase() && 
+      filteredSubjects = filteredSubjects.filter(subject =>
+        subject.semester.toLowerCase() === semesterName.toLowerCase() &&
         subject.category_id === categoryId
-      ) ;
+      );
     }
     // If only the semester is selected, filter by semester
     else if (semesterName) {
-      filteredSubjects = filteredSubjects.filter(subject => 
+      filteredSubjects = filteredSubjects.filter(subject =>
         subject.semester.toLowerCase() === semesterName.toLowerCase()
       );
     }
     // If only the category is selected, filter by category
     else if (categoryId) {
-      filteredSubjects = filteredSubjects.filter(subject => 
+      filteredSubjects = filteredSubjects.filter(subject =>
         subject.category_id === categoryId
       );
     }
@@ -119,28 +126,28 @@ const AddHomeWorkPage = () => {
 
     // If both semester and category are selected, filter by both
     if (subjectId) {
-      filteredChapters = filteredChapters.filter(chapter => 
-        chapter.subject_id=== subjectId
-      ) ;
+      filteredChapters = filteredChapters.filter(chapter =>
+        chapter.subject_id === subjectId
+      );
     }
     setChapterData(filteredChapters);
     console.log(filteredChapters)
   };
 
-    // Function to filter lessons by chapters 
-    const filterLessons = (chapterId) => {
-      let filteredLessons = allLessons; // Start with all subjects
-  
-      // If both semester and category are selected, filter by both
-      if (chapterId) {
-        filteredLessons= filteredLessons.filter(lesson => 
-          lesson.chapter_id === chapterId
-        ) ;
-      }
-      setLessonData(filteredLessons);
-      console.log(filteredLessons)
-    };
-  
+  // Function to filter lessons by chapters 
+  const filterLessons = (chapterId) => {
+    let filteredLessons = allLessons; // Start with all subjects
+
+    // If both semester and category are selected, filter by both
+    if (chapterId) {
+      filteredLessons = filteredLessons.filter(lesson =>
+        lesson.chapter_id === chapterId
+      );
+    }
+    setLessonData(filteredLessons);
+    console.log(filteredLessons)
+  };
+
 
   const handleOpenSelectSemester = () => {
     setOpenSelectSemester(!openSelectSemester);
@@ -445,7 +452,19 @@ const AddHomeWorkPage = () => {
     setDisplayedQuestions(newGroups);
     // setDisplayedQuestions(filteredQuestions);
   };
+  const handlePdfClick = () => {
+    if (pdfRef.current) {
+      pdfRef.current.click(); // Trigger a click on the hidden file input
+    }
+  };
 
+  const handlePdfChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setHomeWorkPdfFile(file); // Set file object for upload
+      setHomeWorkPdf(file.name); // Display file name in the text input
+    }
+  };
   const handleFormSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
 
@@ -476,6 +495,14 @@ const AddHomeWorkPage = () => {
     }
     if (!selectHomeWorkLevel) {
       auth.toastError('Please Select Homework Difficulty.');
+      return;
+    }
+    if (!homeWorkDate) {
+      auth.toastError('Please Set due Date.');
+      return;
+    }
+    if (!homeWorkPdfFile) {
+      auth.toastError('Please Select Home work Pdf.');
       return;
     }
     if (!mark) {
@@ -510,16 +537,19 @@ const AddHomeWorkPage = () => {
       formData.append('pass', parseInt(pass));
       formData.append('status', homeWorkActive);
 
-      // Adding groups and questions to formData
-      questGroups.forEach((group, index) => {
-        // Add group details
-        formData.append(`groups[${index}]`, group.titleInput);
+      formData.append('due_date', homeWorkDate);
+      formData.append('homework', homeWorkPdfFile);
 
-        // Add questions for this group
-        group.selectedQuestions.forEach((question, questionIndex) => {
-          formData.append(`questions[${index}][${questionIndex}]`, question.id);
-        });
-      });
+      // Adding groups and questions to formData
+      // questGroups.forEach((group, index) => {
+      //   // Add group details
+      //   formData.append(`groups[${index}]`, group.titleInput);
+
+      //   // Add questions for this group
+      //   group.selectedQuestions.forEach((question, questionIndex) => {
+      //     formData.append(`questions[${index}][${questionIndex}]`, question.id);
+      //   });
+      // });
 
       // Log the formData entries
       for (let pair of formData.entries()) {
@@ -553,7 +583,13 @@ const AddHomeWorkPage = () => {
     }
   };
 
-
+  if (isLoading) {
+    return (
+      <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
+        <Loading />
+      </div>
+    );
+  }
   return (
     <>
       {/* Buttons to switch between sections */}
@@ -565,13 +601,13 @@ const AddHomeWorkPage = () => {
         >
           H.W Info
         </button>
-        <button
+        {/* <button
           className={`w-1/6 text-center text-xl font-medium ${activeSection === 'Question' ? 'p-3 text-mainColor border-b-8 border-mainColor rounded' : 'p-3 text-thirdColor'
             }`}
           onClick={() => setActiveSection('Question')}
         >
           Questions
-        </button>
+        </button> */}
       </div>
 
       <form onSubmit={handleFormSubmit}>
@@ -640,6 +676,7 @@ const AddHomeWorkPage = () => {
                   options={homeWorkLevel}
                 />
               </div>
+
               <div className="lg:w-[30%] sm:w-full">
                 <DropDownMenu
                   ref={dropdownHWRef}
@@ -652,7 +689,30 @@ const AddHomeWorkPage = () => {
               </div>
               <div className="lg:w-[30%] sm:w-full">
                 <InputCustom
+                  type="date"
+                  // placeholder="Due Date"
+                  value={homeWorkDate}
+                  onChange={(e) => setHomeWorkDate(e.target.value)}
+                />
+              </div>
+              <div className="lg:w-[30%] sm:w-full">
+                <InputCustom
                   type="text"
+                  placeholder="Upload Pdf"
+                  value={homeWorkPdf}
+                  readonly={true}
+                  onClick={handlePdfClick}
+                />
+                <input
+                  ref={pdfRef}
+                  type="file"
+                  className="hidden"
+                  onChange={handlePdfChange}
+                />
+              </div>
+              <div className="lg:w-[30%] sm:w-full">
+                <InputCustom
+                  type="number"
                   placeholder="Pass"
                   value={pass}
                   onChange={(e) => setPass(e.target.value)}
@@ -678,14 +738,15 @@ const AddHomeWorkPage = () => {
               <div className="flex items-center justify-center w-72">
                 <Button
                   type="button"
-                  Text="Next"
+                  Text="Done"
                   BgColor="bg-mainColor"
                   Color="text-white"
                   Width="full"
                   Size="text-2xl"
                   px="px-28"
                   rounded="rounded-2xl"
-                  handleClick={handleNext}
+                  // handleClick={handleNext}
+                  handleClick={handleFormSubmit}
                 />
               </div>
               <button onClick={handleGoBack} className="text-2xl text-mainColor">
@@ -695,16 +756,14 @@ const AddHomeWorkPage = () => {
           </div>
         )}
 
-        {activeSection === 'Question' && (
+        {/* {activeSection === 'Question' && (
           <div id="Question" className="w-full">
-            {/* Initial Button to add the first question group */}
             {initialButtonVisible && (
               <div className="sm:w-full flex justify-center mx-auto">
                 <ButtonAdd Text="Add Question Group" handleClick={handleAddFirstGroup} />
               </div>
             )}
 
-            {/* Render the question groups */}
             {!initialButtonVisible && (
               <>
                 {questGroups.map((group, index) => (
@@ -754,9 +813,7 @@ const AddHomeWorkPage = () => {
                       </div>
                     </div>
 
-                    {/* Questions and Selected Questions Tables */}
                     <div className="w-full flex items-center justify-between mt-4 overflow-x-auto gap-12">
-                      {/* Available Questions Table */}
                       <table className="w-full sm:min-w-0 border">
                         <thead>
                           <tr className="border-b-2">
@@ -793,7 +850,6 @@ const AddHomeWorkPage = () => {
                         </tbody>
                       </table>
 
-                      {/* Selected Questions Table */}
                       <table className="w-full sm:min-w-0 border">
                         <thead>
                           <tr className="border-b-2">
@@ -836,7 +892,6 @@ const AddHomeWorkPage = () => {
                   <ButtonAdd Text="Add Question Group" handleClick={handleAddGroup} />
                 </div>
 
-                {/* Buttons */}
                 <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
                   <div className="flex items-center justify-center w-72">
                     <button
@@ -853,7 +908,7 @@ const AddHomeWorkPage = () => {
               </>
             )}
           </div>
-        )}
+        )} */}
 
       </form>
 

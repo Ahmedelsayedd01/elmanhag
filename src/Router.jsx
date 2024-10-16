@@ -94,7 +94,13 @@ import {
   AddAdminRolesLayout,
   AdminUserLayout,
   AddAdminUserLayout,
-  EditAdminUserLayout
+  EditAdminUserLayout,
+  QuestionIssuesLayout,
+  AddQuestionIssuesLayout,
+  EditQuestionIssuesLayout,
+  VideoIssuesLayout,
+  AddVideoIssuesLayout,
+  EditVideoIssuesLayout
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -333,7 +339,7 @@ const AppLayoutAffilatePayout = () => (
     <Outlet />
   </>
 );
-
+/* Setting */
 const AppLayoutAdminRoles = () => (
   <>
     <Outlet />
@@ -365,6 +371,18 @@ const AppLayoutPaymentMethod = () => (
   </>
 );
 
+// Question Issues
+const AppLayoutQuestionIssues = () => (
+  <>
+    <Outlet />
+  </>
+);
+// Video Issues
+const AppLayoutVideoIssues = () => (
+  <>
+    <Outlet />
+  </>
+);
 
 /* Student Dashboard */
 const AppLayoutStudentDashboard = () => (
@@ -996,6 +1014,7 @@ export const router = createBrowserRouter([
               }
             ]
           },
+          // Countries
           {
             path: 'countries',
             element: <AppLayoutCountries />,
@@ -1015,6 +1034,7 @@ export const router = createBrowserRouter([
               }
             ]
           },
+          // Cities
           {
             path: 'cities',
             element: <AppLayoutCities />,
@@ -1034,6 +1054,7 @@ export const router = createBrowserRouter([
               }
             ]
           },
+          // Parent Relation
           {
             path: 'parentRelation',
             element: <AppLayoutParentRelation />,
@@ -1052,6 +1073,7 @@ export const router = createBrowserRouter([
               }
             ]
           },
+          // Operations
           {
             path: 'operations',
             element: <AppLayoutOperations />,
@@ -1061,8 +1083,8 @@ export const router = createBrowserRouter([
                 element: <OperationsLayout />,
               }
             ]
-          }
-          ,
+          },
+          // Payment Method
           {
             path: 'paymentMethod',
             element: <AppLayoutPaymentMethod />,
@@ -1078,6 +1100,44 @@ export const router = createBrowserRouter([
               {
                 path: 'edit/:PaymentMethodId',
                 element: <EditPaymentMethodLayout />,
+              }
+            ]
+          },
+          //Question Issues
+          {
+            path: 'question_issues',
+            element: <AppLayoutQuestionIssues />,
+            children: [
+              {
+                path: '',
+                element: <QuestionIssuesLayout />,
+              },
+              {
+                path: 'add',
+                element: <AddQuestionIssuesLayout />,
+              },
+              {
+                path: 'edit/:questionIssuesId',
+                element: <EditQuestionIssuesLayout />,
+              }
+            ]
+          },
+          //Viedo Issues
+          {
+            path: 'video_issues',
+            element: <AppLayoutVideoIssues />,
+            children: [
+              {
+                path: '',
+                element: <VideoIssuesLayout />,
+              },
+              {
+                path: 'add',
+                element: <AddVideoIssuesLayout />,
+              },
+              {
+                path: 'edit/:videoIssuesId',
+                element: <EditVideoIssuesLayout />,
               }
             ]
           },

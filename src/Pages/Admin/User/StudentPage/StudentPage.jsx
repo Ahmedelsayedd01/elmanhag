@@ -48,6 +48,25 @@ const StudentPage = () => {
        const [isDeleting, setIsDeleting] = useState(false);
        const [openDialog, setOpenDialog] = useState(null);
 
+
+
+       const [currentPage, setCurrentPage] = useState(1); // Track the current page
+       const studentsPerPage = 25; // Limit to 25 students per page
+
+       // Calculate total number of pages
+       const totalPages = Math.ceil(students.length / studentsPerPage);
+
+       // Get the students for the current page
+       const currentStudents = students.slice(
+              (currentPage - 1) * studentsPerPage,
+              currentPage * studentsPerPage
+       );
+
+       // Handle page change
+       const handlePageChange = (pageNumber) => {
+              setCurrentPage(pageNumber);
+       };
+
        const filterStudents = (country, city, education, category, pay) => {
               let filteredStudents = [...allStudents];
 
@@ -436,10 +455,13 @@ const StudentPage = () => {
                                           </Link>
                                    </div>
                             </div>
+
                             <div className="w-full flex flex-col items-center justify-between mt-4 overflow-x-auto">
-                                   <table className="w-full min-w-full table-auto border-collapse bg-white shadow-md rounded-lg">
+                                   {/* Table */}
+                                   <table className="w-full min-w-full table-auto border-collapse bg-white shadow-sm rounded-lg">
                                           <thead className="bg-gray-100">
                                                  <tr className="border-b">
+                                                        {/* Table Headers */}
                                                         <th className="px-4 py-2 text-mainColor text-center font-semibold text-sm lg:text-lg">#</th>
                                                         <th className="px-4 py-2 text-mainColor text-center font-semibold text-sm lg:text-lg">Name / Phone</th>
                                                         <th className="px-4 py-2 text-mainColor text-center font-semibold text-sm lg:text-lg">Country / City</th>
@@ -455,134 +477,60 @@ const StudentPage = () => {
                                           </thead>
 
                                           <tbody className="bg-thirdBgColor">
-
-                                                 {students.map((student, index) => (
+                                                 {currentStudents.map((student, index) => (
                                                         <tr key={student.id} className="border-b hover:bg-gray-50">
-                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">{index + 1}</td>
+                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">{(currentPage - 1) * studentsPerPage + index + 1}</td>
+                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">{student?.name || "-"} <br /> {student?.phone || "-"}</td>
+                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">{student.country?.name || "-"} <br /> {student.city?.name || "-"}</td>
+                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">{student.education?.name || "-"}</td>
+                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">{student.category?.name || "-"}</td>
+                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">{student?.gender || "-"}</td>
+                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">{student.student_job?.job || "-"}</td>
+                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">{student?.last_login?.updated_at || '-'}</td>
+                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base pay">{student.bundlesy === '' && student.subjects === '' ? 'Paid' : 'Free'}</td>
                                                                <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">
-                                                                      {student?.name || "-"} <br /> {student?.phone || "-"}
-                                                               </td>
-                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">
-                                                                      {student.country?.name || "-"} <br /> {student.city?.name || "-"}
-                                                               </td>
-                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">
-                                                                      {student.education?.name || "-"}
-                                                               </td>
-                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">
-                                                                      {student.category?.name || "-"}
-                                                               </td>
-                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">
-                                                                      {student?.gender || "-"}
-                                                               </td>
-                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">
-                                                                      {student.student_job?.job || "-"}
-                                                               </td>
-                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">
-                                                                      {student?.last_login?.updated_at || '-'}
-                                                               </td>
-                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base pay">
-                                                                      {student.bundlesy === '' && student.subjects === '' ? 'Paid' : 'Free'}
-                                                               </td>
-                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">
-                                                                      {student.status === 1 && (
-                                                                             <button
-                                                                                    className="bg-green-500 text-white px-4 py-2 rounded-lg"
-                                                                                    onClick={() => handleStatus(student.id, student.name, 0)}
-                                                                             >
-                                                                                    Active
-                                                                             </button>
-                                                                      )}
-                                                                      {student.status === 0 && (
-                                                                             <button
-                                                                                    className="bg-red-500 text-white px-4 py-2 rounded-lg"
-                                                                                    onClick={() => handleStatus(student.id, student.name, 1)}
-                                                                             >
-                                                                                    Banned
-                                                                             </button>
+                                                                      {student.status === 1 ? (
+                                                                             <button className="bg-green-500 text-white px-4 py-2 rounded-lg" onClick={() => handleStatus(student.id, student.name, 0)}>Active</button>
+                                                                      ) : (
+                                                                             <button className="bg-red-500 text-white px-4 py-2 rounded-lg" onClick={() => handleStatus(student.id, student.name, 1)}>Banned</button>
                                                                       )}
                                                                </td>
                                                                <td className="px-4 py-3 text-center">
                                                                       <div className="flex items-center justify-center gap-2">
-                                                                             <Link to={`edit/${student.id}`} className="text-blue-500 hover:underline">
-                                                                                    <EditIcon />
-                                                                             </Link>
-                                                                             <button onClick={() => handleOpenDialog(student.id)} className="text-red-500">
-                                                                                    <DeleteIcon />
-                                                                             </button>
+                                                                             <Link to={`edit/${student.id}`} className="text-blue-500 hover:underline"><EditIcon /></Link>
+                                                                             <button onClick={() => handleOpenDialog(student.id)} className="text-red-500"><DeleteIcon /></button>
                                                                       </div>
-                                                                      {/* {openDialog === student.id && (
-                                                                             <Dialog open={true} onClose={handleCloseDialog}>
-                                                                                    <DialogBackdrop className="fixed inset-0 bg-gray-400 bg-opacity-75" />
-                                                                                    <div className="fixed inset-0 z-10 flex items-center justify-center">
-                                                                                           <DialogPanel className="bg-white rounded-lg shadow-lg">
-                                                                                                  <div className="p-6">
-                                                                                                         <h3 className="text-lg font-semibold">Delete {student?.name || "-"}</h3>
-                                                                                                         <p>Are you sure you want to delete this student?</p>
-                                                                                                         <div className="mt-4 flex justify-end space-x-3">
-                                                                                                                <button
-                                                                                                                       onClick={() => handleDelete(student.id, student.name)}
-                                                                                                                       className="bg-red-500 text-white px-4 py-2 rounded-lg"
-                                                                                                                >
-                                                                                                                       {isDeleting ? <Loading /> : 'Delete'}
-                                                                                                                </button>
-                                                                                                                <button onClick={handleCloseDialog} className="bg-gray-300 px-4 py-2 rounded-lg">
-                                                                                                                       Cancel
-                                                                                                                </button>
-                                                                                                         </div>
-                                                                                                  </div>
-                                                                                           </DialogPanel>
-                                                                                    </div>
-                                                                             </Dialog>
-                                                                      )} */}
-
-                                                                      {openDialog === student.id && (
-                                                                             <Dialog open={true} onClose={handleCloseDialog} className="relative z-10">
-                                                                                    <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-                                                                                    <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                                                                                           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                                                                                                  <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                                                                                                         <div className="flex flex-col items-center justify-center bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                                                                                                                <Wroning Width='28' Height='28' aria-hidden="true" />
-                                                                                                                <div className="flex items-center">
-                                                                                                                       <div className="mt-2 text-center">
-                                                                                                                              <DialogTitle as="h3" className="text-xl font-semibold leading-10 text-gray-900">
-                                                                                                                                     You will delete {student?.name || "this student"}
-                                                                                                                              </DialogTitle>
-                                                                                                                       </div>
-                                                                                                                </div>
-                                                                                                         </div>
-                                                                                                         <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                                                                                                <button
-                                                                                                                       type="button"
-                                                                                                                       data-autofocus
-                                                                                                                       onClick={handleCloseDialog}
-                                                                                                                       className=" rounded-md bg-white px-6 py-2 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
-                                                                                                                >
-                                                                                                                       Cancel
-                                                                                                                </button>
-                                                                                                                <button
-                                                                                                                       type="button"
-                                                                                                                       onClick={() => handleDelete(student.id, student.name)}
-                                                                                                                       disabled={isDeleting}
-                                                                                                                       className="w-24 bg-red-500 text-white text-sm font-medium px-6 py-3 rounded-lg mr-3 flex items-center justify-center"
-                                                                                                                >
-                                                                                                                       {isDeleting ? <div className='w-6'><Loading /></div> : 'Delete'}
-                                                                                                                </button>
-                                                                                                         </div>
-                                                                                                  </DialogPanel>
-                                                                                           </div>
-                                                                                    </div>
-                                                                             </Dialog>
-                                                                      )}
                                                                </td>
                                                         </tr>
                                                  ))}
                                           </tbody>
                                    </table>
 
+                                   {/* No students found message */}
                                    {students.length === 0 && (
                                           <span className="w-full py-3 text-center text-thirdColor text-xl font-semibold">Not Found Students</span>
                                    )}
+
+                                   {/* Pagination Tabs */}
+                                   <div className="my-6 flex items-center justify-center gap-x-4">
+                                          {currentPage !== 1 && (
+
+                                                 <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-secoundColor font-medium' onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
+                                          )}
+                                          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                                                 <button
+                                                        key={page}
+                                                        onClick={() => handlePageChange(page)}
+                                                        className={`px-4 py-2 mx-1 text-lg font-semibold rounded-full duration-300 ${currentPage === page ? 'bg-mainColor text-white' : ' text-mainColor'}`}
+                                                 >
+                                                        {page}
+                                                 </button>
+                                          ))}
+                                          {totalPages !== currentPage && (
+
+                                                 <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-secoundColor font-medium' onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+                                          )}
+                                   </div>
                             </div>
                      </div>
               </>

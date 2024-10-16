@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import HeaderPageSection from '../../Components/HeaderPageSection'
+import { EditAdminPage } from '../../Pages/AllPages'
 
 const EditAdminUserLayout = () => {
        const navigate = useNavigate()
@@ -10,7 +11,7 @@ const EditAdminUserLayout = () => {
        return (
               <>
                      <HeaderPageSection handleClick={handleGoBack} name={'Edit Admin'} />
-                     <EditAdminUserLayout />
+                     <EditAdminPage />
               </>
        )
 }

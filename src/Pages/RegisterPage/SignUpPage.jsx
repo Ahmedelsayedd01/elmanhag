@@ -56,7 +56,7 @@ const SignUpPage = () => {
   const [countriesState, setCountriesState] = useState('البلد');
   const [citiesState, setCitiesState] = useState('المدينة');
   const [categoryState, setCategoryState] = useState('السنة الدراسية');
-  const [educationState, setEducationState] = useState('التعليم');
+  const [educationState, setEducationState] = useState('نوع التعليم');
   const [studentTypeState, setStudentTypeState] = useState('النوع');
   const [studentJobState, setStudentJobState] = useState('نفسك تطلع ايه');
   const [parentRelationState, setParentRelationState] = useState('قرابة ولى الأمر');
@@ -356,7 +356,7 @@ const SignUpPage = () => {
         return;
       }
       if (!education) {
-        auth.toastError("اختر التعليم")
+        auth.toastError("اختر نوع التعليم")
         return;
       }
       if (!category) {
@@ -688,7 +688,20 @@ const SignUpPage = () => {
                 />
 
               </div>
-              <div className="w-full flex  justify-between gap-4">
+              {/* <div className="w-full flex  justify-between gap-4"> */}
+              <div className="w-full flex  flex-col xl:flex-row-reverse justify-between gap-4">
+
+                <div className="w-full">
+                  <DropDownMenu
+                    ref={EducationRef}
+                    iconDirection={true}
+                    handleOpen={handleOpenEducation}
+                    handleOpenOption={handleEducation}
+                    stateoption={educationState}
+                    openMenu={openEducation}
+                    options={educations}
+                  />
+                </div>
 
                 <div className="w-full">
                   <DropDownMenu
@@ -702,17 +715,6 @@ const SignUpPage = () => {
                   />
                 </div>
 
-                <div className="w-full">
-                  <DropDownMenu
-                    ref={EducationRef}
-                    iconDirection={true}
-                    handleOpen={handleOpenEducation}
-                    handleOpenOption={handleEducation}
-                    stateoption={educationState}
-                    openMenu={openEducation}
-                    options={educations}
-                  />
-                </div>
               </div>
 
               {/* <InputCustom
@@ -724,6 +726,36 @@ const SignUpPage = () => {
                 value={studentEmail}
                 onChange={(e) => setStudentEmail(e.target.value)}
               /> */}
+
+              {/* <div className="w-full flex  flex-col xl:flex-row-reverse justify-between gap-4"> */}
+              {/* <div className="w-full flex justify-between gap-4"> */}
+              <div className="w-full flex justify-between gap-4">
+
+
+                <div className="w-full">
+                  <DropDownMenu
+                    ref={CitiesRef}
+                    iconDirection={true}
+                    handleOpen={handleOpenCity}
+                    handleOpenOption={handleCity}
+                    stateoption={citiesState}
+                    openMenu={openCity}
+                    options={cities.length > 0 ? cities : [{ id: "لا يوجد مدن", name: "لا يوجد مدن" }]}
+                  />
+                </div>
+
+                <div className="w-full">
+                  <DropDownMenu
+                    ref={CountriesRef}
+                    iconDirection={true}
+                    handleOpen={handleOpenCountry}
+                    handleOpenOption={handleCountry}
+                    stateoption={countriesState}
+                    openMenu={openCountry}
+                    options={countries}
+                  />
+                </div>
+              </div>
 
               <div className="w-full flex justify-between gap-4">
 
@@ -747,33 +779,6 @@ const SignUpPage = () => {
                     stateoption={studentTypeState}
                     openMenu={openStudentType}
                     options={studentTypes}
-                  />
-                </div>
-              </div>
-
-              <div className="w-full flex  flex-col xl:flex-row-reverse justify-between gap-4">
-
-                <div className="w-full">
-                  <DropDownMenu
-                    ref={CountriesRef}
-                    iconDirection={true}
-                    handleOpen={handleOpenCountry}
-                    handleOpenOption={handleCountry}
-                    stateoption={countriesState}
-                    openMenu={openCountry}
-                    options={countries}
-                  />
-                </div>
-
-                <div className="w-full">
-                  <DropDownMenu
-                    ref={CitiesRef}
-                    iconDirection={true}
-                    handleOpen={handleOpenCity}
-                    handleOpenOption={handleCity}
-                    stateoption={citiesState}
-                    openMenu={openCity}
-                    options={cities.length > 0 ? cities : [{ id: "لا يوجد مدن", name: "لا يوجد مدن" }]}
                   />
                 </div>
               </div>
