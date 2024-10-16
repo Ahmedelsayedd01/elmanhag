@@ -51,7 +51,7 @@ const StudentPage = () => {
 
 
        const [currentPage, setCurrentPage] = useState(1); // Track the current page
-       const studentsPerPage = 25; // Limit to 25 students per page
+       const studentsPerPage = 50; // Limit to 25 students per page
 
        // Calculate total number of pages
        const totalPages = Math.ceil(students.length / studentsPerPage);
@@ -500,6 +500,46 @@ const StudentPage = () => {
                                                                              <Link to={`edit/${student.id}`} className="text-blue-500 hover:underline"><EditIcon /></Link>
                                                                              <button onClick={() => handleOpenDialog(student.id)} className="text-red-500"><DeleteIcon /></button>
                                                                       </div>
+
+                                                                      {openDialog === student.id && (
+                                                                             <Dialog open={true} onClose={handleCloseDialog} className="relative z-10">
+                                                                                    <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                                                                                    <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                                                                                           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                                                                                  <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                                                                                         <div className="flex flex-col items-center justify-center bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                                                                                                <Wroning Width='28' Height='28' aria-hidden="true" />
+                                                                                                                <div className="flex items-center">
+                                                                                                                       <div className="mt-2 text-center">
+                                                                                                                              <DialogTitle as="h3" className="text-xl font-semibold leading-10 text-gray-900">
+                                                                                                                                     You will delete {student?.name || "this student"}
+                                                                                                                              </DialogTitle>
+                                                                                                                       </div>
+                                                                                                                </div>
+                                                                                                         </div>
+                                                                                                         <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                                                                                                <button
+                                                                                                                       type="button"
+                                                                                                                       data-autofocus
+                                                                                                                       onClick={handleCloseDialog}
+                                                                                                                       className=" rounded-md bg-white px-6 py-2 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
+                                                                                                                >
+                                                                                                                       Cancel
+                                                                                                                </button>
+                                                                                                                <button
+                                                                                                                       type="button"
+                                                                                                                       onClick={() => handleDelete(student.id, student.name)}
+                                                                                                                       disabled={isDeleting}
+                                                                                                                       className="w-24 bg-red-500 text-white text-sm font-medium px-6 py-3 rounded-lg mr-3 flex items-center justify-center"
+                                                                                                                >
+                                                                                                                       {isDeleting ? <div className='w-6'><Loading /></div> : 'Delete'}
+                                                                                                                </button>
+                                                                                                         </div>
+                                                                                                  </DialogPanel>
+                                                                                           </div>
+                                                                                    </div>
+                                                                             </Dialog>
+                                                                      )}
                                                                </td>
                                                         </tr>
                                                  ))}
@@ -531,8 +571,8 @@ const StudentPage = () => {
                                                  <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-secoundColor font-medium' onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
                                           )}
                                    </div>
-                            </div>
-                     </div>
+                            </div >
+                     </div >
               </>
        );
 };
