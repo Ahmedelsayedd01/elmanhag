@@ -67,7 +67,7 @@ const SignUpPage = () => {
   const [educationId, setEducationId] = useState('')
   const [studentTypeName, setStudentTypeName] = useState('')
   const [studentJobId, setStudentJobId] = useState('')
-  const [parentRelationId, setParentRelationId] = useState('')
+  const [parentRelationId, setParentRelationId] = useState(1)
 
   const [openCountry, setOpenCountry] = useState(false);
   const [openCity, setOpenCity] = useState(false);
