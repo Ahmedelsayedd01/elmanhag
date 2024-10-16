@@ -202,7 +202,7 @@ const AddCategoryPage = () => {
                                    <div className="flex items-center justify-center w-72">
                                           <Button
                                                  type="submit"
-                                                 Text="Done"
+                                                 Text="Add"
                                                  BgColor="bg-mainColor"
                                                  Color="text-white"
                                                  Width="full"
