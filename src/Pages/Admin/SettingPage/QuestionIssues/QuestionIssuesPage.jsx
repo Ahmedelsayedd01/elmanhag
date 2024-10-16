@@ -19,14 +19,11 @@ const QuestionIssuesPage = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [openDialog, setOpenDialog] = useState(null);
 
-  // const [openView, setOpenView] = useState(null);
 
   const handleCloseDialog = () => {
     setOpenDialog(null);
   };
-  // const handleCloseView = () => {
-  //   setOpenView(null);
-  // };
+
   const fetchQuestionIssues = async () => {
     setIsLoading(true);
     try {
@@ -51,13 +48,31 @@ const QuestionIssuesPage = () => {
     fetchQuestionIssues();
   }, [])
 
+  const handleStatus = async (questionIssuesId, questionIssuesTitle, status) => {
+    try {
+      const response = await axios.put(`https://bdev.elmanhag.shop/admin/Settings/questionIssues/status/${questionIssuesId}`, { status }, {
+        headers: {
+          Authorization: `Bearer ${auth.user.token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        setQuestionIssuesChanged(!questionIssuesChanged)
+        auth.toastSuccess(`${questionIssuesTitle} ${response.data.success}  successfully`)
+        console.log("responsesssd", response)
+      } else {
+        auth.toastError(`${questionIssuesTitle} Failed To ${response.data.success}`)
+      }
+    } catch (error) {
+      auth.toastError('Error', error)
+      console.error('Error change Status questionIssues:', error);
+    }
+  };
+
   const handleOpenDialog = (questionIssuesId) => {
     setOpenDialog(questionIssuesId);
   };
 
-  // const handleOpenView = (roleId) => {
-  //   setOpenView(roleId);
-  // };
 
   const handleDelete = async (questionIssuesId, questionIssuesName) => {
     setIsDeleting(true);
@@ -72,6 +87,7 @@ const QuestionIssuesPage = () => {
       auth.toastError(`Failed to delete ${questionIssuesName}`);
     }
   };
+
   const deleteQuestionIssues = async (questionIssuesId, authToken) => {
     try {
       const response = await axios.delete(`https://bdev.elmanhag.shop/admin/Settings/questionIssues/delete/${questionIssuesId}`, {
@@ -113,9 +129,9 @@ const QuestionIssuesPage = () => {
   //        );
   // }
   // if (!rolesData) {
-  //        return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Roles available</div>;
+  //        return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Question Issues available</div>;
   // }
-  const headers = ['#', 'Question Issues', 'Action']
+  const headers = ['#', 'Question Issues', 'Status', 'Action']
   return (
     <>
       <div className="w-full">
@@ -126,7 +142,7 @@ const QuestionIssuesPage = () => {
         </div>
         {isLoading ? (<div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
           <Loading />
-        </div>) : !questionIssuesData ? (<div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Roles available</div>
+        </div>) : !questionIssuesData ? (<div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Question Issues available</div>
         ) : (
           <div className="w-full flex items-center justify-between mt-4 overflow-x-auto">
             <table className="w-full sm:min-w-0 border-collapse">
@@ -148,6 +164,13 @@ const QuestionIssuesPage = () => {
                     </td>
                     <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                       {question?.title || "-"}
+                    </td>
+                    <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                      {question.status === 1 ? (
+                        <button className="bg-green-500 text-white px-4 py-2 rounded-lg" onClick={() => handleStatus(question.id, question.title, 0)}>Active</button>
+                      ) : (
+                        <button className="bg-red-500 text-white px-4 py-2 rounded-lg" onClick={() => handleStatus(question.id, question.title, 1)}>Banned</button>
+                      )}
                     </td>
                     <td className="min-w-[100px] sm:min-w-[80px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                       <div className="flex items-center justify-center gap-x-3">
