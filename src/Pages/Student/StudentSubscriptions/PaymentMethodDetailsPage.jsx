@@ -159,17 +159,21 @@ const PaymentMethodDetailsPage = () => {
         if (response.status === 200) {
           auth.toastSuccess("شكرا على اشتاركك في منصة المنهج يتم مراجعة المدفوعات من قبل القسم المختص");
           handleGoBack();
-        } else {
+        } 
+        else {
           auth.toastError('Failed to add Subject.');
         }
       } catch (error) {
         console.log(error)
+        if(error.response.data.faild =="You buy subject before"){
+          auth.toastError('You buy Subject before.');
+        }
         const errorMessages = error?.response?.data.errors;
         let errorMessageString = 'Error occurred';
         if (errorMessages) {
           errorMessageString = Object.values(errorMessages).flat().join(' ');
         }
-        auth.toastError('Error', errorMessageString);
+        // auth.toastError('Error', errorMessageString);
       } finally {
         setIsLoading(false);
       }
