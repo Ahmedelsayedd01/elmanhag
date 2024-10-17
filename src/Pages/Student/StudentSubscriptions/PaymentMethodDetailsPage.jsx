@@ -168,12 +168,17 @@ const PaymentMethodDetailsPage = () => {
         if(error.response.data.faild =="You buy subject before"){
           auth.toastError('You buy Subject before.');
         }
-        const errorMessages = error?.response?.data.errors;
-        let errorMessageString = 'Error occurred';
-        if (errorMessages) {
-          errorMessageString = Object.values(errorMessages).flat().join(' ');
+        else if (error.response.data.faild =="You buy bundle before"){
+          auth.toastError('You buy bundle before.');
         }
-        // auth.toastError('Error', errorMessageString);
+        else{
+          const errorMessages = error?.response?.data.errors;
+          let errorMessageString = 'Error occurred';
+          if (errorMessages) {
+            errorMessageString = Object.values(errorMessages).flat().join(' ');
+          }
+          auth.toastError('Error', errorMessageString);
+        }
       } finally {
         setIsLoading(false);
       }
