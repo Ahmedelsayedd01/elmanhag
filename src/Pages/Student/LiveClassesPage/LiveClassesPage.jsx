@@ -554,6 +554,7 @@ const LiveClassesPage = () => {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
+    console.log("done")
     navigate(-1, { replace: true });
   };
 
@@ -591,37 +592,70 @@ const LiveClassesPage = () => {
     }
   };
 
-
   const filterLiveSessions = (liveSessions, selectedDay) => {
     const currentTime = new Date();
+    const today = new Date(); // Represents the current day
   
     const filtered = liveSessions.filter((live) => {
-      const liveDate = new Date(live.date); // Date of the live session
-      const fromTime = new Date(live.from); // Start time of the live session
-      const toTime = new Date(live.to); // End time of the live session
-
-      // Skip expired or past sessions
+      const liveDate = new Date(live.date);
+  
+      // Extract hours and minutes from live.from and live.to
+      const [toHours, toMinutes] = live.to.split(":");
+      const [fromHours, fromMinutes] = live.from.split(":");
+  
+      // Create `fromTime` and `toTime` based on the time of the session
+      const fromTime = new Date(selectedDay);
+      fromTime.setHours(fromHours, fromMinutes, 0);
+  
+      const toTime = new Date(selectedDay);
+      toTime.setHours(toHours, toMinutes, 0);
+  
+      // Extract hours and minutes from current time
+      const currentHours = currentTime.getHours();
+      const currentMinutes = currentTime.getMinutes();
+  
+      // Compare only the time part (hours and minutes)
+      const fromTimeOnly = fromHours * 60 + parseInt(fromMinutes);
+      const toTimeOnly = toHours * 60 + parseInt(toMinutes);
+      const currentTimeOnly = currentHours * 60 + currentMinutes;
+  
+      // For debugging: Check the constructed times
+      console.log("fromTime:", fromTime);
+      console.log("toTime:", toTime);
+      console.log("currentTime:", currentTime);
+      console.log("currentTimeOnly:", currentTimeOnly, "toTimeOnly:", toTimeOnly);
+  
+      // Skip expired sessions
       if (live.date === "Expired") {
         return false;
       }
-      
+  
+      // Check if selectedDay is today
+      if (isSameDay(today, selectedDay)) {
+        // Compare only the time part for today's session
+        if (currentTimeOnly > toTimeOnly) {
+          console.log("Session has already ended today:", liveDate);
+          return false;
+        }
+      }
+  
       // Non-recurring sessions (fixed === 0): Show only on the selected day
       if (live.fixed === 0) {
         return isSameDay(liveDate, selectedDay);
       }
 
-      // Recurring sessions (fixed === 1): Check if they are in the interval for the selected day
-      if (live.fixed === 1) {
+        // Recurring sessions (fixed === 1): Check if they are in the interval for the selected day
+        if (live.fixed === 1) {
         const startDate = new Date(live.date); // Start of the live session's interval
         const endDate = new Date(live.end_date); // End of the live session's interval
         // return isWithinInterval(selectedDay, { start: startDate, end: endDate});
 
-       // Get the day name from selectedDay
-       const selectedDayName = selectedDay.toLocaleString('en-US', { weekday: 'long' }); // 'Wednesday', etc.
-       console.log("Selected Day Name:", selectedDayName, "Live Day:", live.day);
-       
-       // Check if selectedDay's day name is the same as live.day
-       const isSelectedDaySameAsLiveDay = selectedDayName === live.day;
+        // Get the day name from selectedDay
+        const selectedDayName = selectedDay.toLocaleString('en-US', { weekday: 'long' }); // 'Wednesday', etc.
+        console.log("Selected Day Name:", selectedDayName, "Live Day:", live.day);
+        
+        // Check if selectedDay's day name is the same as live.day
+        const isSelectedDaySameAsLiveDay = selectedDayName === live.day;
       
       // Check if live.day is within the start and end dates
       const isLiveDayInInterval = isWithinInterval(selectedDay, { start: startDate, end: endDate });
@@ -629,14 +663,15 @@ const LiveClassesPage = () => {
       // Return true if both conditions are met
       return isSelectedDaySameAsLiveDay && isLiveDayInInterval;
       }
-
-      return false; // Default case, should not happen
+  
+      return false; // Default case
     });
-    
+  
     setFilteredData(filtered);
     console.log(filtered);
   };
-
+  
+  
   useEffect(() => {
     fetchLive();
   }, [auth.user.token]);
@@ -656,7 +691,7 @@ const LiveClassesPage = () => {
   };
 
   const handleDateClick = (date) => {
-    if (!isBefore(date, today)) {
+    if (isBefore(date, today) || !isSameDay(date, today)) {
       setSelectedDay(date); // Update selected day
       filterLiveSessions(liveData, date); // Filter sessions based on the selected day
     }
@@ -667,9 +702,7 @@ const LiveClassesPage = () => {
     return Array.from({ length: 7 }, (_, i) => addDays(startDate, i));
   };
 
-
-  
-  const handleAttendanceClick = async (id, live) => {
+  const handleAttendanceClick = async (id, live) => { 
     setIsLoading(true);
     console.log("live is:", live, live.link);
   
@@ -684,31 +717,17 @@ const LiveClassesPage = () => {
         return date;
       };
   
+      // Create a date object for the live session date
+      const liveDate = new Date(live.date); // Ensure live.date is in a valid format (ISO string)
       const fromTime = parseTime(live.from); // Convert fromTime to a Date object
       const toTime = parseTime(live.to); // Convert toTime to a Date object
   
-      // Calculate the time difference in minutes
-      const diffFromTime = (fromTime - currentTime) / (1000 * 60); // Difference in minutes
-      const diffToTime = (currentTime - toTime) / (1000 * 60); // Difference in minutes
+      // Set the live session's date for 'from' and 'to' times
+      fromTime.setFullYear(liveDate.getFullYear(), liveDate.getMonth(), liveDate.getDate());
+      toTime.setFullYear(liveDate.getFullYear(), liveDate.getMonth(), liveDate.getDate());
   
-      // Check if the current time is more than 30 minutes before the live start time
-      if (diffFromTime > 30) {
-        setWarningMessage('اللايف لم يبدأ بعد. الرجاء العودة لاحقًا قبل الموعد بعشر دقائق'); // Arabic message for "Event hasn't started yet"
-        setIsWorningOpen(true); // Open the warning modal
-        setIsLoading(false); // Stop loading
-        return; // Exit the function, prevent API call
-      }
-  
-      // Check if the live session has already ended
-      if (diffToTime > 0) {
-        setWarningMessage('انتهى اللايف. لا يمكنك الانضمام بعد الآن.'); // Arabic message for "Event has ended"
-        setIsWorningOpen(true); // Open the warning modal
-        setIsLoading(false); // Stop loading
-        return; // Exit the function, prevent API call
-      }
-  
-      // Proceed with API call if time conditions are met
-      const response = await axios.post(
+      // First, check if the user has purchased the live session
+      const purchaseResponse = await axios.post(
         `https://bdev.elmanhag.shop/student/subscription/check/${id}`, {},
         {
           headers: {
@@ -718,27 +737,62 @@ const LiveClassesPage = () => {
         }
       );
   
-      console.log("Response status:", response.status);
-      console.log("Response data:", response);
+      console.log("Purchase Response status:", purchaseResponse.status);
+      console.log("Purchase Response data:", purchaseResponse.data);
   
-      if (response.status === 200 && response.data.success) {
-        console.log('Success:', response.data);
+      if (purchaseResponse.status !== 200 || !purchaseResponse.data.success) {
+        // Handle if the user hasn't purchased the live session
+        setModalMessage('يجب شراء اللايف'); // Arabic message for "You must buy live first"
+        setIsModalOpen(true); // Open the modal
+        setIsLoading(false);
+        return; // Exit the function
+      }
+  
+      // Now that we know the user has purchased, proceed with date checks
+      const diffFromTime = (fromTime - currentTime) / (1000 * 60); // Difference in minutes
+      const diffToTime = (currentTime - toTime) / (1000 * 60); // Difference in minutes
+  
+      const isSameDay = selectedDay.toDateString() === currentTime.toDateString();
+      console.log(selectedDay.toDateString() , currentTime.toDateString())
+      
+      if (isSameDay) {
+        // If today is the live date, check if the live session has ended
+        if (diffToTime > 0) {
+          setWarningMessage('انتهى اللايف. لا يمكنك الانضمام بعد الآن.'); // Event has ended
+          setIsWorningOpen(true);
+          setIsLoading(false);
+          return;
+        }
+  
+        // If the live session starts in more than 30 minutes
+        if (diffFromTime > 30) {
+          setWarningMessage('اللايف لم يبدأ بعد. الرجاء العودة لاحقًا قبل الموعد بعشر دقائق'); // Event hasn't started yet
+          setIsWorningOpen(true);
+          setIsLoading(false);
+          return;
+        }
+  
+        // If the live session starts within 30 minutes, go to the link directly
         window.open(live.link, '_blank', 'noopener noreferrer');
+  
+      } else {
+        // If the live session is in the future
+        if (selectedDay > currentTime) {
+          setWarningMessage('الرجاء الدخول قبل الموعد بعشر دقائق'); // Please enter before the appointment 10 minutes
+          setIsWorningOpen(true);
+          setIsLoading(false);
+          return;
+        }
       }
     } catch (error) {
       console.log('Error response:', error.response);
   
-      // Check if the error response contains the 'faild' message
+      // Handle any errors that occurred during the API call
       if (error.response && error.response.data && error.response.data.faild) {
         const faildMessage = error.response.data.faild;
   
         // Set the Arabic message if the returned message matches
-        if (faildMessage === 'You must buy live first') {
-          setModalMessage('يجب شراء اللايف'); // Arabic message for the modal
-        } else {
-          setModalMessage(faildMessage); // Set the original error message if it's different
-        }
-  
+        setModalMessage(faildMessage); // Use the faild message if present
         setIsModalOpen(true); // Open the modal
       } else {
         // Handle other possible errors (e.g., validation errors)
@@ -753,6 +807,98 @@ const LiveClassesPage = () => {
       setIsLoading(false);
     }
   };
+
+  const handleCloseWorning = () => {
+    setIsWorningOpen(false)
+  }
+  
+
+
+  
+  // const handleAttendanceClick = async (id, live) => {
+  //   setIsLoading(true);
+  //   console.log("live is:", live, live.link);
+  
+  //   try {
+  //     const currentTime = new Date(); // Get the current date and time
+  
+  //     // Helper function to create a Date object with today's date and a given time (HH:MM:SS)
+  //     const parseTime = (timeString) => {
+  //       const [hours, minutes, seconds] = timeString.split(':').map(Number);
+  //       const date = new Date();
+  //       date.setHours(hours, minutes, seconds, 0); // Set hours, minutes, and seconds
+  //       return date;
+  //     };
+  
+  //     const fromTime = parseTime(live.from); // Convert fromTime to a Date object
+  //     const toTime = parseTime(live.to); // Convert toTime to a Date object
+  
+  //     // Calculate the time difference in minutes
+  //     const diffFromTime = (fromTime - currentTime) / (1000 * 60); // Difference in minutes
+  //     const diffToTime = (currentTime - toTime) / (1000 * 60); // Difference in minutes
+  
+  //     // Check if the current time is more than 30 minutes before the live start time
+  //     if (diffFromTime > 30) {
+  //       setWarningMessage('اللايف لم يبدأ بعد. الرجاء العودة لاحقًا قبل الموعد بعشر دقائق'); // Arabic message for "Event hasn't started yet"
+  //       setIsWorningOpen(true); // Open the warning modal
+  //       setIsLoading(false); // Stop loading
+  //       return; // Exit the function, prevent API call
+  //     }
+  
+  //     // Check if the live session has already ended
+  //     if (diffToTime > 0) {
+  //       setWarningMessage('انتهى اللايف. لا يمكنك الانضمام بعد الآن.'); // Arabic message for "Event has ended"
+  //       setIsWorningOpen(true); // Open the warning modal
+  //       setIsLoading(false); // Stop loading
+  //       return; // Exit the function, prevent API call
+  //     }
+  
+  //     // Proceed with API call if time conditions are met
+  //     const response = await axios.post(
+  //       `https://bdev.elmanhag.shop/student/subscription/check/${id}`, {},
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${auth.user.token}`,
+  //           'Content-Type': 'application/json',
+  //         },
+  //       }
+  //     );
+  
+  //     console.log("Response status:", response.status);
+  //     console.log("Response data:", response);
+  
+  //     if (response.status === 200 && response.data.success) {
+  //       console.log('Success:', response.data);
+  //       window.open(live.link, '_blank', 'noopener noreferrer');
+  //     }
+  //   } catch (error) {
+  //     console.log('Error response:', error.response);
+  
+  //     // Check if the error response contains the 'faild' message
+  //     if (error.response && error.response.data && error.response.data.faild) {
+  //       const faildMessage = error.response.data.faild;
+  
+  //       // Set the Arabic message if the returned message matches
+  //       if (faildMessage === 'You must buy live first') {
+  //         setModalMessage('يجب شراء اللايف'); // Arabic message for the modal
+  //       } else {
+  //         setModalMessage(faildMessage); // Set the original error message if it's different
+  //       }
+  
+  //       setIsModalOpen(true); // Open the modal
+  //     } else {
+  //       // Handle other possible errors (e.g., validation errors)
+  //       const errorMessages = error?.response?.data?.errors;
+  //       let errorMessageString = 'Error occurred';
+  //       if (errorMessages) {
+  //         errorMessageString = Object.values(errorMessages).flat().join(' ');
+  //       }
+  //       auth.toastError('Error', errorMessageString);
+  //     }
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
   
 
   return (
@@ -776,14 +922,14 @@ const LiveClassesPage = () => {
         </div>
 
         {/* Days of the Week */}
-        <div className="grid grid-cols-7 gap-2 text-center font-bold lg:text-lg sm:text-xs">
+        {/* <div className="grid grid-cols-7 gap-2 text-center font-bold lg:text-lg sm:text-xs">
           {['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'].map(day => (
             <div key={day} className="text-gray-600">{day}</div>
           ))}
-        </div>
+        </div> */}
 
         {/* Dates for the Current Week */}
-        <div className="grid grid-cols-7 gap-2 mt-4">
+        {/* <div className="grid grid-cols-7 gap-2 mt-4">
           {generateWeekDates().map(date => {
             const isToday = isSameDay(date, today);
             const isPastDate = isBefore(date, today);
@@ -799,7 +945,24 @@ const LiveClassesPage = () => {
               </div>
             );
           })}
-        </div>
+        </div> */}
+
+<div className="grid grid-cols-7 gap-1 lg:gap-2 text-center font-semibold lg:text-lg md:text-lg sm:text-xs">
+  {generateWeekDates().map((date) => (
+    <button
+      key={date.toString()}
+      onClick={() => handleDateClick(date)}
+      className={`p-1 lg:p-2 rounded-lg cursor-pointer 
+        ${isSameDay(date, selectedDay) ? 'bg-mainColor text-white' : 'bg-gray-200'} 
+        ${isBefore(date, today) && !isSameDay(date, today) ? 'cursor-not-allowed opacity-50' : ''}`} // Apply opacity only to past dates
+      disabled={isBefore(date, today) && !isSameDay(date, today)} // Disable past dates except today
+    >
+      {format(date, 'EEEE', { locale: arSA })}<br />
+      {format(date, 'd', { locale: arSA })}
+    </button>
+  ))}
+</div>
+
       </div>
 
       {/* Filtered Data Display */}
@@ -828,7 +991,7 @@ const LiveClassesPage = () => {
                 <div className="bg-white p-6 md:p-12 rounded-lg w-11/12 md:w-1/2 lg:w-1/3">
                   <h2 className="text-[#6B6B6B] text-xl md:text-2xl font-bold mb-4">{warningMessage}</h2>
                   <div className="flex justify-end gap-4 sm:gap-2">
-                    <Button Text="حسنا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
+                    <Button Text="حسنا" Width="auto" BgColor="bg-mainColor" Color="text-white" handleClick={handleCloseWorning} />
                   </div>
                 </div>
               </div>
@@ -859,14 +1022,16 @@ const LiveClassesPage = () => {
                     px="px-3"
                     rounded="rounded-2xl"
                     handleClick={() => handleAttendanceClick(live.id, live)}
-                    stateLoding={isLoading}
+                    // stateLoding={isLoading}
                   />
                 </div>
               </div>
             </div>
           ))
         ) : (
-          <h1 className="text-mainColor text-xl font-semibold">لا توجد حصص متاحة في هذا اليوم</h1>
+         <div className='w-full text-center'>
+          <h1 className="text-mainColor text-2xl font-semibold">لا توجد حصص متاحة في هذا اليوم</h1>
+          </div>
         )}
       </div>
     </>
