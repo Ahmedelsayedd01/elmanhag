@@ -546,32 +546,32 @@ export const router = createBrowserRouter([
               {
                 path: 'edit/:profileStudentId',
                 element: <AppLayoutStudentProfile />,
-                children: [
-                  {
-                    index: true, // This will match the base '/edit' path
-                    element: <Navigate to="profile" />, // Redirect to '/edit/profile'
-                  },
-                  {
-                    path: 'profile',
-                    element: <ProfilePage />,
-                  },
-                  {
-                    path: 'parent',
-                    element: <ParentPage />,
-                  },
-                  {
-                    path: 'Purchases',
-                    element: <PurchasesPage />,
-                  },
-                  {
-                    path: 'Progress',
-                    element: <ProgressPage />,
-                  },
-                  {
-                    path: 'loginHistory',
-                    element: <LoginHistoryPage />,
-                  },
-                ],
+                // children: [
+                //   {
+                //     index: true, // This will match the base '/edit' path
+                //     element: <Navigate to="profile" />, // Redirect to '/edit/profile'
+                //   },
+                //   {
+                //     path: 'profile',
+                //     element: <ProfilePage />,
+                //   },
+                //   {
+                //     path: 'parent',
+                //     element: <ParentPage />,
+                //   },
+                //   {
+                //     path: 'Purchases',
+                //     element: <PurchasesPage />,
+                //   },
+                //   {
+                //     path: 'Progress',
+                //     element: <ProgressPage />,
+                //   },
+                //   {
+                //     path: 'loginHistory',
+                //     element: <LoginHistoryPage />,
+                //   },
+                // ],
               }
             ]
 
