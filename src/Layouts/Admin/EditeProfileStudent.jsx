@@ -35,6 +35,7 @@ const EditeProfileStudent = () => {
     // console.log('allStudent', allStudent);
     // console.log('studentEdit', studentEdit);
 
+    const { profileStudentId } = useParams()
     const handleGoBack = () => {
         navigate('/dashboard_admin/student', { replace: true });
     };
@@ -42,17 +43,18 @@ const EditeProfileStudent = () => {
     return (
         <>
             <HeaderPageSection name='Edit Student' handleClick={handleGoBack} />
-            <div className="LinksProfile flex flex-wrap w-full justify-between mb-8 pt-5">
+            {/* <div className="LinksProfile flex flex-wrap w-full justify-between mb-8 pt-5">
                 <Taps path={'profile'} name={"profile"} />
                 <Taps path={'parent'} name={"parent"} />
                 <Taps path={'Purchases'} name={"Purchases"} />
                 <Taps path={'Progress'} name={"Progress"} />
                 <Taps path={'loginHistory'} name={"login History"} />
-            </div>
+            </div> */}
             {/* <h1>Profile ID: {profileStudentId}</h1> */}
             {/* <StudentDataContext.Provider value={studentEdit}> */}
             <EditProfilePage />
             {/* </StudentDataContext.Provider> */}
+            {/* <span>{profileStudentId}</span> */}
         </>
     );
 };
