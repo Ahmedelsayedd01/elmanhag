@@ -12,6 +12,9 @@ import { Link } from 'react-router-dom';
 import DropDownMenu from '../../../../Components/DropDownMenu';
 import { Wroning } from '../../../../Components/Icons/All_Icons';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
+import { LuUpload } from 'react-icons/lu';
+
+import * as XLSX from 'xlsx';
 
 const StudentPage = () => {
        const auth = useAuth();
@@ -381,6 +384,56 @@ const StudentPage = () => {
               setSearch(e.target.value);
        };
 
+
+
+       const handleExportExcel = () => {
+              // Extract table data
+              setIsLoading(true);
+              const tableData = students.map((student, index) => ({
+                     "#": index + 1,
+                     "Name": `${student?.name || "-"}`,
+                     "Phone": `${student?.phone || "-"}`,
+                     "Country": `${student.country?.name || "-"}`,
+                     "City": `${student.city?.name || "-"}`,
+                     "Education": student.education?.name || "-",
+                     "Category": student.category?.name || "-",
+                     "Type": student?.gender || "-",
+                     "Job": student.student_job?.job || "-",
+                     "Last Login": student?.last_login?.updated_at || "-",
+                     "Status": student.status === 1 ? "Active" : "Banned",
+                     "Free / Paid": student.bundlesy === '' && student.subjects === '' ? 'Paid' : 'Free',
+              }));
+
+              // Create a new workbook and add the data
+              const workbook = XLSX.utils.book_new();
+              const worksheet = XLSX.utils.json_to_sheet(tableData);
+
+              // Define custom column widths
+              worksheet['!cols'] = [
+                     { wch: 5 },   // Column for "#"
+                     { wch: 20 },  // Column for "Name"
+                     { wch: 20 },  // Column for "Phone"
+                     { wch: 10 },  // Column for "Country"
+                     { wch: 15 },  // Column for "City"
+                     { wch: 10 },  // Column for "Education"
+                     { wch: 25 },  // Column for "Category"
+                     { wch: 10 },  // Column for "Type"
+                     { wch: 20 },  // Column for "Job"
+                     { wch: 20 },  // Column for "Last Login"
+                     { wch: 10 },  // Column for "Free / Paid"
+                     { wch: 10 }   // Column for "Status"
+              ];
+
+              // Append the customized worksheet
+              XLSX.utils.book_append_sheet(workbook, worksheet, "Students");
+
+              // Export the file
+              XLSX.writeFile(workbook, "students_data.xlsx");
+              setIsLoading(false);
+       };
+
+
+
        return (
               <>
                      <div className="w-full flex flex-wrap gap-y-4 items-center justify-between">
@@ -449,10 +502,15 @@ const StudentPage = () => {
                                                  options={[{ id: 1, name: 'Free' }, { id: 2, name: 'Paid' }]}
                                           />
                                    </div>
-                                   <div className="sm:w-full xl:w-[10%] text-start">
-                                          <Link to="add">
-                                                 <ButtonAdd Text={"Add"} isWidth={true} BgColor={"white"} Color={"thirdColor"} Size={"xl"} />
-                                          </Link>
+                                   <div className="w-full flex sm:flex-col xl:flex-row gap-4">
+
+                                          <div className="sm:w-full xl:w-[10%] text-start">
+                                                 <Link to="add">
+                                                        <ButtonAdd Text={"Add"} isWidth={true} BgColor={"white"} Color={"thirdColor"} Size={"xl"} />
+                                                 </Link>
+                                          </div>
+
+                                          <button className="bg-green-500 text-white text-xl px-4 py-2 rounded-lg flex items-center justify-center gap-2" onClick={handleExportExcel}><LuUpload /> Export Excel</button>
                                    </div>
                             </div>
 
@@ -572,7 +630,7 @@ const StudentPage = () => {
                                           )}
                                    </div>
                             </div >
-                     </div >
+                     </div>
               </>
        );
 };
