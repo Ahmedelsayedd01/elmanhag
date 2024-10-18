@@ -423,7 +423,7 @@ const AppLayoutAffilateDashboard = () => (
 );
 const AppLayoutTeacherDashboard = () => (
   <div className="w-full flex gap-x-4 directionAR">
-    {/* <SidebarStudent /> */}
+    <SidebarTeacher />
     <div className=" w-full h-screen ">
       <NavbarStudent />
       <TeacherPage />
