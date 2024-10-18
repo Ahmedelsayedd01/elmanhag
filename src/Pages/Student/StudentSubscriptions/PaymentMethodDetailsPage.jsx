@@ -168,12 +168,17 @@ const PaymentMethodDetailsPage = () => {
         if(error.response.data.faild =="You buy subject before"){
           auth.toastError('You buy Subject before.');
         }
-        const errorMessages = error?.response?.data.errors;
-        let errorMessageString = 'Error occurred';
-        if (errorMessages) {
-          errorMessageString = Object.values(errorMessages).flat().join(' ');
+        else if (error.response.data.faild =="You buy bundle before"){
+          auth.toastError('You buy bundle before.');
         }
-        // auth.toastError('Error', errorMessageString);
+        else{
+          const errorMessages = error?.response?.data.errors;
+          let errorMessageString = 'Error occurred';
+          if (errorMessages) {
+            errorMessageString = Object.values(errorMessages).flat().join(' ');
+          }
+          auth.toastError('Error', errorMessageString);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -473,7 +478,7 @@ const PaymentMethodDetailsPage = () => {
           {!['visa', 'fawry'].includes(paymentMethod.title) && (
             <>
               <div className="p-6 rounded-lg shadow-lg w-full lg:w-[60%] space-y-6">
-                <p className="text-md text-gray-700 directionEN">Please check the payment details below:</p>
+                {/* <p className="text-md text-gray-700 directionEN">Please check the payment details below:</p> */}
                 <h1 className="text-xl font-semibold text-gray-900 mb-4 border-b-2 border-gray-200 pb-2 directionEN">{paymentMethod.description}</h1>
                 <div className="lg:w-[50%] sm:w-full">
                   <InputCustom
