@@ -533,7 +533,7 @@ const EditProfilePage = () => {
                                    (
                                           <div className="w-full flex flex-wrap items-center justify-start gap-2">
                                                  <div className="w-full flex items-center justify-start gap-5 mb-4">
-                                                        <img src={studentImage} alt="Photo" className='w-72 h-72 object-cover object-center rounded-full' />
+                                                        <img src={studentImage} loading='lazy' alt="Photo" className='w-72 h-72 object-cover object-center rounded-full' />
                                                         <div className="flex flex-col">
                                                                <span className='text-mainColor text-xl font-medium'>{studentName}</span>
                                                                <span className='text-mainColor text-xl font-medium'>{studentEmail}</span>
@@ -620,7 +620,7 @@ const EditProfilePage = () => {
                                                                ref={StudentJobRef}
                                                                handleOpen={handleOpenStudentJob}
                                                                handleOpenOption={handleStudentJob}
-                                                               stateoption={studentJobState}
+                                                               stateoption={studentJobName}
                                                                openMenu={openStudentJob}
                                                                options={studentJobs}
                                                         />
