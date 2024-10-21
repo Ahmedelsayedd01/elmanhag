@@ -10,7 +10,7 @@ const LiveLayout = () => {
 
 
        useEffect(() => {
-              if (location.pathname === '/dashboard_admin/live' || location.pathname === '/dashboard_admin/live/') {
+              if (location.pathname === '/dashboard_admin/lives/live' || location.pathname === '/dashboard_admin/lives/live/') {
                      navigate('upcoming'); // Navigate to 'upcoming' when at '/live' path
               }
        }, [location.pathname, navigate]);
@@ -18,7 +18,7 @@ const LiveLayout = () => {
        return (
               <>
                      <div className="flex flex-col items-center gap-y-4">
-                            {(location.pathname === '/dashboard_admin/live/upcoming' || location.pathname === '/dashboard_admin/live/history') && (
+                            {(location.pathname === '/dashboard_admin/lives/live/upcoming' || location.pathname === '/dashboard_admin/lives/live/history') && (
                                    <>
                                           <TitleHeader text={"Live"} spaceBottom={0} />
                                           <LiveNavPage />
