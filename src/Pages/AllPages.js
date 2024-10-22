@@ -174,6 +174,12 @@ export { default as SubscriptionsPaymentPage } from "./Student/StudentSubscripti
 export { default as AllPlansPage } from "./Student/StudentSubscriptions/AllPlansPage";
 export { default as PaymentMethodDetailsPage } from "./Student/StudentSubscriptions/PaymentMethodDetailsPage";
 
+/* Student Live Classes History */
+export { default as AllLiveSubjectsPage } from "./Student/LiveClassesHistory/AllLiveSubjectsPage";
+export { default as AllLiveUnitsPage } from "./Student/LiveClassesHistory/AllLiveUnitsPage";
+export { default as AllLiveLessonesPage } from "./Student/LiveClassesHistory/AllLiveLessonesPage";
+
+
 /* StudentComplaint and suggestion */
 export { default as ComplaintPage } from "./Student/Complaint/ComplaintPage";
 

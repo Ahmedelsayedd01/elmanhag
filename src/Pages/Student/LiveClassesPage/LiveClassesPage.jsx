@@ -903,6 +903,9 @@ const LiveClassesPage = () => {
 
   return (
     <>
+    <div className='w-full p-4'>
+    <Button Text="حصص اللايف السابقه" Width="auto" BgColor="bg-mainColor" Color="text-white" handleClick={handleGoBack} />
+    </div>
       <div className="w-full p-4 bg-white shadow-lg rounded-lg" dir="rtl">
         {/* Header */}
         <div className="flex justify-between items-center mb-4">
