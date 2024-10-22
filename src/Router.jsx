@@ -101,7 +101,11 @@ import {
   VideoIssuesLayout,
   AddVideoIssuesLayout,
   EditVideoIssuesLayout,
+<<<<<<< HEAD
   TeacherLayout
+=======
+  RecordedLiveLayout
+>>>>>>> ce174f8eb648e4e774d64f9543485deba7799189
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -124,12 +128,15 @@ import SignUpPage from "./Pages/RegisterPage/SignUpPage";
 
 import {
   AddLiveUpcomingPage,
+  AddRecordedLivePage,
   AffilatePage,
   ComplaintsHistoryPage,
   ComplaintsPage,
   DownloadMobilePage,
   EditLiveUpcomingPage,
+  EditRecordedLivePage,
   HomePage,
+  LiveHistoryPage,
   LiveUpcomingPage,
   LoginHistoryPage,
   ParentDashboardPage,
@@ -175,7 +182,6 @@ import EditQuestionLayout from "./Layouts/Admin/EditQuestionLayout";
 import QuestionLayout from "./Layouts/Admin/QuestionLayout";
 import Complaint from "./Pages/Student/Complaint/ComplaintPage";
 import EditProfileStudentLayout from "./Layouts/Student/EditProfileStudentLayout";
-import LiveHistoryPage from "./Pages/Admin/LivePage/History/LiveHistoryPage";
 
 export const ContextNumper = createContext()
 const AppLayoutAuthentication = () => (
@@ -280,11 +286,21 @@ const AppLayoutQuestionsBank = () => (
   </>
 );
 
-/* Live */
+/* Lives */
+const AppLayoutLives = () => (
+  <>
+    <Outlet />
+  </>
+);
 const AppLayoutLive = () => (
   <>
     {/* <Outlet /> */}
     <LiveLayout />
+  </>
+);
+const AppLayoutRecordedLive = () => (
+  <>
+    <Outlet />
   </>
 );
 /* Marketing */
@@ -770,27 +786,52 @@ export const router = createBrowserRouter([
             element: <ExamsAD />,
           },
           {
-            path: 'live',
-            element: <AppLayoutLive />,
+            path: 'lives',
+            element: <AppLayoutLives />,
             children: [
               {
-                path: 'upcoming',
-                element: <LiveUpcomingPage />,
+                path: 'live',
+                element: <AppLayoutLive />,  // Ensure this is the right component
+                children: [
+                  {
+                    path: 'upcoming',
+                    element: <LiveUpcomingPage />,
+                  },
+                  {
+                    path: 'upcoming/add',
+                    element: <AddLiveUpcomingPage />
+                  },
+                  {
+                    path: 'upcoming/edit/:liveId',
+                    element: <EditLiveUpcomingPage />
+                  },
+                  {
+                    path: 'history',
+                    element: <LiveHistoryPage />,
+                  },
+                ]
               },
               {
-                path: 'upcoming/add',
-                element: <AddLiveUpcomingPage />
-              },
-              {
-                path: 'upcoming/edit/:liveId',
-                element: <EditLiveUpcomingPage />
-              },
-              {
-                path: 'history',
-                element: <LiveHistoryPage />,
+                path: 'recorded_live',
+                element: <AppLayoutRecordedLive />,  // Ensure this is the right component
+                children: [
+                  {
+                    path: '',
+                    element: <RecordedLiveLayout />
+                  },
+                  {
+                    path: 'add',
+                    element: <AddRecordedLivePage />
+                  },
+                  {
+                    path: 'edit/:liveId',
+                    element: <EditRecordedLivePage />
+                  },
+                ]
               },
             ]
           },
+
           /* Marketing */
           {
             path: 'discount',

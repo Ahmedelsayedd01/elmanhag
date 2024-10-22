@@ -52,13 +52,19 @@ export { default as HomeWorkPage } from "./Admin/HomeWorkPage/HomeWorkPage";
 export { default as AddHomeWorkPage } from "./Admin/HomeWorkPage/AddHomeWorkPage";
 export { default as EditHomeWorkPage } from "./Admin/HomeWorkPage/EditHomeWorkPage";
 
-/* Live Page */
-export { default as LiveNavPage } from "./Admin/LivePage/LiveNavPage";
+/* Lives */ 
+// Live Page 
+export { default as LiveNavPage } from "./Admin/LivesPage/LivePage/LiveNavPage";
 // Upcoming
-export { default as LiveUpcomingPage } from "./Admin/LivePage/Upcoming/LiveUpcomingPage";
-export { default as AddLiveUpcomingPage } from "./Admin/LivePage/Upcoming/AddLiveUpcomingPage";
-export { default as EditLiveUpcomingPage } from "./Admin/LivePage/Upcoming/EditLiveUpcomingPage";
+export { default as LiveUpcomingPage } from "./Admin/LivesPage/LivePage/Upcoming/LiveUpcomingPage";
+export { default as AddLiveUpcomingPage } from "./Admin/LivesPage/LivePage/Upcoming/AddLiveUpcomingPage";
+export { default as EditLiveUpcomingPage } from "./Admin/LivesPage/LivePage/Upcoming/EditLiveUpcomingPage";
 // History
+export { default as LiveHistoryPage } from "./Admin/LivesPage/LivePage/History/LiveHistoryPage";
+// Recorded Live 
+export { default as RecordedLivePage } from "./Admin/LivesPage/RecordedPage/RecordedLivePage";
+export { default as AddRecordedLivePage } from "./Admin/LivesPage/RecordedPage/AddRecordedLivePage";
+export { default as EditRecordedLivePage } from "./Admin/LivesPage/RecordedPage/EditRecordedLivePage";
 
 /* Marketing Pages */
 //Discount Pages

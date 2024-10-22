@@ -11,14 +11,18 @@ export const ContextProvider = ({ children }) => {
     return userData ? JSON.parse(userData) : null;
   });
 
+  const [sidebar, setSidebar] = useState(null);
+
+  // Sync user to localStorage when it changes
   useEffect(() => {
     if (user) {
       localStorage.setItem('user', JSON.stringify(user));
     } else {
       localStorage.removeItem('user');
-      localStorage.removeItem("sidebarState")
+      setSidebar(null); // Reset sidebar state when the user logs out
     }
   }, [user]);
+
 
   const login = (userData) => {
     setUser(userData);
@@ -26,11 +30,12 @@ export const ContextProvider = ({ children }) => {
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("sidebarState")
-    localStorage.removeItem("students")
-    localStorage.removeItem("Categories")
-    localStorage.removeItem("subjects")
-    localStorage.removeItem("Countries")
+    setSidebar(null);
+    // localStorage.removeItem("sidebarState")
+    // localStorage.removeItem("students")
+    // localStorage.removeItem("Categories")
+    // localStorage.removeItem("subjects")
+    // localStorage.removeItem("Countries")
 
   };
   const toastSuccess = (text) => {
@@ -43,7 +48,7 @@ export const ContextProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, toastSuccess, toastError }}>
+    <AuthContext.Provider value={{ user, sidebar, login, logout, toastSuccess, toastError }}>
       <ToastContainer />
       {children}
     </AuthContext.Provider>

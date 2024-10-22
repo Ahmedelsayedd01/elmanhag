@@ -27,7 +27,9 @@ const LinksSidebar = () => {
        const navigate = useNavigate();
        console.log('location', location)
        const [Premission] = useState(auth.user.premissions)
-       const savedState = JSON.parse(localStorage.getItem('sidebarState')) || {};
+       // const savedState = JSON.parse(localStorage.getItem('sidebarState')) || {};
+       const savedState = auth.sidebar ? JSON.parse(auth.sidebar) : {}; // Load the saved state from auth.sidebar
+       // setSidebar(savedState); // Update the state
 
        // Define the initial state values using the saved state or fallback to default values
        const [isActiveDashboard, setIsActiveDashboard] = useState(savedState.isActiveDashboard ?? true);
@@ -52,7 +54,13 @@ const LinksSidebar = () => {
        const [isActiveHomeWork, setIsActiveHomeWork] = useState(savedState.isActiveHomeWork ?? false);
        const [isActiveRevision, setIsActiveRevision] = useState(savedState.isActiveRevision ?? false);
        const [isActiveExams, setIsActivExams] = useState(savedState.isActiveExams ?? false);
+
+       /* Lives */
+       const [isActiveLives, setIsActiveLives] = useState(savedState.isActiveLives ?? false);
+       const [openListLives, setOpenListLives] = useState(savedState.openListLives ?? false);
+       /* Childern Lives */
        const [isActiveLive, setIsActiveLive] = useState(savedState.isActiveLive ?? false);
+       const [isActiveRecordedLive, setIsActiveRecordedLive] = useState(savedState.isActiveRecordedLive ?? false);
        /* Marketiwng */
        /* Childern Marketing */
        const [isActiveMarketing, setIsActiveMarketing] = useState(savedState.isActiveMarketing ?? false);
@@ -124,7 +132,10 @@ const LinksSidebar = () => {
                      isActiveHomeWork,
                      isActiveRevision,
                      isActiveExams,
+                     isActiveLives,
+                     openListLives,
                      isActiveLive,
+                     isActiveRecordedLive,
                      isActiveMarketing,
                      openListMarketing,
                      isActiveDiscount,
@@ -159,7 +170,9 @@ const LinksSidebar = () => {
                      isActiveVideoIssues,
                      isActiveNoticeBoard,
               };
-              localStorage.setItem('sidebarState', JSON.stringify(sidebarState));
+              // localStorage.setItem('sidebarState', JSON.stringify(sidebarState));
+              // Whenever sidebarState changes
+              auth.sidebar = JSON.stringify(sidebarState); // Save the new state to auth.sidebar
        }, [isActiveDashboard,
               isActiveUser,
               openListUser,
@@ -176,7 +189,10 @@ const LinksSidebar = () => {
               isActiveHomeWork,
               isActiveRevision,
               isActiveExams,
+              isActiveLives,
+              openListLives,
               isActiveLive,
+              isActiveRecordedLive,
               isActiveMarketing,
               openListMarketing,
               isActiveDiscount,
@@ -229,7 +245,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -291,7 +310,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -352,7 +374,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -404,7 +429,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -464,7 +492,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -524,7 +555,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -586,7 +620,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -647,7 +684,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -699,7 +739,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -759,7 +802,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -819,7 +865,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -880,7 +929,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(true)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -940,7 +992,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(true)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -1000,7 +1055,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(true)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -1043,7 +1101,8 @@ const LinksSidebar = () => {
                      handleClickExams()
               }
        }, [location])
-       const handleClickLive = () => {
+       /* Lives */
+       const handleClickLives = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
               setOpenListUser(false);
@@ -1060,7 +1119,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(true)
+              setOpenListLives(true)
               setIsActiveLive(true)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -1098,11 +1160,149 @@ const LinksSidebar = () => {
        useEffect(() => {
               const part = location.pathname;
               const parts = part.split('/');
-              const result = parts.slice(0, 3).join('/');
-              if (result == "/dashboard_admin/live") {
+              const result = parts.slice(0, 4).join('/');
+              console.log('resultLives', result)
+              // if (result == "/dashboard_admin/lives") {
+              //        handleClickLives()
+              //        // navigate('lives/live');
+
+              // }
+
+              // Check only if the path matches without constantly re-triggering state updates
+              if (result === "/dashboard_admin/lives" || result === "/dashboard_admin/lives/") {
+                     handleClickLives(); // Calls state changes
+                     navigate('lives/live'); // Prevent triggering navigate on every render
+              }
+       }, [location])
+       /* Childern Lives */
+       const handleClickLive = () => {
+              setIsActiveDashboard(false);
+              setIsActiveUser(false);
+              setOpenListUser(false);
+              setIsActiveStudent(false);
+              setIsActiveParent(false);
+              setIsActiveTeacher(false);
+              setIsActiveAdmin(false);
+              setIsActiveEducation(false)
+              setOpenListEducation(false)
+              setIsActiveCategories(false)
+              setIsActiveSubject(false)
+              setIsActiveBundles(false)
+              setIsActiveQuestionsBank(false)
+              setIsActiveHomeWork(false)
+              setIsActiveRevision(false)
+              setIsActivExams(false)
+              setIsActiveLives(true)
+              setOpenListLives(true)
+              setIsActiveLive(true)
+              setIsActiveRecordedLive(false)
+              setIsActiveMarketing(false)
+              setOpenListMarketing(false)
+              setIsActiveDiscount(false)
+              setIsActivePromoCode(false)
+              setIsActiveReview(false)
+              setIsActivePopUp(false)
+              setIsActiveFinancial(false)
+              setOpenListFinancial(false)
+              setIsActiveFinancialPendingPayments(false)
+              setIsActiveFinancialPayments(false)
+              setIsActiveAffiliate(false)
+              setOpenListAffiliate(false)
+              setIsActiveAffiliateUser(false)
+              setIsActiveAffiliatePaymentMethod(false)
+              setIsActiveAffiliateCommissions(false)
+              setIsActiveAffiliateBonus(false)
+              setIsActiveAffiliatePayout(false)
+              setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
+              setIsActiveReports(false)
+              setIsActiveSetting(false)
+              setOpenListSetting(false)
+              setIsActiveAdminRoles(false)
+              setIsActiveCountries(false)
+              setIsActiveCities(false)
+              setIsActiveParentRelation(false)
+              setIsActiveOperations(false)
+              setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
+              setIsActiveNoticeBoard(false)
+       };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 4).join('/');
+              if (result == "/dashboard_admin/lives/live") {
                      handleClickLive()
               }
        }, [location])
+       const handleClickRecordedLive = () => {
+              setIsActiveDashboard(false);
+              setIsActiveUser(false);
+              setOpenListUser(false);
+              setIsActiveStudent(false);
+              setIsActiveParent(false);
+              setIsActiveTeacher(false);
+              setIsActiveAdmin(false);
+              setIsActiveEducation(false)
+              setOpenListEducation(false)
+              setIsActiveCategories(false)
+              setIsActiveSubject(false)
+              setIsActiveBundles(false)
+              setIsActiveQuestionsBank(false)
+              setIsActiveHomeWork(false)
+              setIsActiveRevision(false)
+              setIsActivExams(false)
+              setIsActiveLives(true)
+              setOpenListLives(true)
+              setIsActiveLive(false)
+              setIsActiveRecordedLive(true)
+              setIsActiveMarketing(false)
+              setOpenListMarketing(false)
+              setIsActiveDiscount(false)
+              setIsActivePromoCode(false)
+              setIsActiveReview(false)
+              setIsActivePopUp(false)
+              setIsActiveFinancial(false)
+              setOpenListFinancial(false)
+              setIsActiveFinancialPendingPayments(false)
+              setIsActiveFinancialPayments(false)
+              setIsActiveAffiliate(false)
+              setOpenListAffiliate(false)
+              setIsActiveAffiliateUser(false)
+              setIsActiveAffiliatePaymentMethod(false)
+              setIsActiveAffiliateCommissions(false)
+              setIsActiveAffiliateBonus(false)
+              setIsActiveAffiliatePayout(false)
+              setIsActiveSupport(false)
+              setOpenListSupport(false)
+              setIsActiveComplaints(false)
+              setIsActiveSuggestions(false)
+              setIsActiveReports(false)
+              setIsActiveSetting(false)
+              setOpenListSetting(false)
+              setIsActiveAdminRoles(false)
+              setIsActiveCountries(false)
+              setIsActiveCities(false)
+              setIsActiveParentRelation(false)
+              setIsActiveOperations(false)
+              setIsActivePaymentMethod(false)
+              setIsActiveQuestionIssues(false)
+              setIsActiveVideoIssues(false)
+              setIsActiveNoticeBoard(false)
+       };
+       useEffect(() => {
+              const part = location.pathname;
+              const parts = part.split('/');
+              const result = parts.slice(0, 4).join('/');
+              if (result == "/dashboard_admin/lives/recorded_live") {
+                     handleClickRecordedLive()
+              }
+       }, [location])
+       /* // Childern Lives */
+       /* // Lives */
        /* Marketing */
        const handleClickMarketing = () => {
               setIsActiveDashboard(false);
@@ -1121,7 +1321,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(true)
               setOpenListMarketing(true)
               setIsActiveDiscount(true)
@@ -1181,7 +1384,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(true)
               setOpenListMarketing(true)
               setIsActiveDiscount(true)
@@ -1233,7 +1439,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(true)
               setOpenListMarketing(true)
               setIsActiveDiscount(false)
@@ -1293,7 +1502,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(true)
               setOpenListMarketing(true)
               setIsActiveDiscount(false)
@@ -1353,7 +1565,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(true)
               setOpenListMarketing(true)
               setIsActiveDiscount(false)
@@ -1415,7 +1630,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -1475,7 +1693,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -1527,7 +1748,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -1589,7 +1813,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -1649,7 +1876,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -1701,7 +1931,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -1761,7 +1994,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -1821,7 +2057,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -1882,7 +2121,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -1945,7 +2187,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -2011,7 +2256,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -2074,7 +2322,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -2140,7 +2391,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -2201,7 +2455,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -2262,7 +2519,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -2314,7 +2574,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -2374,7 +2637,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -2434,7 +2700,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -2494,7 +2763,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -2554,7 +2826,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -2615,7 +2890,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -2676,7 +2954,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -2737,7 +3018,10 @@ const LinksSidebar = () => {
               setIsActiveHomeWork(false)
               setIsActiveRevision(false)
               setIsActivExams(false)
+              setIsActiveLives(false)
+              setOpenListLives(false)
               setIsActiveLive(false)
+              setIsActiveRecordedLive(false)
               setIsActiveMarketing(false)
               setOpenListMarketing(false)
               setIsActiveDiscount(false)
@@ -2841,10 +3125,23 @@ const LinksSidebar = () => {
                                    </Link>
 
 
-                                   <Link to="live" onClick={handleClickLive} className={`${isActiveLive ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
-                                          <LiveIcon Width={25} Height={23} isActive={isActiveLive} />
-                                          <span className={`${isActiveLive ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Live</span>
+                                   <Link to="lives" onClick={handleClickLives} className={`${isActiveLives ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                          <LiveIcon Width={25} Height={23} isActive={isActiveLives} />
+                                          <span className={`${isActiveLives ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Lives</span>
                                    </Link>
+
+                                   <div className={`${openListLives ? "h-18" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                          <ul className={`${openListLives ? "h-full" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`}>
+                                                 <li className={`${isActiveLive ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>
+                                                        <Link to="lives/live" onClick={handleClickLive}>Live</Link> {/* Full path to 'live' */}
+                                                 </li>
+
+                                                 <li className={`${isActiveRecordedLive ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>
+                                                        <Link to="lives/recorded_live" onClick={handleClickRecordedLive}>Recorded Live</Link> {/* Full path to 'recorded_live' */}
+                                                 </li>
+                                          </ul>
+                                   </div>
+
 
 
                                    <Link to="discount" onClick={handleClickMarketing} className={`${isActiveMarketing ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
@@ -2941,7 +3238,7 @@ const LinksSidebar = () => {
                                    </>
 
 
-                            </div>
+                            </div >
                      ) : (
                             <div className="LinksSidebar w-full h-full flex flex-col items-center justify-start">
 

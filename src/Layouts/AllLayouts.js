@@ -52,10 +52,13 @@ export { default as EditHomeWorkLayout } from "./Admin/EditHomeWorkLayout";
 
 export { default as RevisionAD } from "./Admin/RevisionAD";
 export { default as ExamsAD } from "./Admin/ExamsAD";
-/*Live */
+/* Lives */
+// Live 
 export { default as LiveLayout } from "./Admin/LiveLayout";
 export { default as AddLiveLayout } from "./Admin/AddLiveLayout";
 export { default as EditLiveLayout } from "./Admin/EditLiveLayout";
+// Recorded Live 
+export { default as RecordedLiveLayout } from "./Admin/RecordedLiveLayout";
 
 /* Marketing Layouts */
 // Discount Layouts
