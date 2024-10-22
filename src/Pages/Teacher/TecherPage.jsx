@@ -1,32 +1,69 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 import { DiAndroid, DiApple } from 'react-icons/di'
 import { NavLink } from 'react-router-dom'
+import Loading from '../../Components/Loading';
+import { useAuth } from '../../Context/Auth';
+import axios from 'axios';
 
 const TecherPage = () => {
+       const navigate = useNavigate();
+       const auth = useAuth();
+       const [isLoading, setIsLoading] = useState(false);
+       const [teacherSubject, setTeacherSubject] = useState([]);
+
+
+       const fetchData = async () => {
+        setIsLoading(true);
+        try {
+               const response = await axios.get('https://bdev.elmanhag.shop/teacher/live/view', {
+                      headers: {
+                             Authorization: `Bearer ${auth.user.token}`,
+                      },
+               });
+               if (response.status === 200) {
+                      console.log(response.data)
+                      setTeacherSubject(response.data.sessions)
+               }
+        } catch (error) {
+               console.error('Error fetching data:', error);
+        } finally {
+               setIsLoading(false);
+        }
+       };
+       useEffect(() => {
+              fetchData(); 
+          }, []);
+
+       const handleNavigate = (subject) => {
+       console.log(subject)
+       navigate(`subject/${subjectId}`, { state: {live : subject} });  // Navigate to the correct path under "curricula"
+       };
+
        return (
               <>
-                     <div className="w-full  flex flex-col gap-y-5 p-3">
-                            <div className="mt-12 text-center">
-                                   <h1 className="text-2xl sm:text-4xl font-bold mb-8 text-mainColor">حمل التطبيق الان</h1>
-                                   <div className="flex flex-wrap justify-center gap-8">
-                                          {/* Android Download */}
-                                          <div
-                                                 onClick={() => window.open('https://play.google.com/store/apps/details?id=com.elmanhag.aff', '_blank', 'noopener,noreferrer')}
-                                                 className="w-36 sm:w-44 h-36 sm:h-44 bg-black rounded-full shadow-lg flex flex-col items-center justify-center hover:scale-110 transform transition duration-300 ease-in-out cursor-pointer"
-                                          >
-                                                 <DiAndroid className="text-5xl sm:text-6xl text-white" />
-                                                 <span className="block mt-3 text-white text-lg sm:text-xl">Android</span>
-                                          </div>
-
-
-                                          {/* iOS Download */}
-                                          <div className="w-36 sm:w-44 h-36 sm:h-44 bg-black rounded-full shadow-lg flex flex-col items-center justify-center hover:scale-110 transform transition duration-300 ease-in-out cursor-pointer">
-                                                 <DiApple className="text-5xl sm:text-6xl text-white" />
-                                                 <span className="block mt-3 text-white text-lg sm:text-xl">iOS</span>
-                                          </div>
-                                   </div>
+              <div className="p-4 md:p-8 lg:p-12">        
+                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                     {teacherSubject.map((subject) => (
+                            <div
+                                   key={subject.id}
+                                   className="subject-box p-3 flex flex-col justify-center items-center bg-white rounded-xl shadow-lg hover:cursor-pointer transition-transform transform hover:scale-105"
+                                   style={{ boxShadow: '0px 0px 8px rgba(208, 16, 37, 0.12)' }}
+                                   onClick={() => handleNavigate(subject)}
+                            >
+                                   <span className="text-mainColor text-lg md:text-xl lg:text-2xl font-bold mb-3">
+                                   {subject.name}
+                                   </span>
+                                   <img
+                                   src={subject.thumbnail_url}
+                                   alt={subject.name}
+                                   // className="w-32 h-32"
+                                   />
                             </div>
-                     </div ></>
+                     ))}
+                     </div>
+              </div>
+              </>
        )
 }
 

@@ -144,7 +144,6 @@ export { default as EditVideoIssuesLayout } from "./Admin/EditVideoIssuesLayout"
 /* Notice Board */
 export { default as NoticeBoardAD } from "./Admin/NoticeBoardAD";
 
-/* Teachers Layout */
 /* Parent Layout */
 /* Affiliate Layout */
 
@@ -177,3 +176,7 @@ export { default as AffilateStudentLayout } from "./Student/AffilateStudentLayou
 export { default as UnitsLayout } from "./Student/UnitsLayout";
 
 export { default as LessonsLayout } from "./Student/LessonsLayout";
+
+
+/* Teachers Layout */
+export { default as TeacherLayout } from "./Teacher/TeacherLayout";
