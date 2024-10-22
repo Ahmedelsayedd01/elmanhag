@@ -135,62 +135,58 @@ const PendingPaymentsPage = () => {
 
   return (
     <>
-      <div className="w-full flex flex-col gap-y-3">
-        <div className="w-full flex items-center justify-between mt-4 overflow-x-auto">
-          <table className="w-full sm:min-w-0">
-            <thead className="w-full">
-              <tr className="w-full border-b-2">
-                <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
-                <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Amount</th>
-                <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Service</th>
-                <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Student</th>
-                <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Payment Methods</th>
-                <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Date</th>
-                <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Receipt</th>
-                <th className="min-w-[120px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
+      <div className="w-full flex flex-col gap-y-6">
+        <div className="w-full overflow-x-auto">
+          <table className="w-full min-w-max bg-white shadow-md rounded-lg overflow-hidden">
+            <thead className="bg-mainColor text-white">
+              <tr className="text-left">
+                <th className="px-4 py-3 text-center text-sm font-medium">#</th>
+                <th className="px-4 py-3 text-center text-sm font-medium">Student</th>
+                <th className="px-4 py-3 text-center text-sm font-medium">Category</th>
+                <th className="px-4 py-3 text-center text-sm font-medium">Amount</th>
+                <th className="px-4 py-3 text-center text-sm font-medium">Service</th>
+                <th className="px-4 py-3 text-center text-sm font-medium">Payment Methods</th>
+                <th className="px-4 py-3 text-center text-sm font-medium">Date</th>
+                <th className="px-4 py-3 text-center text-sm font-medium">Receipt</th>
+                <th className="px-4 py-3 text-center text-sm font-medium">Action</th>
               </tr>
             </thead>
-            <tbody className="w-full">
+            <tbody>
               {pendingPayments.map((payment, index) => (
-                <tr className="w-full border-b-2" key={payment.id}>
-                  <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                    {index + 1}
-                  </td>
-                  <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                    {payment?.amount || "0"}
-                  </td>
-                  <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                    <span className='text-mainColor text-xl border-b-2 border-mainColor font-semibold cursor-pointer'
-                      onClick={() => handleOpenView(payment.id)}>
+                <tr className="hover:bg-gray-50 transition-colors" key={payment.id}>
+                  <td className="px-4 py-3 text-center text-thirdColor">{index + 1}</td>
+                  <td className="px-4 py-3 text-center text-thirdColor">{payment.student?.name || "-"}</td>
+                  <td className="px-4 py-3 text-center text-thirdColor">{payment.student?.category?.name || "-"}</td>
+                  <td className="px-4 py-3 text-center text-thirdColor">{payment?.amount || "0"}</td>
+                  <td className="px-4 py-3 text-center">
+                    <span
+                      className="cursor-pointer text-mainColor font-semibold hover:underline"
+                      onClick={() => handleOpenView(payment.id)}
+                    >
                       View
                     </span>
                   </td>
-                  <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                    {payment.student?.name || "-"}
-                  </td>
-                  <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                    {payment.payment_method?.title || "-"}
-                  </td>
-                  <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                    {payment?.purchase_date || "-"}
-                  </td>
-                  <td className="min-w-[120px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                    <span className='text-mainColor text-xl border-b-2 border-mainColor font-semibold cursor-pointer'
-                      onClick={() => handleOpenViewPhoto(payment.id)}>
+                  <td className="px-4 py-3 text-center text-thirdColor">{payment.payment_method?.title || "-"}</td>
+                  <td className="px-4 py-3 text-center text-thirdColor">{payment?.purchase_date || "-"}</td>
+                  <td className="px-4 py-3 text-center">
+                    <span
+                      className="cursor-pointer text-mainColor font-semibold hover:underline"
+                      onClick={() => handleOpenViewPhoto(payment.id)}
+                    >
                       View
                     </span>
                   </td>
-                  <td className="min-w-[120px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden rounded">
+                  <td className="px-4 py-3 text-center">
                     <button
                       onClick={() => {
                         setSelectedPaymentId(payment.id);
                         setShowPopup(true);
                       }}
-                      className={`w-[100px] flex justify-center py-2 px-4 rounded ${paymentStatuses[payment.id] === "Approve"
-                        ? "bg-green-500 text-white"
+                      className={`w-full py-2 px-4 rounded text-white font-medium ${paymentStatuses[payment.id] === "Approve"
+                        ? "bg-green-500"
                         : paymentStatuses[payment.id] === "Reject"
-                          ? "bg-red-500 text-white"
-                          : "bg-thirdColor text-white"
+                          ? "bg-red-500"
+                          : "bg-thirdColor"
                         }`}
                     >
                       {paymentStatuses[payment.id] || "Pending"}
@@ -222,7 +218,7 @@ const PendingPaymentsPage = () => {
                             <div className="w-full flex flex-wrap items-center justify-center gap-4 my-4 px-4 sm:p-6 sm:pb-4">
                               <img
                                 src={payment.receipt_link || '-'}
-                                className="w-[400px] h-[600px] object-contain object-center rounded-xl shadow-md transition-transform duration-300 hover:scale-105"
+                                className="w-[400px] h-[450px] object-contain object-center rounded-xl shadow-md transition-transform duration-300 hover:scale-105"
                                 alt="Receipt"
                                 loading="lazy"
                               />
@@ -327,77 +323,77 @@ const PendingPaymentsPage = () => {
                       </div>
                     </Dialog>
                   )}
-
                 </tr>
               ))}
-              {/* Popup Modal */}
-              {showPopup && (
-                <div className="fixed top-0 left-0 w-full h-full bg-gray-800 inset-0 z-50 bg-opacity-50 flex justify-center items-center">
-                  <div className="bg-white p-6 rounded-md shadow-lg w-96 text-center">
-                    <h2 className="text-mainColor text-2xl font-semibold mb-6">Choose</h2>
-
-                    {/* Radio Buttons for Approve/Reject */}
-                    <div className="mb-6">
-                      <label className="text-xl text-mainColor flex items-center justify-start mb-4">
-                        <input
-                          type="radio"
-                          value="Approve"
-                          checked={selectedOption === "Approve"}
-                          onChange={handleOptionChange}
-                          className="mr-2 accent-red-600 w-6 h-6 rounded-full border-2 border-red-600 cursor-pointer relative"
-                        />
-                        Approve
-                      </label>
-                      <label className="text-xl text-mainColor flex items-center justify-start">
-                        <input
-                          type="radio"
-                          value="Reject"
-                          checked={selectedOption === "Reject"}
-                          onChange={handleOptionChange}
-                          className="mr-2 accent-red-600 w-6 h-6 rounded-full border-2 border-red-600 cursor-pointer relative"
-                        />
-                        Reject
-                      </label>
-                    </div>
-
-                    {selectedOption === "Reject" && (
-                      <div className="mb-4">
-                        <label htmlFor="rejectReason" className="block font-medium mb-2">Why Did I Reject?</label>
-                        <input
-                          id="rejectReason"
-                          type="text"
-                          value={rejectReason}
-                          onChange={handleRejectReasonChange}
-                          className="w-full p-2 border border-gray-300 rounded"
-                          placeholder="Enter rejection reason..."
-                        />
-                      </div>
-                    )}
-
-                    {/* Done and Cancel Buttons */}
-                    <div className="flex justify-around mt-4">
-                      <button
-                        onClick={handleDone}
-                        className="bg-mainColor text-white text-xl py-2 px-6 rounded"
-                      >
-                        Done
-                      </button>
-                      <button
-                        onClick={closePopup}
-                        className="text-red-600 text-xl py-2 px-6"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-
-                  </div>
-                </div>
-              )}
             </tbody>
           </table>
         </div>
       </div>
+
+      {/* Popup for Action */}
+      {showPopup && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 className="text-2xl text-mainColor font-semibold mb-6">Choose Action</h2>
+            <div className="flex flex-col gap-4">
+              <label className="flex items-center gap-2 text-mainColor text-xl cursor-pointer">
+                <input
+                  type="radio"
+                  value="Approve"
+                  checked={selectedOption === "Approve"}
+                  onChange={handleOptionChange}
+                  className="w-6 h-6 cursor-pointer"
+                />
+                Approve
+              </label>
+              <label className="flex items-center gap-2 text-mainColor text-xl cursor-pointer">
+                <input
+                  type="radio"
+                  value="Reject"
+                  checked={selectedOption === "Reject"}
+                  onChange={handleOptionChange}
+                  className="w-6 h-6 cursor-pointer"
+                />
+                Reject
+              </label>
+
+              {selectedOption === "Reject" && (
+                <div className="flex flex-col">
+                  <label className="text-mainColor mb-2 font-medium" htmlFor="rejectReason">
+                    Reason for Rejection:
+                  </label>
+                  <input
+                    id="rejectReason"
+                    type="text"
+                    value={rejectReason}
+                    onChange={handleRejectReasonChange}
+                    className="w-full p-2 border border-gray-300 rounded"
+                    placeholder="Enter rejection reason"
+                  />
+                </div>
+              )}
+            </div>
+
+            <div className="mt-6 flex justify-between">
+              <button
+                onClick={handleDone}
+                className="bg-mainColor text-white py-2 px-4 rounded shadow hover:bg-mainColor-dark transition"
+              >
+                Done
+              </button>
+              <button
+                onClick={closePopup}
+                className="text-red-600 py-2 px-4 hover:underline"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
+
+
   );
 };
 
