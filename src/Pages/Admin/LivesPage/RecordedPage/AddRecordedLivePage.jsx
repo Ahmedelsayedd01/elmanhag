@@ -577,6 +577,7 @@ const AddRecordedLivePage = () => {
                                                  <InputCustom
                                                         type="text"
                                                         upload={true}
+                                                        paddinRight='pr-2'
                                                         placeholder="Live Video"
                                                         value={LiveVideoRecorded}
                                                         readonly={true}
