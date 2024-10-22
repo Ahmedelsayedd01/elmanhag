@@ -101,11 +101,11 @@ import {
   VideoIssuesLayout,
   AddVideoIssuesLayout,
   EditVideoIssuesLayout,
-<<<<<<< HEAD
-  TeacherLayout
-=======
-  RecordedLiveLayout
->>>>>>> ce174f8eb648e4e774d64f9543485deba7799189
+  TeacherLayout,
+  RecordedLiveLayout,
+  AllLiveSubjectsLayout,
+  AllLiveUnitsLayout,
+  AllLiveLessonesLayout
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -422,6 +422,17 @@ const AppLayoutUnit = () => (
 const AppLayoutSubscriptions = () => (
   <>
     <Outlet />
+  </>
+)
+
+const AppLayoutCurriculaLive =() =>(
+  <>
+  <Outlet/>
+  </>
+)
+const AppLayoutUnitLive =() =>(
+  <>
+  <Outlet/>
   </>
 )
 
@@ -1248,10 +1259,6 @@ export const router = createBrowserRouter([
                   }
                 ]
               },
-              // {
-              //   path: 'lesson/:lessonId',
-              //   element: <LessonsLayout /> // Add the component to render the lesson
-              // }
             ]
           },
           {
@@ -1316,6 +1323,30 @@ export const router = createBrowserRouter([
           {
             path: "affilate_student",
             element: <AffilateStudentLayout />,
+          },
+          {
+            path: "curricula_live",
+            element: <AppLayoutCurriculaLive />, // Add the JSX brackets
+            children: [
+              {
+                path: '',
+                element: <AllLiveSubjectsLayout />,
+              },
+              {
+                path: 'subject_live/:subjectliveId',
+                element: <AppLayoutUnitLive />,
+                children: [
+                  {
+                    path: '',
+                    element: <AllLiveUnitsLayout />,
+                  },
+                  {
+                    path: 'lesson_live/:lessonliveId',
+                    element: <AllLiveLessonesLayout /> // Add the component to render the lesson
+                  }
+                ]
+              },
+            ]
           },
         ],
       },
