@@ -3211,13 +3211,13 @@ const LinksSidebar = () => {
 
 
                                    <>
-                                          <Link to="adminRoles" onClick={handleClickSetting} className={`${isActiveSetting ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                          <Link to="admin_roles" onClick={handleClickSetting} className={`${isActiveSetting ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
                                                  <SettingsIcon Width={25} Height={23} isActive={isActiveSetting} />
                                                  <span className={`${isActiveSetting ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Setting</span>
                                           </Link>
                                           <div className={`${openListSetting ? "h-42" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
                                                  <ul className={`${openListSetting ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
-                                                        <li className={`${isActiveAdminRoles ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"adminRoles"} onClick={handleClickAdminRoles}>Admin Roles</Link></li>
+                                                        <li className={`${isActiveAdminRoles ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"admin_roles"} onClick={handleClickAdminRoles}>Admin Roles</Link></li>
                                                         <li className={`${isActiveCountries ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"countries"} onClick={handleClickCountries}>Countries</Link></li>
                                                         <li className={`${isActiveCities ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"cities"} onClick={handleClickCities}>Cities</Link></li>
                                                         <li className={`${isActiveParentRelation ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"parentRelation"} onClick={handleClickParentRelatioen}>Parent Relation</Link></li>
@@ -3412,13 +3412,13 @@ const LinksSidebar = () => {
 
                                    {Premission.includes("settings") && (
                                           <>
-                                                 <Link to="adminRoles" onClick={handleClickSetting} className={`${isActiveSetting ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                                 <Link to="admin_roles" onClick={handleClickSetting} className={`${isActiveSetting ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
                                                         <SettingsIcon Width={25} Height={23} isActive={isActiveSetting} />
                                                         <span className={`${isActiveSetting ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Setting</span>
                                                  </Link>
                                                  <div className={`${openListSetting ? "" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
                                                         <ul className={`${openListSetting ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-[20%] bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
-                                                               <li className={`${isActiveAdminRoles ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"adminRoles"} onClick={handleClickAdminRoles}>Admin Roles</Link></li>
+                                                               <li className={`${isActiveAdminRoles ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"admin_roles"} onClick={handleClickAdminRoles}>Admin Roles</Link></li>
                                                                <li className={`${isActiveCountries ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"countries"} onClick={handleClickCountries}>Countries</Link></li>
                                                                <li className={`${isActiveCities ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"cities"} onClick={handleClickCities}>Cities</Link></li>
                                                                <li className={`${isActiveParentRelation ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}><Link to={"parentRelation"} onClick={handleClickParentRelatioen}>Parent Relation</Link></li>
