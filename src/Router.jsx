@@ -101,7 +101,11 @@ import {
   VideoIssuesLayout,
   AddVideoIssuesLayout,
   EditVideoIssuesLayout,
+<<<<<<< HEAD
+  TeacherLayout
+=======
   RecordedLiveLayout
+>>>>>>> ce174f8eb648e4e774d64f9543485deba7799189
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -434,19 +438,26 @@ const AppLayoutAffilateDashboard = () => (
     {/* <Outlet /> */}
   </div>
 );
+// const AppLayoutTeacherDashboard = () => (
+//   <div className="w-full flex gap-x-4 directionAR">
+//     {/* <SidebarTeacher /> */}
+//     <div className=" w-full h-screen ">
+//       <NavbarStudent />
+//       <TeacherPage />
+//     </div>
+//     {/* <AffilatePage /> */}
+//     {/* <NavbarStudent />
+//       <AffilatePage /> */}
+//     {/* <Outlet /> */}
+//   </div>
+// );
+
 const AppLayoutTeacherDashboard = () => (
-  <div className="w-full flex gap-x-4 directionAR">
-    <SidebarTeacher />
-    <div className=" w-full h-screen ">
-      <NavbarStudent />
-      <TeacherPage />
-    </div>
-    {/* <AffilatePage /> */}
-    {/* <NavbarStudent />
-      <AffilatePage /> */}
-    {/* <Outlet /> */}
-  </div>
-);
+  <>
+    <TeacherLayout />
+  </>
+)
+
 const AppLayoutParentDashboard = () => (
   <div className="w-full flex gap-x-4 directionAR">
     <div className=" w-full h-screen ">
@@ -1333,10 +1344,17 @@ export const router = createBrowserRouter([
   /* Teacher Dashboard */
   {
     element: <ProtectedRoute allowedRoles={['teacher']} />,
+    path: '/dashboard_teacher',
     children: [
       {
-        path: '/dashboard_teacher',
+        path: '',
         element: <AppLayoutTeacherDashboard />,
+        children :[
+          {
+            path:'',
+            element:<TeacherPage/>
+          }
+        ]
       }
     ],
   },

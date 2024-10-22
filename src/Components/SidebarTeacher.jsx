@@ -1,14 +1,18 @@
 import React from "react";
-import LogoSidebar from "../Assets/Images/logoSidebar.jsx"
-import MenuSide from "./MenuSide.jsx";
-const SidebarTeacher = () => {
+import LogoWhite from "../Assets/Images/logoWhite.jsx"
+import MenuSideTeacher from "./MenuSideTeacher.jsx";
+const SidebarTeacher = ({ isOpen }) => {
        return (
               <>
-                     <aside className="w-1/5 fixed h-screen right-0 overflow-hidden flex flex-col items-center bg-mainColor gap-y-6">
-                            <div className="h-1/5 mt-2">
-                                   <LogoSidebar Width="100%" />
+                     <aside
+                            className={`scrollSec fixed lg:w-1/5 sm:w-4/5 z-10 h-screen right-0 overflow-y-auto flex flex-col items-center bg-mainColor gap-y-3 transition-transform transform ${
+                                   isOpen ? "translate-x-0" : "translate-x-full"
+                            } lg:translate-x-0`}
+                            >
+                            <div className="h-1/6 mt-2">
+                                   <LogoWhite Width="100%" />
                             </div>
-                            <MenuSide />
+                            <MenuSideTeacher />
                      </aside>
               </>
        );
