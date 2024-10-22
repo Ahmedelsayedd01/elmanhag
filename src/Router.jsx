@@ -101,11 +101,11 @@ import {
   VideoIssuesLayout,
   AddVideoIssuesLayout,
   EditVideoIssuesLayout,
-  TeacherLayout,
-  RecordedLiveLayout,
-  AllLiveSubjectsLayout,
-  AllLiveUnitsLayout,
-  AllLiveLessonesLayout
+<<<<<<< HEAD
+  TeacherLayout
+=======
+  RecordedLiveLayout
+>>>>>>> ce174f8eb648e4e774d64f9543485deba7799189
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -1380,10 +1380,10 @@ export const router = createBrowserRouter([
       {
         path: '',
         element: <AppLayoutTeacherDashboard />,
-        children :[
+        children: [
           {
-            path:'',
-            element:<TeacherPage/>
+            path: '',
+            element: <TeacherPage />
           }
         ]
       }

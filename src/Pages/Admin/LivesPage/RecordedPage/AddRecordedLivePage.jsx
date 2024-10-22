@@ -16,7 +16,7 @@ const AddRecordedLivePage = () => {
 
        const [data, setData] = useState(null);
 
-       const [semesterData, setSemesterData] = useState([{ name: 'First' }, { name: 'Second' }]);
+       const [semesterData, setSemesterData] = useState([{ name: 'first' }, { name: 'second' }]);
        const [educationData, setEducationData] = useState([]);
        const [categoryData, setCategoryData] = useState([]);
        const [chapterData, setChapterData] = useState([]);
@@ -470,6 +470,14 @@ const AddRecordedLivePage = () => {
                      auth.toastError('Please Enter Name.');
                      return;
               }
+              if (!description) {
+                     auth.toastError('Please Enter Description.');
+                     return;
+              }
+              if (!LiveVideoRecordedFile) {
+                     auth.toastError('Please Enter The Video.');
+                     return;
+              }
               if (!selectEducationId) {
                      auth.toastError('Please Select Education.');
                      return;
@@ -482,12 +490,16 @@ const AddRecordedLivePage = () => {
                      auth.toastError('Please Select Category.');
                      return;
               }
-              if (selectSubjectId.length === 0) {
+              if (!selectSubjectId) {
                      auth.toastError('Please Select Subject.');
                      return;
               }
-              if (!selectStatus) {
-                     auth.toastError('Please Enter Status.');
+              if (!selectChapterId) {
+                     auth.toastError('Please Select Chapter.');
+                     return;
+              }
+              if (!selectLessonId) {
+                     auth.toastError('Please Select Lesson.');
                      return;
               }
 
@@ -496,6 +508,7 @@ const AddRecordedLivePage = () => {
                      const formData = new FormData();
                      formData.append('name', name);
                      formData.append('description', description);
+                     formData.append('semester', selectSemesterName);
                      formData.append('video', LiveVideoRecordedFile);
                      formData.append('category_id', selectCategoryId);
                      formData.append('chapter_id', selectChapterId);
@@ -646,17 +659,6 @@ const AddRecordedLivePage = () => {
                                                         options={paidData || []}
                                                  />
                                           </div>
-                                          {selectStatus === 'Paid' && (
-                                                 <div className="lg:w-[30%] sm:w-full">
-                                                        <InputCustom
-                                                               type="text"
-                                                               placeholder="Price"
-                                                               value={price}
-                                                               required={false}
-                                                               onChange={(e) => setPrice(e.target.value)}
-                                                        />
-                                                 </div>
-                                          )}
 
                                           <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
                                                  <span className="text-2xl text-thirdColor font-medium">Active:</span>
