@@ -1041,9 +1041,10 @@ export const router = createBrowserRouter([
             element: <ReportsAD />,
           },
           /* Setting */
+          
           // Admin Roles
           {
-            path: 'adminRoles',
+            path: 'admin_roles',
             element: <AppLayoutAdminRoles />,
             children: [
               {
