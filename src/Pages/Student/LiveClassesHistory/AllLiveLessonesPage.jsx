@@ -14,6 +14,7 @@ const AllLiveLessonesPage = ({ subjectId, lessonId }) => {
   const [lessons, setLessons] = useState({});
   const [subjectData, setSubjectData] = useState([]);
   const [chapterID, setChapterID] = useState('');
+  const [showErrorModal, setShowErrorModal] = useState(false); // Modal state
 
   const [videoProblemList, setVideoProblemList] = useState({});
   const [questionProblemList, setQuestionProblemList] = useState({});
@@ -44,11 +45,10 @@ const AllLiveLessonesPage = ({ subjectId, lessonId }) => {
                             subject_id === parseInt(subjectId) && item.lesson_id=== parseInt(lessonId));
                   
                             if (matchedLesson) {
-                              // Set the lesson if found
-                              setLessons(matchedLesson);
-                              setChapterID(matchedLesson.chapter_id)
+                                   setLessons(matchedLesson); // Set the lesson if found
+                                   setChapterID(matchedLesson.chapter_id);
                             } else {
-                              console.log('غير متوفر حصص لايف مسجله');
+                            setShowErrorModal(true);
                             }
                           }
                    } 
@@ -209,54 +209,68 @@ const AllLiveLessonesPage = ({ subjectId, lessonId }) => {
 
 
   return (
-    <div className="p-6 mb-20 sm:p-2">
-       <div className="w-full">
-              <video className="w-full object-cover" controls controlsList='nodownload'>
-                     <source src={`${lessons.video_link}`} type="video/mp4" />
-                     Your browser does not support the video tag.
-              </video>
+       <>
+       {showErrorModal && (
+       <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 lg:mr-10">
+       <div className="bg-white p-6 md:p-12 rounded-lg w-11/12 md:w-1/2 lg:w-1/3">
+       <h2 className="text-[#6B6B6B] text-xl md:text-2xl font-bold mb-4">غير متوفر حصص لايف مسجله</h2>
+       <div className="flex justify-end gap-4 sm:gap-2">
+              <Button Text="حسناً" Width="auto" BgColor="bg-mainColor" Color="text-white" handleClick={handleGoBack} />
+       </div>
+       </div>
+       </div>
+       )}
 
-              <div className="mt-4 relative">             
-                     <button
-                     className="bg-mainColor text-white py-2 px-4 rounded-md flex items-center gap-3"
-                     onClick={() => setDropdownVisible(!dropdownVisible)}
-                     >
-                     <div>
-                     <h1>الإبلاغ عن مشكلة في الفيديو</h1>
-                     </div>
-                     <div
-                     className={`mt-1 transition-transform duration-200 ${dropdownVisible ? 'rotate-180' : 'rotate-0'}`}
-                     >
-                     <IoIosArrowDown size={20}/>
-                     </div>
-                     </button>
+       {!showErrorModal && (
+              <div className="p-6 mb-20 sm:p-2">
+              <div className="w-full">
+                     <video className="w-full object-cover" controls controlsList='nodownload'>
+                            <source src={`${lessons.video_link}`} type="video/mp4" />
+                            Your browser does not support the video tag.
+                     </video>
 
-                     {dropdownVisible && videoProblemList?.length > 0 && (
-                     <ul className="left-0 mt-2 bg-mainColor text-white border border-red-600 rounded-md shadow-lg z-10 xl:w-1/5 md:w-2/5 w-4/5">
-                     {videoProblemList.map((problem) => (
-                     <li
-                            key={problem.id}
-                            className={`p-2 hover:bg-white hover:text-mainColor rounded-2xl text-lg font-semibold cursor-pointer ${selectedProblem === problem ? "bg-mainColor" : ""}`}
-                            onClick={() => {
-                            setSelectedProblem(problem);
-                            handleSubmitProblem(event,problem.id, lessons.id); // Auto submit when problem is selected
-                            }}
-                     >
-                            {problem.title}
-                     </li>
-                     ))}
-                     </ul>
-                     )}
+                     <div className="mt-4 relative">             
+                            <button
+                            className="bg-mainColor text-white py-2 px-4 rounded-md flex items-center gap-3"
+                            onClick={() => setDropdownVisible(!dropdownVisible)}
+                            >
+                            <div>
+                            <h1>الإبلاغ عن مشكلة في الفيديو</h1>
+                            </div>
+                            <div
+                            className={`mt-1 transition-transform duration-200 ${dropdownVisible ? 'rotate-180' : 'rotate-0'}`}
+                            >
+                            <IoIosArrowDown size={20}/>
+                            </div>
+                            </button>
+
+                            {dropdownVisible && videoProblemList?.length > 0 && (
+                            <ul className="left-0 mt-2 bg-mainColor text-white border border-red-600 rounded-md shadow-lg z-10 xl:w-1/5 md:w-2/5 w-4/5">
+                            {videoProblemList.map((problem) => (
+                            <li
+                                   key={problem.id}
+                                   className={`p-2 hover:bg-white hover:text-mainColor rounded-2xl text-lg font-semibold cursor-pointer ${selectedProblem === problem ? "bg-mainColor" : ""}`}
+                                   onClick={() => {
+                                   setSelectedProblem(problem);
+                                   handleSubmitProblem(event,problem.id, lessons.id); // Auto submit when problem is selected
+                                   }}
+                            >
+                                   {problem.title}
+                            </li>
+                            ))}
+                            </ul>
+                            )}
+                     </div>
+
               </div>
 
-       </div>
-
-       <div className="mt-4">
-       <h4 className="text-2xl text-mainColor font-semibold">{chapterName}</h4>
-       <p className="text-gray-900 text-lg">{lessons.name}</p>
-       </div>
-    </div>
- 
+              <div className="mt-4">
+              <h4 className="text-2xl text-mainColor font-semibold">{chapterName}</h4>
+              <p className="text-gray-900 text-lg">{lessons.name}</p>
+              </div>
+              </div>
+       )}
+   </>
   );
 };
 

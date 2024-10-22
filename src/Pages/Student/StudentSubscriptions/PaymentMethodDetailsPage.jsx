@@ -166,10 +166,10 @@ const PaymentMethodDetailsPage = () => {
       } catch (error) {
         console.log(error)
         if(error.response.data.faild =="You buy subject before"){
-          auth.toastError('You buy Subject before.');
+          auth.toastError('عملية الدفع قيد الانتظار للتأكيد من القسم المختص يرجى الانتظار وسوف يتم إبلاغك عند التفعيل شكرا لتفهمكم');
         }
         else if (error.response.data.faild =="You buy bundle before"){
-          auth.toastError('You buy bundle before.');
+          auth.toastError('عملية الدفع قيد الانتظار للتأكيد من القسم المختص يرجى الانتظار وسوف يتم إبلاغك عند التفعيل شكرا لتفهمكم');
         }
         else{
           const errorMessages = error?.response?.data.errors;

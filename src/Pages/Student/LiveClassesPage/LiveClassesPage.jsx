@@ -903,9 +903,9 @@ const LiveClassesPage = () => {
 
   return (
     <>
-    <div className='w-full p-4'>
+    <div className='w-full p-4 mt-10 flex lg:justify-start sm:justify-center'>
       <Link to="/dashboard/curricula_live">
-      <Button Text="حصص اللايف السابقه" Width="auto" BgColor="bg-mainColor" Color="text-white"/>
+      <Button Text="حصص اللايف المسجله" Width="auto" BgColor="bg-mainColor" Color="text-white"/>
       </Link>
     </div>
       <div className="w-full p-4 bg-white shadow-lg rounded-lg" dir="rtl">

@@ -340,7 +340,7 @@ const AllPlansPage = () => {
             <div className='w-full flex justify-center'>
               <button
                 onClick={() => setIsSelecting(true)}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4"
+                className="bg-mainColor text-white px-4 py-2 rounded hover:bg-blue-600 mt-4"
               >
                 اختر المواد
               </button>
@@ -349,7 +349,7 @@ const AllPlansPage = () => {
             <div className="flex justify-between mt-4">
               <button
                 onClick={handleSelectedPlansClick} // Navigate with selected plans
-                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                className="bg-mainColor text-white px-4 py-2 rounded hover:bg-green-600"
               >
                 {` اشترك الان : (${selectedSubjects.length})`}
               </button>
