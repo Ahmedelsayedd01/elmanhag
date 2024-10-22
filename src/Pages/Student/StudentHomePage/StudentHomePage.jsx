@@ -106,10 +106,15 @@ const StudentHomePage = () => {
                         </span>
                     </NavLink>
                 </div>
-{/* 
-                <div>
 
-                </div> */}
+                <div className="flex lg:hidden md:hidden w-full justify-center gap-5">
+                <Link to="subscriptions">
+                         <button type='button' className=" w-full px-6 py-2 text-2xl text-secoundColor bg-mainColor rounded-md lg:px-28 lg:py-3 hover:bg-hoverColor">
+                            اشتراكاتي
+                        </button>
+                    </Link>
+            </div>
+
             <div className="flex gap-5">
                     <button style={{ cursor: "pointer" }} onClick={handleDownload}>
                                     <div className="flex gap-5 bg-[#F6F6F6] px-7 py-4 justify-center items-center">

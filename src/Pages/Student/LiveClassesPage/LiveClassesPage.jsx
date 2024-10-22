@@ -532,7 +532,7 @@ import React, { useState, useEffect } from 'react';
 import { format, startOfWeek, addDays, isBefore, isSameDay, isWithinInterval, addWeeks, subWeeks, isSameWeek } from 'date-fns';
 import { arSA } from 'date-fns/locale';
 import { FaRegArrowAltCircleRight, FaRegArrowAltCircleLeft } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link} from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../../Context/Auth';
 import { Button } from '../../../Components/Button';
@@ -903,8 +903,10 @@ const LiveClassesPage = () => {
 
   return (
     <>
-    <div className='w-full p-4'>
-    <Button Text="حصص اللايف السابقه" Width="auto" BgColor="bg-mainColor" Color="text-white" handleClick={handleGoBack} />
+    <div className='w-full p-4 mt-10 flex lg:justify-start sm:justify-center'>
+      <Link to="/dashboard/curricula_live">
+      <Button Text="حصص اللايف المسجله" Width="auto" BgColor="bg-mainColor" Color="text-white"/>
+      </Link>
     </div>
       <div className="w-full p-4 bg-white shadow-lg rounded-lg" dir="rtl">
         {/* Header */}
