@@ -166,13 +166,6 @@ const SubjextPage = () => {
             <ButtonAdd Text={"Add"} BgColor={"white"} Color={"thirdColor"} Size={"xl"} />
           </Link>
         </div>
-        {/* <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Subject data available
-        </div>;
-        <div className="">
-          <Link to="add">
-            <ButtonAdd Text={"Add"} BgColor={"white"} Color={"thirdColor"} Size={"xl"} />
-          </Link>
-        </div> */}
       </>
     )
 
@@ -273,8 +266,6 @@ const SubjextPage = () => {
                         <del className='text-mainColor'>{subject?.price || 'Null'}</del>  / {subject?.price_discount || 'Null'} EGP
                       </>
                     }
-                    {/* <del className='text-mainColor'>{subject?.price || 'Null'}</del>
-                    / {subject?.price_discount || 'Null'} EGP */}
                   </td>
                   <td
                     className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
