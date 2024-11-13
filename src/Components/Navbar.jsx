@@ -5,8 +5,6 @@ import { CiGlobe } from "react-icons/ci";
 import { IoNotifications } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
 import SearchBar from './SearchBar';
-import DropDownMenu from './DropDownMenu';
-import { Link } from 'react-router-dom';
 import { Button } from './Button';
 
 
