@@ -23,8 +23,8 @@ const LoginAdmin = () => {
 
        useEffect(() => {
               if (data) {
-                     console.log('Calling auth.login with data:', data); // Debugging line
-                     auth.login(data); // Call auth.login with the updated data
+                     console.log('Calling auth.login with data:', data); 
+                     auth.login(data);
 
                      setIsLoading(false);
                      navigate("/dashboard_admin", { replace: true });
