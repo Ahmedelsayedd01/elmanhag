@@ -23,7 +23,7 @@ const LoginAdmin = () => {
 
        useEffect(() => {
               if (data) {
-                     console.log('Calling auth.login with data:', data); 
+                     console.log('Calling auth.login with data:', data);
                      auth.login(data);
 
                      setIsLoading(false);
@@ -104,10 +104,9 @@ const LoginAdmin = () => {
                                    </div>
                             </div>
                             <div className="hidden lg:flex items-center justify-center w-6/12">
-                                   {/* <img src={Logo} alt="" /> */}
                                    <Logo Height='250' />
                             </div>
-                     </div >
+                     </div>
               </>
        )
 }
