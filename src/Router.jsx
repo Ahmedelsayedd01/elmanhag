@@ -437,7 +437,7 @@ export const router = createBrowserRouter([
     path: "/",
     children: [
       {
-        index: true, // This makes it the default route for "/"
+        index: true, 
         element: <HomePage />,
       },
       {
