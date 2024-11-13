@@ -4,16 +4,6 @@ import Navbar from '../../Components/Navbar'
 import { Outlet } from 'react-router-dom'
 
 const LayoutAdmin = () => {
-       // useEffect(() => {
-       //        const disableRightClick = (e) => e.preventDefault();
-
-       //        // Disable right-click
-       //        document.addEventListener('contextmenu', disableRightClick);
-
-       //        return () => {
-       //               document.removeEventListener('contextmenu', disableRightClick);
-       //        };
-       // }, []);
        return (
               <>
                      <div className="w-full flex justify-between">
