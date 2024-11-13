@@ -11,7 +11,6 @@ const Sidebar = () => {
                             </div>
                             <LinksSidebar />
                      </aside>
-                     {/* <div className="fixed top-0">as</div> */}
               </div>
        )
 }
