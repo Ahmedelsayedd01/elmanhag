@@ -127,6 +127,7 @@ const AddCategoryPage = () => {
                      setCategoryThumbnailFile(file); // Set file object for upload
                      setCategoryThumbnail(file.name); // Display file name in the text input
               }
+              console.log(file)
        };
 
        return (

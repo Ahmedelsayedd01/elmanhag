@@ -186,80 +186,91 @@ const PaymentMethodDetailsPage = () => {
     
     // else if (paymentMethod.title === 'fawry') {
     //   try {
-    //     const chargeItems = [{
-    //       "itemId": plan.id,
-    //       "description": planType,
-    //       "quantity": "1"
-    //     }];
+    //     let chargeItems = [];
+    
+    //     if (planType === 'Subject') {
+    //       if (Array.isArray(plan)) {
+    //         // Plan is an array, send list of string ids
+    //         chargeItems = plan.map(singlePlan => ({
+    //           "itemId": singlePlan.id.toString(), // Convert id to string
+    //           "description": 'Subject',
+    //           "quantity": "1"
+    //         }));
+    //       } else {
+    //         // Plan is a single object, send id as string in a list
+    //         chargeItems = [{
+    //           "itemId": plan.id.toString(), // Convert id to string
+    //           "description": 'Subject',
+    //           "quantity": "1"
+    //         }];
+    //       }
+    //     } else if (planType === 'Bundle') {
+    //       // Plan type is Bundle, send id as an integer
+    //       chargeItems = [{
+    //         "itemId": plan.id.toString(), // Keep id as an integer
+    //         "description": 'Bundle',
+    //         "quantity": "1"
+    //       }];
+    //     }
 
+    //     console.log('Constructed chargeItems:', chargeItems);
+    
+    //     // Send request to Fawry API
     //     const response = await axios.post('https://bdev.elmanhag.shop/api/pay-at-fawry', {
-    //       "chargeItems": chargeItems
+    //       chargeItems,
+    //       "amount" :price
     //     }, {
     //       headers: {
     //         Authorization: `Bearer ${auth.user.token}`,
     //       },
     //     });
-
-    //     if (response.status === 200) {
-    //       setReferenceNumber(response.data.referenceNumber);
-    //       setMerchantNumber(response.data.merchantRefNumber);
-    //       localStorage.setItem('referenceNumber', response.data.referenceNumber);
-    //       localStorage.setItem('merchantNumber', response.data.merchantRefNumber);
-    //       setShowModal(true);
-    //     } else {
-    //       auth.toastError('Failed to submit.');
-    //     }
-    //   } catch (error) {
-    //     const errorMessages = error?.response?.data.errors;
-    //     let errorMessageString = 'Error occurred';
-    //     if (errorMessages) {
-    //       errorMessageString = Object.values(errorMessages).flat().join(' ');
-    //     }
-    //     auth.toastError('Error', errorMessageString);
-    //   } finally {
-    //     setIsLoading(false);
-    //   }
-    // }
-
-    else if (paymentMethod.title === 'fawry') {
+    
+    if (paymentMethod.title === "fawry") {
       try {
+        console.log("fawry");
+    
         let chargeItems = [];
     
-        if (planType === 'Subject') {
+        if (planType === "Subject") {
           if (Array.isArray(plan)) {
-            // Plan is an array, send list of string ids
-            chargeItems = plan.map(singlePlan => ({
-              "itemId": singlePlan.id.toString(), // Convert id to string
-              "description": 'Subject',
-              "quantity": "1"
-            }));
+            plan.forEach((singlePlan, index) => {
+              chargeItems.push({
+                itemId: `[${singlePlan.id}]`, // Use [id] for itemId as a string
+                description: "Subject",
+                quantity: "1",
+              });
+            });
           } else {
-            // Plan is a single object, send id as string in a list
-            chargeItems = [{
-              "itemId": plan.id.toString(), // Convert id to string
-              "description": 'Subject',
-              "quantity": "1"
-            }];
+            chargeItems.push({
+              itemId: `[${plan.id}]`, // Use [id] for itemId as a string
+              description: "Subject",
+              quantity: "1",
+            });
           }
-        } else if (planType === 'Bundle') {
-          // Plan type is Bundle, send id as an integer
-          chargeItems = [{
-            "itemId": plan.id, // Keep id as an integer
-            "description": 'Bundle',
-            "quantity": "1"
-          }];
+        } else if (planType === "Bundle") {
+          chargeItems.push({
+            itemId: `[${plan.id}]`, // Use [id] for itemId as a string
+            description: "Bundle",
+            quantity: "1",
+          });
         }
     
-        // Send request to Fawry API
-        const response = await axios.post('https://bdev.elmanhag.shop/api/pay-at-fawry', {
-          "chargeItems": chargeItems,
-          "amount" :price
-        }, {
-          headers: {
-            Authorization: `Bearer ${auth.user.token}`,
-          },
-        });
+        console.log("Constructed chargeItems:", chargeItems);
     
+        // Send request to the API
+        const response = await axios.post(
+          "https://bdev.elmanhag.shop/api/pay-at-fawry",
+          {
+            chargeItems: chargeItems, // Pass chargeItems as an array of objects
+            amount: price,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${auth.user.token}`,
+            },
+          }
+        );
+
         if (response.status === 200) {
           setReferenceNumber(response.data.referenceNumber);
           setMerchantNumber(response.data.merchantRefNumber);
