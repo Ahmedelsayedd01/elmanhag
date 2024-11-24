@@ -494,14 +494,14 @@ const AddRecordedLivePage = () => {
                      auth.toastError('Please Select Subject.');
                      return;
               }
-              if (!selectChapterId) {
-                     auth.toastError('Please Select Chapter.');
-                     return;
-              }
-              if (!selectLessonId) {
-                     auth.toastError('Please Select Lesson.');
-                     return;
-              }
+              // if (!selectChapterId) {
+              //        auth.toastError('Please Select Chapter.');
+              //        return;
+              // }
+              // if (!selectLessonId) {
+              //        auth.toastError('Please Select Lesson.');
+              //        return;
+              // }
 
               setIsLoading(true);
               try {
