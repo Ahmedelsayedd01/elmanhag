@@ -13,8 +13,6 @@ import {
   RevisionAD,
   ExamsAD,
   LiveLayout,
-  AddLiveLayout,
-  EditLiveLayout,
   NoticeBoardAD,
   BundlesEducationLayout,
   CategoriesEducationLayout,
@@ -89,7 +87,6 @@ import {
   AffilateStudentLayout,
   ReportsAD,
   ComplaintsLayout,
-  SuggestionsLayout,
   EditAdminRolesLayout,
   AddAdminRolesLayout,
   AdminUserLayout,
@@ -109,17 +106,6 @@ import {
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
-import SidebarSuperAdmin from "./Components/SidebarSuperAdmin";
-
-import SidebarAdmin from "./Components/SidebarAdmin";
-
-import SidebarTeacher from "./Components/SidebarTeacher";
-import SidebarAffiliate from "./Components/SidebarAffiliate";
-import SidebarParent from "./Components/SidebarParent";
-import SidebarStudent from "./Components/SidebarStudent";
-
-
-// import HeaderStudent from "./Components/HeaderStudent";
 
 import { createContext } from "react";
 
@@ -132,22 +118,14 @@ import {
   AffilatePage,
   ComplaintsHistoryPage,
   ComplaintsPage,
-  DownloadMobilePage,
   EditLiveUpcomingPage,
   EditRecordedLivePage,
   HomePage,
   LiveHistoryPage,
   LiveUpcomingPage,
-  LoginHistoryPage,
   ParentDashboardPage,
-  ParentPage,
   PayoutHistoryPage,
   PayoutPendingPage,
-  ProfilePage,
-  ProgressPage,
-  PurchasesPage,
-  SuggestionsHistoryPage,
-  SuggestionsPage,
   TeacherPage
 } from "./Pages/AllPages";
 
@@ -157,20 +135,15 @@ import LevelsPage from "./Pages/LevelsPage/LevelsPage";
 import AboutUsPage from "./Pages/AboutUsPage/AboutUsPage";
 import ConectUsPage from "./Pages/ConectUsPage/ConectUsPage";
 
-import { ContextProvider } from "./Context/Auth";
 import ProtectedRoute from "./Protected Data/ProtectedRoute";
 import Unauthorized from "./Pages/Unauthorized/Unauthorized";
 import ProtectedLogin from "./Protected Data/ProtectedLogin";
 import Authentication from "./Pages/RegisterPage/Authentication";
 import ForgetPass from "./Pages/RegisterPage/ForgetPass";
 import LoginAdmin from "./Pages/RegisterPage/LoginAdmin";
-import User from "./Layouts/User/User";
-import Sidebar from "./Components/Sidebar";
-import Navbar from "./Components/Navbar";
 import StudentUser from "./Layouts/Admin/StudentUser";
 import TeacherUserLayout from "./Layouts/Admin/TeacherUserLayout";
 import ParentUser from "./Layouts/Admin/ParentUser";
-import AdminUser from "./Layouts/Admin/AdminUserLayout";
 import LayoutAdmin from "./Layouts/Admin/LayoutAdmin";
 import EditProfilePage from "./Layouts/Admin/EditeProfileStudent";
 import EditCategoryLayout from "./Layouts/Admin/EditCategoryLayout";
@@ -180,7 +153,6 @@ import EditAffiliateUserLayout from "./Layouts/Admin/EditAffiliateUserLayout";
 import AddQuestionLayout from "./Layouts/Admin/AddQuestionLayout";
 import EditQuestionLayout from "./Layouts/Admin/EditQuestionLayout";
 import QuestionLayout from "./Layouts/Admin/QuestionLayout";
-import Complaint from "./Pages/Student/Complaint/ComplaintPage";
 import EditProfileStudentLayout from "./Layouts/Student/EditProfileStudentLayout";
 
 export const ContextNumper = createContext()
@@ -254,9 +226,7 @@ const AppLayoutAdminUser = () => (
 /* Education */
 const AppLayoutCategories = () => (
   <>
-    {/* <div className="flex flex-col items-center gap-y-4"> */}
     <Outlet />
-    {/* </div> */}
   </>
 );
 const AppLayoutSubject = () => (
@@ -425,14 +395,14 @@ const AppLayoutSubscriptions = () => (
   </>
 )
 
-const AppLayoutCurriculaLive =() =>(
+const AppLayoutCurriculaLive = () => (
   <>
-  <Outlet/>
+    <Outlet />
   </>
 )
-const AppLayoutUnitLive =() =>(
+const AppLayoutUnitLive = () => (
   <>
-  <Outlet/>
+    <Outlet />
   </>
 )
 
@@ -443,25 +413,8 @@ const AppLayoutAffilateDashboard = () => (
       <NavbarStudent />
       <AffilatePage />
     </div>
-    {/* <AffilatePage /> */}
-    {/* <NavbarStudent />
-      <AffilatePage /> */}
-    {/* <Outlet /> */}
   </div>
 );
-// const AppLayoutTeacherDashboard = () => (
-//   <div className="w-full flex gap-x-4 directionAR">
-//     {/* <SidebarTeacher /> */}
-//     <div className=" w-full h-screen ">
-//       <NavbarStudent />
-//       <TeacherPage />
-//     </div>
-//     {/* <AffilatePage /> */}
-//     {/* <NavbarStudent />
-//       <AffilatePage /> */}
-//     {/* <Outlet /> */}
-//   </div>
-// );
 
 const AppLayoutTeacherDashboard = () => (
   <>
@@ -484,7 +437,7 @@ export const router = createBrowserRouter([
     path: "/",
     children: [
       {
-        index: true, // This makes it the default route for "/"
+        index: true, 
         element: <HomePage />,
       },
       {
@@ -581,32 +534,6 @@ export const router = createBrowserRouter([
               {
                 path: 'edit/:profileStudentId',
                 element: <AppLayoutStudentProfile />,
-                // children: [
-                //   {
-                //     index: true, // This will match the base '/edit' path
-                //     element: <Navigate to="profile" />, // Redirect to '/edit/profile'
-                //   },
-                //   {
-                //     path: 'profile',
-                //     element: <ProfilePage />,
-                //   },
-                //   {
-                //     path: 'parent',
-                //     element: <ParentPage />,
-                //   },
-                //   {
-                //     path: 'Purchases',
-                //     element: <PurchasesPage />,
-                //   },
-                //   {
-                //     path: 'Progress',
-                //     element: <ProgressPage />,
-                //   },
-                //   {
-                //     path: 'loginHistory',
-                //     element: <LoginHistoryPage />,
-                //   },
-                // ],
               }
             ]
 
@@ -1032,21 +959,6 @@ export const router = createBrowserRouter([
                   }
                 ]
               },
-              // {
-              //   path: 'suggestions',
-              //   element: <SuggestionsLayout />,
-              //   children: [
-              //     {
-              //       index: true,
-              //       path: '',
-              //       element: <SuggestionsPage />
-              //     },
-              //     {
-              //       path: 'history',
-              //       element: <SuggestionsHistoryPage />
-              //     }
-              //   ]
-              // },
 
             ]
           },
@@ -1055,7 +967,7 @@ export const router = createBrowserRouter([
             element: <ReportsAD />,
           },
           /* Setting */
-          
+
           // Admin Roles
           {
             path: 'admin_roles',
@@ -1214,17 +1126,6 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  /* Signup coming soon student Dashboard */
-  // {
-  //   element: <ProtectedRoute allowedRoles={['studentSignup']} />,
-  //   path: '/download',
-  //   children: [
-  //     {
-  //       path: '',
-  //       element: <DownloadMobilePage />,
-  //     },
-  //   ]
-  // },
   /* Student Dashboard */
   {
     element: <ProtectedRoute allowedRoles={['student']} />,

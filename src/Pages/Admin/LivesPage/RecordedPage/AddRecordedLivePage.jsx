@@ -100,7 +100,7 @@ const AddRecordedLivePage = () => {
                                    }
                             );
                             if (response.status === 200) {
-                                   console.log('response3', response.data);
+                                   console.log('All Live', response.data);
                                    setData(response.data.live);
                                    setEducationData([
                                           ...response.data.education,
@@ -338,9 +338,9 @@ const AddRecordedLivePage = () => {
               const selectedOptionName = e.currentTarget.textContent.trim();
               const selectedOptionValue = inputElement ? parseInt(inputElement.value) : '';
 
-              const subjectsData = subjectData.find((subject) => subject.category_id == selectedOptionValue)
+              const subjectsData = subjectData.filter((subject) => subject.category_id == selectedOptionValue)
 
-              setSubjects([subjectsData])
+              setSubjects(subjectsData)
               console.log('subjectsData', subjectsData)
 
               setCategoryState(selectedOptionName[0].toUpperCase() + selectedOptionName.slice(1));

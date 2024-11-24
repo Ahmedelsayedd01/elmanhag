@@ -3430,7 +3430,6 @@ const LinksSidebar = () => {
                                    )}
                                    {Premission.includes("notice board") && (
                                           <>
-
                                                  <Link to="noticeboard" onClick={handleClickNoticeBoard} className={`${isActiveNoticeBoard ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
                                                         <NoticeBoardIcon Width={25} Height={23} isActive={isActiveNoticeBoard} />
                                                         <span className={`${isActiveNoticeBoard ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Notice Board</span>

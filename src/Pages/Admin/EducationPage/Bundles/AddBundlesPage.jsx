@@ -238,15 +238,6 @@ const AddBundlesPage = () => {
     console.log('Selected Subject ID:', selectedOptionValue);
   };
 
-  // Handle removal of a subject
-  // const handleRemoveSubject = (subjectId) => {
-  //   setSelectSubject(prevNames =>
-  //     prevNames.filter((name, index) => subjectData.find(subject => subject.id === subjectId)?.name !== name)
-  //   );
-  //   setSelectSubjectId(prevIds =>
-  //     prevIds.filter(id => id !== subjectId)
-  //   );
-  // };
 
   const handleRemoveSubject = (subjectName) => {
     setSelectSubject(selectSubject.filter(subject => subject !== subjectName));

@@ -106,16 +106,6 @@ const AdminRolesPage = () => {
 
 
 
-       // if (isLoading) {
-       //        return (
-       //               <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
-       //                      <Loading />
-       //               </div>
-       //        );
-       // }
-       // if (!rolesData) {
-       //        return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Roles available</div>;
-       // }
        const headers = ['#', 'Role Name', 'Role Premissions', 'Action']
        return (
               <>

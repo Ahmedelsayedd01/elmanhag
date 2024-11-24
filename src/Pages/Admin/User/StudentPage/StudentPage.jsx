@@ -15,6 +15,7 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/re
 import { LuUpload } from 'react-icons/lu';
 
 import * as XLSX from 'xlsx';
+import InputCustom from '../../../../Components/InputCustom';
 
 const StudentPage = () => {
        const auth = useAuth();
@@ -32,6 +33,7 @@ const StudentPage = () => {
        const [selectedOptionEducation, setSelectedOptionEducation] = useState('Filter By Education');
        const [educationName, setEducationName] = useState('');
        const [selectedOptionType, setSelectedOptionType] = useState('Filter By Free/Paid');
+       const [createdAt, setCreatedAt] = useState('');
        const [typeName, setTypeName] = useState('');
        const [openCountry, setOpenCountry] = useState(false);
        const [openCity, setOpenCity] = useState(false);
@@ -70,7 +72,7 @@ const StudentPage = () => {
               setCurrentPage(pageNumber);
        };
 
-       const filterStudents = (country, city, education, category, pay) => {
+       const filterStudents = (country, city, education, category, pay, createdAt) => {
               let filteredStudents = [...allStudents];
 
               // Filter by country
@@ -102,6 +104,32 @@ const StudentPage = () => {
                      });
               }
 
+              // Filter Created At
+              // if (createdAt) {
+              //        filteredStudents = filteredStudents.filter((student) => student.created_at === createdAt);
+              // }
+
+              // Filter Created At (comparing date strings)
+              if (createdAt) {
+                     filteredStudents = filteredStudents.filter((student) => {
+                            const createdAtRaw = student.created_at;
+
+                            // Ensure student.created_at exists and is in DD-MM-YYYY format
+                            if (!createdAtRaw || !/^\d{2}-\d{2}-\d{4}$/.test(createdAtRaw)) {
+                                   // Skip invalid date
+                                   return false;
+                            }
+
+                            // Manually parse DD-MM-YYYY format and convert it to YYYY-MM-DD
+                            const [day, month, year] = createdAtRaw.split('-');
+                            const studentCreatedAt = `${year}-${month}-${day}`; // Convert to YYYY-MM-DD
+
+                            return studentCreatedAt === createdAt;
+                     });
+              }
+
+
+
               // Handle not found case
               // if (filteredStudents.length === 0) {
               //        setNotFound(true);
@@ -117,9 +145,13 @@ const StudentPage = () => {
               console.log('education', education)
               console.log('category', category)
               console.log('pay', pay)
+              console.log('createdAt', createdAt)
               console.log('filteredStudents', filteredStudents)
        };
 
+       useEffect(() => {
+              console.log('students', students)
+       }, [students])
 
        const handleOptionCountry = (e) => {
               const selectedCountry = e.target.innerText;
@@ -135,7 +167,8 @@ const StudentPage = () => {
                      cityName,
                      educationName,
                      categoryName,
-                     typeName
+                     typeName,
+                     createdAt,
               )
               setOpenCountry(false);
               console.log('Selected Country:', selectedCountry);
@@ -154,7 +187,8 @@ const StudentPage = () => {
                      selectedCity,
                      educationName,
                      categoryName,
-                     typeName
+                     typeName,
+                     createdAt,
               )
               setOpenCity(false);
               console.log('Selected City:', selectedCity);
@@ -173,7 +207,8 @@ const StudentPage = () => {
                      cityName,
                      educationName,
                      selectedCategory,
-                     typeName
+                     typeName,
+                     createdAt,
               )
 
               console.log('selected Category:', selectedCategory);
@@ -190,7 +225,8 @@ const StudentPage = () => {
                      cityName,
                      selectedEducation,
                      categoryName,
-                     typeName
+                     typeName,
+                     createdAt,
               )
               console.log('selected Education:', selectedEducation);
 
@@ -208,7 +244,8 @@ const StudentPage = () => {
                      cityName,
                      educationName,
                      categoryName,
-                     selectedType
+                     selectedType,
+                     createdAt,
               )
               console.log('selected Type:', selectedType);
 
@@ -285,6 +322,7 @@ const StudentPage = () => {
                             },
                      });
                      if (response.status === 200) {
+                            console.log('response', response)
                             setData(response.data);
                             setAllStudents(response.data.students);
                             setStudents(response.data.students);
@@ -399,6 +437,7 @@ const StudentPage = () => {
                      "Category": student.category?.name || "-",
                      "Type": student?.gender || "-",
                      "Job": student.student_job?.job || "-",
+                     "Created At": student?.created_at || "-",
                      "Last Login": student?.last_login?.updated_at || "-",
                      "Status": student.status === 1 ? "Active" : "Banned",
                      "Free / Paid": student.bundlesy === '' && student.subjects === '' ? 'Paid' : 'Free',
@@ -418,8 +457,9 @@ const StudentPage = () => {
                      { wch: 10 },  // Column for "Education"
                      { wch: 25 },  // Column for "Category"
                      { wch: 10 },  // Column for "Type"
-                     { wch: 20 },  // Column for "Job"
-                     { wch: 20 },  // Column for "Last Login"
+                     { wch: 10 },  // Column for "Job"
+                     { wch: 15 },  // Column for "Created At"
+                     { wch: 15 },  // Column for "Last Login"
                      { wch: 10 },  // Column for "Free / Paid"
                      { wch: 10 }   // Column for "Status"
               ];
@@ -502,9 +542,32 @@ const StudentPage = () => {
                                                  options={[{ id: 1, name: 'Free' }, { id: 2, name: 'Paid' }]}
                                           />
                                    </div>
-                                   <div className="w-full flex sm:flex-col xl:flex-row gap-4">
+                                   <div className="sm:w-full xl:w-[30%] flex items-center justify-between">
+                                          <span className='w-5/12 text-thirdColor font-semibold text-xl pl-1'>Create At:</span>
+                                          <InputCustom
+                                                 type="date"
+                                                 minDate={false}
+                                                 placeholder="Start Date"
+                                                 value={createdAt}
+                                                 required={false}
+                                                 onChange={(e) => {
+                                                        const value = e.target.value;
+                                                        setCreatedAt(value)
 
-                                          <div className="sm:w-full xl:w-[10%] text-start">
+                                                        filterStudents(
+                                                               countryName,
+                                                               cityName,
+                                                               educationName,
+                                                               categoryName,
+                                                               typeName,
+                                                               value,
+                                                        )
+                                                 }}
+                                          />
+                                   </div>
+                                   <div className="sm:w-full xl:w-[30%] flex items-center justify-end sm:flex-col xl:flex-row gap-4">
+
+                                          <div className="sm:w-full xl:w-[30%] text-start">
                                                  <Link to="add">
                                                         <ButtonAdd Text={"Add"} isWidth={true} BgColor={"white"} Color={"thirdColor"} Size={"xl"} />
                                                  </Link>
@@ -527,6 +590,7 @@ const StudentPage = () => {
                                                         <th className="px-4 py-2 text-mainColor text-center font-semibold text-sm lg:text-lg">Category</th>
                                                         <th className="px-4 py-2 text-mainColor text-center font-semibold text-sm lg:text-lg">Type</th>
                                                         <th className="px-4 py-2 text-mainColor text-center font-semibold text-sm lg:text-lg">Job</th>
+                                                        <th className="px-4 py-2 text-mainColor text-center font-semibold text-sm lg:text-lg">Created At</th>
                                                         <th className="px-4 py-2 text-mainColor text-center font-semibold text-sm lg:text-lg">Last Login</th>
                                                         <th className="px-4 py-2 text-mainColor text-center font-semibold text-sm lg:text-lg">Free / Paid</th>
                                                         <th className="px-4 py-2 text-mainColor text-center font-semibold text-sm lg:text-lg">Status</th>
@@ -544,6 +608,7 @@ const StudentPage = () => {
                                                                <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">{student.category?.name || "-"}</td>
                                                                <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">{student?.gender || "-"}</td>
                                                                <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">{student.student_job?.job || "-"}</td>
+                                                               <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">{student?.created_at || '-'}</td>
                                                                <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">{student?.last_login?.updated_at || '-'}</td>
                                                                <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base pay">{student.bundlesy === '' && student.subjects === '' ? 'Paid' : 'Free'}</td>
                                                                <td className="px-4 py-3 text-center text-thirdColor text-sm lg:text-base">

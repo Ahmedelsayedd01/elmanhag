@@ -15,7 +15,6 @@ const CategoriesPage = () => {
        const [allCategories, setAllCategories] = useState(null);
        const [categories, setCategories] = useState(null);
        const [categoriesChanged, setCategoriesChanged] = useState(false); // Change tracker
-       const [parentCategories, setParentCategories] = useState(); // Change tracker
 
        const [isDeleting, setIsDeleting] = useState(false);
        const [openDialog, setOpenDialog] = useState(null);
