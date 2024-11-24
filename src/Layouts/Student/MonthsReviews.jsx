@@ -13,7 +13,7 @@ const MonthsReviews = () => {
        return (
               <>
                      <div className='directionEN'>
-                     <HeaderPageSection handleClick={handleGoBack} name="حصص لايف" />
+                     <HeaderPageSection handleClick={handleGoBack} name="مراجعات الشهور" />
                      </div>
                      <MonthsreviewsPage/>
               </>
