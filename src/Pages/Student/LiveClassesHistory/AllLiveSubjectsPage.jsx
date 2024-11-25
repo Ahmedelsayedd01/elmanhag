@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'; 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import { useAuth } from '../../../Context/Auth';
 import Loading from '../../../Components/Loading';
 import axios from 'axios';
@@ -10,15 +10,14 @@ const AllLiveSubjectsPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [studentSubject, setStudentSubject] = useState([]);
 
-    const handleNavigate = (subjectId , thumbnailUrl) => {
-        console.log(thumbnailUrl)
-      navigate(`subject_live/${subjectId}`, { state: {thumbnail_image : thumbnailUrl} });  // Navigate to the correct path under "curricula"
-    };
+    // const handleNavigate = (subjectId , subject) => {
+    //   navigate(`../../lesson_live/${subjectId}`, { state: {live : subject} });  // Navigate to the correct path under "curricula"
+    // };
 
    const fetchSubjects = async () => {
      setIsLoading(true);
      try {
-            const response = await axios.get('https://bdev.elmanhag.shop/student/setting/subject/student',
+            const response = await axios.get('https://bdev.elmanhag.shop/student/recorded_live',
            {
                    headers: {
                           Authorization: `Bearer ${auth.user.token}`,
@@ -29,7 +28,7 @@ const AllLiveSubjectsPage = () => {
             });
             if (response.status === 200) {
                   console.log(response.data)
-                  setStudentSubject(response.data.subject)
+                  setStudentSubject(response.data.live_recorded)
             }
           } 
      catch (error) {
@@ -63,11 +62,12 @@ const AllLiveSubjectsPage = () => {
         <div className="p-4 md:p-8 lg:p-12">        
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     {studentSubject.map((subject) => (
+                        <Link to={`lesson_live/${subject.id}`} state={{live:subject , liveId:subject.id}} key={subject.id}>
                         <div
-                            key={subject.id}
+                            
                             className="subject-box p-3 flex flex-col justify-center items-center bg-white rounded-xl shadow-lg hover:cursor-pointer transition-transform transform hover:scale-105"
                             style={{ boxShadow: '0px 0px 8px rgba(208, 16, 37, 0.12)' }}
-                            onClick={() => handleNavigate(subject.id ,subject.thumbnail_url)}
+                            // onClick={() => handleNavigate(subject.id ,subject)}
                         >
                             <span className="text-mainColor text-lg md:text-xl lg:text-2xl font-bold mb-3">
                                 {subject.name}
@@ -78,6 +78,7 @@ const AllLiveSubjectsPage = () => {
                                 // className="w-32 h-32"
                             />
                         </div>
+                        </Link>
                     ))}
                 </div>
         </div>

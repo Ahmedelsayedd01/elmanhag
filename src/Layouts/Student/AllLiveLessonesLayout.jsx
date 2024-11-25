@@ -4,20 +4,20 @@ import { AllLiveLessonesPage } from '../../Pages/AllPages'
 import { useNavigate } from 'react-router-dom';
 
 const AllLiveLessonesLayout = () => {
-       const { lessonliveId } = useParams()
-       const { subjectliveId } = useParams()
+       // const { lessonliveId } = useParams()
+       // const { subjectliveId } = useParams()
        const navigate = useNavigate();
        const handleGoBack = () => {
               navigate(-1, { replace: true });
        };
 
-       useEffect(() => {
-              console.log("Lesson Live ID:", lessonliveId);  // Log unitId to check if it's coming correctly
-       }, [lessonliveId]);
+       // useEffect(() => {
+       //        console.log("Lesson Live ID:", lessonliveId);  // Log unitId to check if it's coming correctly
+       // }, [lessonliveId]);
 
        return (
               <>
-                     <AllLiveLessonesPage lessonId={lessonliveId} subjectId={subjectliveId} />
+                     <AllLiveLessonesPage  />
               </>
        )
 }

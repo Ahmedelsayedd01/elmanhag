@@ -1235,19 +1235,23 @@ export const router = createBrowserRouter([
                 element: <AllLiveSubjectsLayout />,
               },
               {
-                path: 'subject_live/:subjectliveId',
-                element: <AppLayoutUnitLive />,
-                children: [
-                  {
-                    path: '',
-                    element: <AllLiveUnitsLayout />,
-                  },
-                  {
-                    path: 'lesson_live/:lessonliveId',
-                    element: <AllLiveLessonesLayout /> // Add the component to render the lesson
-                  }
-                ]
-              },
+                path: 'lesson_live/:lessonliveId',
+                element: <AllLiveLessonesLayout /> // Add the component to render the lesson
+              }
+              // {
+              //   path: 'subject_live/:subjectliveId',
+              //   element: <AppLayoutUnitLive />,
+              //   children: [
+              //     {
+              //       path: '',
+              //       element: <AllLiveUnitsLayout />,
+              //     },
+              //     {
+              //       path: 'lesson_live/:lessonliveId',
+              //       element: <AllLiveLessonesLayout /> // Add the component to render the lesson
+              //     }
+              //   ]
+              // },
             ]
           },
         ],

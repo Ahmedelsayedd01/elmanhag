@@ -4,12 +4,15 @@ import Loading from '../../../Components/Loading';
 import axios from 'axios';
 import { Button } from '../../../Components/Button';
 import { IoIosArrowDown } from 'react-icons/io';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { FaDownload } from 'react-icons/fa'; // Import download icon
 
-const AllLiveLessonesPage = ({ subjectId, lessonId }) => {
+const AllLiveLessonesPage = () => {
 //   const [activeTab, setActiveTab] = useState("videos");
   const auth = useAuth();
+  const location = useLocation();
+  const { live ,liveId} = location.state || {}; // Access the passed plan data safely
+//   const {live ,liveId}= useLocation()
   const [isLoading, setIsLoading] = useState(false);
   const [lessons, setLessons] = useState({});
   const [subjectData, setSubjectData] = useState([]);
@@ -25,85 +28,8 @@ const AllLiveLessonesPage = ({ subjectId, lessonId }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-       const fetchLiveRecorded = async () => {
-              setIsLoading(true);
-              try {
-                     const response = await axios.get('https://bdev.elmanhag.shop/student/recorded_live',
-                    {
-                            headers: {
-                                   Authorization: `Bearer ${auth.user.token}`,
-                                   'Content-Type': 'application/json',
-                                   Accept: 'application/json',
-                            },
-         
-                     });
-                     if (response.status === 200) {
-                            console.log('Live Recorded:', response.data);
-                               // Check if any of the live recorded matches the lessonId
-                            const matchedLesson = response.data.live_recorded.find((item) =>
-                                   item.
-                            subject_id === parseInt(subjectId) && item.lesson_id=== parseInt(lessonId));
-                  
-                            if (matchedLesson) {
-                                   setLessons(matchedLesson); // Set the lesson if found
-                                   setChapterID(matchedLesson.chapter_id);
-                            } else {
-                            setShowErrorModal(true);
-                            }
-                          }
-                   } 
-              catch (error) {
-                    console.log(error.response); // Log the full response for debugging
-                    const errorMessages = error?.response?.data?.errors;
-                    let errorMessageString = 'Error occurred';
-                  if (errorMessages) {
-                          errorMessageString = Object.values(errorMessages).flat().join(' ');
-                  }
-                  auth.toastError('Error', errorMessageString);
-                  }
-              finally {
-                  setIsLoading(false);
-                  }
-              };
-        
-              fetchLiveRecorded();
-  }, [subjectId, lessonId, auth.user.token]);
-
-
-  useEffect(() => {
-  const fetchSubjects = async () => {
-       setIsLoading(true);
-       try {
-              const response = await axios.get('https://bdev.elmanhag.shop/student/setting/subject/student',
-             {
-                     headers: {
-                            Authorization: `Bearer ${auth.user.token}`,
-                            'Content-Type': 'application/json',
-                            Accept: 'application/json',
-                     },
-  
-              });
-              if (response.status === 200) {
-                    console.log(response.data)
-                    setSubjectData(response.data.subject)
-              }
-            } 
-       catch (error) {
-             console.log(error.response); // Log the full response for debugging
-             const errorMessages = error?.response?.data?.errors;
-             let errorMessageString = 'Error occurred';
-           if (errorMessages) {
-                   errorMessageString = Object.values(errorMessages).flat().join(' ');
-           }
-           auth.toastError('Error', errorMessageString);
-           }
-       finally {
-           setIsLoading(false);
-           }
-       };
-               fetchSubjects();
+      console.log(live,liveId)
       }, []);
-
 
   const fetchProblemList = async () => {
     setIsLoading(true);
@@ -203,8 +129,8 @@ const AllLiveLessonesPage = ({ subjectId, lessonId }) => {
     );
   }
 
-  if (!lessons) {
-    return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No lessons data available</div>;
+  if (!live) {
+    return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No live data available</div>;
   }
 
 
@@ -225,7 +151,7 @@ const AllLiveLessonesPage = ({ subjectId, lessonId }) => {
               <div className="p-6 mb-20 sm:p-2">
               <div className="w-full">
                      <video className="w-full object-cover" controls controlsList='nodownload'>
-                            <source src={`${lessons.video_link}`} type="video/mp4" />
+                            <source src={`${live.video_link}`} type="video/mp4" />
                             Your browser does not support the video tag.
                      </video>
 
@@ -252,7 +178,7 @@ const AllLiveLessonesPage = ({ subjectId, lessonId }) => {
                                    className={`p-2 hover:bg-white hover:text-mainColor rounded-2xl text-lg font-semibold cursor-pointer ${selectedProblem === problem ? "bg-mainColor" : ""}`}
                                    onClick={() => {
                                    setSelectedProblem(problem);
-                                   handleSubmitProblem(event,problem.id, lessons.id); // Auto submit when problem is selected
+                                   handleSubmitProblem(event,problem.id, live.id); // Auto submit when problem is selected
                                    }}
                             >
                                    {problem.title}
@@ -265,8 +191,8 @@ const AllLiveLessonesPage = ({ subjectId, lessonId }) => {
               </div>
 
               <div className="mt-4">
-              <h4 className="text-2xl text-mainColor font-semibold">{chapterName}</h4>
-              <p className="text-gray-900 text-lg">{lessons.name}</p>
+              <h4 className="text-2xl text-mainColor font-semibold">{live.chapter.name}</h4>
+              <p className="text-gray-900 text-lg">{live.name}</p>
               </div>
               </div>
        )}
