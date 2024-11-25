@@ -35,6 +35,7 @@ const AddRecordedLivePage = () => {
 
        const [name, setName] = useState('');
        const [description, setDescription] = useState('');
+       const [price, setPrice] = useState('');
 
 
        const [educationState, setEducationState] = useState('Select Education');
@@ -76,6 +77,7 @@ const AddRecordedLivePage = () => {
        const [openSelectStatus, setOpenSelectStatus] = useState(false);
 
        const [liveRecordedStatus, setLiveRecordedStatus] = useState(0);
+       const [liveIncluded, setLiveIncluded] = useState(0);
 
        const liveVideoRecordedRef = useRef();
        const dropdownEducationRef = useRef();
@@ -420,6 +422,10 @@ const AddRecordedLivePage = () => {
               const isChecked = e.target.checked;
               setLiveRecordedStatus(isChecked ? 1 : 0);
        };
+       const handleLiveLiveIncluded = (e) => {
+              const isChecked = e.target.checked;
+              setLiveIncluded(isChecked ? 1 : 0);
+       };
 
        const handleInputClick = (ref) => {
               if (ref.current) {
@@ -494,14 +500,20 @@ const AddRecordedLivePage = () => {
                      auth.toastError('Please Select Subject.');
                      return;
               }
-              if (!selectChapterId) {
-                     auth.toastError('Please Select Chapter.');
-                     return;
+              if (selectStatus === 'Paid') {
+                     if (!price) {
+                            auth.toastError('Please Enter Price.');
+                            return;
+                     }
               }
-              if (!selectLessonId) {
-                     auth.toastError('Please Select Lesson.');
-                     return;
-              }
+              // if (!selectChapterId) {
+              //        auth.toastError('Please Select Chapter.');
+              //        return;
+              // }
+              // if (!selectLessonId) {
+              //        auth.toastError('Please Select Lesson.');
+              //        return;
+              // }
 
               setIsLoading(true);
               try {
@@ -515,6 +527,8 @@ const AddRecordedLivePage = () => {
                      formData.append('lesson_id', selectLessonId);
                      formData.append('subject_id', selectSubjectId);
                      formData.append('paid', selectStatus === 'Paid' ? 1 : 0);
+                     formData.append('included', liveIncluded);
+                     formData.append('price', price);
                      formData.append('active', liveRecordedStatus);
 
                      // // Handle education_id appropriately
@@ -660,7 +674,26 @@ const AddRecordedLivePage = () => {
                                                         options={paidData || []}
                                                  />
                                           </div>
+                                          {selectStatus === 'Paid' && (
+                                                 <>
+                                                        <div className="lg:w-[30%] sm:w-full">
+                                                               <InputCustom
+                                                                      type="text"
+                                                                      placeholder="Price"
+                                                                      value={price}
+                                                                      required={false}
+                                                                      onChange={(e) => setPrice(e.target.value)}
+                                                               />
+                                                        </div>
+                                                 </>
+                                          )}
 
+                                          <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+                                                 <span className="text-2xl text-thirdColor font-medium">Included:</span>
+                                                 <div>
+                                                        <CheckBox checked={liveIncluded} handleClick={handleLiveLiveIncluded} />
+                                                 </div>
+                                          </div>
                                           <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
                                                  <span className="text-2xl text-thirdColor font-medium">Active:</span>
                                                  <div>
