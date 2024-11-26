@@ -72,11 +72,17 @@ const AllLiveSubjectsPage = () => {
                             <span className="text-mainColor text-lg md:text-xl lg:text-2xl font-bold mb-3">
                                 {subject.name}
                             </span>
-                            <img
+                            {/* <span className="text-mainColor text-lg md:text-xl lg:text-2xl font-bold mb-3">
+                                {subject.description}
+                            </span> */}
+                            <span className="text-black text-lg md:text-xl lg:text-2xl font-bold mb-3">
+                                {subject.chapter?.name}
+                            </span>
+                            {/* <img
                                 src={subject.thumbnail_url}
                                 alt={subject.name}
                                 // className="w-32 h-32"
-                            />
+                            /> */}
                         </div>
                         </Link>
                     ))}
