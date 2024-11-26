@@ -373,9 +373,9 @@ const AllPlansPage = () => {
             {liveRecordedPlans.map((live) => (
               <div key={live.id} className="bg-white p-6 rounded-lg shadow-md text-center flex flex-col justify-between">
                 <div>
-                  <div className='flex justify-center'>
+                  {/* <div className='flex justify-center'>
                     <img src={live.cover_photo_link} alt={live.name} className="" />
-                  </div>
+                  </div> */}
                   <h3 className="text-xl font-semibold mb-2">{live.name}</h3>
                   <p className="text-gray-700 mb-2">
                     {live.price_discount > 0 ? (
