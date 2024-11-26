@@ -143,10 +143,10 @@ const PaymentMethodDetailsPage = () => {
           console.log(plan.id)
           formData.append('bundle_id', JSON.stringify([plan.id.toString()])); 
         }
-        else if (planType === 'Live') {
+        else if (planType === 'Recorded live') {
           // Plan type is Bundle, send id as an integer (no need to convert to string)
           console.log(plan.id)
-          formData.append('record_live_id', JSON.stringify([plan.id.toString()])); 
+          formData.append('record_live_id', plan.id); 
         }
         
         
@@ -256,6 +256,13 @@ const PaymentMethodDetailsPage = () => {
           chargeItems.push({
             itemId: `[${plan.id}]`, // Use [id] for itemId as a string
             description: "Bundle",
+            quantity: "1",
+          });
+        }
+        else if (planType === "Live") {
+          chargeItems.push({
+            itemId: `[${plan.id}]`, // Use [id] for itemId as a string
+            description: "Live Session",
             quantity: "1",
           });
         }
