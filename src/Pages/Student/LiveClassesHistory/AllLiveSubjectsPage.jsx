@@ -70,13 +70,13 @@ const AllLiveSubjectsPage = () => {
                             // onClick={() => handleNavigate(subject.id ,subject)}
                         >
                             <span className="text-mainColor text-lg md:text-xl lg:text-2xl font-bold mb-3">
-                                {subject.name}
+                                {subject.name || '-'}
                             </span>
                             {/* <span className="text-mainColor text-lg md:text-xl lg:text-2xl font-bold mb-3">
                                 {subject.description}
                             </span> */}
                             <span className="text-black text-lg md:text-xl lg:text-2xl font-bold mb-3">
-                                {subject.chapter?.name}
+                                {subject.chapter?.name || subject.description || '-'}
                             </span>
                             {/* <img
                                 src={subject.thumbnail_url}
