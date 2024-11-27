@@ -232,9 +232,9 @@ const AddRevisionPage = () => {
               const selectedOptionName = e.currentTarget.textContent.trim();
               const selectedOptionValue = inputElement ? parseInt(inputElement.value) : '';
 
-              const subjectsData = allSubjects.find((subject) => subject.category_id == selectedOptionValue)
+              const subjectsData = allSubjects.filter((subject) => subject.category_id == selectedOptionValue)
 
-              setSubjects([subjectsData])
+              setSubjects(subjectsData)
               console.log('subjectsData', subjectsData)
 
               setCategoryState(selectedOptionName[0].toUpperCase() + selectedOptionName.slice(1));
