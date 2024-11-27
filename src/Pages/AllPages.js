@@ -52,6 +52,10 @@ export { default as HomeWorkPage } from "./Admin/HomeWorkPage/HomeWorkPage";
 export { default as AddHomeWorkPage } from "./Admin/HomeWorkPage/AddHomeWorkPage";
 export { default as EditHomeWorkPage } from "./Admin/HomeWorkPage/EditHomeWorkPage";
 
+/* revisions */ 
+export { default as RevisionPage } from "./Admin/RevisionPage/RevisionPage";
+export { default as AddRevisionPage } from "./Admin/RevisionPage/AddRevisionPage";
+export { default as EditRevisionPage } from "./Admin/RevisionPage/EditRevisionPage";
 /* Lives */ 
 // Live Page 
 export { default as LiveNavPage } from "./Admin/LivesPage/LivePage/LiveNavPage";

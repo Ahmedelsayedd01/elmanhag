@@ -50,8 +50,9 @@ export { default as HomeWorkLayout } from "./Admin/HomeWorkLayout";
 export { default as AddHomeWorkLayout } from "./Admin/AddHomeWorkLayout";
 export { default as EditHomeWorkLayout } from "./Admin/EditHomeWorkLayout";
 
-export { default as RevisionAD } from "./Admin/RevisionAD";
 export { default as ExamsAD } from "./Admin/ExamsAD";
+/* Revisions */
+export { default as RevisionsLayout } from "./Admin/RevisionsLayout";
 /* Lives */
 // Live 
 export { default as LiveLayout } from "./Admin/LiveLayout";
