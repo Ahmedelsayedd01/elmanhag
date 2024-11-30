@@ -259,10 +259,10 @@ const PaymentMethodDetailsPage = () => {
             quantity: "1",
           });
         }
-        else if (planType === "Live") {
+        else if (planType === "Recorded live") {
           chargeItems.push({
             itemId: `[${plan.id}]`, // Use [id] for itemId as a string
-            description: "Live Session",
+            description: "Recorded Live",
             quantity: "1",
           });
         }
