@@ -261,13 +261,14 @@ const PaymentMethodDetailsPage = () => {
         }
         else if (planType === "Recorded live") {
           chargeItems.push({
-            itemId: `[${plan.id}]`, // Use [id] for itemId as a string
-            description: "Recorded Live",
+            // itemId: `[${plan.id}]`, // Use [id] for itemId as a string
+            itemId:plan.id.toString(),
+            description: "Recorded live",
             quantity: "1",
           });
         }
     
-        console.log("Constructed chargeItems:", chargeItems);
+        console.log("Constructed chargeItems:", chargeItems ,price);
     
         // Send request to the API
         const response = await axios.post(
@@ -284,6 +285,7 @@ const PaymentMethodDetailsPage = () => {
         );
 
         if (response.status === 200) {
+          console.log(response)
           setReferenceNumber(response.data.referenceNumber);
           setMerchantNumber(response.data.merchantRefNumber);
           localStorage.setItem('referenceNumber', response.data.referenceNumber);
