@@ -10,7 +10,6 @@ import {
   FinalReviews,
   SolveExams,
   DashboardAD,
-  RevisionAD,
   ExamsAD,
   LiveLayout,
   NoticeBoardAD,
@@ -102,7 +101,8 @@ import {
   RecordedLiveLayout,
   AllLiveSubjectsLayout,
   AllLiveUnitsLayout,
-  AllLiveLessonesLayout
+  AllLiveLessonesLayout,
+  RevisionsLayout
 } from "./Layouts/AllLayouts";
 
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -115,11 +115,13 @@ import SignUpPage from "./Pages/RegisterPage/SignUpPage";
 import {
   AddLiveUpcomingPage,
   AddRecordedLivePage,
+  AddRevisionPage,
   AffilatePage,
   ComplaintsHistoryPage,
   ComplaintsPage,
   EditLiveUpcomingPage,
   EditRecordedLivePage,
+  EditRevisionPage,
   HomePage,
   LiveHistoryPage,
   LiveUpcomingPage,
@@ -256,6 +258,12 @@ const AppLayoutQuestionsBank = () => (
   </>
 );
 
+/* Revisions */
+const AppLayoutRevision = () => (
+  <>
+    <Outlet />
+  </>
+);
 /* Lives */
 const AppLayoutLives = () => (
   <>
@@ -437,7 +445,7 @@ export const router = createBrowserRouter([
     path: "/",
     children: [
       {
-        index: true, 
+        index: true,
         element: <HomePage />,
       },
       {
@@ -716,8 +724,22 @@ export const router = createBrowserRouter([
             ]
           },
           {
-            path: 'revision',
-            element: <RevisionAD />,
+            path: 'revisions',
+            element: <AppLayoutRevision />,  // Ensure this is the right component
+            children: [
+              {
+                path: '',
+                element: <RevisionsLayout />
+              },
+              {
+                path: 'add',
+                element: <AddRevisionPage />
+              },
+              {
+                path: 'edit/:revisionId',
+                element: <EditRevisionPage />
+              },
+            ]
           },
           {
             path: 'exams',

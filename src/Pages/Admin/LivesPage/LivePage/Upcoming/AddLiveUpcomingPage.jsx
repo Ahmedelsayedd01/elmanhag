@@ -39,7 +39,7 @@ const AddLiveUpcomingPage = () => {
   const [endTime, setEndTime] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState('');
 
   const [selectEducation, setSelectEducation] = useState('Select Education');
   const [selectEducationId, setSelectEducationId] = useState('');
@@ -808,7 +808,7 @@ const AddLiveUpcomingPage = () => {
             {selectStatus === 'Paid' && (
               <div className="lg:w-[30%] sm:w-full">
                 <InputCustom
-                  type="text"
+                  type="number"
                   placeholder="Price"
                   value={price}
                   required={false}

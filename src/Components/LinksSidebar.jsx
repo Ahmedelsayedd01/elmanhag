@@ -52,7 +52,7 @@ const LinksSidebar = () => {
        const [isActiveQuestionsBank, setIsActiveQuestionsBank] = useState(savedState.isActiveQuestionsBank ?? false);
        /* ///Childern Education */
        const [isActiveHomeWork, setIsActiveHomeWork] = useState(savedState.isActiveHomeWork ?? false);
-       const [isActiveRevision, setIsActiveRevision] = useState(savedState.isActiveRevision ?? false);
+       const [isActiveRevisions, setIsActiveRevisions] = useState(savedState.isActiveRevisions ?? false);
        const [isActiveExams, setIsActivExams] = useState(savedState.isActiveExams ?? false);
 
        /* Lives */
@@ -130,7 +130,7 @@ const LinksSidebar = () => {
                      isActiveBundles,
                      isActiveQuestionsBank,
                      isActiveHomeWork,
-                     isActiveRevision,
+                     isActiveRevisions,
                      isActiveExams,
                      isActiveLives,
                      openListLives,
@@ -187,7 +187,7 @@ const LinksSidebar = () => {
               isActiveBundles,
               isActiveQuestionsBank,
               isActiveHomeWork,
-              isActiveRevision,
+              isActiveRevisions,
               isActiveExams,
               isActiveLives,
               openListLives,
@@ -243,7 +243,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -308,7 +308,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -372,7 +372,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -427,7 +427,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -490,7 +490,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -553,7 +553,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -618,7 +618,7 @@ const LinksSidebar = () => {
               setIsActiveQuestionsBank(false)
               setOpenListEducation(true)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -682,7 +682,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -737,7 +737,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -800,7 +800,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(true)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -863,7 +863,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(true)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -927,7 +927,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(true)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -975,7 +975,7 @@ const LinksSidebar = () => {
                      handleClickHomeWork()
               }
        }, [location])
-       const handleClickRevision = () => {
+       const handleClickRevisions = () => {
               setIsActiveDashboard(false);
               setIsActiveUser(false);
               setOpenListUser(false);
@@ -990,7 +990,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(true)
+              setIsActiveRevisions(true)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -1034,8 +1034,8 @@ const LinksSidebar = () => {
               const part = location.pathname;
               const parts = part.split('/');
               const result = parts.slice(0, 3).join('/');
-              if (result == "/dashboard_admin/revision") {
-                     handleClickRevision()
+              if (result == "/dashboard_admin/revisions") {
+                     handleClickRevisions()
               }
        }, [location])
        const handleClickExams = () => {
@@ -1053,7 +1053,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(true)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -1117,7 +1117,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(true)
               setOpenListLives(true)
@@ -1190,7 +1190,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(true)
               setOpenListLives(true)
@@ -1253,7 +1253,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(true)
               setOpenListLives(true)
@@ -1319,7 +1319,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -1382,7 +1382,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -1437,7 +1437,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -1500,7 +1500,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -1563,7 +1563,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -1628,7 +1628,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -1691,7 +1691,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -1746,7 +1746,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -1811,7 +1811,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -1874,7 +1874,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -1929,7 +1929,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -1992,7 +1992,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -2055,7 +2055,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -2119,7 +2119,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -2185,7 +2185,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -2254,7 +2254,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -2320,7 +2320,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -2389,7 +2389,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -2453,7 +2453,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -2517,7 +2517,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -2572,7 +2572,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -2635,7 +2635,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -2698,7 +2698,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -2761,7 +2761,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -2824,7 +2824,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -2888,7 +2888,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -2952,7 +2952,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -3016,7 +3016,7 @@ const LinksSidebar = () => {
               setIsActiveBundles(false)
               setIsActiveQuestionsBank(false)
               setIsActiveHomeWork(false)
-              setIsActiveRevision(false)
+              setIsActiveRevisions(false)
               setIsActivExams(false)
               setIsActiveLives(false)
               setOpenListLives(false)
@@ -3113,9 +3113,9 @@ const LinksSidebar = () => {
                                    </Link>
 
 
-                                   <Link to="revision" onClick={handleClickRevision} className={`${isActiveRevision ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
-                                          <RevisionIcon Width={25} Height={23} isActive={isActiveRevision} />
-                                          <span className={`${isActiveRevision ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Revision</span>
+                                   <Link to="revisions" onClick={handleClickRevisions} className={`${isActiveRevisions ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                          <RevisionIcon Width={25} Height={23} isActive={isActiveRevisions} />
+                                          <span className={`${isActiveRevisions ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Revisions</span>
                                    </Link>
 
 
@@ -3307,9 +3307,9 @@ const LinksSidebar = () => {
                                    )}
 
                                    {Premission.includes("revisions") && (
-                                          <Link to="revision" onClick={handleClickRevision} className={`${isActiveRevision ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
-                                                 <RevisionIcon Width={25} Height={23} isActive={isActiveRevision} />
-                                                 <span className={`${isActiveRevision ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Revision</span>
+                                          <Link to="revisions" onClick={handleClickRevisions} className={`${isActiveRevisions ? 'active' : ''} w-full flex items-center justify-start pl-6 py-[9px] gap-x-5`}>
+                                                 <RevisionIcon Width={25} Height={23} isActive={isActiveRevisions} />
+                                                 <span className={`${isActiveRevisions ? "text-mainColor" : "text-thirdColor"} hover:text-mainColor text-lg font-[400]`}>Revisions</span>
                                           </Link>
                                    )}
 
