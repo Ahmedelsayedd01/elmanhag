@@ -191,8 +191,8 @@ const AllLiveLessonesPage = () => {
               </div>
 
               <div className="mt-4">
-              <h4 className="text-2xl text-mainColor font-semibold">{live.chapter.name || '-'}</h4>
-              <p className="text-gray-900 text-lg">{live.name||'-'}</p>
+              <h4 className="text-2xl text-mainColor font-semibold">{live?.name || '-'}</h4>
+              <p className="text-gray-900 text-lg">{live?.description||'-'}</p>
               </div>
               </div>
        )}
