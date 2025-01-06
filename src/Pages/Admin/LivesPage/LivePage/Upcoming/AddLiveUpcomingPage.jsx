@@ -85,7 +85,7 @@ const AddLiveUpcomingPage = () => {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          "https://bdev.elmanhag.shop/admin/live",
+          "https://bcknd.elmanhag.com/admin/live",
           {
             headers: {
               Authorization: `Bearer ${auth.user.token}`,
@@ -634,7 +634,7 @@ const AddLiveUpcomingPage = () => {
       }
 
       // try {
-      const response = await axios.post(' https://bdev.elmanhag.shop/admin/live/add', formData, {
+      const response = await axios.post(' https://bcknd.elmanhag.com/admin/live/add', formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },

@@ -61,7 +61,7 @@ const AddAffiliatePaymentMethodPage = () => {
                      formData.append('thumbnail', paymentMethodThumbnailFile);  // Fixed typo here
                      formData.append('status', paymentMethodActive);
 
-                     const response = await axios.post('https://bdev.elmanhag.shop/admin/affilate/affilateMethodAdd', formData, {
+                     const response = await axios.post('https://bcknd.elmanhag.com/admin/affilate/affilateMethodAdd', formData, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                                    'Content-Type': 'multipart/form-data',

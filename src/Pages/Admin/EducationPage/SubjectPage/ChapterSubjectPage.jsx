@@ -30,7 +30,7 @@ const ChapterSubjectPage = () => {
 
   const fetchChapter = async () => {
     try {
-      const response = await axios.get(`https://bdev.elmanhag.shop/admin/chapter/${subjectID}`, {
+      const response = await axios.get(`https://bcknd.elmanhag.com/admin/chapter/${subjectID}`, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },
@@ -60,7 +60,7 @@ const ChapterSubjectPage = () => {
   const changeStatus = async (chapterId, lessonId, lessonName, check) => {
     try {
       const response = await axios.put(
-        `https://bdev.elmanhag.shop/admin/lesson/switch/${lessonId}`,
+        `https://bcknd.elmanhag.com/admin/lesson/switch/${lessonId}`,
         { id: lessonId, switch: check },
         {
           headers: {
@@ -185,7 +185,7 @@ const ChapterSubjectPage = () => {
 
   const deleteChapter = async (chapterId, authToken) => {
     try {
-      const response = await axios.delete(`https://bdev.elmanhag.shop/admin/chapter/delete/${chapterId}`, {
+      const response = await axios.delete(`https://bcknd.elmanhag.com/admin/chapter/delete/${chapterId}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
@@ -205,7 +205,7 @@ const ChapterSubjectPage = () => {
   };
   const deleteLesson = async (lessonId, authToken) => {
     try {
-      const response = await axios.delete(`https://bdev.elmanhag.shop/admin/lesson/delete/${lessonId}`, {
+      const response = await axios.delete(`https://bcknd.elmanhag.com/admin/lesson/delete/${lessonId}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },

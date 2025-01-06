@@ -39,7 +39,7 @@ const PromoCodePage = () => {
       const fetchPromoCodes = async () => {
             setIsLoading(true);
             try {
-                  const response = await axios.get('https://bdev.elmanhag.shop/admin/promoCode', {
+                  const response = await axios.get('https://bcknd.elmanhag.com/admin/promoCode', {
                         headers: {
                               Authorization: `Bearer ${auth.user.token}`,
                         },
@@ -87,7 +87,7 @@ const PromoCodePage = () => {
 
       const deletePromoCode = async (promoCodeId, authToken) => {
             try {
-                  const response = await axios.delete(`https://bdev.elmanhag.shop/admin/promoCode/delete/${promoCodeId}`, {
+                  const response = await axios.delete(`https://bcknd.elmanhag.com/admin/promoCode/delete/${promoCodeId}`, {
                         headers: {
                               Authorization: `Bearer ${authToken}`,
                         },

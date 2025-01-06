@@ -44,7 +44,7 @@ const AddQuestionIssuesPage = () => {
                      // formData.append('description', descriptionIssues);
                      // formData.append('thumbnail', thumbnailIssuesFile);
 
-                     const response = await axios.post('https://bdev.elmanhag.shop/admin/Settings/questionIssues/add', formData, {
+                     const response = await axios.post('https://bcknd.elmanhag.com/admin/Settings/questionIssues/add', formData, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                                    'Content-Type': 'multipart/form-data',

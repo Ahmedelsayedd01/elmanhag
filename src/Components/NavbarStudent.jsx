@@ -22,7 +22,7 @@ const NavbarStudent = () => {
     // Fetch data from API
     const fetchStudentDetails = async () => {
         try {
-            const response = await fetch('https://bdev.elmanhag.shop/student/setting/view');
+            const response = await fetch('https://bcknd.elmanhag.com/student/setting/view');
             const data = await response.json();
             // console.log(data)
             setEducationData(Array.isArray(data.education) ? data.education : []);
@@ -103,28 +103,28 @@ const NavbarStudent = () => {
                         </div>
                     </div>
                     {/* <div className="w-4/12 flex items-center justify-center gap-4"> */}
-                        {auth.user.role == 'student' && (
-                          <div className="w-4/12 flex items-center justify-center gap-4 hidden md:flex">
+                    {auth.user.role == 'student' && (
+                        <div className="w-4/12 items-center justify-center gap-4 sm:hidden xl:flex">
                             <Link to="subscriptions">
                                 <button type='button' className=" w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-28 lg:py-3 hover:bg-hoverColor">
                                     اشتراكاتي
                                 </button>
                             </Link>
-                            </div>
-                        )}
+                        </div>
+                    )}
 
-                        {(auth.user.role == 'affilate' ||
-                            auth.user.role == 'parent' ||
-                            auth.user.role == 'teacher') && (
-                                <div className="w-4/12 flex items-center justify-center gap-4">
+                    {(auth.user.role == 'affilate' ||
+                        auth.user.role == 'parent' ||
+                        auth.user.role == 'teacher') && (
+                            <div className="w-4/12 flex items-center justify-center gap-4">
                                 <button type='button' onClick={handleLogout} className="w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-6 lg:py-3 hover:bg-hoverColor">
                                     تسجيل خروج
                                 </button>
-                                </div>
-                            )}
+                            </div>
+                        )}
 
 
-                        {/* {auth.user.role == 'parent' && (
+                    {/* {auth.user.role == 'parent' && (
                             <button type='button' onClick={handleLogout} className="w-full px-4 py-2 text-2xl text-secoundColor bg-mainColor rounded-2xl lg:px-6 lg:py-3 hover:bg-hoverColor">
                                 تسجيل خروج
                             </button>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import InputCustom from '../../../../Components/InputCustom';
 import { Button } from '../../../../Components/Button';
-import  CheckBox  from '../../../../Components/CheckBox';
+import CheckBox from '../../../../Components/CheckBox';
 import { useAuth } from '../../../../Context/Auth';
 import { useNavigate } from 'react-router-dom';
 import { countryEditContext } from '../../../../Layouts/Admin/EditCountryLayout';
@@ -53,7 +53,7 @@ const EditCountryPage = () => {
                 status: countryActive,
             };
 
-            const response = await axios.put(`https://bdev.elmanhag.shop/admin/Settings/countries/update/${countryData.id}`, requestData, {
+            const response = await axios.put(`https://bcknd.elmanhag.com/admin/Settings/countries/update/${countryData.id}`, requestData, {
                 headers: {
                     Authorization: `Bearer ${auth.user.token}`,
                 },
@@ -105,10 +105,10 @@ const EditCountryPage = () => {
                         />
                     </div>
                     <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-ful">
-                            <span className="text-2xl text-thirdColor font-medium">Active:</span>
-                            <div>
-                                <CheckBox handleClick={handleClick} checked={countryActive} />
-                            </div>
+                        <span className="text-2xl text-thirdColor font-medium">Active:</span>
+                        <div>
+                            <CheckBox handleClick={handleClick} checked={countryActive} />
+                        </div>
                     </div>
                 </div>
                 <div className="flex gap-4 mt-6">

@@ -18,7 +18,7 @@
 //   const fetchPlans = async () => {
 //     setIsLoading(true);
 //     try {
-//       const response = await axios.get('https://bdev.elmanhag.shop/student/bundles', {
+//       const response = await axios.get('https://bcknd.elmanhag.com/student/bundles', {
 //         headers: {
 //           Authorization: `Bearer ${auth.user.token}`,
 //           'Content-Type': 'application/json',
@@ -77,77 +77,77 @@
 //         استمتع بتجربة تعليمية شاملة: فيديوهات، واجبات، مراجعات، وحصص لايف لكل الدروس
 //       </h2>
 
-      // {/* Bundles Section */}
-      // {bundlePlans.length > 0 && (
-      //   <section className="mb-8">
-      //     <h2 className="text-3xl font-semibold text-center mb-4">خطط الباقات</h2>
-      //     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      //       {bundlePlans.map((bundle) => (
-      //         <div key={bundle.id} className="bg-white p-6 rounded-lg shadow-md text-center flex flex-col justify-between">
-      //           <div>
-      //             <div className='flex justify-center'>
-      //               <img src={bundle.cover_photo_link} alt={bundle.name} className="" />
-      //             </div>
-      //             <h3 className="text-xl font-semibold mb-2">{bundle.name}</h3>
-      //             <p className="text-gray-700 mb-2">
-      //               {bundle.price_discount > 0 ?(
-      //                 <>
-      //                 {/* // ? `${bundle.price_discount} جنيه بدلا من ${bundle.price} جنيه`
-      //                 // : `${bundle.price} جنيه` */}
-      //                 {`${bundle.price_discount} جنيه بدلا من `}
-      //                 <span className="line-through">{bundle.price} جنيه</span>
-      //                 </>
-      //             ) : (
-      //               `${bundle.price} جنيه`
-      //                 )}
-      //             </p>
-      //           </div>
-      //           <button
-      //             onClick={() => handleBuyClick(bundle, 'Bundle')}
-      //             className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full mt-4"
-      //           >
-      //             اشتراك الآن
-      //           </button>
-      //         </div>
-      //       ))}
-      //     </div>
-      //   </section>
-      // )}
+// {/* Bundles Section */}
+// {bundlePlans.length > 0 && (
+//   <section className="mb-8">
+//     <h2 className="text-3xl font-semibold text-center mb-4">خطط الباقات</h2>
+//     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+//       {bundlePlans.map((bundle) => (
+//         <div key={bundle.id} className="bg-white p-6 rounded-lg shadow-md text-center flex flex-col justify-between">
+//           <div>
+//             <div className='flex justify-center'>
+//               <img src={bundle.cover_photo_link} alt={bundle.name} className="" />
+//             </div>
+//             <h3 className="text-xl font-semibold mb-2">{bundle.name}</h3>
+//             <p className="text-gray-700 mb-2">
+//               {bundle.price_discount > 0 ?(
+//                 <>
+//                 {/* // ? `${bundle.price_discount} جنيه بدلا من ${bundle.price} جنيه`
+//                 // : `${bundle.price} جنيه` */}
+//                 {`${bundle.price_discount} جنيه بدلا من `}
+//                 <span className="line-through">{bundle.price} جنيه</span>
+//                 </>
+//             ) : (
+//               `${bundle.price} جنيه`
+//                 )}
+//             </p>
+//           </div>
+//           <button
+//             onClick={() => handleBuyClick(bundle, 'Bundle')}
+//             className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full mt-4"
+//           >
+//             اشتراك الآن
+//           </button>
+//         </div>
+//       ))}
+//     </div>
+//   </section>
+// )}
 
 //       {/* Subjects Section */}
-      // {subjectPlans.length > 0 && (
-      //   <section className="mb-8">
-      //     <h2 className="text-3xl font-semibold text-center mb-4">خطط المواد</h2>
-      //     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      //       {subjectPlans.map((subject) => (
-      //         <div key={subject.id} className="bg-white p-6 rounded-lg shadow-md text-center flex flex-col justify-between">
-      //           <div>
-      //             <div className='flex justify-center'>
-      //               <img src={subject.cover_photo_url} alt={subject.name} className="" />
-      //             </div>
-      //             <h3 className="text-xl font-semibold mb-2">{subject.name}</h3>
-      //             <p className="text-gray-700 mb-2">
-      //               {subject.price_discount > 0 ? (
-      //                 <>
-      //                   {`${subject.price_discount} جنيه بدلا من `}
-      //                   <span className="line-through">{subject.price} جنيه</span>
-      //                 </>
-      //               ) : (
-      //                 `${subject.price} جنيه`
-      //               )}
-      //             </p>
-      //           </div>
-      //           <button
-      //             onClick={() => handleBuyClick(subject, 'Subject')}
-      //             className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full mt-4"
-      //           >
-      //             اشتراك الآن
-      //           </button>
-      //         </div>
-      //       ))}
-      //     </div>
-      //   </section>
-      // )}
+// {subjectPlans.length > 0 && (
+//   <section className="mb-8">
+//     <h2 className="text-3xl font-semibold text-center mb-4">خطط المواد</h2>
+//     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+//       {subjectPlans.map((subject) => (
+//         <div key={subject.id} className="bg-white p-6 rounded-lg shadow-md text-center flex flex-col justify-between">
+//           <div>
+//             <div className='flex justify-center'>
+//               <img src={subject.cover_photo_url} alt={subject.name} className="" />
+//             </div>
+//             <h3 className="text-xl font-semibold mb-2">{subject.name}</h3>
+//             <p className="text-gray-700 mb-2">
+//               {subject.price_discount > 0 ? (
+//                 <>
+//                   {`${subject.price_discount} جنيه بدلا من `}
+//                   <span className="line-through">{subject.price} جنيه</span>
+//                 </>
+//               ) : (
+//                 `${subject.price} جنيه`
+//               )}
+//             </p>
+//           </div>
+//           <button
+//             onClick={() => handleBuyClick(subject, 'Subject')}
+//             className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full mt-4"
+//           >
+//             اشتراك الآن
+//           </button>
+//         </div>
+//       ))}
+//     </div>
+//   </section>
+// )}
 
 //     </div>
 //   );
@@ -178,7 +178,7 @@ const AllPlansPage = () => {
   const fetchPlans = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('https://bdev.elmanhag.shop/student/bundles', {
+      const response = await axios.get('https://bcknd.elmanhag.com/student/bundles', {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'application/json',
@@ -311,7 +311,7 @@ const AllPlansPage = () => {
                       `${subject.price} جنيه`
                     )}
                   </p>
-                  
+
                   {!isSelecting && (
                     <button
                       onClick={() => handleBuyClick(subject, 'Subject')}

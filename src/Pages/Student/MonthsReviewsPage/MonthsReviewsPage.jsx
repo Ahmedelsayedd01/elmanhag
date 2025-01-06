@@ -26,7 +26,7 @@
 //   const fetchSubjects = async () => {
 //     setIsLoading(true);
 //     try {
-//            const response = await axios.get('https://bdev.elmanhag.shop/student/recorded_live',
+//            const response = await axios.get('https://bcknd.elmanhag.com/student/recorded_live',
 //           {
 //                   headers: {
 //                          Authorization: `Bearer ${auth.user.token}`,
@@ -61,7 +61,7 @@
 //   const fetchPlans = async () => {
 //     setIsLoading(true);
 //     try {
-//       const response = await axios.get('https://bdev.elmanhag.shop/student/bundles', {
+//       const response = await axios.get('https://bcknd.elmanhag.com/student/bundles', {
 //         headers: {
 //           Authorization: `Bearer ${auth.user.token}`,
 //           'Content-Type': 'application/json',
@@ -109,7 +109,7 @@
 //                         {studentSubject.map((subject) => (
 //                             <Link to={`../curricula_live/lesson_live/${subject.id}`} state={{live:subject , liveId:subject.id}} key={subject.id}>
 //                             <div
-                                
+
 //                                 className="subject-box p-3 flex flex-col justify-center items-center bg-white rounded-xl shadow-lg hover:cursor-pointer transition-transform transform hover:scale-105"
 //                                 style={{ boxShadow: '0px 0px 8px rgba(208, 16, 37, 0.12)' }}
 //                                 // onClick={() => handleNavigate(subject.id ,subject)}
@@ -198,7 +198,7 @@ const MonthsReviewsPage = () => {
   const fetchSubjects = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('https://bdev.elmanhag.shop/student/recorded_live', {
+      const response = await axios.get('https://bcknd.elmanhag.com/student/recorded_live', {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'application/json',
@@ -223,7 +223,7 @@ const MonthsReviewsPage = () => {
   const fetchPlans = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('https://bdev.elmanhag.shop/student/bundles', {
+      const response = await axios.get('https://bcknd.elmanhag.com/student/bundles', {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'application/json',

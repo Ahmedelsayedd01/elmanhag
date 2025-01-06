@@ -34,7 +34,7 @@ const EditAdminPage = () => {
                      setIsLoading(true);
                      try {
                             const response = await axios.get(
-                                   `https://bdev.elmanhag.shop/admin/admins/admin/${adminId}`,
+                                   `https://bcknd.elmanhag.com/admin/admins/admin/${adminId}`,
                                    {
                                           headers: {
                                                  Authorization: `Bearer ${auth.user.token}`,
@@ -62,7 +62,7 @@ const EditAdminPage = () => {
               const fetchRole = async () => {
                      try {
                             const response = await axios.get(
-                                   "https://bdev.elmanhag.shop/admin/admins",
+                                   "https://bcknd.elmanhag.com/admin/admins",
                                    {
                                           headers: {
                                                  Authorization: `Bearer ${auth.user.token}`,
@@ -168,7 +168,7 @@ const EditAdminPage = () => {
 
                      }
 
-                     const response = await axios.post(`https://bdev.elmanhag.shop/admin/admins/update/${adminId}`, formData, {
+                     const response = await axios.post(`https://bcknd.elmanhag.com/admin/admins/update/${adminId}`, formData, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                                    'Content-Type': 'multipart/form-data',

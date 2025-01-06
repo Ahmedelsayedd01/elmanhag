@@ -1,4 +1,4 @@
-import React, { useState, useRef,useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import InputCustom from '../../../../Components/InputCustom';
 import { Button } from '../../../../Components/Button';
@@ -79,7 +79,7 @@ const AddPaymentMethodPage = () => {
             });
 
             const response = await axios.post(
-                'https://bdev.elmanhag.shop/admin/Settings/paymentMethods/add',
+                'https://bcknd.elmanhag.com/admin/Settings/paymentMethods/add',
                 formData,
                 {
                     headers: {
@@ -142,8 +142,8 @@ const AddPaymentMethodPage = () => {
                             type="text"
                             placeholder="Thumbnail"
                             value={thumbnails}
-                            readOnly={true} 
-                            onClick={handleInputClick} 
+                            readOnly={true}
+                            onClick={handleInputClick}
                         />
                         <input
                             type="file"
@@ -156,7 +156,7 @@ const AddPaymentMethodPage = () => {
                     <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
                         <span className="text-2xl text-thirdColor font-medium">Active:</span>
                         <div>
-                            <CheckBox handleClick={handleClick} checked={paymentActive}/>
+                            <CheckBox handleClick={handleClick} checked={paymentActive} />
                         </div>
                     </div>
                 </div>

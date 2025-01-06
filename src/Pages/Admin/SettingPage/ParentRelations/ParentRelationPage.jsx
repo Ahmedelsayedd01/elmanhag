@@ -17,7 +17,7 @@ const ParentRelationPage = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "https://bdev.elmanhag.shop/admin/Settings/relation",
+        "https://bcknd.elmanhag.com/admin/Settings/relation",
         {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,
@@ -41,7 +41,7 @@ const ParentRelationPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`https://bdev.elmanhag.shop/admin/Settings/relation/delete/${id}`, {
+      const response = await axios.delete(`https://bcknd.elmanhag.com/admin/Settings/relation/delete/${id}`, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`
         }
@@ -71,24 +71,24 @@ const ParentRelationPage = () => {
 
   return (
     <>
-    <div className="w-full flex flex-col gap-y-3">
+      <div className="w-full flex flex-col gap-y-3">
         <div className="sm:w-full xl:w-1/12">
-              <Link to="add">
-                    <ButtonAdd Text={"Add"} BgColor={"white"} Color={"thirdColor"} iconColor="mainColor" Size={"xl"} />
-              </Link>
+          <Link to="add">
+            <ButtonAdd Text={"Add"} BgColor={"white"} Color={"thirdColor"} iconColor="mainColor" Size={"xl"} />
+          </Link>
         </div>
-      {loading ? (
-        <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
-        <Loading />
-      </div>      ) : (
-        <Table
-          headers={headers}
-          data={tableData}
-          editPath="edit"
-          handleDelete={handleDelete}
-          pageName = "Parent Relation"
-        />
-      )}
+        {loading ? (
+          <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
+            <Loading />
+          </div>) : (
+          <Table
+            headers={headers}
+            data={tableData}
+            editPath="edit"
+            handleDelete={handleDelete}
+            pageName="Parent Relation"
+          />
+        )}
       </div>
     </>
   );

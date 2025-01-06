@@ -167,60 +167,60 @@ const EditHomeWorkPage = () => {
   const dropdownHWRef = useRef(null);
   const dropdownHomeWorkLevelRef = useRef(null);
 
-    // Function to filter subjects by semester, category, or both
-    const filterSubjects = (semesterName, categoryId) => {
-      let filteredSubjects = allSubjects; // Start with all subjects
-  
-      // If both semester and category are selected, filter by both
-      if (semesterName && categoryId) {
-        filteredSubjects = filteredSubjects.filter(subject => 
-          subject.semester.toLowerCase() === semesterName.toLowerCase() && 
-          subject.category_id === categoryId
-        ) ;
-      }
-      // If only the semester is selected, filter by semester
-      else if (semesterName) {
-        filteredSubjects = filteredSubjects.filter(subject => 
-          subject.semester.toLowerCase() === semesterName.toLowerCase()
-        );
-      }
-      // If only the category is selected, filter by category
-      else if (categoryId) {
-        filteredSubjects = filteredSubjects.filter(subject => 
-          subject.category_id === categoryId
-        );
-      }
-      setSubjectData(filteredSubjects);
-      console.log(filteredSubjects)
-    };
-  
-    // Function to filter chapters by subject
-    const filterChapters = (subjectId) => {
-      let filteredChapters = allChapters; // Start with all subjects
-  
-      // If both semester and category are selected, filter by both
-      if (subjectId) {
-        filteredChapters = filteredChapters.filter(chapter => 
-          chapter.subject_id=== subjectId
-        ) ;
-      }
-      setChapterData(filteredChapters);
-      console.log(filteredChapters)
-    };
-  
-      // Function to filter lessons by chapters 
-      const filterLessons = (chapterId) => {
-        let filteredLessons = allLessons; // Start with all subjects
-    
-        // If both semester and category are selected, filter by both
-        if (chapterId) {
-          filteredLessons= filteredLessons.filter(lesson => 
-            lesson.chapter_id === chapterId
-          ) ;
-        }
-        setLessonData(filteredLessons);
-        console.log(filteredLessons)
-      };
+  // Function to filter subjects by semester, category, or both
+  const filterSubjects = (semesterName, categoryId) => {
+    let filteredSubjects = allSubjects; // Start with all subjects
+
+    // If both semester and category are selected, filter by both
+    if (semesterName && categoryId) {
+      filteredSubjects = filteredSubjects.filter(subject =>
+        subject.semester.toLowerCase() === semesterName.toLowerCase() &&
+        subject.category_id === categoryId
+      );
+    }
+    // If only the semester is selected, filter by semester
+    else if (semesterName) {
+      filteredSubjects = filteredSubjects.filter(subject =>
+        subject.semester.toLowerCase() === semesterName.toLowerCase()
+      );
+    }
+    // If only the category is selected, filter by category
+    else if (categoryId) {
+      filteredSubjects = filteredSubjects.filter(subject =>
+        subject.category_id === categoryId
+      );
+    }
+    setSubjectData(filteredSubjects);
+    console.log(filteredSubjects)
+  };
+
+  // Function to filter chapters by subject
+  const filterChapters = (subjectId) => {
+    let filteredChapters = allChapters; // Start with all subjects
+
+    // If both semester and category are selected, filter by both
+    if (subjectId) {
+      filteredChapters = filteredChapters.filter(chapter =>
+        chapter.subject_id === subjectId
+      );
+    }
+    setChapterData(filteredChapters);
+    console.log(filteredChapters)
+  };
+
+  // Function to filter lessons by chapters 
+  const filterLessons = (chapterId) => {
+    let filteredLessons = allLessons; // Start with all subjects
+
+    // If both semester and category are selected, filter by both
+    if (chapterId) {
+      filteredLessons = filteredLessons.filter(lesson =>
+        lesson.chapter_id === chapterId
+      );
+    }
+    setLessonData(filteredLessons);
+    console.log(filteredLessons)
+  };
 
   const handleOpenSelectSemester = () => {
     setOpenSelectSemester(!openSelectSemester);
@@ -603,7 +603,7 @@ const EditHomeWorkPage = () => {
       });
 
 
-      const response = await axios.put(`https://bdev.elmanhag.shop/admin/homework/update/${homeWorkID}?${params}`, {}, {
+      const response = await axios.put(`https://bcknd.elmanhag.com/admin/homework/update/${homeWorkID}?${params}`, {}, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },

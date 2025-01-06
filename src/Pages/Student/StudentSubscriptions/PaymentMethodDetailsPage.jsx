@@ -61,7 +61,7 @@ const PaymentMethodDetailsPage = () => {
     console.log("The plan price is ", price);
     console.log("The plan Type is ", planType);
     console.log("The payment method is ", paymentMethod);
-  }, [ plan, price, planType, paymentMethod]); // This will re-run when subjectsId or any other dependencies change
+  }, [plan, price, planType, paymentMethod]); // This will re-run when subjectsId or any other dependencies change
 
 
   // Function to submit payment details
@@ -114,7 +114,7 @@ const PaymentMethodDetailsPage = () => {
         //     formData.append('live_id[]', subjectId); // Use 'live_id[]' for arrays
         //   });
         // } }
-        
+
         // } else if (planType === 'Bundle') {
         //   // Plan type is Bundle, send id as an integer (no need to convert to string)
         //   formData.append('bundle_id', subjectsId); 
@@ -136,25 +136,25 @@ const PaymentMethodDetailsPage = () => {
             formData.append('subject_id', JSON.stringify(subjectIds.map(String))); // Convert to string and JSON stringify
           } else {
             // Plan is a single object, convert the id to a string and JSON stringify it as a list
-            formData.append('subject_id', JSON.stringify([plan.id.toString()])); 
+            formData.append('subject_id', JSON.stringify([plan.id.toString()]));
           }
         } else if (planType === 'Bundle') {
           // Plan type is Bundle, send id as an integer (no need to convert to string)
           console.log(plan.id)
-          formData.append('bundle_id', JSON.stringify([plan.id.toString()])); 
+          formData.append('bundle_id', JSON.stringify([plan.id.toString()]));
         }
         else if (planType === 'Recorded live') {
           // Plan type is Bundle, send id as an integer (no need to convert to string)
           console.log(plan.id)
-          formData.append('record_live_id', plan.id); 
+          formData.append('record_live_id', plan.id);
         }
-        
-        
+
+
 
         // Now formData is ready to be sent
 
 
-        const response = await axios.post('https://bdev.elmanhag.shop/student/order/place', formData, {
+        const response = await axios.post('https://bcknd.elmanhag.com/student/order/place', formData, {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,
             'Content-Type': 'multipart/form-data',
@@ -164,19 +164,19 @@ const PaymentMethodDetailsPage = () => {
         if (response.status === 200) {
           auth.toastSuccess("شكرا على اشتاركك في منصة المنهج يتم مراجعة المدفوعات من قبل القسم المختص");
           handleGoBack();
-        } 
+        }
         else {
           auth.toastError('Failed to add Subject.');
         }
       } catch (error) {
         console.log(error)
-        if(error.response.data.faild =="You buy subject before"){
+        if (error.response.data.faild == "You buy subject before") {
           auth.toastError('عملية الدفع قيد الانتظار للتأكيد من القسم المختص يرجى الانتظار وسوف يتم إبلاغك عند التفعيل شكرا لتفهمكم');
         }
-        else if (error.response.data.faild =="You buy bundle before"){
+        else if (error.response.data.faild == "You buy bundle before") {
           auth.toastError('عملية الدفع قيد الانتظار للتأكيد من القسم المختص يرجى الانتظار وسوف يتم إبلاغك عند التفعيل شكرا لتفهمكم');
         }
-        else{
+        else {
           const errorMessages = error?.response?.data.errors;
           let errorMessageString = 'Error occurred';
           if (errorMessages) {
@@ -187,12 +187,12 @@ const PaymentMethodDetailsPage = () => {
       } finally {
         setIsLoading(false);
       }
-    } 
-    
+    }
+
     // else if (paymentMethod.title === 'fawry') {
     //   try {
     //     let chargeItems = [];
-    
+
     //     if (planType === 'Subject') {
     //       if (Array.isArray(plan)) {
     //         // Plan is an array, send list of string ids
@@ -219,9 +219,9 @@ const PaymentMethodDetailsPage = () => {
     //     }
 
     //     console.log('Constructed chargeItems:', chargeItems);
-    
+
     //     // Send request to Fawry API
-    //     const response = await axios.post('https://bdev.elmanhag.shop/api/pay-at-fawry', {
+    //     const response = await axios.post('https://bcknd.elmanhag.com/api/pay-at-fawry', {
     //       chargeItems,
     //       "amount" :price
     //     }, {
@@ -229,13 +229,13 @@ const PaymentMethodDetailsPage = () => {
     //         Authorization: `Bearer ${auth.user.token}`,
     //       },
     //     });
-    
+
     if (paymentMethod.title === "fawry") {
       try {
         console.log("fawry");
-    
+
         let chargeItems = [];
-    
+
         if (planType === "Subject") {
           if (Array.isArray(plan)) {
             plan.forEach((singlePlan, index) => {
@@ -262,17 +262,17 @@ const PaymentMethodDetailsPage = () => {
         else if (planType === "Recorded live") {
           chargeItems.push({
             // itemId: `[${plan.id}]`, // Use [id] for itemId as a string
-            itemId:plan.id.toString(),
+            itemId: plan.id.toString(),
             description: "Recorded live",
             quantity: "1",
           });
         }
-    
-        console.log("Constructed chargeItems:", chargeItems ,price);
-    
+
+        console.log("Constructed chargeItems:", chargeItems, price);
+
         // Send request to the API
         const response = await axios.post(
-          "https://bdev.elmanhag.shop/api/pay-at-fawry",
+          "https://bcknd.elmanhag.com/api/pay-at-fawry",
           {
             chargeItems: chargeItems, // Pass chargeItems as an array of objects
             amount: price,
@@ -305,7 +305,7 @@ const PaymentMethodDetailsPage = () => {
         setIsLoading(false);
       }
     }
-    
+
   };
 
   // Function to show modal if values exist in local storage
@@ -335,7 +335,7 @@ const PaymentMethodDetailsPage = () => {
   const handleDone = async () => {
     try {
       const merchantNumber = localStorage.getItem('merchantNumber');
-      const response = await axios.post('https://bdev.elmanhag.shop/api/fawry/check-status',
+      const response = await axios.post('https://bcknd.elmanhag.com/api/fawry/check-status',
         { "merchantRefNum": merchantNumber }
         , {
           headers: {
@@ -395,9 +395,9 @@ const PaymentMethodDetailsPage = () => {
             )}
             {/* <h1 className='text-xl'>الماده : <span className='text-mainColor'>{plan.name}</span></h1> */}
             <h1 className='text-xl'>
-              الماده : 
+              الماده :
               <span className='text-mainColor'>
-                {Array.isArray(plan) 
+                {Array.isArray(plan)
                   ? plan.map(singlePlan => singlePlan.name).join(', ') // If plan is an array, join all names with a comma
                   : plan.name // If plan is a single object, display its name
                 }

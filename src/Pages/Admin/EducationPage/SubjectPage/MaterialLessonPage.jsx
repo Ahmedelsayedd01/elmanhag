@@ -44,7 +44,7 @@ const MaterialLessonPage = () => {
 
        const fetchMaterialLesson = async () => {
               try {
-                     const response = await axios.get(`https://bdev.elmanhag.shop/admin/lessonMaterial/${lessonId}`, {
+                     const response = await axios.get(`https://bcknd.elmanhag.com/admin/lessonMaterial/${lessonId}`, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -172,7 +172,7 @@ const MaterialLessonPage = () => {
        const handleRemoveMaterialEdit = async (id) => {
               setIsLoadingDelete(true)
               try {
-                     const response = await axios.delete(`https://bdev.elmanhag.shop/admin/lessonMaterial/delete/${id}`, {
+                     const response = await axios.delete(`https://bcknd.elmanhag.com/admin/lessonMaterial/delete/${id}`, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -345,7 +345,7 @@ const MaterialLessonPage = () => {
               });
 
               try {
-                     const response = await axios.post(`https://bdev.elmanhag.shop/admin/lessonMaterial/add/${lessonId}`, formData, {
+                     const response = await axios.post(`https://bcknd.elmanhag.com/admin/lessonMaterial/add/${lessonId}`, formData, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                                    'Content-Type': 'multipart/form-data',

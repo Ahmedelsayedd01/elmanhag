@@ -28,7 +28,7 @@ const AddAdminRolesPage = () => {
                      setIsLoading(true);
                      try {
                             const response = await axios.get(
-                                   "https://bdev.elmanhag.shop/admin/adminRole",
+                                   "https://bcknd.elmanhag.com/admin/adminRole",
                                    {
                                           headers: {
                                                  Authorization: `Bearer ${auth.user.token}`,
@@ -123,7 +123,7 @@ const AddAdminRolesPage = () => {
                             formData.append(`roles[${index}]`, role);
                      });
 
-                     const response = await axios.post('https://bdev.elmanhag.shop/admin/adminRole/add', formData, {
+                     const response = await axios.post('https://bcknd.elmanhag.com/admin/adminRole/add', formData, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                                    'Content-Type': 'multipart/form-data',

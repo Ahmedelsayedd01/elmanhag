@@ -41,7 +41,7 @@ const TableStudent = ({ tableTitle, data, setStudent, editPath }) => {
 
        const deleteStudent = async (studentId, authToken) => {
               try {
-                     const response = await axios.delete(`https://bdev.elmanhag.shop/admin/student/delete/${studentId}`, {
+                     const response = await axios.delete(`https://bcknd.elmanhag.com/admin/student/delete/${studentId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },

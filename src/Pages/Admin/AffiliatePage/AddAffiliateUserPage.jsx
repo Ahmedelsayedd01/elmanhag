@@ -32,7 +32,7 @@ const AddAffiliateUserPage = () => {
        useEffect(() => {
               const fetchCities = async () => {
                      try {
-                            const response = await axios.get('https://bdev.elmanhag.shop/admin/Settings/cities', {
+                            const response = await axios.get('https://bcknd.elmanhag.com/admin/Settings/cities', {
                                    headers: {
                                           Authorization: `Bearer ${auth.user.token}`
                                    }
@@ -47,7 +47,7 @@ const AddAffiliateUserPage = () => {
               };
               const fetchCountries = async () => {
                      try {
-                            const response = await axios.get('https://bdev.elmanhag.shop/admin/Settings/countries', {
+                            const response = await axios.get('https://bcknd.elmanhag.com/admin/Settings/countries', {
                                    headers: {
                                           Authorization: `Bearer ${auth.user.token}`
                                    }
@@ -161,7 +161,7 @@ const AddAffiliateUserPage = () => {
 
                      console.log('Submitting data:', requestData);
 
-                     const response = await axios.post('https://bdev.elmanhag.shop/admin/affilate/add', requestData, {
+                     const response = await axios.post('https://bcknd.elmanhag.com/admin/affilate/add', requestData, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },

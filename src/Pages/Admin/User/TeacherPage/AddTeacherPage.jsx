@@ -70,7 +70,7 @@ const AddTeacherPage = () => {
   const fetchSupData = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('https://bdev.elmanhag.shop/admin/teacher', {
+      const response = await axios.get('https://bcknd.elmanhag.com/admin/teacher', {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },
@@ -277,7 +277,7 @@ const AddTeacherPage = () => {
     });
 
     try {
-      const response = await axios.post('https://bdev.elmanhag.shop/admin/teacher/add', formData, {
+      const response = await axios.post('https://bcknd.elmanhag.com/admin/teacher/add', formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'multipart/form-data',

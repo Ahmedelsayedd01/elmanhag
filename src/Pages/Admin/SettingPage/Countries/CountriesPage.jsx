@@ -17,7 +17,7 @@ const CountriesPage = () => {
   const fetchCountries = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('https://bdev.elmanhag.shop/admin/Settings/countries', {
+      const response = await axios.get('https://bcknd.elmanhag.com/admin/Settings/countries', {
         headers: {
           Authorization: `Bearer ${auth.user.token}`
         }
@@ -38,7 +38,7 @@ const CountriesPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`https://bdev.elmanhag.shop/admin/Settings/countries/delete/${id}`, {
+      const response = await axios.delete(`https://bcknd.elmanhag.com/admin/Settings/countries/delete/${id}`, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`
         }
@@ -73,26 +73,26 @@ const CountriesPage = () => {
 
   return (
     <>
-    <div className="w-full flex flex-col gap-y-3">
+      <div className="w-full flex flex-col gap-y-3">
         <div className="sm:w-full xl:w-1/12">
-              <Link to="add">
-                    <ButtonAdd Text={"Add"} BgColor={"white"} Color={"thirdColor"} iconColor="mainColor" Size={"xl"} />
-              </Link>
+          <Link to="add">
+            <ButtonAdd Text={"Add"} BgColor={"white"} Color={"thirdColor"} iconColor="mainColor" Size={"xl"} />
+          </Link>
         </div>
-      {loading ? (
-        <div className="w-1/4 flex items-start mt-[10%] justify-center h-full m-auto">
-          <Loading />
-        </div>
-      ) : (
-        <Table
-          headers={headers}
-          data={tableData}
-          editPath="edit"
-          handleDelete={handleDelete}
-          pageName="Countries"
-        />
-      )}
-    </div>
+        {loading ? (
+          <div className="w-1/4 flex items-start mt-[10%] justify-center h-full m-auto">
+            <Loading />
+          </div>
+        ) : (
+          <Table
+            headers={headers}
+            data={tableData}
+            editPath="edit"
+            handleDelete={handleDelete}
+            pageName="Countries"
+          />
+        )}
+      </div>
     </>
   );
 }

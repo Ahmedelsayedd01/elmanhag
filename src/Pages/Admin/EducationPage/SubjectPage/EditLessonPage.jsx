@@ -30,7 +30,7 @@ const EditLessonPage = () => {
        const fetchEditLesson = async () => {
               try {
 
-                     const response = await axios.get(`https://bdev.elmanhag.shop/admin/lesson/${lessonId}`, {
+                     const response = await axios.get(`https://bcknd.elmanhag.com/admin/lesson/${lessonId}`, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -111,7 +111,7 @@ const EditLessonPage = () => {
               }
               try {
 
-                     const response = await axios.put(`https://bdev.elmanhag.shop/admin/lesson/update/${lessonId}`, updateLesson, {
+                     const response = await axios.put(`https://bcknd.elmanhag.com/admin/lesson/update/${lessonId}`, updateLesson, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },

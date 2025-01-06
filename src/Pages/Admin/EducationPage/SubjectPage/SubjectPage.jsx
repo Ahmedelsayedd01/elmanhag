@@ -86,7 +86,7 @@ const SubjextPage = () => {
   const fetchSubjects = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('https://bdev.elmanhag.shop/admin/subject', {
+      const response = await axios.get('https://bcknd.elmanhag.com/admin/subject', {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },
@@ -130,7 +130,7 @@ const SubjextPage = () => {
 
   const deleteSubject = async (subjectId, authToken) => {
     try {
-      const response = await axios.delete(`https://bdev.elmanhag.shop/admin/subject/delete/${subjectId}`, {
+      const response = await axios.delete(`https://bcknd.elmanhag.com/admin/subject/delete/${subjectId}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },

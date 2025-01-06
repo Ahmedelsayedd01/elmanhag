@@ -7,7 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { parentRelationEditContext } from '../../../../Layouts/Admin/EditParentRelationLayout';
 
 const EditParentRelationPage = () => {
-  const parentRelationData = useContext(parentRelationEditContext);
+    const parentRelationData = useContext(parentRelationEditContext);
 
     const auth = useAuth();
     const [relationContent, setRelationContent] = useState({});
@@ -45,7 +45,7 @@ const EditParentRelationPage = () => {
                 ar_name: nameAr,
             };
 
-            const response = await axios.put(`https://bdev.elmanhag.shop/admin/Settings/relation/update/${relationContent.id}`, requestData, {
+            const response = await axios.put(`https://bcknd.elmanhag.com/admin/Settings/relation/update/${relationContent.id}`, requestData, {
                 headers: {
                     Authorization: `Bearer ${auth.user.token}`,
                 },

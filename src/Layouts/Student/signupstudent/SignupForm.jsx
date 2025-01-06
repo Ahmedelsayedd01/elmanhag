@@ -17,11 +17,11 @@ const SignupForm = () => {
     parent_name: '',
     parent_phone: '',
     parent_email: '',
-    parent_relation:'',
+    parent_relation: '',
 
     StudentJobs_id: '',
-    affilate_id:'',
-    gender:'',
+    affilate_id: '',
+    gender: '',
   });
 
   const [step, setStep] = useState(1);
@@ -34,14 +34,14 @@ const SignupForm = () => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await fetch('https://bdev.elmanhag.shop/student/setting/view');
+        const response = await fetch('https://bcknd.elmanhag.com/student/setting/view');
         const data = await response.json();
         setCountries(data.country || []);
         setCities(data.city || []);
         setEducation(data.education || []);
         setStudentJobs(data.studentJobs || []);
-        setParentRelation(data.parentRelation||[])
-        setCategory(data.category||[])
+        setParentRelation(data.parentRelation || [])
+        setCategory(data.category || [])
 
       } catch (error) {
         console.error('Error fetching countries and cities:', error);
@@ -80,7 +80,7 @@ const SignupForm = () => {
     });
 
     try {
-      const response = await fetch('https://bdev.elmanhag.shop/student/auth/signup/create', {
+      const response = await fetch('https://bcknd.elmanhag.com/student/auth/signup/create', {
         method: 'POST',
         body: formDataToSubmit,
       });
@@ -113,11 +113,11 @@ const SignupForm = () => {
             studentJobs={studentJobs}
           />
         )}
-        {step === 3 && <Step3 
-        formData={formData}
-         handleChange={handleChange}
-         parentRelation={parentRelation}
-         />}
+        {step === 3 && <Step3
+          formData={formData}
+          handleChange={handleChange}
+          parentRelation={parentRelation}
+        />}
 
         <div className="flex justify-between mt-4">
           {step > 1 && (

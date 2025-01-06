@@ -12,7 +12,7 @@
 
 
 
-import React, { useEffect, useState } from 'react'; 
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Loading from '../../../Components/Loading';
 import { useAuth } from '../../../Context/Auth';
@@ -21,7 +21,7 @@ import axios from 'axios';
 const My_SubscriptionsPage = () => {
   const [plans, setPlans] = useState([]);
   const [subjectPlans, setSubjectPlans] = useState([]);
-//   const [bundlePlans, setBundlePlans] = useState([]);
+  //   const [bundlePlans, setBundlePlans] = useState([]);
   const [livePlans, setLivePlans] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const My_SubscriptionsPage = () => {
   const fetchMyPlans = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('https://bdev.elmanhag.shop/student/subscription', {
+      const response = await axios.get('https://bcknd.elmanhag.com/student/subscription', {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ const My_SubscriptionsPage = () => {
       });
 
       if (response.status === 200) {
-       console.log(response.data)
+        console.log(response.data)
         setPlans(response.data);
         setSubjectPlans(response.data.subjects || []);
         setLivePlans(response.data.live || []);
@@ -77,7 +77,7 @@ const My_SubscriptionsPage = () => {
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-4xl font-bold text-center mb-6">اشتراكاتي الحاليه</h1>
-      
+
       {/* Subjects Section */}
       {subjectPlans.length > 0 && (
         <section className="mb-8">

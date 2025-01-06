@@ -1,4 +1,4 @@
-import React, { useRef, useState ,useEffect ,useContext} from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import InputCustom from '../../../../Components/InputCustom';
 import { Button } from '../../../../Components/Button';
 import { useAuth } from '../../../../Context/Auth';
@@ -24,16 +24,16 @@ const EditPromoCodePage = () => {
   const [allBundles, setAllBundles] = useState([]); // Store all subjects initially
   const [promoCodeData, setPromoCodeData] = useState([]);
 
-  const [title,setTitle]=useState('')
+  const [title, setTitle] = useState('')
   const [valueType, setValueType] = useState([{ name: 'percentage' }, { name: 'value' }]);
-  const [value,setValue]=useState('')
+  const [value, setValue] = useState('')
   const [percentage, setPercentage] = useState('');
-  const [code,setCode]=useState('')
-  const [usage,setUsage]=useState('')
+  const [code, setCode] = useState('')
+  const [usage, setUsage] = useState('')
   const [usageTypeData, setUsageTypeData] = useState([{ name: 'unlimited' }, { name: 'fixed' }]);
-  const [userNumber,setUserNumber]=useState('')
-  const [activePromoCode,setActivePromoCode]=useState(0)
-  const [includeLive,setIncludeLive]=useState(0)
+  const [userNumber, setUserNumber] = useState('')
+  const [activePromoCode, setActivePromoCode] = useState(0)
+  const [includeLive, setIncludeLive] = useState(0)
 
   const [selectUsageType, setSelectUsageType] = useState('Select UsageType');
   const [selectUsageTypeName, setSelectUsageTypeName] = useState(null);
@@ -71,7 +71,7 @@ const EditPromoCodePage = () => {
 
     setPromoCodeData(StoragePromoCodeData);
     setCategoryData(StoragePromoCodeData.categories);
-     // Set both all subjects and initial subject data
+    // Set both all subjects and initial subject data
     setAllSubjects(StoragePromoCodeData.subjects);
     setSubjectData(StoragePromoCodeData.subjects); // Show all subjects initially
 
@@ -82,42 +82,42 @@ const EditPromoCodePage = () => {
   useEffect(() => {
     if (promoCodeEdit) {
 
-      if (promoCodeEdit.subjects && promoCodeEdit.subjects.length > 0) {              
-        setSelectSubject(promoCodeEdit.subjects.map(subject => subject.name)); 
+      if (promoCodeEdit.subjects && promoCodeEdit.subjects.length > 0) {
+        setSelectSubject(promoCodeEdit.subjects.map(subject => subject.name));
         setSelectSubjectId(promoCodeEdit.subjects.map(subject => subject.id));
       } else {
         setSelectSubject('Select Subject');
         setSelectSubjectId([null]);
       }
 
-      if (promoCodeEdit.bundles && promoCodeEdit.bundles.length > 0) {              
-        setSelectBundle(promoCodeEdit.bundles.map(bundle => bundle.name)); 
+      if (promoCodeEdit.bundles && promoCodeEdit.bundles.length > 0) {
+        setSelectBundle(promoCodeEdit.bundles.map(bundle => bundle.name));
         setSelectBundleId(promoCodeEdit.bundles.map(bundle => bundle.id));
       } else {
         setSelectSubject('Select Bundle');
         setSelectSubjectId([null]);
       }
 
-       // Determine value type
-       if (promoCodeEdit.precentage !== 0) {
+      // Determine value type
+      if (promoCodeEdit.precentage !== 0) {
         setSelectValueType("percentage");
         setPercentage(promoCodeEdit.precentage || '');
       } else {
-          setSelectValueType("value");
-          setValue(promoCodeEdit.value || '');
+        setSelectValueType("value");
+        setValue(promoCodeEdit.value || '');
       }
 
-        setTitle(promoCodeEdit.title || '');
-        setCode(promoCodeEdit.code || '');
-        setSelectUsageType(promoCodeEdit.usage_type || '');
-        setUsage(promoCodeEdit.usage|| '')
-        setUserNumber(promoCodeEdit.number_users|| '')
-        setValue(promoCodeEdit.value || '');
-        setPercentage(promoCodeEdit.precentage || '');
-        setActivePromoCode(promoCodeEdit.status||0) 
-        setIncludeLive(promoCodeEdit.live||0) 
-}
-}, [promoCodeEdit]);
+      setTitle(promoCodeEdit.title || '');
+      setCode(promoCodeEdit.code || '');
+      setSelectUsageType(promoCodeEdit.usage_type || '');
+      setUsage(promoCodeEdit.usage || '')
+      setUserNumber(promoCodeEdit.number_users || '')
+      setValue(promoCodeEdit.value || '');
+      setPercentage(promoCodeEdit.precentage || '');
+      setActivePromoCode(promoCodeEdit.status || 0)
+      setIncludeLive(promoCodeEdit.live || 0)
+    }
+  }, [promoCodeEdit]);
 
   // Function to filter subjects by semester, category, or both
   const filterSubjects = (semesterName, categoryId) => {
@@ -125,20 +125,20 @@ const EditPromoCodePage = () => {
 
     // If both semester and category are selected, filter by both
     if (semesterName && categoryId) {
-      filteredSubjects = filteredSubjects.filter(subject => 
-        subject.semester.toLowerCase() === semesterName.toLowerCase() && 
+      filteredSubjects = filteredSubjects.filter(subject =>
+        subject.semester.toLowerCase() === semesterName.toLowerCase() &&
         subject.category_id === categoryId
-      ) ;
+      );
     }
     // If only the semester is selected, filter by semester
     else if (semesterName) {
-      filteredSubjects = filteredSubjects.filter(subject => 
+      filteredSubjects = filteredSubjects.filter(subject =>
         subject.semester.toLowerCase() === semesterName.toLowerCase()
       );
     }
     // If only the category is selected, filter by category
     else if (categoryId) {
-      filteredSubjects = filteredSubjects.filter(subject => 
+      filteredSubjects = filteredSubjects.filter(subject =>
         subject.category_id === categoryId
       );
     }
@@ -151,16 +151,16 @@ const EditPromoCodePage = () => {
     let filteredBundles = allBundles;
 
     if (semesterName && categoryId) {
-      filteredBundles = filteredBundles.filter(bundle => 
-        bundle.semester.toLowerCase() === semesterName.toLowerCase() && 
+      filteredBundles = filteredBundles.filter(bundle =>
+        bundle.semester.toLowerCase() === semesterName.toLowerCase() &&
         bundle.category_id === categoryId
       );
     } else if (semesterName) {
-      filteredBundles = filteredBundles.filter(bundle => 
+      filteredBundles = filteredBundles.filter(bundle =>
         bundle.semester.toLowerCase() === semesterName.toLowerCase()
       );
     } else if (categoryId) {
-      filteredBundles = filteredBundles.filter(bundle => 
+      filteredBundles = filteredBundles.filter(bundle =>
         bundle.category_id === categoryId
       );
     }
@@ -256,7 +256,7 @@ const EditPromoCodePage = () => {
     // Filter subjects based on the new semester and existing category
     filterSubjects(selectedOptionName, selectCategoryId);
     filterBundles(selectedOptionName, selectCategoryId);
-    };
+  };
 
   const handleSelectCategory = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
@@ -347,20 +347,20 @@ const EditPromoCodePage = () => {
   }, []);
 
   const handleClickOutside = (event) => {
-      if (dropdownValueTypeRef.current && !dropdownValueTypeRef.current.contains(event.target) &&
-          dropdownUsageTypeRef.current && !dropdownUsageTypeRef.current.contains(event.target)&&
-          dropdownSemesterRef.current &&  !dropdownSemesterRef.current.contains(event.target)&&
-          dropdownCategoryRef.current &&  !dropdownCategoryRef.current.contains(event.target)&&
-          dropdownBundleRef.current &&  ! dropdownBundleRef.current.contains(event.target)&&
-          dropdownSubjectRef.current &&  !dropdownSubjectRef.current.contains(event.target)
-      ) {
-        setOpenSelectValueType(false);
-        setOpenSelectUsageType(false);
-        setOpenSelectSemester(false);
-        setOpenSelectSubject(false);
-        setOpenSelectBundle(false);
-        setOpenSelectCategory(false)
-      }
+    if (dropdownValueTypeRef.current && !dropdownValueTypeRef.current.contains(event.target) &&
+      dropdownUsageTypeRef.current && !dropdownUsageTypeRef.current.contains(event.target) &&
+      dropdownSemesterRef.current && !dropdownSemesterRef.current.contains(event.target) &&
+      dropdownCategoryRef.current && !dropdownCategoryRef.current.contains(event.target) &&
+      dropdownBundleRef.current && !dropdownBundleRef.current.contains(event.target) &&
+      dropdownSubjectRef.current && !dropdownSubjectRef.current.contains(event.target)
+    ) {
+      setOpenSelectValueType(false);
+      setOpenSelectUsageType(false);
+      setOpenSelectSemester(false);
+      setOpenSelectSubject(false);
+      setOpenSelectBundle(false);
+      setOpenSelectCategory(false)
+    }
   };
 
   const handleGoBack = () => {
@@ -406,7 +406,7 @@ const EditPromoCodePage = () => {
         return;
       }
     }
-      
+
     setIsLoading(true);
     try {
 
@@ -416,12 +416,12 @@ const EditPromoCodePage = () => {
       selectSubjectId.forEach((subjectId, index) => {
         params.append(`subjects[${index}]`, subjectId);
       });
-  
+
       // Append the bundles array
       selectBundleId.forEach((bundleId, index) => {
         params.append(`bundles[${index}]`, bundleId);
       });
-  
+
       // Append other fields
       params.append('title', title);
       params.append('code', code);
@@ -443,17 +443,17 @@ const EditPromoCodePage = () => {
       params.append('live', includeLive);
       params.append('status', activePromoCode);
 
-       // To print params in a readable format
-    console.log('Submitted Parameters:');
-    params.forEach((value, key) => {
-      console.log(`${key}: ${value}`);
-    });
-  
+      // To print params in a readable format
+      console.log('Submitted Parameters:');
+      params.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+      });
+
       // Convert params to query string
       // const queryString = params.toString();
-    
-    // try {
-        const response = await axios.put(`https://bdev.elmanhag.shop/admin/promoCode/update/${promoCodeID}?${params.toString()}`, {}, {
+
+      // try {
+      const response = await axios.put(`https://bcknd.elmanhag.com/admin/promoCode/update/${promoCodeID}?${params.toString()}`, {}, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },
@@ -462,36 +462,36 @@ const EditPromoCodePage = () => {
         auth.toastSuccess('PromoCode Updated successfully!');
         handleGoBack();
       } else {
-              auth.toastError('Failed to Update PromoCode.');
+        auth.toastError('Failed to Update PromoCode.');
       }
-      } catch (error) {
-        console.log(error.response); // Log the full response for debugging
-        console.log(error.response.data.errors);
-        const errorMessages = error?.response?.data?.errors;
-        let errorMessageString = 'Error occurred';
+    } catch (error) {
+      console.log(error.response); // Log the full response for debugging
+      console.log(error.response.data.errors);
+      const errorMessages = error?.response?.data?.errors;
+      let errorMessageString = 'Error occurred';
       if (errorMessages) {
-              errorMessageString = Object.values(errorMessages).flat().join(' ');
+        errorMessageString = Object.values(errorMessages).flat().join(' ');
       }
       auth.toastError('Error', errorMessageString);
-      } finally {
+    } finally {
       setIsLoading(false);
-      }
+    }
   };
 
   return (
     <form className="w-full flex flex-col items-center justify-center gap-y-3" onSubmit={(event) => handleSubmitEdit(promoCodeEdit.id, event)}>
-    <div className="w-full flex flex-wrap items-center justify-start gap-3">
-      <div className="lg:w-[30%] sm:w-full">
-        <DropDownMenu
-          ref={dropdownSemesterRef}
-          handleOpen={handleOpenSemester}
-          handleOpenOption={handleSelectSemester}
-          stateoption={selectSemester}
-          openMenu={openSelectSemester}
-          options={semesterData}
-        />
-      </div> 
-      <div className="lg:w-[30%] sm:w-full">
+      <div className="w-full flex flex-wrap items-center justify-start gap-3">
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownSemesterRef}
+            handleOpen={handleOpenSemester}
+            handleOpenOption={handleSelectSemester}
+            stateoption={selectSemester}
+            openMenu={openSelectSemester}
+            options={semesterData}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
           <DropDownMenu
             ref={dropdownCategoryRef}
             handleOpen={handleOpenCategory}
@@ -525,44 +525,44 @@ const EditPromoCodePage = () => {
             name="Bundles"
           />
         </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <InputCustom
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <InputCustom
-          type="text"
-          placeholder="Code"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-        />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <DropDownMenu
-          ref={dropdownUsageTypeRef}
-          handleOpen={handleOpenUsageType}
-          handleOpenOption={handleSelectUsageType}
-          stateoption={selectUsageType}
-          openMenu={openSelectUsageType}
-          options={usageTypeData}
-        />
-      </div> 
-      {/* Conditionally Render Usage Input */}
-      {selectUsageType === 'fixed' && (   
-          <div className="lg:w-[30%] sm:w-full">
+        <div className="lg:w-[30%] sm:w-full">
           <InputCustom
             type="text"
-            placeholder="Usage Number"
-            value={usage}
-            onChange={(e) => setUsage(e.target.value)}
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
-      )}
-      {/* <div className="lg:w-[30%] sm:w-full">
+        <div className="lg:w-[30%] sm:w-full">
+          <InputCustom
+            type="text"
+            placeholder="Code"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownUsageTypeRef}
+            handleOpen={handleOpenUsageType}
+            handleOpenOption={handleSelectUsageType}
+            stateoption={selectUsageType}
+            openMenu={openSelectUsageType}
+            options={usageTypeData}
+          />
+        </div>
+        {/* Conditionally Render Usage Input */}
+        {selectUsageType === 'fixed' && (
+          <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+              type="text"
+              placeholder="Usage Number"
+              value={usage}
+              onChange={(e) => setUsage(e.target.value)}
+            />
+          </div>
+        )}
+        {/* <div className="lg:w-[30%] sm:w-full">
         <InputCustom
           type="text"
           placeholder="Number Of Users"
@@ -570,7 +570,7 @@ const EditPromoCodePage = () => {
           onChange={(e) => setUserNumber(e.target.value)}
         />
       </div> */}
-      {/* <div className="lg:w-[30%] sm:w-full">
+        {/* <div className="lg:w-[30%] sm:w-full">
         <InputCustom
           type="text"
           placeholder="Value"
@@ -578,65 +578,65 @@ const EditPromoCodePage = () => {
           onChange={(e) => setValue(e.target.value)}
         />
       </div> */}
-      <div className="lg:w-[30%] sm:w-full">
-        <DropDownMenu
-          ref={dropdownValueTypeRef}
-          handleOpen={handleOpenValueType}
-          handleOpenOption={handleSelectValueType}
-          stateoption={selectValueType}
-          openMenu={openSelectValueType}
-          options={valueType}
-        />
-      </div> 
-      {selectValueType === 'value' && (
         <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            placeholder="Value"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+          <DropDownMenu
+            ref={dropdownValueTypeRef}
+            handleOpen={handleOpenValueType}
+            handleOpenOption={handleSelectValueType}
+            stateoption={selectValueType}
+            openMenu={openSelectValueType}
+            options={valueType}
           />
         </div>
-      )}
+        {selectValueType === 'value' && (
+          <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+              placeholder="Value"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+          </div>
+        )}
 
-      {selectValueType === 'percentage' && (
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            placeholder="Percentage"
-            value={percentage}
-            onChange={(e) => setPercentage(e.target.value)}
-          />
+        {selectValueType === 'percentage' && (
+          <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+              placeholder="Percentage"
+              value={percentage}
+              onChange={(e) => setPercentage(e.target.value)}
+            />
+          </div>
+        )}
+
+        <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+          <span className="text-2xl text-thirdColor font-medium">Include Live:</span>
+          <div>
+            <CheckBox checked={includeLive} handleClick={handleActiveLive} />
+          </div>
         </div>
-      )}
 
-      <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
-            <span className="text-2xl text-thirdColor font-medium">Include Live:</span>
-            <div>
-              <CheckBox checked={includeLive} handleClick={handleActiveLive} />
-            </div>
+        <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+          <span className="text-2xl text-thirdColor font-medium">Active Promo Code:</span>
+          <div>
+            <CheckBox checked={activePromoCode} handleClick={handleClick} />
+          </div>
+        </div>
+
       </div>
-      
-      <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
-            <span className="text-2xl text-thirdColor font-medium">Active Promo Code:</span>
-            <div>
-              <CheckBox checked={activePromoCode} handleClick={handleClick} />
-            </div>
-      </div>
-   
-    </div>
-    {/* Buttons */}
-    <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
+      {/* Buttons */}
+      <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
         <div className="flex items-center justify-center w-72">
-              <Button
-                      type="submit"
-                      Text="Done"
-                      BgColor="bg-mainColor"
-                      Color="text-white"
-                      Width="full"
-                      Size="text-2xl"
-                      px="px-28"
-                      rounded="rounded-2xl"
-                      // stateLoding={isLoading}
-              />
+          <Button
+            type="submit"
+            Text="Done"
+            BgColor="bg-mainColor"
+            Color="text-white"
+            Width="full"
+            Size="text-2xl"
+            px="px-28"
+            rounded="rounded-2xl"
+          // stateLoding={isLoading}
+          />
         </div>
         <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
       </div>

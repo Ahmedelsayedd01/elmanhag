@@ -20,8 +20,8 @@ const LessonsPage = ({ subjectId, lessonId }) => {
 
   const [videoProblemList, setVideoProblemList] = useState({});
   const [questionProblemList, setQuestionProblemList] = useState({});
-  const [selectedProblem,setSelectedProblem]= useState('')
-  const [problemType ,setProblemType] = useState('')
+  const [selectedProblem, setSelectedProblem] = useState('')
+  const [problemType, setProblemType] = useState('')
   const [dropdownVisible, setDropdownVisible] = useState(false); // For toggling the dropdown visibility
 
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
       setIsLoading(true);
       try {
         const response = await axios.post(
-          'https://bdev.elmanhag.shop/student/chapter/lesson/view',
+          'https://bcknd.elmanhag.com/student/chapter/lesson/view',
           {
             'subject_id': subjectId,
             'lesson_id': lessonId,
@@ -52,13 +52,13 @@ const LessonsPage = ({ subjectId, lessonId }) => {
           console.log('response lesson', response)
           if (response.data.lesson) {
             setLessons(response.data.lesson);
-             // Check if the lesson exists but resources are empty
-          if (response.data.lesson.resources && response.data.lesson.resources.length === 0) {
-            setErrorMessage('عفوا هذا الدرس غير متاح حاليا. سوف يتوفر لاحقا');
-            setShowErrorModal(true); // Show modal when error occurs
-          } else {
-            setChapterID(response.data.lesson.chapter_id || '');
-          }
+            // Check if the lesson exists but resources are empty
+            if (response.data.lesson.resources && response.data.lesson.resources.length === 0) {
+              setErrorMessage('عفوا هذا الدرس غير متاح حاليا. سوف يتوفر لاحقا');
+              setShowErrorModal(true); // Show modal when error occurs
+            } else {
+              setChapterID(response.data.lesson.chapter_id || '');
+            }
             // setChapterID(response.data.lesson?.chapter_id || '');
           } else {
             setErrorMessage('Lesson data not found.');
@@ -77,7 +77,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
           case 204:
             if (error.response.data.faield === 'This Lesson Is Closed') {
               setErrorMessage('يجب عليك الاشتراك لتكملة تعلم هذا الدرس');
-            } 
+            }
             break;
           case 400:
             if (error.response.data.faield === 'This Material for This Lesson is Closed') {
@@ -93,20 +93,20 @@ const LessonsPage = ({ subjectId, lessonId }) => {
           case 404:
             if (error.response.data.faield === 'This Lesson Not Found') {
               setErrorMessage('عفوا لا يوجد هذا الدرس');
-            } else if (error.response.data.not_found ==='Not Found homeWork for previous lesson.') {
+            } else if (error.response.data.not_found === 'Not Found homeWork for previous lesson.') {
               setErrorMessage('عفوا لا يوجد واجبات لهذا الدرس.');
-            } 
+            }
             break;
           case 403:
-            if (error.response.data.faield ==='You Can\'t Take This Lesson cuse Don\'t end homework Befor Lesson') {
+            if (error.response.data.faield === 'You Can\'t Take This Lesson cuse Don\'t end homework Befor Lesson') {
               setErrorMessage(" يجب عليك الانتهاء من حل الدرس السابق");
             }
             break;
-            case 405:
-              if (error.response.data.faield ==='This Material for This Lesson is Closed') {
-                setErrorMessage("عفوا هذا الدرس غير متوفر حاليا ، سوف يتوفر قريباً");
-              }
-              break;
+          case 405:
+            if (error.response.data.faield === 'This Material for This Lesson is Closed') {
+              setErrorMessage("عفوا هذا الدرس غير متوفر حاليا ، سوف يتوفر قريباً");
+            }
+            break;
           case 500:
             if (error.response.data.lesson_not_solved === "The previous lesson was not solved.") {
               setErrorMessage('يجب عليك حل الدرس السابق قبل المتابعة.');
@@ -135,85 +135,85 @@ const LessonsPage = ({ subjectId, lessonId }) => {
   const fetchProblemList = async () => {
     setIsLoading(true);
     try {
-           const response = await axios.get('https://bdev.elmanhag.shop/student/issues',
-          {
-                  headers: {
-                         Authorization: `Bearer ${auth.user.token}`,
-                         'Content-Type': 'application/json',
-                         Accept: 'application/json',
-                  },
+      const response = await axios.get('https://bcknd.elmanhag.com/student/issues',
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`,
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
 
-           });
-           if (response.status === 200) {
-                 console.log(response.data)
-                 setVideoProblemList(response.data.video_issues)
-                 setQuestionProblemList(response.data.question_issues)
-           }
-         } 
+        });
+      if (response.status === 200) {
+        console.log(response.data)
+        setVideoProblemList(response.data.video_issues)
+        setQuestionProblemList(response.data.question_issues)
+      }
+    }
     catch (error) {
-          console.log(error.response); // Log the full response for debugging
-          const errorMessages = error?.response?.data?.errors;
-          let errorMessageString = 'Error occurred';
-        if (errorMessages) {
-                errorMessageString = Object.values(errorMessages).flat().join(' ');
-        }
-        auth.toastError('Error', errorMessageString);
-        }
+      console.log(error.response); // Log the full response for debugging
+      const errorMessages = error?.response?.data?.errors;
+      let errorMessageString = 'Error occurred';
+      if (errorMessages) {
+        errorMessageString = Object.values(errorMessages).flat().join(' ');
+      }
+      auth.toastError('Error', errorMessageString);
+    }
     finally {
-        setIsLoading(false);
-        }
-    };
+      setIsLoading(false);
+    }
+  };
 
-   useEffect(() => {
+  useEffect(() => {
     fetchProblemList();
     console.log(videoProblemList)
-   }, []);
+  }, []);
 
 
-   const handleSubmitProblem = async (event, problemId, resourceId,resourceType) => {
+  const handleSubmitProblem = async (event, problemId, resourceId, resourceType) => {
     event.preventDefault(); // Prevent the default form submission
 
     setIsLoading(true); // Show loading state
 
     try {
-        const formData = new FormData();
-        
-        // Determine the type based on problemType
-        const typeToSend = resourceType === "video" ? "video" : "question"; 
-        formData.append('type', typeToSend);
-        formData.append('issue_id', problemId);
-        formData.append('id', resourceId);
+      const formData = new FormData();
 
-          // Print each FormData entry for debugging
-          for (const [key, value] of formData.entries()) {
-            console.log(`${key}: ${value}`);
-        }
+      // Determine the type based on problemType
+      const typeToSend = resourceType === "video" ? "video" : "question";
+      formData.append('type', typeToSend);
+      formData.append('issue_id', problemId);
+      formData.append('id', resourceId);
 
-        const response = await axios.post('https://bdev.elmanhag.shop/student/issues', formData, {
-            headers: {
-                Authorization: `Bearer ${auth.user.token}`,
-                'Content-Type': 'multipart/form-data',
-            },
-        });
+      // Print each FormData entry for debugging
+      for (const [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
 
-        if (response.status === 200) {
-            console.log('formData', formData);
-            auth.toastSuccess("تم ارسال المشكله بنجاح");
-        } else {
-            auth.toastError('فشل ارسال المشكله !.');
-        }
+      const response = await axios.post('https://bcknd.elmanhag.com/student/issues', formData, {
+        headers: {
+          Authorization: `Bearer ${auth.user.token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.status === 200) {
+        console.log('formData', formData);
+        auth.toastSuccess("تم ارسال المشكله بنجاح");
+      } else {
+        auth.toastError('فشل ارسال المشكله !.');
+      }
     } catch (error) {
-        const errorMessages = error?.response?.data.errors;
-        let errorMessageString = 'Error occurred';
+      const errorMessages = error?.response?.data.errors;
+      let errorMessageString = 'Error occurred';
 
-        if (errorMessages) {
-            errorMessageString = Object.values(errorMessages).flat().join(' ');
-        }
-        auth.toastError('Error', errorMessageString);
+      if (errorMessages) {
+        errorMessageString = Object.values(errorMessages).flat().join(' ');
+      }
+      auth.toastError('Error', errorMessageString);
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
-};
+  };
 
 
 
@@ -262,63 +262,63 @@ const LessonsPage = ({ subjectId, lessonId }) => {
       {/* Error Modal */}
       {showErrorModal && (
 
-          <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 lg:mr-10">
-            <div className="bg-white p-6 md:p-12 rounded-lg w-11/12 md:w-1/2 lg:w-1/3">
-              <h2 className="text-[#6B6B6B] text-xl md:text-2xl font-bold mb-4">{errorMessage}</h2>
-              <div className="flex justify-end gap-4 sm:gap-2">
-                {/* Conditional rendering based on the error message */}
-                {errorMessage === `عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين. اشترك الآن واستمتع بجميع الدروس بدون قيود !` ? (
-                  <>
-                    <Link to="/dashboard/subscriptions/plans" state={{ subject_Id: subjectId }}>
-                      <Button Text="اشترك الان" Width="auto" BgColor="bg-mainColor" Color="text-white" />
-                    </Link>
-                    <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
-                  </>
-                ) : (
-                  <Button Text="حسناً" Width="auto" BgColor="bg-mainColor" Color="text-white" handleClick={handleGoBack} />
-                )}
-              </div>
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 lg:mr-10">
+          <div className="bg-white p-6 md:p-12 rounded-lg w-11/12 md:w-1/2 lg:w-1/3">
+            <h2 className="text-[#6B6B6B] text-xl md:text-2xl font-bold mb-4">{errorMessage}</h2>
+            <div className="flex justify-end gap-4 sm:gap-2">
+              {/* Conditional rendering based on the error message */}
+              {errorMessage === `عذرًا , يبدوا ان هذا الدرس غير متاح حالياً إلا للمشتركين. اشترك الآن واستمتع بجميع الدروس بدون قيود !` ? (
+                <>
+                  <Link to="/dashboard/subscriptions/plans" state={{ subject_Id: subjectId }}>
+                    <Button Text="اشترك الان" Width="auto" BgColor="bg-mainColor" Color="text-white" />
+                  </Link>
+                  <Button Text="حاول لاحقا" Width="auto" BgColor="bg-gray-300" Color="text-black" handleClick={handleGoBack} />
+                </>
+              ) : (
+                <Button Text="حسناً" Width="auto" BgColor="bg-mainColor" Color="text-white" handleClick={handleGoBack} />
+              )}
             </div>
           </div>
-        )}
+        </div>
+      )}
 
       {!showErrorModal && (
         <>
           <div className="flex w-full gap-5 mb-5">
             {/* Tab buttons */}
-            <div className='sm:w-1/4'> 
-            <Button
-              Text="فيديوهات"
-              Width="full"
-              px="px-1"
-              Size='text-xl'
-              BgColor={activeTab === "videos" ? "bg-mainColor" : "bg-white"}
-              Color={activeTab === "videos" ? "text-white" : "text-mainColor"}
-              handleClick={() => setActiveTab("videos")}
-            />
+            <div className='sm:w-1/4'>
+              <Button
+                Text="فيديوهات"
+                Width="full"
+                px="px-1"
+                Size='text-xl'
+                BgColor={activeTab === "videos" ? "bg-mainColor" : "bg-white"}
+                Color={activeTab === "videos" ? "text-white" : "text-mainColor"}
+                handleClick={() => setActiveTab("videos")}
+              />
             </div>
-            <div className='sm:w-1/4'> 
-            <Button
-              Text="مذكرات"
-              Width="full"
-              px="px-1"
-              Size='text-xl'
-              BgColor={activeTab === "pdf" ? "bg-red-600" : "bg-white"}
-              Color={activeTab === "pdf" ? "text-white" : "text-red-600"}
-              handleClick={() => setActiveTab("pdf")}
-            />
+            <div className='sm:w-1/4'>
+              <Button
+                Text="مذكرات"
+                Width="full"
+                px="px-1"
+                Size='text-xl'
+                BgColor={activeTab === "pdf" ? "bg-red-600" : "bg-white"}
+                Color={activeTab === "pdf" ? "text-white" : "text-red-600"}
+                handleClick={() => setActiveTab("pdf")}
+              />
             </div>
 
-            <div className='sm:w-1/4'> 
-            <Button
-              Text="واجبات"
-              Width="full"
-              px="px-1"
-              Size='text-xl'
-              BgColor={activeTab === "homework" ? "bg-red-600" : "bg-white"}
-              Color={activeTab === "homework" ? "text-white" : "text-red-600"}
-              handleClick={() => setActiveTab("homework")}
-            />
+            <div className='sm:w-1/4'>
+              <Button
+                Text="واجبات"
+                Width="full"
+                px="px-1"
+                Size='text-xl'
+                BgColor={activeTab === "homework" ? "bg-red-600" : "bg-white"}
+                Color={activeTab === "homework" ? "text-white" : "text-red-600"}
+                handleClick={() => setActiveTab("homework")}
+              />
             </div>
             <button type='button' onClick={handleGoBack}>
               <IoIosArrowDown className="rotate-90 text-mainColor text-5xl" />
@@ -336,7 +336,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
                       Your browser does not support the video tag.
                     </video>
 
-                    <div className="mt-4 relative">             
+                    <div className="mt-4 relative">
                       <button
                         className="bg-mainColor text-white py-2 px-4 rounded-md flex items-center gap-3"
                         onClick={() => setDropdownVisible(!dropdownVisible)}
@@ -347,7 +347,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
                         <div
                           className={`mt-1 transition-transform duration-200 ${dropdownVisible ? 'rotate-180' : 'rotate-0'}`}
                         >
-                          <IoIosArrowDown size={20}/>
+                          <IoIosArrowDown size={20} />
                         </div>
                       </button>
 
@@ -359,7 +359,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
                               className={`p-2 hover:bg-white hover:text-mainColor rounded-2xl text-lg font-semibold cursor-pointer ${selectedProblem === problem ? "bg-mainColor" : ""}`}
                               onClick={() => {
                                 setSelectedProblem(problem);
-                                 handleSubmitProblem(event,problem.id, mainResource.id,mainResource.type); // Auto submit when problem is selected
+                                handleSubmitProblem(event, problem.id, mainResource.id, mainResource.type); // Auto submit when problem is selected
                               }}
                             >
                               {problem.title}
@@ -430,14 +430,14 @@ const LessonsPage = ({ subjectId, lessonId }) => {
                 <ul className="list-disc ml-5 space-y-4 p-4 w-full">
                   {lessons.homework.map((task, index) => (
                     // <li key={index}>
-                      <li key={index} className="flex items-center w-1/2">
+                    <li key={index} className="flex items-center w-1/2">
                       <Button
                         Text={task.title || `PDF File ${index + 1}`}
                         Icon={<FaDownload />}
                         Width="w-1/2"
                         BgColor="bg-mainColor"
                         Color="text-white"
-                        handleClick={() => handleDownload(task.homework_link,task.title || `PDF_File_${index + 1}.pdf`)}
+                        handleClick={() => handleDownload(task.homework_link, task.title || `PDF_File_${index + 1}.pdf`)}
                       />
                     </li>
                     // </li>

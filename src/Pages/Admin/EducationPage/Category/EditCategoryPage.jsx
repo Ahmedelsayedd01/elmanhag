@@ -112,7 +112,7 @@ const EditCategoryPage = () => {
                      const formDataEntries = Array.from(formData.entries());
                      console.log('FormData Entries:', formDataEntries);
 
-                     const response = await axios.put(`https://bdev.elmanhag.shop/admin/category/update/${categoryID}`, formData, {
+                     const response = await axios.put(`https://bcknd.elmanhag.com/admin/category/update/${categoryID}`, formData, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                                    'Content-Type': 'multipart/form-data',

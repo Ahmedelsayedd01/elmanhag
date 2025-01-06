@@ -26,7 +26,7 @@ const AffiliatePaymentMethodPage = () => {
        const fetchPaymentMethod = async () => {
               setIsLoading(true);
               try {
-                     const response = await axios.get('https://bdev.elmanhag.shop/admin/affilate/affilateMethod', {
+                     const response = await axios.get('https://bcknd.elmanhag.com/admin/affilate/affilateMethod', {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -61,7 +61,7 @@ const AffiliatePaymentMethodPage = () => {
        };
        const deletePaymentMethod = async (paymentMethodId, authToken) => {
               try {
-                     const response = await axios.delete(`https://bdev.elmanhag.shop/admin/affilate/affilateMethodDelete/${paymentMethodId}`, {
+                     const response = await axios.delete(`https://bcknd.elmanhag.com/admin/affilate/affilateMethodDelete/${paymentMethodId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },

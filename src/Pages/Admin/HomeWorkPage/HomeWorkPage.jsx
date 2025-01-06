@@ -194,7 +194,7 @@ const HomeWorkPage = () => {
       const fetchHomeWork = async () => {
             setIsLoading(true);
             try {
-                  const response = await axios.get(' https://bdev.elmanhag.shop/admin/homework', {
+                  const response = await axios.get(' https://bcknd.elmanhag.com/admin/homework', {
                         headers: {
                               Authorization: `Bearer ${auth.user.token}`,
                         },
@@ -244,7 +244,7 @@ const HomeWorkPage = () => {
 
       const deleteHomeWork = async (homeWorkId, authToken) => {
             try {
-                  const response = await axios.delete(`https://bdev.elmanhag.shop/admin/homework/delete/${homeWorkId}`, {
+                  const response = await axios.delete(`https://bcknd.elmanhag.com/admin/homework/delete/${homeWorkId}`, {
                         headers: {
                               Authorization: `Bearer ${authToken}`,
                         },

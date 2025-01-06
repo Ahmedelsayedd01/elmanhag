@@ -25,7 +25,7 @@ const EditQuestionIssuesPage = () => {
     const fetchQuestionIssues = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(`https://bdev.elmanhag.shop/admin/Settings/questionIssues/issue/${questionIssuesId}`, {
+        const response = await axios.get(`https://bcknd.elmanhag.com/admin/Settings/questionIssues/issue/${questionIssuesId}`, {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,
             'Content-Type': 'multipart/form-data',
@@ -72,7 +72,7 @@ const EditQuestionIssuesPage = () => {
         'status': statusIssues,
       }
 
-      const response = await axios.put(`https://bdev.elmanhag.shop/admin/Settings/questionIssues/update/${questionIssuesId}`, payload, {
+      const response = await axios.put(`https://bcknd.elmanhag.com/admin/Settings/questionIssues/update/${questionIssuesId}`, payload, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'application/json',

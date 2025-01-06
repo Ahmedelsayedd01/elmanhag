@@ -14,7 +14,7 @@ const ComplaintsPage = () => {
        const fetchComplaints = async () => {
               setIsLoading(true)
               try {
-                     const response = await axios.get('https://bdev.elmanhag.shop/admin/complaint', {
+                     const response = await axios.get('https://bcknd.elmanhag.com/admin/complaint', {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -35,7 +35,7 @@ const ComplaintsPage = () => {
 
        const handleStatus = async (complaintId, studentName, status) => {
               try {
-                     const response = await axios.put(`https://bdev.elmanhag.shop/admin/complaint/active/${complaintId}`, { status }, {
+                     const response = await axios.put(`https://bcknd.elmanhag.com/admin/complaint/active/${complaintId}`, { status }, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },

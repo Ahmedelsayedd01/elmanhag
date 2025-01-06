@@ -1,4 +1,4 @@
-import React, { useRef, useState ,useEffect} from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import InputCustom from '../../../../Components/InputCustom';
 import { Button } from '../../../../Components/Button';
 import { useAuth } from '../../../../Context/Auth';
@@ -22,13 +22,13 @@ const AddDiscountPage = () => {
   const [discountData, setDiscountData] = useState([]);
 
   const [valueType, setValueType] = useState([{ name: 'percentage' }, { name: 'value' }]);
-  const [value,setValue]=useState('')
+  const [value, setValue] = useState('')
   // const [percentage, setPercentage] = useState('');
   // const [activeDiscount,setActiveDiscount]=useState(0)
-  const [description,setDescription]=useState('')
-  const [startDate,setStartDate]=useState('')
-  const [endDate,setEndDate]=useState('')
-  const [activeDiscount,setActiveDiscount]=useState(0)
+  const [description, setDescription] = useState('')
+  const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
+  const [activeDiscount, setActiveDiscount] = useState(0)
 
   const [selectValueType, setSelectValueType] = useState('Select ValueType');
   const [selectValueTypeName, setSelectValueTypeName] = useState(null);
@@ -74,20 +74,20 @@ const AddDiscountPage = () => {
 
     // If both semester and category are selected, filter by both
     if (semesterName && categoryId) {
-      filteredSubjects = filteredSubjects.filter(subject => 
-        subject.semester.toLowerCase() === semesterName.toLowerCase() && 
+      filteredSubjects = filteredSubjects.filter(subject =>
+        subject.semester.toLowerCase() === semesterName.toLowerCase() &&
         subject.category_id === categoryId
-      ) ;
+      );
     }
     // If only the semester is selected, filter by semester
     else if (semesterName) {
-      filteredSubjects = filteredSubjects.filter(subject => 
+      filteredSubjects = filteredSubjects.filter(subject =>
         subject.semester.toLowerCase() === semesterName.toLowerCase()
       );
     }
     // If only the category is selected, filter by category
     else if (categoryId) {
-      filteredSubjects = filteredSubjects.filter(subject => 
+      filteredSubjects = filteredSubjects.filter(subject =>
         subject.category_id === categoryId
       );
     }
@@ -100,16 +100,16 @@ const AddDiscountPage = () => {
     let filteredBundles = allBundles;
 
     if (semesterName && categoryId) {
-      filteredBundles = filteredBundles.filter(bundle => 
-        bundle.semester.toLowerCase() === semesterName.toLowerCase() && 
+      filteredBundles = filteredBundles.filter(bundle =>
+        bundle.semester.toLowerCase() === semesterName.toLowerCase() &&
         bundle.category_id === categoryId
       );
     } else if (semesterName) {
-      filteredBundles = filteredBundles.filter(bundle => 
+      filteredBundles = filteredBundles.filter(bundle =>
         bundle.semester.toLowerCase() === semesterName.toLowerCase()
       );
     } else if (categoryId) {
-      filteredBundles = filteredBundles.filter(bundle => 
+      filteredBundles = filteredBundles.filter(bundle =>
         bundle.category_id === categoryId
       );
     }
@@ -181,7 +181,7 @@ const AddDiscountPage = () => {
     // Filter subjects based on the new semester and existing category
     filterSubjects(selectedOptionName, selectCategoryId);
     filterBundles(selectedOptionName, selectCategoryId);
-    };
+  };
 
   const handleSelectCategory = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
@@ -267,18 +267,18 @@ const AddDiscountPage = () => {
   }, []);
 
   const handleClickOutside = (event) => {
-      if (dropdownValueTypeRef.current && !dropdownValueTypeRef.current.contains(event.target) &&
-          dropdownSemesterRef.current &&  !dropdownSemesterRef.current.contains(event.target)&&
-          dropdownCategoryRef.current &&  !dropdownCategoryRef.current.contains(event.target)&&
-          dropdownBundleRef.current &&  ! dropdownBundleRef.current.contains(event.target)&&
-          dropdownSubjectRef.current &&  !dropdownSubjectRef.current.contains(event.target)
-      ) {
-        setOpenSelectValueType(false);
-        setOpenSelectSemester(false);
-        setOpenSelectSubject(false);
-        setOpenSelectBundle(false);
-        setOpenSelectCategory(false)
-      }
+    if (dropdownValueTypeRef.current && !dropdownValueTypeRef.current.contains(event.target) &&
+      dropdownSemesterRef.current && !dropdownSemesterRef.current.contains(event.target) &&
+      dropdownCategoryRef.current && !dropdownCategoryRef.current.contains(event.target) &&
+      dropdownBundleRef.current && !dropdownBundleRef.current.contains(event.target) &&
+      dropdownSubjectRef.current && !dropdownSubjectRef.current.contains(event.target)
+    ) {
+      setOpenSelectValueType(false);
+      setOpenSelectSemester(false);
+      setOpenSelectSubject(false);
+      setOpenSelectBundle(false);
+      setOpenSelectCategory(false)
+    }
   };
 
   const handleGoBack = () => {
@@ -326,33 +326,33 @@ const AddDiscountPage = () => {
       auth.toastError('Please Enter EndDate.');
       return;
     }
-            
+
     setIsLoading(true);
     try {
-    const formData = new FormData();
-     // Append the subjects array
-    selectSubjectId.forEach((subjectId, index) => {
-      formData.append(`subject_id[${index}]`, subjectId);
-    });
-    // Append the bundles array
-    selectBundleId.forEach((bundleId, index) => {
-      formData.append(`bundle_id[${index}]`, bundleId);
-    });
-    formData.append('category_id', selectCategoryId);
-    formData.append('description', description);
-    formData.append('start_date', startDate);
-    formData.append('end_date', endDate);
-    formData.append('type', selectValueTypeName);
-    formData.append('amount', value || 0);
-    // formData.append('precentage', percentage || 0);
-    formData.append('statue', activeDiscount);
+      const formData = new FormData();
+      // Append the subjects array
+      selectSubjectId.forEach((subjectId, index) => {
+        formData.append(`subject_id[${index}]`, subjectId);
+      });
+      // Append the bundles array
+      selectBundleId.forEach((bundleId, index) => {
+        formData.append(`bundle_id[${index}]`, bundleId);
+      });
+      formData.append('category_id', selectCategoryId);
+      formData.append('description', description);
+      formData.append('start_date', startDate);
+      formData.append('end_date', endDate);
+      formData.append('type', selectValueTypeName);
+      formData.append('amount', value || 0);
+      // formData.append('precentage', percentage || 0);
+      formData.append('statue', activeDiscount);
 
-    for (let pair of formData.entries()) {
-      console.log(pair[0]+ ', '+ pair[1]); 
-    }
-    
-    // try {
-        const response = await axios.post('https://bdev.elmanhag.shop/admin/discount/add', formData, {
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+      }
+
+      // try {
+      const response = await axios.post('https://bcknd.elmanhag.com/admin/discount/add', formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },
@@ -361,37 +361,37 @@ const AddDiscountPage = () => {
         auth.toastSuccess('Dicount added successfully!');
         handleGoBack();
       } else {
-              auth.toastError('Failed to add Dicount.');
+        auth.toastError('Failed to add Dicount.');
       }
-      } catch (error) {
-        console.log(error.response); // Log the full response for debugging
-        console.log(error.response.data.errors);
-        const errorMessages = error?.response?.data?.errors;
-        let errorMessageString = 'Error occurred';
+    } catch (error) {
+      console.log(error.response); // Log the full response for debugging
+      console.log(error.response.data.errors);
+      const errorMessages = error?.response?.data?.errors;
+      let errorMessageString = 'Error occurred';
       if (errorMessages) {
-              errorMessageString = Object.values(errorMessages).flat().join(' ');
+        errorMessageString = Object.values(errorMessages).flat().join(' ');
       }
       auth.toastError('Error', errorMessageString);
-      } finally {
+    } finally {
       setIsLoading(false);
-      }
+    }
   };
 
 
   return (
     <form className="w-full flex flex-col items-center justify-center gap-y-3" onSubmit={handleSubmit}>
-    <div className="w-full flex flex-wrap items-center justify-start gap-3">
-    <div className="lg:w-[30%] sm:w-full">
-        <DropDownMenu
-          ref={dropdownSemesterRef}
-          handleOpen={handleOpenSemester}
-          handleOpenOption={handleSelectSemester}
-          stateoption={selectSemester}
-          openMenu={openSelectSemester}
-          options={semesterData}
-        />
-      </div> 
-      <div className="lg:w-[30%] sm:w-full">
+      <div className="w-full flex flex-wrap items-center justify-start gap-3">
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownSemesterRef}
+            handleOpen={handleOpenSemester}
+            handleOpenOption={handleSelectSemester}
+            stateoption={selectSemester}
+            openMenu={openSelectSemester}
+            options={semesterData}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
           <DropDownMenu
             ref={dropdownCategoryRef}
             handleOpen={handleOpenCategory}
@@ -448,58 +448,58 @@ const AddDiscountPage = () => {
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <DropDownMenu
-          ref={dropdownValueTypeRef}
-          handleOpen={handleOpenValueType}
-          handleOpenOption={handleSelectValueType}
-          stateoption={selectValueType}
-          openMenu={openSelectValueType}
-          options={valueType}
-        />
-      </div>
-      {selectValueType === 'value' && (
         <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            placeholder="Value"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+          <DropDownMenu
+            ref={dropdownValueTypeRef}
+            handleOpen={handleOpenValueType}
+            handleOpenOption={handleSelectValueType}
+            stateoption={selectValueType}
+            openMenu={openSelectValueType}
+            options={valueType}
           />
         </div>
-      )}
+        {selectValueType === 'value' && (
+          <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+              placeholder="Value"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+          </div>
+        )}
 
-      {selectValueType === 'percentage' && (
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            placeholder="Percentage"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />
+        {selectValueType === 'percentage' && (
+          <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+              placeholder="Percentage"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+          </div>
+        )}
+
+        <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+          <span className="text-2xl text-thirdColor font-medium">Active Discount:</span>
+          <div>
+            <CheckBox checked={activeDiscount} handleClick={handleClick} />
+          </div>
         </div>
-      )}
-      
-      <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
-            <span className="text-2xl text-thirdColor font-medium">Active Discount:</span>
-            <div>
-              <CheckBox checked={activeDiscount} handleClick={handleClick} />
-            </div>
+
       </div>
-   
-    </div>
-    {/* Buttons */}
-    <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
+      {/* Buttons */}
+      <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
         <div className="flex items-center justify-center w-72">
-              <Button
-                      type="submit"
-                      Text="Done"
-                      BgColor="bg-mainColor"
-                      Color="text-white"
-                      Width="full"
-                      Size="text-2xl"
-                      px="px-28"
-                      rounded="rounded-2xl"
-                      // stateLoding={isLoading}
-              />
+          <Button
+            type="submit"
+            Text="Done"
+            BgColor="bg-mainColor"
+            Color="text-white"
+            Width="full"
+            Size="text-2xl"
+            px="px-28"
+            rounded="rounded-2xl"
+          // stateLoding={isLoading}
+          />
         </div>
         <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
       </div>

@@ -23,7 +23,7 @@ const PayoutPendingPage = () => {
        const fetchPending = async () => {
               setIsLoading(true)
               try {
-                     const response = await axios.get('https://bdev.elmanhag.shop/admin/affilate/payouts', {
+                     const response = await axios.get('https://bcknd.elmanhag.com/admin/affilate/payouts', {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -67,7 +67,7 @@ const PayoutPendingPage = () => {
 
        const rejectedPayout = async (pendingId, authToken) => {
               try {
-                     const response = await axios.post(`https://bdev.elmanhag.shop/admin/affilate/payout/rejected/${pendingId}`, { 'rejected_reason ': rejecteReason }, {
+                     const response = await axios.post(`https://bcknd.elmanhag.com/admin/affilate/payout/rejected/${pendingId}`, { 'rejected_reason ': rejecteReason }, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },
@@ -90,7 +90,7 @@ const PayoutPendingPage = () => {
               // setIsLoading(true)
               setStateChanged(!stateChanged)
               try {
-                     const response = await axios.post(`https://bdev.elmanhag.shop/admin/affilate/payout/approve/${pendingId}`, {}, {
+                     const response = await axios.post(`https://bcknd.elmanhag.com/admin/affilate/payout/approve/${pendingId}`, {}, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },

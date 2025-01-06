@@ -92,7 +92,7 @@ const AddPage = () => {
 
               const fetchSupData = async () => {
                      try {
-                            const response = await axios.get('https://bdev.elmanhag.shop/student/setting/view', {});
+                            const response = await axios.get('https://bcknd.elmanhag.com/student/setting/view', {});
                             if (response.status === 200) {
                                    setCountries(response.data.country)
                                    setAllCities(response.data.city)
@@ -378,7 +378,7 @@ const AddPage = () => {
 
                      console.log('Submitting data:', requestData);
 
-                     const response = await axios.post('https://bdev.elmanhag.shop/admin/student/add', requestData, {
+                     const response = await axios.post('https://bcknd.elmanhag.com/admin/student/add', requestData, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -444,7 +444,7 @@ const AddPage = () => {
 
        //               console.log('Submitting data:', requestData);
 
-       //               const response = await axios.post('https://bdev.elmanhag.shop/admin/student/add', requestData, {
+       //               const response = await axios.post('https://bcknd.elmanhag.com/admin/student/add', requestData, {
        //                      headers: {
        //                             Authorization: `Bearer ${auth.user.token}`,
        //                      },

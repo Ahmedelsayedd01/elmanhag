@@ -556,7 +556,7 @@ const AddHomeWorkPage = () => {
         console.log(pair[0] + ', ' + pair[1]);
       }
 
-      const response = await axios.post('https://bdev.elmanhag.shop/admin/homework/add', formData, {
+      const response = await axios.post('https://bcknd.elmanhag.com/admin/homework/add', formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },

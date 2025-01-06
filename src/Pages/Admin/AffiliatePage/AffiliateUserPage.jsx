@@ -92,7 +92,7 @@ const AffiliateUserPage = () => {
        const fetchUser = async () => {
               setIsLoading(true);
               try {
-                     const response = await axios.get('https://bdev.elmanhag.shop/admin/affilate', {
+                     const response = await axios.get('https://bcknd.elmanhag.com/admin/affilate', {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -143,7 +143,7 @@ const AffiliateUserPage = () => {
        };
        const blockUser = async (userId, authToken) => {
               try {
-                     const response = await axios.put(`https://bdev.elmanhag.shop/admin/affilate/banned/${userId}`, {}, {
+                     const response = await axios.put(`https://bcknd.elmanhag.com/admin/affilate/banned/${userId}`, {}, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },
@@ -178,7 +178,7 @@ const AffiliateUserPage = () => {
 
        const unblockUser = async (userId, authToken) => {
               try {
-                     const response = await axios.put(`https://bdev.elmanhag.shop/admin/affilate/unblock/${userId}`, {}, {
+                     const response = await axios.put(`https://bcknd.elmanhag.com/admin/affilate/unblock/${userId}`, {}, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },

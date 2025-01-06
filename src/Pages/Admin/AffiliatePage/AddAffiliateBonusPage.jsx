@@ -66,7 +66,7 @@ const AddAffiliateBonusPage = () => {
                      formData.append('bonus', bonus);
                      formData.append('image', bonusImageFile);
 
-                     const response = await axios.post('https://bdev.elmanhag.shop/admin/affilate/bonus/add', formData, {
+                     const response = await axios.post('https://bcknd.elmanhag.com/admin/affilate/bonus/add', formData, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                                    'Content-Type': 'multipart/form-data',

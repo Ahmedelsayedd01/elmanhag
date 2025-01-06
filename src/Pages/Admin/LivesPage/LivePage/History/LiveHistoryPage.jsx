@@ -83,7 +83,7 @@ const LiveHistoryPage = () => {
               setIsLoading(true);
               try {
                      const response = await axios.get(
-                            "https://bdev.elmanhag.shop/admin/live",
+                            "https://bcknd.elmanhag.com/admin/live",
                             {
                                    headers: {
                                           Authorization: `Bearer ${auth.user.token}`,
@@ -125,7 +125,7 @@ const LiveHistoryPage = () => {
        const deleteLives = async (livesId, authToken) => {
               try {
                      const response = await axios.delete(
-                            `https://bdev.elmanhag.shop/admin/live/delete/${livesId}`,
+                            `https://bcknd.elmanhag.com/admin/live/delete/${livesId}`,
                             {
                                    headers: {
                                           Authorization: `Bearer ${authToken}`,

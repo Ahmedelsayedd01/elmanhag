@@ -72,7 +72,7 @@ const LoginPage = () => {
 
               setIsLoading(true);
               try {
-                     const response = await axios.post('https://bdev.elmanhag.shop/student/auth/login', {
+                     const response = await axios.post('https://bcknd.elmanhag.com/student/auth/login', {
                             email,
                             password,
                      });

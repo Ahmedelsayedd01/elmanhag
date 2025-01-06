@@ -13,7 +13,7 @@ const AddParentRelationPage = () => {
     const navigate = useNavigate();
 
     const handleGoBack = () => {
-      navigate(-1, { replace: true });
+        navigate(-1, { replace: true });
     };
 
 
@@ -38,11 +38,11 @@ const AddParentRelationPage = () => {
 
             console.log('Submitting data:', requestData);
 
-            const response = await axios.post('https://bdev.elmanhag.shop/admin/Settings/relation/add', requestData ,{
+            const response = await axios.post('https://bcknd.elmanhag.com/admin/Settings/relation/add', requestData, {
                 headers: {
                     Authorization: `Bearer ${auth.user.token}`,
                 },
-        });
+            });
 
             if (response.status === 200) {
                 console.log('Parent Relation added successfully');

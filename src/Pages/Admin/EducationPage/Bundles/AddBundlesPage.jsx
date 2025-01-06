@@ -73,7 +73,7 @@ const AddBundlesPage = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        "https://bdev.elmanhag.shop/admin/live",
+        "https://bcknd.elmanhag.com/admin/live",
         {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,
@@ -401,7 +401,7 @@ const AddBundlesPage = () => {
 
 
     try {
-      const response = await axios.post('https://bdev.elmanhag.shop/admin/bundle/add', formData, {
+      const response = await axios.post('https://bcknd.elmanhag.com/admin/bundle/add', formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'multipart/form-data',

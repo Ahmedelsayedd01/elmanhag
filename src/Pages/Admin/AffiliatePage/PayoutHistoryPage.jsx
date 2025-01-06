@@ -15,7 +15,7 @@ const PayoutHistoryPage = () => {
        const fetchHistories = async () => {
               setIsLoading(true)
               try {
-                     const response = await axios.get('https://bdev.elmanhag.shop/admin/affilate/payoutsHistory', {
+                     const response = await axios.get('https://bcknd.elmanhag.com/admin/affilate/payoutsHistory', {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },

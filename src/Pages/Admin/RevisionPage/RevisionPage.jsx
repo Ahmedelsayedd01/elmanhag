@@ -29,7 +29,7 @@ const RevisionPage = () => {
               setIsLoading(true);
               try {
                      const response = await axios.get(
-                            "https://bdev.elmanhag.shop/admin/revisions",
+                            "https://bcknd.elmanhag.com/admin/revisions",
                             {
                                    headers: {
                                           Authorization: `Bearer ${auth.user.token}`,
@@ -70,7 +70,7 @@ const RevisionPage = () => {
        const deleteLivesRecorded = async (livesRecordedId, authToken) => {
               try {
                      const response = await axios.delete(
-                            `https://bdev.elmanhag.shop/admin/revisions/delete/${livesRecordedId}`,
+                            `https://bcknd.elmanhag.com/admin/revisions/delete/${livesRecordedId}`,
                             {
                                    headers: {
                                           Authorization: `Bearer ${authToken}`,

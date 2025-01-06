@@ -25,7 +25,7 @@ const EditVideoIssuesPage = () => {
     const fetchVideoIssues = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(`https://bdev.elmanhag.shop/admin/Settings/videoIssues/issue/${videoIssuesId}`, {
+        const response = await axios.get(`https://bcknd.elmanhag.com/admin/Settings/videoIssues/issue/${videoIssuesId}`, {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,
             'Content-Type': 'multipart/form-data',
@@ -72,7 +72,7 @@ const EditVideoIssuesPage = () => {
         'status': statusIssues,
       }
 
-      const response = await axios.put(`https://bdev.elmanhag.shop/admin/Settings/videoIssues/update/${videoIssuesId}`, payload, {
+      const response = await axios.put(`https://bcknd.elmanhag.com/admin/Settings/videoIssues/update/${videoIssuesId}`, payload, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'application/json',

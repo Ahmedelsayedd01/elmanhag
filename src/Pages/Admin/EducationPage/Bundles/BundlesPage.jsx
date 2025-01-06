@@ -96,7 +96,7 @@ const BundlesPage = () => {
        const fetchBundles = async () => {
               setIsLoading(true);
               try {
-                     const response = await axios.get('https://bdev.elmanhag.shop/admin/bundle', {
+                     const response = await axios.get('https://bcknd.elmanhag.com/admin/bundle', {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -147,7 +147,7 @@ const BundlesPage = () => {
 
        const deleteBundle = async (bundleId, authToken) => {
               try {
-                     const response = await axios.delete(`https://bdev.elmanhag.shop/admin/bundle/delete/${bundleId}`, {
+                     const response = await axios.delete(`https://bcknd.elmanhag.com/admin/bundle/delete/${bundleId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },

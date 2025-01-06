@@ -14,7 +14,7 @@ const ComplaintsHistoryPage = () => {
        const fetchComplaintsHistory = async () => {
               setIsLoading(true)
               try {
-                     const response = await axios.get('https://bdev.elmanhag.shop/admin/complaint/history', {
+                     const response = await axios.get('https://bcknd.elmanhag.com/admin/complaint/history', {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },

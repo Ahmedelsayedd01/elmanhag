@@ -37,7 +37,7 @@ const LoginForm = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('https://bdev.elmanhag.shop/student/auth/login', {
+      const response = await fetch('https://bcknd.elmanhag.com/student/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

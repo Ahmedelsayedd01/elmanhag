@@ -47,7 +47,7 @@ const LoginAdmin = () => {
 
               setIsLoading(true)
               try {
-                     const response = await axios.post('https://bdev.elmanhag.shop/api/admin/auth/login', {
+                     const response = await axios.post('https://bcknd.elmanhag.com/api/admin/auth/login', {
                             email,
                             password,
                      });

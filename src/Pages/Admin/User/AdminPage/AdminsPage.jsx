@@ -31,7 +31,7 @@ const AdminsPage = () => {
        const fetchAdmins = async () => {
               setIsLoading(true);
               try {
-                     const response = await axios.get("https://bdev.elmanhag.shop/admin/admins", {
+                     const response = await axios.get("https://bcknd.elmanhag.com/admin/admins", {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -62,7 +62,7 @@ const AdminsPage = () => {
 
        const handleStatus = async (adminId, adminName, status) => {
               try {
-                     const response = await axios.put(`https://bdev.elmanhag.shop/admin/admins/status/${adminId}`, { status }, {
+                     const response = await axios.put(`https://bcknd.elmanhag.com/admin/admins/status/${adminId}`, { status }, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -96,7 +96,7 @@ const AdminsPage = () => {
        };
        const deleteAdmin = async (adminId, authToken) => {
               try {
-                     const response = await axios.delete(`https://bdev.elmanhag.shop/admin/admins/delete/${adminId}`, {
+                     const response = await axios.delete(`https://bcknd.elmanhag.com/admin/admins/delete/${adminId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },

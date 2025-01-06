@@ -1,4 +1,4 @@
-import React, { useRef, useState ,useEffect} from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import InputCustom from '../../../../Components/InputCustom';
 import { Button } from '../../../../Components/Button';
 import { useAuth } from '../../../../Context/Auth';
@@ -21,16 +21,16 @@ const AddPromoCodePage = () => {
   const [allBundles, setAllBundles] = useState([]); // Store all subjects initially
   const [promoCodeData, setPromoCodeData] = useState([]);
 
-  const [title,setTitle]=useState('')
+  const [title, setTitle] = useState('')
   const [valueType, setValueType] = useState([{ name: 'percentage' }, { name: 'value' }]);
-  const [value,setValue]=useState('')
+  const [value, setValue] = useState('')
   const [percentage, setPercentage] = useState('');
-  const [code,setCode]=useState('')
-  const [usage,setUsage]=useState('')
+  const [code, setCode] = useState('')
+  const [usage, setUsage] = useState('')
   const [usageTypeData, setUsageTypeData] = useState([{ name: 'unlimited' }, { name: 'fixed' }]);
-  const [userNumber,setUserNumber]=useState('')
-  const [activePromoCode,setActivePromoCode]=useState(0)
-  const [includeLive,setIncludeLive]=useState(0)
+  const [userNumber, setUserNumber] = useState('')
+  const [activePromoCode, setActivePromoCode] = useState(0)
+  const [includeLive, setIncludeLive] = useState(0)
 
   const [selectUsageType, setSelectUsageType] = useState('Select UsageType');
   const [selectUsageTypeName, setSelectUsageTypeName] = useState(null);
@@ -68,7 +68,7 @@ const AddPromoCodePage = () => {
 
     setPromoCodeData(StoragePromoCodeData);
     setCategoryData(StoragePromoCodeData.categories);
-     // Set both all subjects and initial subject data
+    // Set both all subjects and initial subject data
     setAllSubjects(StoragePromoCodeData.subjects);
     setSubjectData(StoragePromoCodeData.subjects); // Show all subjects initially
 
@@ -82,20 +82,20 @@ const AddPromoCodePage = () => {
 
     // If both semester and category are selected, filter by both
     if (semesterName && categoryId) {
-      filteredSubjects = filteredSubjects.filter(subject => 
-        subject.semester.toLowerCase() === semesterName.toLowerCase() && 
+      filteredSubjects = filteredSubjects.filter(subject =>
+        subject.semester.toLowerCase() === semesterName.toLowerCase() &&
         subject.category_id === categoryId
-      ) ;
+      );
     }
     // If only the semester is selected, filter by semester
     else if (semesterName) {
-      filteredSubjects = filteredSubjects.filter(subject => 
+      filteredSubjects = filteredSubjects.filter(subject =>
         subject.semester.toLowerCase() === semesterName.toLowerCase()
       );
     }
     // If only the category is selected, filter by category
     else if (categoryId) {
-      filteredSubjects = filteredSubjects.filter(subject => 
+      filteredSubjects = filteredSubjects.filter(subject =>
         subject.category_id === categoryId
       );
     }
@@ -108,16 +108,16 @@ const AddPromoCodePage = () => {
     let filteredBundles = allBundles;
 
     if (semesterName && categoryId) {
-      filteredBundles = filteredBundles.filter(bundle => 
-        bundle.semester.toLowerCase() === semesterName.toLowerCase() && 
+      filteredBundles = filteredBundles.filter(bundle =>
+        bundle.semester.toLowerCase() === semesterName.toLowerCase() &&
         bundle.category_id === categoryId
       );
     } else if (semesterName) {
-      filteredBundles = filteredBundles.filter(bundle => 
+      filteredBundles = filteredBundles.filter(bundle =>
         bundle.semester.toLowerCase() === semesterName.toLowerCase()
       );
     } else if (categoryId) {
-      filteredBundles = filteredBundles.filter(bundle => 
+      filteredBundles = filteredBundles.filter(bundle =>
         bundle.category_id === categoryId
       );
     }
@@ -213,7 +213,7 @@ const AddPromoCodePage = () => {
     // Filter subjects based on the new semester and existing category
     filterSubjects(selectedOptionName, selectCategoryId);
     filterBundles(selectedOptionName, selectCategoryId);
-    };
+  };
 
   const handleSelectCategory = (e) => {
     const inputElement = e.currentTarget.querySelector('.inputVal');
@@ -304,20 +304,20 @@ const AddPromoCodePage = () => {
   }, []);
 
   const handleClickOutside = (event) => {
-      if (dropdownValueTypeRef.current && !dropdownValueTypeRef.current.contains(event.target) &&
-          dropdownUsageTypeRef.current && !dropdownUsageTypeRef.current.contains(event.target)&&
-          dropdownSemesterRef.current &&  !dropdownSemesterRef.current.contains(event.target)&&
-          dropdownCategoryRef.current &&  !dropdownCategoryRef.current.contains(event.target)&&
-          dropdownBundleRef.current &&  ! dropdownBundleRef.current.contains(event.target)&&
-          dropdownSubjectRef.current &&  !dropdownSubjectRef.current.contains(event.target)
-      ) {
-        setOpenSelectValueType(false);
-        setOpenSelectUsageType(false);
-        setOpenSelectSemester(false);
-        setOpenSelectSubject(false);
-        setOpenSelectBundle(false);
-        setOpenSelectCategory(false)
-      }
+    if (dropdownValueTypeRef.current && !dropdownValueTypeRef.current.contains(event.target) &&
+      dropdownUsageTypeRef.current && !dropdownUsageTypeRef.current.contains(event.target) &&
+      dropdownSemesterRef.current && !dropdownSemesterRef.current.contains(event.target) &&
+      dropdownCategoryRef.current && !dropdownCategoryRef.current.contains(event.target) &&
+      dropdownBundleRef.current && !dropdownBundleRef.current.contains(event.target) &&
+      dropdownSubjectRef.current && !dropdownSubjectRef.current.contains(event.target)
+    ) {
+      setOpenSelectValueType(false);
+      setOpenSelectUsageType(false);
+      setOpenSelectSemester(false);
+      setOpenSelectSubject(false);
+      setOpenSelectBundle(false);
+      setOpenSelectCategory(false)
+    }
   };
 
   const handleGoBack = () => {
@@ -374,35 +374,35 @@ const AddPromoCodePage = () => {
     }
 
     // title, code, status, value, precentage, usage_type, usage, number_users
-        // subjects[], bundles[]
-      
+    // subjects[], bundles[]
+
     setIsLoading(true);
     try {
-    const formData = new FormData();
-     // Append the subjects array
-    selectSubjectId.forEach((subjectId, index) => {
-      formData.append(`subjects[${index}]`, subjectId);
-    });
-    // Append the bundles array
-    selectBundleId.forEach((bundleId, index) => {
-      formData.append(`bundles[${index}]`, bundleId);
-    });
-    formData.append('title', title);
-    formData.append('code', code);
-    formData.append('usage_type', selectUsageTypeName);
-    formData.append('usage', usage || 0);
-    // formData.append('number_users', userNumber);
-    formData.append('value', value || 0);
-    formData.append('precentage', percentage || 0);
-    formData.append('live', includeLive);
-    formData.append('status', activePromoCode);
+      const formData = new FormData();
+      // Append the subjects array
+      selectSubjectId.forEach((subjectId, index) => {
+        formData.append(`subjects[${index}]`, subjectId);
+      });
+      // Append the bundles array
+      selectBundleId.forEach((bundleId, index) => {
+        formData.append(`bundles[${index}]`, bundleId);
+      });
+      formData.append('title', title);
+      formData.append('code', code);
+      formData.append('usage_type', selectUsageTypeName);
+      formData.append('usage', usage || 0);
+      // formData.append('number_users', userNumber);
+      formData.append('value', value || 0);
+      formData.append('precentage', percentage || 0);
+      formData.append('live', includeLive);
+      formData.append('status', activePromoCode);
 
-    for (let pair of formData.entries()) {
-      console.log(pair[0]+ ', '+ pair[1]); 
-    }
-    
-    // try {
-        const response = await axios.post('https://bdev.elmanhag.shop/admin/promoCode/add', formData, {
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+      }
+
+      // try {
+      const response = await axios.post('https://bcknd.elmanhag.com/admin/promoCode/add', formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },
@@ -411,36 +411,36 @@ const AddPromoCodePage = () => {
         auth.toastSuccess('PromoCode added successfully!');
         handleGoBack();
       } else {
-              auth.toastError('Failed to add PromoCode.');
+        auth.toastError('Failed to add PromoCode.');
       }
-      } catch (error) {
-        console.log(error.response); // Log the full response for debugging
-        console.log(error.response.data.errors);
-        const errorMessages = error?.response?.data?.errors;
-        let errorMessageString = 'Error occurred';
+    } catch (error) {
+      console.log(error.response); // Log the full response for debugging
+      console.log(error.response.data.errors);
+      const errorMessages = error?.response?.data?.errors;
+      let errorMessageString = 'Error occurred';
       if (errorMessages) {
-              errorMessageString = Object.values(errorMessages).flat().join(' ');
+        errorMessageString = Object.values(errorMessages).flat().join(' ');
       }
       auth.toastError('Error', errorMessageString);
-      } finally {
+    } finally {
       setIsLoading(false);
-      }
+    }
   };
 
   return (
     <form className="w-full flex flex-col items-center justify-center gap-y-3" onSubmit={handleSubmit}>
-    <div className="w-full flex flex-wrap items-center justify-start gap-3">
-    <div className="lg:w-[30%] sm:w-full">
-        <DropDownMenu
-          ref={dropdownSemesterRef}
-          handleOpen={handleOpenSemester}
-          handleOpenOption={handleSelectSemester}
-          stateoption={selectSemester}
-          openMenu={openSelectSemester}
-          options={semesterData}
-        />
-      </div> 
-      <div className="lg:w-[30%] sm:w-full">
+      <div className="w-full flex flex-wrap items-center justify-start gap-3">
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownSemesterRef}
+            handleOpen={handleOpenSemester}
+            handleOpenOption={handleSelectSemester}
+            stateoption={selectSemester}
+            openMenu={openSelectSemester}
+            options={semesterData}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
           <DropDownMenu
             ref={dropdownCategoryRef}
             handleOpen={handleOpenCategory}
@@ -474,44 +474,44 @@ const AddPromoCodePage = () => {
             name="Bundles"
           />
         </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <InputCustom
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <InputCustom
-          type="text"
-          placeholder="Code"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-        />
-      </div>
-      <div className="lg:w-[30%] sm:w-full">
-        <DropDownMenu
-          ref={dropdownUsageTypeRef}
-          handleOpen={handleOpenUsageType}
-          handleOpenOption={handleSelectUsageType}
-          stateoption={selectUsageType}
-          openMenu={openSelectUsageType}
-          options={usageTypeData}
-        />
-      </div> 
-      {/* Conditionally Render Usage Input */}
-      {selectUsageType === 'fixed' && (   
-          <div className="lg:w-[30%] sm:w-full">
+        <div className="lg:w-[30%] sm:w-full">
           <InputCustom
             type="text"
-            placeholder="Usage Number"
-            value={usage}
-            onChange={(e) => setUsage(e.target.value)}
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
-      )}
-      {/* <div className="lg:w-[30%] sm:w-full">
+        <div className="lg:w-[30%] sm:w-full">
+          <InputCustom
+            type="text"
+            placeholder="Code"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+          />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <DropDownMenu
+            ref={dropdownUsageTypeRef}
+            handleOpen={handleOpenUsageType}
+            handleOpenOption={handleSelectUsageType}
+            stateoption={selectUsageType}
+            openMenu={openSelectUsageType}
+            options={usageTypeData}
+          />
+        </div>
+        {/* Conditionally Render Usage Input */}
+        {selectUsageType === 'fixed' && (
+          <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+              type="text"
+              placeholder="Usage Number"
+              value={usage}
+              onChange={(e) => setUsage(e.target.value)}
+            />
+          </div>
+        )}
+        {/* <div className="lg:w-[30%] sm:w-full">
         <InputCustom
           type="text"
           placeholder="Number Of Users"
@@ -519,7 +519,7 @@ const AddPromoCodePage = () => {
           onChange={(e) => setUserNumber(e.target.value)}
         />
       </div> */}
-      {/* <div className="lg:w-[30%] sm:w-full">
+        {/* <div className="lg:w-[30%] sm:w-full">
         <InputCustom
           type="text"
           placeholder="Value"
@@ -527,65 +527,65 @@ const AddPromoCodePage = () => {
           onChange={(e) => setValue(e.target.value)}
         />
       </div> */}
-      <div className="lg:w-[30%] sm:w-full">
-        <DropDownMenu
-          ref={dropdownValueTypeRef}
-          handleOpen={handleOpenValueType}
-          handleOpenOption={handleSelectValueType}
-          stateoption={selectValueType}
-          openMenu={openSelectValueType}
-          options={valueType}
-        />
-      </div> 
-      {selectValueType === 'value' && (
         <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            placeholder="Value"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+          <DropDownMenu
+            ref={dropdownValueTypeRef}
+            handleOpen={handleOpenValueType}
+            handleOpenOption={handleSelectValueType}
+            stateoption={selectValueType}
+            openMenu={openSelectValueType}
+            options={valueType}
           />
         </div>
-      )}
+        {selectValueType === 'value' && (
+          <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+              placeholder="Value"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+          </div>
+        )}
 
-      {selectValueType === 'percentage' && (
-        <div className="lg:w-[30%] sm:w-full">
-          <InputCustom
-            placeholder="Percentage"
-            value={percentage}
-            onChange={(e) => setPercentage(e.target.value)}
-          />
+        {selectValueType === 'percentage' && (
+          <div className="lg:w-[30%] sm:w-full">
+            <InputCustom
+              placeholder="Percentage"
+              value={percentage}
+              onChange={(e) => setPercentage(e.target.value)}
+            />
+          </div>
+        )}
+
+        <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+          <span className="text-2xl text-thirdColor font-medium">Include Live:</span>
+          <div>
+            <CheckBox checked={includeLive} handleClick={handleActiveLive} />
+          </div>
         </div>
-      )}
-      
-      <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
-            <span className="text-2xl text-thirdColor font-medium">Include Live:</span>
-            <div>
-              <CheckBox checked={includeLive} handleClick={handleActiveLive} />
-            </div>
+
+        <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+          <span className="text-2xl text-thirdColor font-medium">Active Promo Code:</span>
+          <div>
+            <CheckBox checked={activePromoCode} handleClick={handleClick} />
+          </div>
+        </div>
+
       </div>
-      
-      <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
-            <span className="text-2xl text-thirdColor font-medium">Active Promo Code:</span>
-            <div>
-              <CheckBox checked={activePromoCode} handleClick={handleClick} />
-            </div>
-      </div>
-   
-    </div>
-    {/* Buttons */}
-    <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
+      {/* Buttons */}
+      <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
         <div className="flex items-center justify-center w-72">
-              <Button
-                      type="submit"
-                      Text="Done"
-                      BgColor="bg-mainColor"
-                      Color="text-white"
-                      Width="full"
-                      Size="text-2xl"
-                      px="px-28"
-                      rounded="rounded-2xl"
-                      // stateLoding={isLoading}
-              />
+          <Button
+            type="submit"
+            Text="Done"
+            BgColor="bg-mainColor"
+            Color="text-white"
+            Width="full"
+            Size="text-2xl"
+            px="px-28"
+            rounded="rounded-2xl"
+          // stateLoding={isLoading}
+          />
         </div>
         <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
       </div>

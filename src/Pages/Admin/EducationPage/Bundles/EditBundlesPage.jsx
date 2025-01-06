@@ -106,7 +106,7 @@ const EditBundlesPage = ({ number }) => {
   const fetchEdite = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`https://bdev.elmanhag.shop/admin/bundle/${number}`, {
+      const response = await axios.get(`https://bcknd.elmanhag.com/admin/bundle/${number}`, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'multipart/form-data',
@@ -170,7 +170,7 @@ const EditBundlesPage = ({ number }) => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        "https://bdev.elmanhag.shop/admin/live",
+        "https://bcknd.elmanhag.com/admin/live",
         {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,
@@ -487,7 +487,7 @@ const EditBundlesPage = ({ number }) => {
 
     try {
       const response = await axios.post(
-        `https://bdev.elmanhag.shop/admin/bundle/update/${bundleId}`,
+        `https://bcknd.elmanhag.com/admin/bundle/update/${bundleId}`,
         formData,
         {
           headers: {

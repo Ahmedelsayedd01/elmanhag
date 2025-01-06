@@ -27,7 +27,7 @@ const EditAffiliatePaymentMethodLayout = () => {
               const fetchEdit = async () => {
                      setIsLoading(true);
                      try {
-                            const response = await axios.get(`https://bdev.elmanhag.shop/admin/affilate/affilateMethod/${paymentMethodId}`, {
+                            const response = await axios.get(`https://bcknd.elmanhag.com/admin/affilate/affilateMethod/${paymentMethodId}`, {
                                    headers: {
                                           Authorization: `Bearer ${auth.user.token}`,
                                    },
@@ -110,7 +110,7 @@ const EditAffiliatePaymentMethodLayout = () => {
                      }
 
                      const response = await axios.post(
-                            `https://bdev.elmanhag.shop/admin/affilate/affilateMethodUpdate/${paymentMethodId}`,
+                            `https://bcknd.elmanhag.com/admin/affilate/affilateMethodUpdate/${paymentMethodId}`,
                             formData,
                             {
                                    headers: {

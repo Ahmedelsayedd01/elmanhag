@@ -22,7 +22,7 @@ const AddCountryPage = () => {
         const isChecked = e.target.checked;
         setCountryActive(isChecked ? 1 : 0);
     };
-    
+
     const handleSubmitAdd = async (event) => {
         event.preventDefault();
 
@@ -45,7 +45,7 @@ const AddCountryPage = () => {
 
             console.log('Submitting data:', requestData);
 
-            const response = await axios.post('https://bdev.elmanhag.shop/admin/Settings/countries/add', requestData, {
+            const response = await axios.post('https://bcknd.elmanhag.com/admin/Settings/countries/add', requestData, {
                 headers: {
                     Authorization: `Bearer ${auth.user.token}`,
                 },
@@ -100,10 +100,10 @@ const AddCountryPage = () => {
                         />
                     </div>
                     <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-ful">
-                            <span className="text-2xl text-thirdColor font-medium">Active:</span>
-                            <div>
-                                <CheckBox handleClick={handleClick} checked={countryActive}/>
-                            </div>
+                        <span className="text-2xl text-thirdColor font-medium">Active:</span>
+                        <div>
+                            <CheckBox handleClick={handleClick} checked={countryActive} />
+                        </div>
                     </div>
                 </div>
                 <div className="flex gap-4 mt-6">

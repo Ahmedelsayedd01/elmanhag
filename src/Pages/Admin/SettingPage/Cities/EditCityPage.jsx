@@ -42,7 +42,7 @@ const EditCityPage = () => {
     useEffect(() => {
         const fetchCountries = async () => {
             try {
-                const countriesResponse = await axios.get('https://bdev.elmanhag.shop/admin/Settings/countries', {
+                const countriesResponse = await axios.get('https://bcknd.elmanhag.com/admin/Settings/countries', {
                     headers: {
                         Authorization: `Bearer ${auth.user.token}`,
                     },
@@ -104,7 +104,7 @@ const EditCityPage = () => {
                 country_id: countryId,
             };
 
-            const response = await axios.put(`https://bdev.elmanhag.shop/admin/Settings/cities/update/${cityContent.id}`, requestData, {
+            const response = await axios.put(`https://bcknd.elmanhag.com/admin/Settings/cities/update/${cityContent.id}`, requestData, {
                 headers: {
                     Authorization: `Bearer ${auth.user.token}`,
                 },

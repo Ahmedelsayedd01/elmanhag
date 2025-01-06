@@ -22,7 +22,7 @@ const CategoriesPage = () => {
        const fetchCategories = async () => {
               setIsLoading(true);
               try {
-                     const response = await axios.get('https://bdev.elmanhag.shop/admin/category', {
+                     const response = await axios.get('https://bcknd.elmanhag.com/admin/category', {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -68,7 +68,7 @@ const CategoriesPage = () => {
 
        const deleteCategories = async (categoriesId, authToken) => {
               try {
-                     const response = await axios.delete(`https://bdev.elmanhag.shop/admin/category/delete/${categoriesId}`, {
+                     const response = await axios.delete(`https://bcknd.elmanhag.com/admin/category/delete/${categoriesId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },

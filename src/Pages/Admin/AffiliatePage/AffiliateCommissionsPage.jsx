@@ -26,7 +26,7 @@ const AffiliateCommissionsPage = () => {
        const fetchCommissions = async () => {
               setIsLoading(true);
               try {
-                     const response = await axios.get('https://bdev.elmanhag.shop/admin/affilate/commession', {
+                     const response = await axios.get('https://bcknd.elmanhag.com/admin/affilate/commession', {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -76,7 +76,7 @@ const AffiliateCommissionsPage = () => {
 
        const handleSave = async () => {
               try {
-                     const responce = await axios.put('https://bdev.elmanhag.shop/admin/affilate/addCommession',
+                     const responce = await axios.put('https://bcknd.elmanhag.com/admin/affilate/addCommession',
                             {
                                    type: commissionsType,
                                    amount: commissionsValue,

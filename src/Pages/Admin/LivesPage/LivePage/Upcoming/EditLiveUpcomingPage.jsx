@@ -83,7 +83,7 @@ const LiveUpcomingPage = () => {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          "https://bdev.elmanhag.shop/admin/live",
+          "https://bcknd.elmanhag.com/admin/live",
           {
             headers: {
               Authorization: `Bearer ${auth.user.token}`,
@@ -118,7 +118,7 @@ const LiveUpcomingPage = () => {
     const fetchEdit = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(`https://bdev.elmanhag.shop/admin/live/${liveId}`, {
+        const response = await axios.get(`https://bcknd.elmanhag.com/admin/live/${liveId}`, {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,
           },
@@ -600,7 +600,7 @@ const LiveUpcomingPage = () => {
 
       // Send the PUT request with JSON data
       const response = await axios.put(
-        `https://bdev.elmanhag.shop/admin/live/update/${liveId}`, // liveId from useParams
+        `https://bcknd.elmanhag.com/admin/live/update/${liveId}`, // liveId from useParams
         payload, // Send payload as JSON
         {
           headers: {

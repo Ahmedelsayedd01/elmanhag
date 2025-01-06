@@ -94,7 +94,7 @@ const AddRecordedLivePage = () => {
                      setIsLoading(true);
                      try {
                             const response = await axios.get(
-                                   "https://bdev.elmanhag.shop/admin/live",
+                                   "https://bcknd.elmanhag.com/admin/live",
                                    {
                                           headers: {
                                                  Authorization: `Bearer ${auth.user.token}`,
@@ -534,7 +534,7 @@ const AddRecordedLivePage = () => {
                      // // Handle education_id appropriately
                      // formData.append('education_id', selectEducationId === 'notfound' ? ' ' : selectEducationId);
 
-                     const response = await axios.post(' https://bdev.elmanhag.shop/admin/recordedLive/add', formData, {
+                     const response = await axios.post(' https://bcknd.elmanhag.com/admin/recordedLive/add', formData, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },

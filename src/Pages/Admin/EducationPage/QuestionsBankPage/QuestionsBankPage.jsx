@@ -27,7 +27,7 @@ const QuestionsBankPage = () => {
        const fetchQuestions = async () => {
               setIsLoading(true);
               try {
-                     const response = await axios.get('https://bdev.elmanhag.shop/admin/question', {
+                     const response = await axios.get('https://bcknd.elmanhag.com/admin/question', {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -96,7 +96,7 @@ const QuestionsBankPage = () => {
 
        const deleteQuestion = async (questionId, authToken) => {
               try {
-                     const response = await axios.delete(`https://bdev.elmanhag.shop/admin/question/delete/${questionId}`, {
+                     const response = await axios.delete(`https://bcknd.elmanhag.com/admin/question/delete/${questionId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },

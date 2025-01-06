@@ -71,7 +71,7 @@ const EditSubjectPage = () => {
   const subjectEditData = useContext(SubjectEditContext);
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('https://bdev.elmanhag.shop/admin/category', {
+      const response = await axios.get('https://bcknd.elmanhag.com/admin/category', {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },
@@ -87,7 +87,7 @@ const EditSubjectPage = () => {
 
   const fetchSubjects = async () => {
     try {
-      const response = await axios.get('https://bdev.elmanhag.shop/admin/subject', {
+      const response = await axios.get('https://bcknd.elmanhag.com/admin/subject', {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },
@@ -275,7 +275,7 @@ const EditSubjectPage = () => {
     formData.append('status', SubjectActive);
     try {
 
-      const response = await axios.post(`https://bdev.elmanhag.shop/admin/subject/update/${path}`, formData, {
+      const response = await axios.post(`https://bcknd.elmanhag.com/admin/subject/update/${path}`, formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'multipart/form-data',

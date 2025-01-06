@@ -99,7 +99,7 @@ const AddRevisionPage = () => {
        const fetchCategoryAndSubjects = async () => {
               setIsLoading(true)
               try {
-                     const response = await axios.get('https://bdev.elmanhag.shop/admin/subject', {
+                     const response = await axios.get('https://bcknd.elmanhag.com/admin/subject', {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -554,7 +554,7 @@ const AddRevisionPage = () => {
               try {
 
 
-                     const response = await axios.post(' https://bdev.elmanhag.shop/admin/revisions/add', formData, {
+                     const response = await axios.post(' https://bcknd.elmanhag.com/admin/revisions/add', formData, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },

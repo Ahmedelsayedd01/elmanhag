@@ -65,7 +65,7 @@ const AddSubjectPage = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('https://bdev.elmanhag.shop/admin/category', {
+        const response = await axios.get('https://bcknd.elmanhag.com/admin/category', {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,
           },
@@ -81,7 +81,7 @@ const AddSubjectPage = () => {
 
     const fetchSubjects = async () => {
       try {
-        const response = await axios.get('https://bdev.elmanhag.shop/admin/subject', {
+        const response = await axios.get('https://bcknd.elmanhag.com/admin/subject', {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,
           },
@@ -231,7 +231,7 @@ const AddSubjectPage = () => {
       formData.append('cover_photo', subjectCoverFile);
       formData.append('status', SubjectActive);
 
-      const response = await axios.post('https://bdev.elmanhag.shop/admin/subject/add', formData, {
+      const response = await axios.post('https://bcknd.elmanhag.com/admin/subject/add', formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'multipart/form-data',

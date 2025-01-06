@@ -33,7 +33,7 @@ const RecordedLivePage = () => {
               setIsLoading(true);
               try {
                      const response = await axios.get(
-                            "https://bdev.elmanhag.shop/admin/recordedLive",
+                            "https://bcknd.elmanhag.com/admin/recordedLive",
                             {
                                    headers: {
                                           Authorization: `Bearer ${auth.user.token}`,
@@ -74,7 +74,7 @@ const RecordedLivePage = () => {
        const deleteLivesRecorded = async (livesRecordedId, authToken) => {
               try {
                      const response = await axios.delete(
-                            `https://bdev.elmanhag.shop/admin/recordedLive/delete/${livesRecordedId}`,
+                            `https://bcknd.elmanhag.com/admin/recordedLive/delete/${livesRecordedId}`,
                             {
                                    headers: {
                                           Authorization: `Bearer ${authToken}`,

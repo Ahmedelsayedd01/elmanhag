@@ -40,7 +40,7 @@ const AddCityPage = () => {
     }, []);
 
     const handleGoBack = () => {
-      navigate(-1, { replace: true });
+        navigate(-1, { replace: true });
     };
 
     // Handle opening and closing of dropdown menu
@@ -91,13 +91,13 @@ const AddCityPage = () => {
             const requestData = {
                 name: nameEn,
                 ar_name: nameAr,
-                status:cityActive,
+                status: cityActive,
                 country_id: countryId,
             };
 
             console.log('Submitting data:', requestData);
 
-            const response = await axios.post('https://bdev.elmanhag.shop/admin/Settings/cities/add', requestData, {
+            const response = await axios.post('https://bcknd.elmanhag.com/admin/Settings/cities/add', requestData, {
                 headers: {
                     Authorization: `Bearer ${auth.user.token}`,
                 },
@@ -113,18 +113,18 @@ const AddCityPage = () => {
 
             }
         } catch (error) {
-          console.error('Error adding country:', error?.response?.data?.errors || 'Network error');
+            console.error('Error adding country:', error?.response?.data?.errors || 'Network error');
 
-          const errorMessages = error?.response?.data?.errors;
-          let errorMessageString = 'Error occurred';
+            const errorMessages = error?.response?.data?.errors;
+            let errorMessageString = 'Error occurred';
 
-          if (errorMessages) {
-              errorMessageString = Object.values(errorMessages).flat().join(' ');
-          }
+            if (errorMessages) {
+                errorMessageString = Object.values(errorMessages).flat().join(' ');
+            }
 
-          auth.toastError('Error', errorMessageString);
+            auth.toastError('Error', errorMessageString);
         } finally {
-          setLoading(false);
+            setLoading(false);
         }
     };
 

@@ -397,7 +397,7 @@ const AddLessonPage = () => {
   //     return;
   //   } else {
   //     try {
-  //       const response = await axios.post(`https://bdev.elmanhag.shop/admin/lesson/add/${chapterID}`, dataArr, {
+  //       const response = await axios.post(`https://bcknd.elmanhag.com/admin/lesson/add/${chapterID}`, dataArr, {
   //         headers: {
   //           Authorization: `Bearer ${auth.user.token}`,
   //           // 'Content-Type': 'multipart/form-data',
@@ -503,7 +503,7 @@ const AddLessonPage = () => {
     formData.append('drip_content', lessonDripContent);
 
     try {
-      const response = await axios.post(`https://bdev.elmanhag.shop/admin/lesson/add/${chapterID}`, formData, {
+      const response = await axios.post(`https://bcknd.elmanhag.com/admin/lesson/add/${chapterID}`, formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'multipart/form-data',

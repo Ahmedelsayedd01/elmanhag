@@ -27,7 +27,7 @@ const VideoIssuesPage = () => {
   const fetchVideoIssues = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get("https://bdev.elmanhag.shop/admin/Settings/videoIssues", {
+      const response = await axios.get("https://bcknd.elmanhag.com/admin/Settings/videoIssues", {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },
@@ -50,7 +50,7 @@ const VideoIssuesPage = () => {
 
   const handleStatus = async (videoIssuesId, videoIssuesTitle, status) => {
     try {
-      const response = await axios.put(`https://bdev.elmanhag.shop/admin/Settings/videoIssues/status/${videoIssuesId}`, { status }, {
+      const response = await axios.put(`https://bcknd.elmanhag.com/admin/Settings/videoIssues/status/${videoIssuesId}`, { status }, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },
@@ -90,7 +90,7 @@ const VideoIssuesPage = () => {
 
   const deleteVideoIssues = async (videoIssuesId, authToken) => {
     try {
-      const response = await axios.delete(`https://bdev.elmanhag.shop/admin/Settings/videoIssues/delete/${videoIssuesId}`, {
+      const response = await axios.delete(`https://bcknd.elmanhag.com/admin/Settings/videoIssues/delete/${videoIssuesId}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
