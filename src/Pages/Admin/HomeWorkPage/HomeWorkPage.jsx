@@ -194,7 +194,7 @@ const HomeWorkPage = () => {
       const fetchHomeWork = async () => {
             setIsLoading(true);
             try {
-                  const response = await axios.get(' https://bcknd.elmanhag.com/admin/homework', {
+                  const response = await axios.get(' http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/homework', {
                         headers: {
                               Authorization: `Bearer ${auth.user.token}`,
                         },
@@ -244,7 +244,7 @@ const HomeWorkPage = () => {
 
       const deleteHomeWork = async (homeWorkId, authToken) => {
             try {
-                  const response = await axios.delete(`https://bcknd.elmanhag.com/admin/homework/delete/${homeWorkId}`, {
+                  const response = await axios.delete(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/homework/delete/${homeWorkId}`, {
                         headers: {
                               Authorization: `Bearer ${authToken}`,
                         },

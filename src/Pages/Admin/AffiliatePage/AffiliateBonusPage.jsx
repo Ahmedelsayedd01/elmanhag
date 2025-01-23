@@ -24,7 +24,7 @@ const AffiliateBonusPage = () => {
        const fetchBonus = async () => {
               setIsLoading(true);
               try {
-                     const response = await axios.get('https://bcknd.elmanhag.com/admin/affilate/bonus', {
+                     const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/affilate/bonus', {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -69,7 +69,7 @@ const AffiliateBonusPage = () => {
 
        const deleteBonus = async (bonusId, authToken) => {
               try {
-                     const response = await axios.delete(`https://bcknd.elmanhag.com/admin/affilate/bonus/delete/${bonusId}`, {
+                     const response = await axios.delete(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/affilate/bonus/delete/${bonusId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },

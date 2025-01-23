@@ -45,7 +45,7 @@ const EditParentRelationPage = () => {
                 ar_name: nameAr,
             };
 
-            const response = await axios.put(`https://bcknd.elmanhag.com/admin/Settings/relation/update/${relationContent.id}`, requestData, {
+            const response = await axios.put(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/Settings/relation/update/${relationContent.id}`, requestData, {
                 headers: {
                     Authorization: `Bearer ${auth.user.token}`,
                 },

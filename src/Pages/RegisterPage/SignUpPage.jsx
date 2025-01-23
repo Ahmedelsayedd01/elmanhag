@@ -88,7 +88,7 @@ const SignUpPage = () => {
 
     const fetchSupData = async () => {
       try {
-        const response = await axios.get('https://bcknd.elmanhag.com/student/setting/view', {});
+        const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/setting/view', {});
         if (response.status === 200) {
           setCountries(response.data.country)
           setAllCities(response.data.city)
@@ -572,7 +572,7 @@ const SignUpPage = () => {
     try {
       const parentEmailObj = parentEmail ? parentEmail : parentPhone + '@elmanhag.com';
 
-      const response = await axios.post('https://bcknd.elmanhag.com/student/auth/signup/create', {
+      const response = await axios.post('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/auth/signup/create', {
         'name': studentName,
         'phone': studentPhone,
         'email': studentEmail,

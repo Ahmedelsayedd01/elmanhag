@@ -18,7 +18,7 @@ const AllLiveUnitsPage = ({ subjectId }) => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        'https://bcknd.elmanhag.com/student/mySubject/chapter/view',
+        'http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/mySubject/chapter/view',
         { subject_id: subjectId },
         {
           headers: {
@@ -46,7 +46,7 @@ const AllLiveUnitsPage = ({ subjectId }) => {
   const fetchSubjects = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('https://bcknd.elmanhag.com/student/recorded_live',
+      const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/recorded_live',
         {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,

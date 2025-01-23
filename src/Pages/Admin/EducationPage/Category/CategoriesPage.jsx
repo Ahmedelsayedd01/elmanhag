@@ -22,7 +22,7 @@ const CategoriesPage = () => {
        const fetchCategories = async () => {
               setIsLoading(true);
               try {
-                     const response = await axios.get('https://bcknd.elmanhag.com/admin/category', {
+                     const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/category', {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -68,7 +68,7 @@ const CategoriesPage = () => {
 
        const deleteCategories = async (categoriesId, authToken) => {
               try {
-                     const response = await axios.delete(`https://bcknd.elmanhag.com/admin/category/delete/${categoriesId}`, {
+                     const response = await axios.delete(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/category/delete/${categoriesId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },

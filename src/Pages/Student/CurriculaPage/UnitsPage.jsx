@@ -18,7 +18,7 @@ const UnitsPage = ({ subjectId }) => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        'https://bcknd.elmanhag.com/student/mySubject/chapter/view',
+        'http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/mySubject/chapter/view',
         { subject_id: subjectId },
         {
           headers: {

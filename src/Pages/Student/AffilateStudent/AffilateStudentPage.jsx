@@ -52,7 +52,7 @@ const AffilateStudentPage = () => {
     setIsLoading(true); // Set loading state when fetching the code
     try {
       const response = await axios.post(
-        'https://bcknd.elmanhag.com/api/createAffilate',
+        'http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/api/createAffilate',
         { user_id: userId },
         {
           headers: {

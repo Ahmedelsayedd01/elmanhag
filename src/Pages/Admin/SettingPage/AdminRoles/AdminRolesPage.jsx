@@ -31,7 +31,7 @@ const AdminRolesPage = () => {
        const fetchRoles = async () => {
               setIsLoading(true);
               try {
-                     const response = await axios.get("https://bcknd.elmanhag.com/admin/adminRole", {
+                     const response = await axios.get("http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/adminRole", {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -75,7 +75,7 @@ const AdminRolesPage = () => {
        };
        const deleteRole = async (roleId, authToken) => {
               try {
-                     const response = await axios.delete(`https://bcknd.elmanhag.com/admin/adminRole/delete/${roleId}`, {
+                     const response = await axios.delete(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/adminRole/delete/${roleId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },

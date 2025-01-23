@@ -53,7 +53,7 @@ const EditCountryPage = () => {
                 status: countryActive,
             };
 
-            const response = await axios.put(`https://bcknd.elmanhag.com/admin/Settings/countries/update/${countryData.id}`, requestData, {
+            const response = await axios.put(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/Settings/countries/update/${countryData.id}`, requestData, {
                 headers: {
                     Authorization: `Bearer ${auth.user.token}`,
                 },

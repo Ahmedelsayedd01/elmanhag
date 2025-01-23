@@ -34,7 +34,7 @@ const SignupForm = () => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await fetch('https://bcknd.elmanhag.com/student/setting/view');
+        const response = await fetch('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/setting/view');
         const data = await response.json();
         setCountries(data.country || []);
         setCities(data.city || []);
@@ -80,7 +80,7 @@ const SignupForm = () => {
     });
 
     try {
-      const response = await fetch('https://bcknd.elmanhag.com/student/auth/signup/create', {
+      const response = await fetch('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/auth/signup/create', {
         method: 'POST',
         body: formDataToSubmit,
       });

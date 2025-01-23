@@ -41,7 +41,7 @@ const SignUpAffilatePage = () => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await fetch('https://bcknd.elmanhag.com/student/setting/view');
+        const response = await fetch('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/setting/view');
         const data = await response.json();
         console.log(data)
         setCountries(data.country || []);
@@ -159,7 +159,7 @@ const SignUpAffilatePage = () => {
     }
     console.log(data)
     try {
-      const response = await axios.post('https://bcknd.elmanhag.com/affilate/auth/signup', data);
+      const response = await axios.post('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/affilate/auth/signup', data);
 
       if (response.status === 200) {
         console.log(response)

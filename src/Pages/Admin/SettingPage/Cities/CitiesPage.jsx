@@ -16,7 +16,7 @@ const CitiesPage = () => {
 
   const fetchCities = async () => {
     try {
-      const response = await axios.get('https://bcknd.elmanhag.com/admin/Settings/cities', {
+      const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/Settings/cities', {
         headers: {
           Authorization: `Bearer ${auth.user.token}`
         }
@@ -32,7 +32,7 @@ const CitiesPage = () => {
 
   const fetchCountries = async () => {
     try {
-      const response = await axios.get('https://bcknd.elmanhag.com/admin/Settings/countries', {
+      const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/Settings/countries', {
         headers: {
           Authorization: `Bearer ${auth.user.token}`
         }
@@ -76,7 +76,7 @@ const CitiesPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`https://bcknd.elmanhag.com/admin/Settings/cities/delete/${id}`, {
+      const response = await axios.delete(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/Settings/cities/delete/${id}`, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`
         }

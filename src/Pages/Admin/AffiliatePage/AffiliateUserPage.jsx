@@ -92,7 +92,7 @@ const AffiliateUserPage = () => {
        const fetchUser = async () => {
               setIsLoading(true);
               try {
-                     const response = await axios.get('https://bcknd.elmanhag.com/admin/affilate', {
+                     const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/affilate', {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -143,7 +143,7 @@ const AffiliateUserPage = () => {
        };
        const blockUser = async (userId, authToken) => {
               try {
-                     const response = await axios.put(`https://bcknd.elmanhag.com/admin/affilate/banned/${userId}`, {}, {
+                     const response = await axios.put(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/affilate/banned/${userId}`, {}, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },
@@ -178,7 +178,7 @@ const AffiliateUserPage = () => {
 
        const unblockUser = async (userId, authToken) => {
               try {
-                     const response = await axios.put(`https://bcknd.elmanhag.com/admin/affilate/unblock/${userId}`, {}, {
+                     const response = await axios.put(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/affilate/unblock/${userId}`, {}, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },

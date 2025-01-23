@@ -36,7 +36,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
       setIsLoading(true);
       try {
         const response = await axios.post(
-          'https://bcknd.elmanhag.com/student/chapter/lesson/view',
+          'http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/chapter/lesson/view',
           {
             'subject_id': subjectId,
             'lesson_id': lessonId,
@@ -135,7 +135,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
   const fetchProblemList = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('https://bcknd.elmanhag.com/student/issues',
+      const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/issues',
         {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,
@@ -189,7 +189,7 @@ const LessonsPage = ({ subjectId, lessonId }) => {
         console.log(`${key}: ${value}`);
       }
 
-      const response = await axios.post('https://bcknd.elmanhag.com/student/issues', formData, {
+      const response = await axios.post('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/issues', formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'multipart/form-data',

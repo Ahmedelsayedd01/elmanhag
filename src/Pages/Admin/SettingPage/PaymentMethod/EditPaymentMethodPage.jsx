@@ -93,7 +93,7 @@ const EditPaymentMethodPage = () => {
             formData.append('status', paymentActive);
 
             const response = await axios.post(
-                `https://bcknd.elmanhag.com/admin/Settings/paymentMethods/update/${paymentContent.id}`,
+                `http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/Settings/paymentMethods/update/${paymentContent.id}`,
                 formData, // Empty body since we are using query params
                 {
                     headers: {

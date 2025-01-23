@@ -27,7 +27,7 @@ const QuestionIssuesPage = () => {
   const fetchQuestionIssues = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get("https://bcknd.elmanhag.com/admin/Settings/questionIssues", {
+      const response = await axios.get("http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/Settings/questionIssues", {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },
@@ -50,7 +50,7 @@ const QuestionIssuesPage = () => {
 
   const handleStatus = async (questionIssuesId, questionIssuesTitle, status) => {
     try {
-      const response = await axios.put(`https://bcknd.elmanhag.com/admin/Settings/questionIssues/status/${questionIssuesId}`, { status }, {
+      const response = await axios.put(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/Settings/questionIssues/status/${questionIssuesId}`, { status }, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },
@@ -90,7 +90,7 @@ const QuestionIssuesPage = () => {
 
   const deleteQuestionIssues = async (questionIssuesId, authToken) => {
     try {
-      const response = await axios.delete(`https://bcknd.elmanhag.com/admin/Settings/questionIssues/delete/${questionIssuesId}`, {
+      const response = await axios.delete(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/Settings/questionIssues/delete/${questionIssuesId}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },

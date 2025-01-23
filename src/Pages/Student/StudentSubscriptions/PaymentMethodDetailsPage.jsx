@@ -154,7 +154,7 @@ const PaymentMethodDetailsPage = () => {
         // Now formData is ready to be sent
 
 
-        const response = await axios.post('https://bcknd.elmanhag.com/student/order/place', formData, {
+        const response = await axios.post('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/order/place', formData, {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,
             'Content-Type': 'multipart/form-data',
@@ -221,7 +221,7 @@ const PaymentMethodDetailsPage = () => {
     //     console.log('Constructed chargeItems:', chargeItems);
 
     //     // Send request to Fawry API
-    //     const response = await axios.post('https://bcknd.elmanhag.com/api/pay-at-fawry', {
+    //     const response = await axios.post('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/api/pay-at-fawry', {
     //       chargeItems,
     //       "amount" :price
     //     }, {
@@ -272,7 +272,7 @@ const PaymentMethodDetailsPage = () => {
 
         // Send request to the API
         const response = await axios.post(
-          "https://bcknd.elmanhag.com/api/pay-at-fawry",
+          "http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/api/pay-at-fawry",
           {
             chargeItems: chargeItems, // Pass chargeItems as an array of objects
             amount: price,
@@ -335,7 +335,7 @@ const PaymentMethodDetailsPage = () => {
   const handleDone = async () => {
     try {
       const merchantNumber = localStorage.getItem('merchantNumber');
-      const response = await axios.post('https://bcknd.elmanhag.com/api/fawry/check-status',
+      const response = await axios.post('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/api/fawry/check-status',
         { "merchantRefNum": merchantNumber }
         , {
           headers: {

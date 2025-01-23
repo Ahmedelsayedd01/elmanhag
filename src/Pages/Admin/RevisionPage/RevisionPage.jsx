@@ -29,7 +29,7 @@ const RevisionPage = () => {
               setIsLoading(true);
               try {
                      const response = await axios.get(
-                            "https://bcknd.elmanhag.com/admin/revisions",
+                            "http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/revisions",
                             {
                                    headers: {
                                           Authorization: `Bearer ${auth.user.token}`,
@@ -70,7 +70,7 @@ const RevisionPage = () => {
        const deleteLivesRecorded = async (livesRecordedId, authToken) => {
               try {
                      const response = await axios.delete(
-                            `https://bcknd.elmanhag.com/admin/revisions/delete/${livesRecordedId}`,
+                            `http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/revisions/delete/${livesRecordedId}`,
                             {
                                    headers: {
                                           Authorization: `Bearer ${authToken}`,

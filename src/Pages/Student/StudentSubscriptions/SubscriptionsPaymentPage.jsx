@@ -21,7 +21,7 @@
 //   const fetchPlansPayment = async () => {
 //     setIsLoading(true);
 //     try {
-//       const response = await axios.get('https://bcknd.elmanhag.com/student/paymentMethods', {
+//       const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/paymentMethods', {
 //         headers: {
 //           Authorization: `Bearer ${auth.user.token}`,
 //           'Content-Type': 'application/json',
@@ -101,7 +101,7 @@
 //         for (let pair of formData.entries()) {
 //           console.log(pair[0]+ ', '+ pair[1]); 
 //         }
-//         const response = await axios.post('https://bcknd.elmanhag.com/student/promoCode', formData, {
+//         const response = await axios.post('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/promoCode', formData, {
 //           headers: {
 //             Authorization: `Bearer ${auth.user.token}`,
 //             'Content-Type': 'multipart/form-data',
@@ -250,7 +250,7 @@ const SubscriptionsPaymentPage = () => {
   const fetchPlansPayment = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('https://bcknd.elmanhag.com/student/paymentMethods', {
+      const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/paymentMethods', {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'application/json',
@@ -429,7 +429,7 @@ const SubscriptionsPaymentPage = () => {
       }
 
 
-      const response = await axios.post('https://bcknd.elmanhag.com/student/promoCode', formData, {
+      const response = await axios.post('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/promoCode', formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'multipart/form-data',

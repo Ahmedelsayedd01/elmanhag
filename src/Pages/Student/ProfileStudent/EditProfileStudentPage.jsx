@@ -48,7 +48,7 @@ const EditProfileStudentPage = () => {
 
   const fetchCountries = async () => {
     try {
-      const response = await axios.get('https://bcknd.elmanhag.com/student/setting/view');
+      const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/setting/view');
       console.log(response.data)
       setAllCountry(response.data.country);
       setAllCity(response.data.city)
@@ -60,7 +60,7 @@ const EditProfileStudentPage = () => {
 
   const fetchStudentData = async () => {
     try {
-      const response = await axios.get('https://bcknd.elmanhag.com/student/profile/view', {
+      const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/profile/view', {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'application/json',
@@ -225,7 +225,7 @@ const EditProfileStudentPage = () => {
     }
 
     try {
-      const response = await axios.post(`https://bcknd.elmanhag.com/student/profile/modify`, formData, {
+      const response = await axios.post(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/profile/modify`, formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'multipart/form-data',

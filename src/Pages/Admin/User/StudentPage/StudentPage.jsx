@@ -316,7 +316,7 @@ const StudentPage = () => {
        const fetchStudents = async () => {
               setIsLoading(true);
               try {
-                     const response = await axios.get('https://bcknd.elmanhag.com/admin/student', {
+                     const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/student', {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -348,7 +348,7 @@ const StudentPage = () => {
 
        const handleStatus = async (studentId, studentName, status) => {
               try {
-                     const response = await axios.put(`https://bcknd.elmanhag.com/admin/student/status/${studentId}`, { status }, {
+                     const response = await axios.put(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/student/status/${studentId}`, { status }, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -385,7 +385,7 @@ const StudentPage = () => {
 
        const deleteStudent = async (studentId, authToken) => {
               try {
-                     const response = await axios.delete(`https://bcknd.elmanhag.com/admin/student/delete/${studentId}`, {
+                     const response = await axios.delete(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/student/delete/${studentId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },

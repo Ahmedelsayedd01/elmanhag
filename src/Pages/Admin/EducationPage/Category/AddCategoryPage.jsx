@@ -75,7 +75,7 @@ const AddCategoryPage = () => {
                      formData.append('category_id', selectParentId);
                      formData.append('order', parseInt(categoryOrder));
 
-                     const response = await axios.post('https://bcknd.elmanhag.com/admin/category/add', formData, {
+                     const response = await axios.post('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/category/add', formData, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                                    'Content-Type': 'multipart/form-data',

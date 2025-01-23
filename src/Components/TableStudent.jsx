@@ -41,7 +41,7 @@ const TableStudent = ({ tableTitle, data, setStudent, editPath }) => {
 
        const deleteStudent = async (studentId, authToken) => {
               try {
-                     const response = await axios.delete(`https://bcknd.elmanhag.com/admin/student/delete/${studentId}`, {
+                     const response = await axios.delete(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/student/delete/${studentId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },

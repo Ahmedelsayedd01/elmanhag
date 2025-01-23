@@ -352,7 +352,7 @@ const AddDiscountPage = () => {
       }
 
       // try {
-      const response = await axios.post('https://bcknd.elmanhag.com/admin/discount/add', formData, {
+      const response = await axios.post('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/discount/add', formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },

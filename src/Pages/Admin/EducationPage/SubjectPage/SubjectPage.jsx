@@ -86,7 +86,7 @@ const SubjextPage = () => {
   const fetchSubjects = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('https://bcknd.elmanhag.com/admin/subject', {
+      const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/subject', {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },
@@ -130,7 +130,7 @@ const SubjextPage = () => {
 
   const deleteSubject = async (subjectId, authToken) => {
     try {
-      const response = await axios.delete(`https://bcknd.elmanhag.com/admin/subject/delete/${subjectId}`, {
+      const response = await axios.delete(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/subject/delete/${subjectId}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },

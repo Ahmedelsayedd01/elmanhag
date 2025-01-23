@@ -453,7 +453,7 @@ const EditPromoCodePage = () => {
       // const queryString = params.toString();
 
       // try {
-      const response = await axios.put(`https://bcknd.elmanhag.com/admin/promoCode/update/${promoCodeID}?${params.toString()}`, {}, {
+      const response = await axios.put(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/promoCode/update/${promoCodeID}?${params.toString()}`, {}, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },

@@ -405,7 +405,7 @@ const EditDiscountPage = () => {
       });
 
       // try {
-      const response = await axios.put(`https://bcknd.elmanhag.com/admin/discount/update/${discountID}?${params.toString()}`, {}, {
+      const response = await axios.put(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/discount/update/${discountID}?${params.toString()}`, {}, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },

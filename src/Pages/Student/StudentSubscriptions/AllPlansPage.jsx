@@ -18,7 +18,7 @@
 //   const fetchPlans = async () => {
 //     setIsLoading(true);
 //     try {
-//       const response = await axios.get('https://bcknd.elmanhag.com/student/bundles', {
+//       const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/bundles', {
 //         headers: {
 //           Authorization: `Bearer ${auth.user.token}`,
 //           'Content-Type': 'application/json',
@@ -178,7 +178,7 @@ const AllPlansPage = () => {
   const fetchPlans = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('https://bcknd.elmanhag.com/student/bundles', {
+      const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/bundles', {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'application/json',

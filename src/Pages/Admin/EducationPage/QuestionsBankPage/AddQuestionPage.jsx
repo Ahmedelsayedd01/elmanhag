@@ -120,7 +120,7 @@ const AddQuestionPage = () => {
        /* Fetch Category && Subjects */
        const fetchCategoryAndSubjects = async () => {
               try {
-                     const response = await axios.get('https://bcknd.elmanhag.com/admin/subject', {
+                     const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/subject', {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -137,7 +137,7 @@ const AddQuestionPage = () => {
        /* Fetch Chapter && Lesson */
        const fetchChapterAndLessonAndQuestionsType = async () => {
               try {
-                     const response = await axios.get('https://bcknd.elmanhag.com/admin/question', {
+                     const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/question', {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -638,7 +638,7 @@ const AddQuestionPage = () => {
 
 
        //        try {
-       //               const response = await axios.post('https://bcknd.elmanhag.com/admin/question/add', formData, {
+       //               const response = await axios.post('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/question/add', formData, {
        //                      headers: {
        //                             Authorization: `Bearer ${auth.user.token}`,
        //                             'Content-Type': 'multipart/form-data',
@@ -747,7 +747,7 @@ const AddQuestionPage = () => {
               }
 
               try {
-                     const response = await axios.post('https://bcknd.elmanhag.com/admin/question/add', formData, {
+                     const response = await axios.post('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/question/add', formData, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                                    'Content-Type': 'multipart/form-data',

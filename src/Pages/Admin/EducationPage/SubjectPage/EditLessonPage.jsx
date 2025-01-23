@@ -30,7 +30,7 @@ const EditLessonPage = () => {
        const fetchEditLesson = async () => {
               try {
 
-                     const response = await axios.get(`https://bcknd.elmanhag.com/admin/lesson/${lessonId}`, {
+                     const response = await axios.get(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/lesson/${lessonId}`, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -111,7 +111,7 @@ const EditLessonPage = () => {
               }
               try {
 
-                     const response = await axios.put(`https://bcknd.elmanhag.com/admin/lesson/update/${lessonId}`, updateLesson, {
+                     const response = await axios.put(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/lesson/update/${lessonId}`, updateLesson, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },

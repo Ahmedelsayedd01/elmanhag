@@ -402,7 +402,7 @@ const AddPromoCodePage = () => {
       }
 
       // try {
-      const response = await axios.post('https://bcknd.elmanhag.com/admin/promoCode/add', formData, {
+      const response = await axios.post('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/promoCode/add', formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },

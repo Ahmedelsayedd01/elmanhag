@@ -17,7 +17,7 @@ const ParentRelationPage = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "https://bcknd.elmanhag.com/admin/Settings/relation",
+        "http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/Settings/relation",
         {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,
@@ -41,7 +41,7 @@ const ParentRelationPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`https://bcknd.elmanhag.com/admin/Settings/relation/delete/${id}`, {
+      const response = await axios.delete(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/Settings/relation/delete/${id}`, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`
         }

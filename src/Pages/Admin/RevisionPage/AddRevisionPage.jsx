@@ -99,7 +99,7 @@ const AddRevisionPage = () => {
        const fetchCategoryAndSubjects = async () => {
               setIsLoading(true)
               try {
-                     const response = await axios.get('https://bcknd.elmanhag.com/admin/subject', {
+                     const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/subject', {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },
@@ -554,7 +554,7 @@ const AddRevisionPage = () => {
               try {
 
 
-                     const response = await axios.post(' https://bcknd.elmanhag.com/admin/revisions/add', formData, {
+                     const response = await axios.post(' http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/revisions/add', formData, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                             },

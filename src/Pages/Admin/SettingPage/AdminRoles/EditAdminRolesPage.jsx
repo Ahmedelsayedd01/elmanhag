@@ -30,7 +30,7 @@ const EditAdminRolesPage = () => {
                      setIsLoading(true);
                      try {
                             const response = await axios.get(
-                                   "https://bcknd.elmanhag.com/admin/adminRole",
+                                   "http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/adminRole",
                                    {
                                           headers: {
                                                  Authorization: `Bearer ${auth.user.token}`,
@@ -55,7 +55,7 @@ const EditAdminRolesPage = () => {
               const fetchEdit = async () => {
                      setIsLoading(true);
                      try {
-                            const response = await axios.get(`https://bcknd.elmanhag.com/admin/adminRole/role/${roleId}`, {
+                            const response = await axios.get(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/adminRole/role/${roleId}`, {
                                    headers: {
                                           Authorization: `Bearer ${auth.user.token}`,
                                    },
@@ -161,7 +161,7 @@ const EditAdminRolesPage = () => {
                             formData.append(`roles[${index}]`, role);
                      });
 
-                     const response = await axios.post(`https://bcknd.elmanhag.com/admin/adminRole/update/${roleId}`, formData, {
+                     const response = await axios.post(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/adminRole/update/${roleId}`, formData, {
                             headers: {
                                    Authorization: `Bearer ${auth.user.token}`,
                                    'Content-Type': 'multipart/form-data',

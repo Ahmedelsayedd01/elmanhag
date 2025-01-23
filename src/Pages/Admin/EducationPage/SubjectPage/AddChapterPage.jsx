@@ -86,7 +86,7 @@ const AddChapterPage = () => {
       formData.append('thumbnail', chapterThumbnailFile);
       formData.append('cover_photo', chapterCoverFile);
 
-      const response = await axios.post(`https://bcknd.elmanhag.com/admin/chapter/add/${subjectID}`, formData, {
+      const response = await axios.post(`http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/chapter/add/${subjectID}`, formData, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'multipart/form-data',

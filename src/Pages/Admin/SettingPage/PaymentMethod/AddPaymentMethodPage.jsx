@@ -79,7 +79,7 @@ const AddPaymentMethodPage = () => {
             });
 
             const response = await axios.post(
-                'https://bcknd.elmanhag.com/admin/Settings/paymentMethods/add',
+                'http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/Settings/paymentMethods/add',
                 formData,
                 {
                     headers: {

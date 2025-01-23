@@ -169,7 +169,7 @@
 // const fetchLive = async () => {
 //   setIsLoading(true);
 //   try {
-//     const response = await axios.get('https://bcknd.elmanhag.com/student/subscription', {
+//     const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/subscription', {
 //       headers: {
 //         Authorization: `Bearer ${auth.user.token}`,
 //         'Content-Type': 'application/json',
@@ -207,7 +207,7 @@
 //   //   console.log("live is :",live,live.link)
 //   //   try {
 //   //     const response = await axios.post(
-//   //       `https://bcknd.elmanhag.com/student/subscription/check/${id}`, {},
+//   //       `http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/subscription/check/${id}`, {},
 //   //       {
 //   //         headers: {
 //   //           Authorization: `Bearer ${auth.user.token}`,
@@ -281,7 +281,7 @@
 
 //   //     // Proceed with API call if time conditions are met
 //   //     const response = await axios.post(
-//   //       `https://bcknd.elmanhag.com/student/subscription/check/${id}`, {},
+//   //       `http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/subscription/check/${id}`, {},
 //   //       {
 //   //         headers: {
 //   //           Authorization: `Bearer ${auth.user.token}`,
@@ -366,7 +366,7 @@
 
 //     // Proceed with API call if time conditions are met
 //     const response = await axios.post(
-//       `https://bcknd.elmanhag.com/student/subscription/check/${id}`, {},
+//       `http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/subscription/check/${id}`, {},
 //       {
 //         headers: {
 //           Authorization: `Bearer ${auth.user.token}`,
@@ -570,7 +570,7 @@ const LiveClassesPage = () => {
   const fetchLive = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('https://bcknd.elmanhag.com/student/subscription', {
+      const response = await axios.get('http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/subscription', {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
           'Content-Type': 'application/json',
@@ -728,7 +728,7 @@ const LiveClassesPage = () => {
 
       // First, check if the user has purchased the live session
       const purchaseResponse = await axios.post(
-        `https://bcknd.elmanhag.com/student/subscription/check/${id}`, {},
+        `http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/subscription/check/${id}`, {},
         {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,
@@ -855,7 +855,7 @@ const LiveClassesPage = () => {
 
   //     // Proceed with API call if time conditions are met
   //     const response = await axios.post(
-  //       `https://bcknd.elmanhag.com/student/subscription/check/${id}`, {},
+  //       `http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/student/subscription/check/${id}`, {},
   //       {
   //         headers: {
   //           Authorization: `Bearer ${auth.user.token}`,

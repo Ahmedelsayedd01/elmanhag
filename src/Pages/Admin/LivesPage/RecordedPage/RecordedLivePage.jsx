@@ -33,7 +33,7 @@ const RecordedLivePage = () => {
               setIsLoading(true);
               try {
                      const response = await axios.get(
-                            "https://bcknd.elmanhag.com/admin/recordedLive",
+                            "http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/recordedLive",
                             {
                                    headers: {
                                           Authorization: `Bearer ${auth.user.token}`,
@@ -74,7 +74,7 @@ const RecordedLivePage = () => {
        const deleteLivesRecorded = async (livesRecordedId, authToken) => {
               try {
                      const response = await axios.delete(
-                            `https://bcknd.elmanhag.com/admin/recordedLive/delete/${livesRecordedId}`,
+                            `http://62.84.185.153/plesk-site-preview/bcknd.elmanhag.com/https/62.84.185.153/admin/recordedLive/delete/${livesRecordedId}`,
                             {
                                    headers: {
                                           Authorization: `Bearer ${authToken}`,
